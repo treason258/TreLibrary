@@ -24,15 +24,7 @@ package com.mjiayou.trecore;
 */
 
 import android.app.Application;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Environment;
-import android.text.TextUtils;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -44,9 +36,6 @@ import com.mjiayou.trecore.helper.UmengHelper;
 import com.mjiayou.trecore.helper.VolleyHelper;
 import com.mjiayou.trecore.util.LogUtil;
 import com.mjiayou.trecore.widget.TCConfigs;
-import com.mjiayou.tcdemo.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by treason on 16/5/14.
@@ -56,7 +45,7 @@ public class TCApp extends Application {
     // APP TAG
     private static final String TAG = "TCApp";
     // APP_NAME
-    public final String APP_NAME = "trecoredemo";
+    public final String APP_NAME = "tcdemo";
 
     // mApplication
     private static TCApp mApp;
