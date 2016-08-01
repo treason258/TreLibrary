@@ -127,17 +127,17 @@ com.mjiayou.trecore.widget.Router
 // **************** D-接入TreCore功能 ****************
 
 11.
-文件 app - AndroidManifest 在 manifest 节点下添加：
-从 TreCore-Start 到 TreCore-End 的 uses-permission
-
-12.
 文件 app - AndroidManifest 在 application 节点下修改：
 android:theme="@style/tc_theme_default"
 
-13.
+12.
 文件 app - AndroidManifest 在 application 节点下添加：
 android:name="com.mjiayou.trecore.TCApp"
 android:largeHeap="true"
+
+13.
+文件 app - AndroidManifest 在 manifest 节点下添加：
+从 TreCore-Start 到 TreCore-End 的 uses-permission
 
 14.
 文件 app - AndroidManifest 在 application 节点下添加：
