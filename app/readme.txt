@@ -70,7 +70,7 @@ DEBUG_TEST = false
 // **************** B-导入依赖库 ****************
 
 1.
-分别拷贝 lib_TreCore lib_Umeng lib_PullToRefresh lib_RecyclerViewPager lib_PickerView 文件夹到项目根目录下
+分别拷贝 lib_TreCore lib_TreView lib_Umeng 文件夹到项目根目录下
 
 2.
 文件 settings.gradle 修改为：
