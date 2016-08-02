@@ -55,7 +55,7 @@ public class TestHacksActivity extends TCActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_hacks);
+        setContentView(R.layout.tc_activity_test_hacks);
         ButterKnife.inject(this);
 
         setTitle("TestHacksActivity");

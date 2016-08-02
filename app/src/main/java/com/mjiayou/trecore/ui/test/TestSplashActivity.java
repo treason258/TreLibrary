@@ -24,7 +24,7 @@ public class TestSplashActivity extends TCActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_splash);
+        setContentView(R.layout.tc_activity_test_splash);
         ButterKnife.inject(this);
 
         mIvSplash.setImageDrawable(getResources().getDrawable(R.drawable.tc_launcher));

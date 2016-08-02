@@ -33,7 +33,7 @@ public class TestVideoActivity extends TCActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_video);
+        setContentView(R.layout.tc_activity_test_video);
         ButterKnife.inject(this);
 
         final Uri uri = Uri.parse(AssetUtil.getRawUriString(mContext, R.raw.tc_test_soccer));
