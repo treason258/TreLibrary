@@ -2,7 +2,7 @@
 
 基于网上开源项目的二次开发。
 
-我不生产代码，我只是代码的搬运工。
+本项目不生产代码，只是代码的搬运工。
 
 AcceleratorBLEDemo - 厂商提供的源码，Android、iOS和Windows10平台支持 文件：app-accelerator-2-厂商提供.rar
 
