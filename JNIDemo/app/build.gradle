@@ -10,6 +10,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            moduleName "testjni" // 生成的so名字
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips" // 输出指定几种abi体系结构下的so库
+        }
     }
     buildTypes {
         release {
