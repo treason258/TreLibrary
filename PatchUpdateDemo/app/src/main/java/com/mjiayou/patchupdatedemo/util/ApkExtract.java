@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
-import android.util.Log;
 
 import java.io.File;
 
@@ -18,7 +17,6 @@ public class ApkExtract {
         context = context.getApplicationContext();
         ApplicationInfo applicationInfo = context.getApplicationInfo();
         String apkPath = applicationInfo.sourceDir;
-        Log.e("hongyang", apkPath);
         return apkPath;
     }
 

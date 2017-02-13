@@ -1,5 +1,9 @@
 package com.mjiayou.patchupdatedemo;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -7,83 +11,202 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.mjiayou.patchupdatedemo.util.ApkExtract;
-import com.mjiayou.patchupdatedemo.util.BsPatch;
+import com.mjiayou.patchupdatedemo.util.JNIUtil;
+import com.mjiayou.trecorelib.util.AppUtil;
 
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "matengfei";
+    private final int REQUEST_CODE_DIFF = 1;
+    private final int REQUEST_CODE_PATCH = 2;
 
-    private TextView mTvInfo;
+    private Activity mActivity;
+    private Context mContext;
+
+    private Button mBtnDiff;
     private Button mBtnPatch;
+    private TextView mTvInfo;
+
+    private File oldAPK;
+    private File newAPK;
+    private File diffPatch;
+    private File targetApk;
+
+    private StringBuilder mLog = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mActivity = this;
+        mContext = this;
 
-        mTvInfo = (TextView) findViewById(R.id.tv_info);
+        mBtnDiff = (Button) findViewById(R.id.btn_diff);
         mBtnPatch = (Button) findViewById(R.id.btn_patch);
+        mTvInfo = (TextView) findViewById(R.id.tv_info);
 
-        mTvInfo.setText("版本-1.0");
-        Log.i(TAG, "版本-1.0");
+        mBtnDiff.setVisibility(View.VISIBLE);
+        mBtnDiff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(mActivity, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_DIFF);
+                } else {
+                    diff();
+                }
+            }
+        });
 
+        mBtnPatch.setVisibility(View.VISIBLE);
         mBtnPatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(mActivity, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PATCH);
                 } else {
-                    doBspatch();
+                    patch();
                 }
-
             }
         });
-    }
 
-    private void doBspatch() {
-        Log.i(TAG, "doBspatch");
+        mTvInfo.setMovementMethod(new ScrollingMovementMethod());
 
-        final File diffPatch = new File(Environment.getExternalStorageDirectory(), "diff.patch");
-        Log.i(TAG, "diffPatch.exists() -> " + diffPatch.exists() + " | diffPatch.getAbsolutePath() -> " + diffPatch.getAbsolutePath());
+        oldAPK = new File(ApkExtract.extract(this));
+        newAPK = new File(getFilePath("new.apk"));
+        diffPatch = new File(getFilePath("diff.patch"));
+        targetApk = new File(getFilePath("target.apk"));
 
-        final File targetApk = new File(Environment.getExternalStorageDirectory(), "target.apk");
-        BsPatch.bspatch(ApkExtract.extract(this), targetApk.getAbsolutePath(), diffPatch.getAbsolutePath());
-        Log.i(TAG, "targetApk.exists() -> " + targetApk.exists() + " | targetApk.getAbsolutePath() -> " + targetApk.getAbsolutePath());
-
-        Log.i(TAG, new File(Environment.getExternalStorageDirectory(), "old").getAbsolutePath());
-        if (targetApk.exists()) {
-            ApkExtract.install(this, targetApk.getAbsolutePath());
-        }
+        refreshLog(AppUtil.getVersionInfo(mContext));
+        refreshLog("--------------------------------");
+        refreshLog("文件路径信息：");
+        refreshLog("oldAPK.getAbsolutePath() -> " + "\n" + oldAPK.getAbsolutePath() + " | " + oldAPK.exists());
+        refreshLog("newAPK.getAbsolutePath() -> " + "\n" + newAPK.getAbsolutePath() + " | " + newAPK.exists());
+        refreshLog("diffPatch.getAbsolutePath() -> " + "\n" + diffPatch.getAbsolutePath() + " | " + diffPatch.exists());
+        refreshLog("targetApk.getAbsolutePath() -> " + "\n" + targetApk.getAbsolutePath() + " | " + targetApk.exists());
+        refreshLog("--------------------------------");
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 2) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                doBspatch();
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            switch (requestCode) {
+                case REQUEST_CODE_DIFF:
+                    diff();
+                    break;
+                case REQUEST_CODE_PATCH:
+                    patch();
+                    break;
             }
         }
     }
 
-//    1、房子问题：
-//        a 房子是肯定买的，婚先婚后的问题；
-//        b 如果婚前不买房，等婚后买房时候，就我这么一个儿子，于情于理我爸妈都肯定会出钱；
-//        c 关于我爸妈帮买房的问题，可以采用付部分首付以及帮还月供的方式；
-//        d 关于我爸妈帮买房的问题，可以当面说明这个问题，口头承诺人格担保（接受不了一家人签字画押这一套，至少是在我家不需要这样）；
-//
-//    2、我家里的情况：
-//        a 爸爸教师工作，政府编制，月工资5000+，每年都会几百的涨幅，退休后有退休金比现在高，所以父母养老以及小妹读书方面，理论上在经济方面不需要我操心；
-//        b 老家一套房子能值个10万+，一直没人住，因为爷爷不同意原因一直没卖；
-//        c 爸妈现在住的房子是市区20万+，房贷14年已还清，也是一笔财富，虽然和我无关，提它是因为这个和现在的家庭经济情况是挂钩的；
+    /**
+     * 生成增量文件
+     */
+    private void diff() {
+        refreshLog("生成增量文件开始-diff");
 
+        if (!oldAPK.exists()) {
+            refreshLog("旧版本APK不存在-!oldAPK.exists()");
+            return;
+        }
+
+        if (!newAPK.exists()) {
+            refreshLog("新版本APK不存在-!newAPK.exists()");
+            return;
+        }
+
+        refreshLog("ing");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JNIUtil.bsdiff(oldAPK.getAbsolutePath(), newAPK.getAbsolutePath(), diffPatch.getAbsolutePath());
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLog("生成增量文件完成-diff done");
+
+                        if (!diffPatch.exists()) {
+                            refreshLog("生成增量文件失败-!diffPatch.exists()");
+                        } else {
+                            refreshLog("生成增量文件成功-diffPatch.exists()");
+                        }
+
+                        refreshLog("--------------------------------");
+                    }
+                });
+            }
+        }).start();
+    }
+
+    /**
+     * 合成增量文件
+     */
+    private void patch() {
+        refreshLog("合成增量文件开始-doPatch");
+
+        if (!oldAPK.exists()) {
+            refreshLog("旧版本APK不存在-!oldAPK.exists()");
+            return;
+        }
+
+        if (!diffPatch.exists()) {
+            refreshLog("增量文件不存在-!diffPatch.exists()");
+            return;
+        }
+
+        refreshLog("ing");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JNIUtil.bspatch(oldAPK.getAbsolutePath(), targetApk.getAbsolutePath(), diffPatch.getAbsolutePath());
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLog("合成增量文件完成-patch done");
+
+                        if (!targetApk.exists()) {
+                            refreshLog("合成增量文件失败-!targetApk.exists()");
+                        } else {
+                            refreshLog("合成增量文件成功-targetApk.exists()");
+
+                            new AlertDialog.Builder(mContext)
+                                    .setTitle("提示")
+                                    .setMessage("目标APK已生成，确认安装？")
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ApkExtract.install(mContext, targetApk.getAbsolutePath());
+                                        }
+                                    })
+                                    .setNegativeButton("取消", null)
+                                    .show();
+                        }
+
+                        refreshLog("--------------------------------");
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void refreshLog(String message) {
+        mLog.append(message).append("\n");
+        mTvInfo.setText(mLog.toString());
+    }
+
+    private String getFilePath(String fileName) {
+        return Environment.getExternalStorageDirectory().getAbsolutePath() + "/treason/" + fileName;
+    }
 }
