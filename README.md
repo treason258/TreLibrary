@@ -49,6 +49,9 @@
   - 包名：com.example.android.bluetoothchat
   - 基于：https://github.com/googlesamples/android-BluetoothChat
   - 文件：android-BluetoothChat-master.zip
-  - 描述：Google官网Bluetooth使用Demo
-
-  
+  - 描述：Google官网Bluetooth使用Demo，可运行
+- Daily
+  - 报名：com.cins.daily
+  - 基于：https://github.com/spring2613/Daily
+  - 文件：Daily-master.zip
+  - 描述：Daily is a content collection Android client, base on Material Design + MVP + RxJava + Retrofit .
