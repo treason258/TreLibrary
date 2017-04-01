@@ -62,7 +62,7 @@ Page({
   },
   getTypeData:function(page){
     wx.request({
-        url: 'http://v.juhe.cn/toutiao/index?type='+app.requestUrl+'&key=1c84600b999ae65c986571e77b403fab',
+        url: 'https://v.juhe.cn/toutiao/index?type='+app.requestUrl+'&key=1c84600b999ae65c986571e77b403fab',
         method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
         // header: {}, // 设置请求的 header
         success: (res) =>{
