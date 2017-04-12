@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.megvii.livenessdetection.DetectionConfig;
 import com.megvii.livenessdetection.DetectionFrame;
@@ -33,6 +34,7 @@ import com.megvii.livenesslib.util.ConUtil;
 import com.megvii.livenesslib.util.DialogUtil;
 import com.megvii.livenesslib.util.ICamera;
 import com.megvii.livenesslib.util.IDetection;
+import com.megvii.livenesslib.util.IFile;
 import com.megvii.livenesslib.util.IMediaPlayer;
 import com.megvii.livenesslib.util.Screen;
 import com.megvii.livenesslib.util.SensorUtil;
@@ -372,6 +374,12 @@ public class LivenessActivity extends Activity
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+
+		// 保存图片
+		Toast.makeText(this, "正在保存图片", Toast.LENGTH_SHORT).show();
+		IFile iFile = new IFile();
+		iFile.save(mDetector, "test", jsonObject);
+
 		Intent intent = new Intent();
 		intent.putExtra("result", jsonObject.toString());
 		setResult(RESULT_OK, intent);
