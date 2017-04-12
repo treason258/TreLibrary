@@ -28,9 +28,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     testCompile 'junit:junit:4.12'
     compile files('libs/android-async-http-1.4.6.jar')
-    compile files('libs/android-support-v4.jar')
     compile files('libs/umeng-analytics-v5.4.1.jar')
     compile files('libs/universal-image-loader-1.9.3.jar')
-    compile project(':LivenessLib')
     compile files('libs/org.apache.http.legacy.jar')
+    compile project(':LivenessLib')
 }
