@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cf_upload_bg"
+    android:paddingBottom="@dimen/cf_activity_vertical_margin"
+    android:paddingLeft="@dimen/cf_activity_horizontal_margin"
+    android:paddingRight="@dimen/cf_activity_horizontal_margin"
+    android:paddingTop="@dimen/cf_activity_vertical_margin"
+    tools:context="com.webank.cloud.demo.DemoActivity">
+
+    <ImageView
+        android:id="@+id/cloud_face_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/cloud_face_logo" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cloud_face_logo"
+        android:layout_marginTop="30dp"
+        android:hint="请输入姓名"
+        android:singleLine="true"
+        android:textColor="@color/cf_white"
+        android:textColorHint="@color/app_grey_text" />
+
+    <EditText
+        android:id="@+id/et_idNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_name"
+        android:hint="请输入身份证号码"
+        android:paddingBottom="10dp"
+        android:singleLine="true"
+        android:textColor="@color/cf_white"
+        android:textColorHint="@color/app_grey_text" />
+
+    <LinearLayout
+        android:id="@+id/modeLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_idNo"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/faceVerifyEasy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/cloud_login_btn_bg">
+
+            <ImageView
+                android:id="@+id/easyIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:src="@mipmap/easy_icon" />
+
+            <TextView
+                android:id="@+id/easyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/easyIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp"
+                android:text="简单模式"
+                android:textColor="@color/cf_white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/easyText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="人脸验证"
+                android:textColor="@color/login_grey_btn"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/faceVerifyMid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:background="@drawable/cloud_login_btn_bg">
+
+            <ImageView
+                android:id="@+id/midIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:src="@mipmap/mid_icon" />
+
+            <TextView
+                android:id="@+id/midText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/midIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp"
+                android:text="中级模式"
+                android:textColor="@color/cf_white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/midText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="人脸验证+动作活体"
+                android:textColor="@color/login_grey_btn"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/faceVerifyAdv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/faceVerifyMid"
+            android:layout_weight="1"
+            android:background="@mipmap/btn_bg">
+
+            <ImageView
+                android:id="@+id/advIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/adv_icon" />
+
+            <TextView
+                android:id="@+id/advText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/advIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp"
+                android:text="高级模式"
+                android:textColor="@color/adv_white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/advText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="人脸验证+唇语活体"
+                android:textColor="@color/login_grey_btn"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/result_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/modeLl"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_toLeftOf="@+id/slip_btn"
+            android:text="验证成功展示结果页"
+            android:textColor="@color/cf_white"
+            android:textSize="16sp" />
+
+        <com.webank.wbcloudfaceverify2.ui.component.SlipButton
+            android:id="@+id/slip_btn"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/modeLl"
+        android:layout_marginTop="20dp">
+
+        <RadioGroup
+            android:id="@+id/color_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/black_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="黑色"
+                android:textColor="@color/cf_white" />
+
+            <RadioButton
+                android:id="@+id/white_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="白色"
+                android:textColor="@color/cf_white" />
+        </RadioGroup>
+    </LinearLayout>
+
+</RelativeLayout>
