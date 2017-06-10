@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
         stickerView = (StickerView) findViewById(R.id.sticker_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        //currently you can config your own icons and icon event
-        //the event you can custom
+        // currently you can config your own icons and icon event the event you can custom
         BitmapStickerIcon deleteIcon = new BitmapStickerIcon(ContextCompat.getDrawable(this, R.drawable.sticker_ic_close_white_18dp), BitmapStickerIcon.LEFT_TOP);
         BitmapStickerIcon zoomIcon = new BitmapStickerIcon(ContextCompat.getDrawable(this, R.drawable.sticker_ic_scale_white_18dp), BitmapStickerIcon.RIGHT_BOTOM);
         BitmapStickerIcon flipIcon = new BitmapStickerIcon(ContextCompat.getDrawable(this, R.drawable.sticker_ic_flip_white_18dp), BitmapStickerIcon.RIGHT_TOP);
