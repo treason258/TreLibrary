@@ -104,6 +104,9 @@ public class StickerView extends FrameLayout {
     private long lastClickTime = 0;
     private int minClickDelayTime = DEFAULT_MIN_CLICK_DELAY_TIME;
 
+    private float mDefaultOffsetX = 0f;
+    private float mDefaultOffsetY = 0f;
+
     public StickerView(Context context) {
         this(context, null);
     }
@@ -146,6 +149,11 @@ public class StickerView extends FrameLayout {
         icons.add(deleteIcon);
         icons.add(zoomIcon);
         icons.add(flipIcon);
+    }
+
+    public void configDefaultPosition(float defaultOffsetX, float defaultOffsetY) {
+        mDefaultOffsetX = defaultOffsetX;
+        mDefaultOffsetY = defaultOffsetY;
     }
 
     /**
@@ -745,14 +753,19 @@ public class StickerView extends FrameLayout {
         float height = getHeight();
         float offsetX = width - sticker.getWidth();
         float offsetY = height - sticker.getHeight();
-        if ((position & Sticker.Position.TOP) > 0) {
+        if ((position & Sticker.Position.DEFAULT) > 0) {
+            offsetY = mDefaultOffsetY;
+        } else if ((position & Sticker.Position.TOP) > 0) {
             offsetY /= 4f;
         } else if ((position & Sticker.Position.BOTTOM) > 0) {
             offsetY *= 3f / 4f;
         } else {
             offsetY /= 2f;
         }
-        if ((position & Sticker.Position.LEFT) > 0) {
+
+        if ((position & Sticker.Position.DEFAULT) > 0) {
+            offsetX = mDefaultOffsetX;
+        } else if ((position & Sticker.Position.LEFT) > 0) {
             offsetX /= 4f;
         } else if ((position & Sticker.Position.RIGHT) > 0) {
             offsetX *= 3f / 4f;

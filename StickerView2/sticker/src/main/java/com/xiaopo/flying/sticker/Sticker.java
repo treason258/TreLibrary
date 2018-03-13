@@ -18,7 +18,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 public abstract class Sticker {
 
-    @IntDef(flag = true, value = {Position.CENTER, Position.TOP, Position.BOTTOM, Position.LEFT, Position.RIGHT})
+    @IntDef(flag = true, value = {Position.CENTER, Position.TOP, Position.BOTTOM, Position.LEFT, Position.RIGHT, Position.DEFAULT})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Position {
         int CENTER = 1;
@@ -26,6 +26,7 @@ public abstract class Sticker {
         int LEFT = 1 << 2;
         int RIGHT = 1 << 3;
         int BOTTOM = 1 << 4;
+        int DEFAULT = 1 << 5;
     }
 
     private final float[] matrixValues = new float[9];
