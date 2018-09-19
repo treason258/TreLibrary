@@ -1,4 +1,5 @@
-## Edit by Treason on 1702061541
+## Edit by Treason on 170206 version 1.0
+
 # 递归忽略文件
 .DS_Store
 *.iml
