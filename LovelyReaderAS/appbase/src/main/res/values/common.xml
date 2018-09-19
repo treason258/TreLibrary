@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--      <string name="base">http://mobile.gbxxzyzx.com</string> -->
+     
+        <!--   <string name="base">http://192.168.10.25:8081/mobilemanager </string> -->   <!-- 移动平台 -->
+<!--      <string name="base">http://221.123.155.131:8080//mobilemanager</string> -->   <!-- 移动平台 -->
+    
+   <!--   <string name="base"> http://221.123.155.149:8080/mobilemanager</string> -->
+     
+   <!--  <string name="base"> http://221.123.155.241:8080/mobilemanager</string> -->   
+   <!--  <string name="base">http://api.learningchina.cn</string>  -->    <!-- 学习中国正式 --> 
+  <!--  <string name="base">http://103.244.67.231:8080/studyCacheApi</string> -->   <!-- 学习中国测试 -->
+    
+<!--    <string name="base"> http://221.123.155.241</string> -->
+
+ <!--    <string name="base">http://103.244.67.222/ServiceServer</string>  -->
+        <string name="base">http://192.168.1.140:8080/ServiceServer</string> 
+   
+    
+    <string name="common_notice_title">温馨提示</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
+    <string name="exit">退出</string>
+    <string name="reset">重置</string>
+    <string name="close">关闭</string>
+    <string name="pause">暂停</string>
+    <string name="delete">删除</string>
+    <string name="date">日期</string>
+    <string name="type">类型</string>
+    <string name="submit">提交</string>
+    <string name="common_notice_pop_btn_1">现在设置</string>
+    <string name="star">*</string>
+    <string name="name">名称</string>
+
+    <!-- 升级 -->
+    <string name="ugGradeHint">系统检测到有新版本!!是否升级？</string>
+    <string name="ugGrade">升级</string>
+    <string name="notGrade">先不升级</string>
+
+    <!-- 提示相关 -->
+    <string name="submitHint">正在提交你的信息,请稍后</string>
+    <string name="common_notice_pop_content">检测到您当前无网络，请设置网络</string>
+    <string name="waittingHintLoadData">正在为您读取数据，请稍候!! </string>
+    <string name="common_notdata_discription">没有您要的内容，请查看其它!!</string>
+    <string name="data_format_exception">数据格式异常，请查看其他内容。</string>
+
+    <!-- 密码相关 -->
+    <string name="pleaseInputOldPassword">请输入旧密码</string>
+    <string name="pleaseInputNewPassword">请输入新密码</string>
+    <string name="pleaseSureNewPassword">请确认新密码</string>
+    <string name="newPasswrodinvalid">请输入长度为6到15位的密码</string>
+    <string name="newOldNotSame">新密码与旧密码不能一致</string>
+    <string name="newRepeatnewNotSame">新密码与确认密码不一致</string>
+    <string name="modifyPasswordForTitle">修改密码</string>
+    <string name="login_btn_pw">忘记密码</string>
+
+    <!-- 登录 -->
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="hint_username">请输入您的用户名</string>
+    <string name="hint_password">请输入您的密码</string>
+    <string name="login_btn_name">登录</string>
+
+    <!-- 搜索　 -->
+    <string name="search_by_anyone">搜</string>
+    <string name="search_by_title">搜标题</string>
+    <string name="search_by_author">搜作者</string>
+    <string name="search_text_hint">请输入搜索目标</string>
+    <string name="search_history">历史搜索记录</string>
+    <string name="search_text_history_notdata">目前您没有搜索历史记录</string>
+
+    <!-- 切换 -->
+    <string name="cancel_open_auto_login">取消/开启自动登录</string>
+    <string name="cancel_auto_login">取消自动登录</string>
+    <string name="toggle">切换用户</string>
+
+</resources>

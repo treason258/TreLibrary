@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    	<string name="msgHttpUrlError">网址拼接错误!!</string>	
+    	<string name="netReadWriteError">网络读写错误，请检查您设备的网络情况!!</string>	
+    	<string name="dataParseError">解析服务器返回的数据时出现问题，请重试或联系系统管理员!!</string>	
+    	<string name="msgLoginTimeout">连接超时，请重试!!</string>	
+    	<string name="connectRrejectError">设备拒绝了您的访问，请检查您设备的网络情况!!</string>	
+    	
+    	<string name="loading">加载数据中,请稍后!!</string>	
+
+</resources>

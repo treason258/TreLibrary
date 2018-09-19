@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.haoyang.reader.page.ui.popup.SimplePopupWindow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/commonPublishTitlePanel"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:visibility="invisible" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical" >
+
+        <LinearLayout
+            android:id="@+id/commonPublishLayoutHY"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/commonPublishOperation"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentTop="true"
+                    android:background="#f1f1f1"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/commonPublishCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="取消"
+                    android:textColor="#999999"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/commonPublishFinish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="提交"
+                    android:textColor="#999999"
+                    android:textSize="20sp" />
+
+                <!--
+                     <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#f1f1f1"
+                    android:text="" />
+                -->
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/scrollCommonPublishTitle"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/commonPublishOperation"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/panel_white_gray_side"
+                android:orientation="vertical" >
+
+                <!-- android:background="@drawable/panel_white_gray_side" -->
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fadingEdge="vertical"
+                    android:overScrollMode="never"
+                    android:padding="10dp"
+                    android:scrollbars="vertical" >
+
+                    <TextView
+                        android:id="@+id/commonPublishTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+						android:maxLines="200"
+                        android:gravity="center_vertical"
+                        android:textColor="#999999"
+                        android:textSize="15sp" />
+                </ScrollView>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/sepLineHY"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#e8e9e6"
+                android:layout_below="@id/scrollCommonPublishTitle"
+                android:text="" />
+
+            <EditText
+                android:id="@+id/commonPublishContent"
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/sepLineHY"
+                android:gravity="top|left"
+                android:hint="这里请输入您的想法"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:selectAllOnFocus="true"
+                android:text=""
+                android:textColor="#cccccc"
+                android:textColorHint="#cccccc" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
+                android:background="#e8e9e6"
+                android:layout_below="@id/commonPublishContent"
+                android:text="" />
+            
+        </LinearLayout>
+
+        <!-- 上边的蒙板区 -->
+
+        <LinearLayout
+            android:id="@+id/commonPublishMengHY"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/commonPublishLayoutHY"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </RelativeLayout>
+
+</com.haoyang.reader.page.ui.popup.SimplePopupWindow>

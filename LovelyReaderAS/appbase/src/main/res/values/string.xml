@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="storageUnavailable">存储卡处于不可用状态，请检查，并重新启动！</string>
+    <string name="networkUnavailable">检测到您当前的网络没\n有信号，请设置网络 !!</string>
+    <string name="sessionTimeout">    您已经很长时间没有进行操作，是否继续使用，</string>
+    <string name="setting">现在设置</string>
+    <string name="toDownLoadManager">下载管理</string>
+    <string name="storageUnavailable_go_on">继续使用</string>
+    <string name="login">登录</string>
+    <string name="edit">编辑</string>
+    <string name="register">注册</string>
+    <string name="help">帮助</string>
+
+</resources>

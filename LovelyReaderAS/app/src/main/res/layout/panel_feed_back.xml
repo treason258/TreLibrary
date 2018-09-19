@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.haoyang.reader.page.ui.popup.SimplePopupWindow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/feed_back_panel"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:visibility="invisible" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical" >
+
+        <LinearLayout
+            android:id="@+id/feedbackAreaHY"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/feedBackOperation"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentTop="true"
+                    android:background="#f1f1f1"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/feedBackCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="取消"
+                    android:textColor="#999999"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/feedBackFinish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="提交"
+                    android:textColor="#999999"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#f1f1f1"
+                    android:text="" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/aaaaa"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#f1f1f1"
+                android:text="" />
+
+            <EditText
+                android:id="@+id/feedBackContent"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="请输入您的宝贵意见:"
+                android:padding="5dp"
+                android:selectAllOnFocus="true"
+                android:text=""
+                android:textColor="#cccccc"
+                android:textColorHint="#cccccc" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/contactHY"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="15dp"
+                    android:text="联系方式:"
+                    android:textColor="#999999"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/feedBackcontact"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/contactHY"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="手机号/qq/email"
+                    android:selectAllOnFocus="true"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textColorHint="#cccccc"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- 上边的蒙板区 -->
+
+        <LinearLayout
+            android:id="@+id/feedbackMengHY"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/feedbackAreaHY"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </RelativeLayout>
+
+</com.haoyang.reader.page.ui.popup.SimplePopupWindow>
