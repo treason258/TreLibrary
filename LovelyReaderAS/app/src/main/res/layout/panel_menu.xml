@@ -169,7 +169,7 @@
 				android:layout_width="fill_parent" android:layout_height="45dp"
 				android:layout_weight="1" android:orientation="horizontal">
 
-				<ImageView android:id="@+id/feedbackICONHY"
+				<ImageView android:id="@+id/gotoPageICONHY"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
 					android:layout_alignParentLeft="true"
 					android:layout_centerVertical="true" android:layout_marginLeft="10dp"
@@ -177,7 +177,7 @@
 
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:layout_centerVertical="true"
-					android:layout_marginLeft="10dp" android:layout_toRightOf="@id/feedbackICONHY"
+					android:layout_marginLeft="10dp" android:layout_toRightOf="@id/gotoPageICONHY"
 					android:gravity="left" android:text="跳到指定页" android:textColor="#999999"
 					android:textSize="13sp" />
 			</RelativeLayout>
