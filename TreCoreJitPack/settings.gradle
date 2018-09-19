@@ -1,0 +1,4 @@
+include ':app'
+
+include ':TreCoreLib'
+project(':TreCoreLib').projectDir = new File('../TreLibrary/TreCore/TreCoreLib')
