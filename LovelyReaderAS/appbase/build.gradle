@@ -30,5 +30,5 @@ dependencies {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
   compile files('libs/commonService.jar')
-  compile files('libs/gson-2.3.1.jar')
+  compile project(':TreCoreLib')
 }

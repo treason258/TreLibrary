@@ -1,1 +1,4 @@
 include ':app', ':appbase'
+
+include ':TreCoreLib'
+project(':TreCoreLib').projectDir = new File('../../TreCore/TreCoreLib')

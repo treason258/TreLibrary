@@ -1,27 +1,66 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+  repositories {
+    google()
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.3.3'
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+
+
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+  }
 }
 
 allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+  repositories {
+    google()
+    jcenter()
+  }
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+  delete rootProject.buildDir
+}
+
+ext {
+  compileSdkVersion = 25
+  buildToolsVersion = '25.0.2'
+
+  android = [
+      minSdkVersion: 15,
+      targetSdkVersion: 19,
+
+      applicationId: 'com.mjiayou.trecore',
+      versionCode: 10,
+      versionName: '2.0.0',
+
+      versionCode_lib: 11,
+      versionName_lib: '2.0.1',
+  ]
+
+  dependencies = [
+      'appcompatV7': 'com.android.support:appcompat-v7:24.2.1',
+      'recyclerviewV7': 'com.android.support:recyclerview-v7:24.2.1',
+      'constraint': 'com.android.support.constraint:constraint-layout:1.0.0-alpha8',
+
+      'gson': 'com.google.code.gson:gson:2.7',
+      'volley': 'com.android.volley:volley:1.0.0',
+      'volley2': 'com.mcxiaoke.volley:library:1.0.7',
+      'okhttputils': 'com.zhy:okhttputils:2.6.2',
+
+      'butterknife': 'com.jakewharton:butterknife:5.1.2',
+      'eventbus': 'de.greenrobot:eventbus:2.2.1',
+      'dart': 'com.f2prateek.dart:dart:1.1.0',
+      'imageloader': 'com.nostra13.universalimageloader:universal-image-loader:1.9.4',
+      'glide': 'com.github.bumptech.glide:glide:3.6.1',
+
+      'logger': 'com.orhanobut:logger:1.15',
+      'umeng_analytics': 'com.umeng.analytics:analytics:latest.integration',
+      'meituan_walle': 'com.meituan.android.walle:payload_reader:1.1.4',
+  ]
 }

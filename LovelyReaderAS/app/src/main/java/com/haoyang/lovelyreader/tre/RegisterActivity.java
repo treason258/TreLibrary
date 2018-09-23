@@ -9,6 +9,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.bean.UserRegisterRequest;
+import com.haoyang.lovelyreader.tre.bean.UserRegisterResponse;
+import com.haoyang.lovelyreader.tre.http.RequestBuilder;
+import com.haoyang.lovelyreader.tre.http.RequestCallback;
+import com.haoyang.lovelyreader.tre.http.RequestEntity;
+import com.haoyang.lovelyreader.tre.http.UrlConfig;
+import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
  * Created by xin on 18/9/22.
@@ -55,7 +62,7 @@ public class RegisterActivity extends BaseActivity {
     // tvCode
     tvCode.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        ToastUtil.show(mContext, "获取验证码");
+        ToastUtils.show("获取验证码");
       }
     });
     // tvRegister
@@ -68,36 +75,58 @@ public class RegisterActivity extends BaseActivity {
         String passwordConfirm = etPasswordConfirm.getText().toString();
 
         if (TextUtils.isEmpty(nickname)) {
-          ToastUtil.show(mContext, "请输入昵称");
+          ToastUtils.show("请输入昵称");
           return;
         }
         if (TextUtils.isEmpty(phone)) {
-          ToastUtil.show(mContext, "请输入手机号码");
+          ToastUtils.show("请输入手机号码");
           return;
         }
         if (TextUtils.isEmpty(code)) {
-          ToastUtil.show(mContext, "请输入验证码");
+          ToastUtils.show("请输入验证码");
           return;
         }
         if (TextUtils.isEmpty(password)) {
-          ToastUtil.show(mContext, "请输入密码");
+          ToastUtils.show("请输入密码");
           return;
         }
         if (TextUtils.isEmpty(passwordConfirm)) {
-          ToastUtil.show(mContext, "请输入确认密码");
+          ToastUtils.show("请输入确认密码");
           return;
         }
 
-        ToastUtil.show(mContext, "注册 | nickname -> " + nickname + " | phone -> " + phone + " | code -> " + code + " | password -> " + password + " | passwordConfirm -> " + passwordConfirm);
+        UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
+        userRegisterRequest.setUserName(nickname);
+        userRegisterRequest.setPhone(phone);
+        userRegisterRequest.setSmsCode(code);
+        userRegisterRequest.setPwd(password);
+        userRegisterRequest.setConfirmPwd(passwordConfirm);
 
-        startActivity(new Intent(mContext, MainActivity.class));
-        finish();
+        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserRegister);
+        requestEntity.setRequestBody(userRegisterRequest);
+        RequestBuilder.get().send(requestEntity, new RequestCallback<UserRegisterResponse>() {
+          @Override public void onStart() {
+
+          }
+
+          @Override public void onSuccess(int code, UserRegisterResponse bean) {
+            if (bean != null) {
+              ToastUtils.show(bean.getUid());
+              startActivity(new Intent(mContext, MainActivity.class));
+              finish();
+            }
+          }
+
+          @Override public void onFailure(int code, String msg) {
+            ToastUtils.show(msg);
+          }
+        });
       }
     });
     // tvProtocol
     tvProtocol.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        ToastUtil.show(mContext, "协议");
+        ToastUtils.show("协议");
       }
     });
   }

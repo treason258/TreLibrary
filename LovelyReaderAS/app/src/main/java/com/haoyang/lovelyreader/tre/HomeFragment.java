@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import com.haoyang.lovelyreader.R;
+import com.mjiayou.trecorelib.util.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class HomeFragment extends BaseFragment {
     gvBook.setAdapter(mHomeAdapter);
     gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ToastUtil.show(mContext, mList.get(position).getName());
+        ToastUtils.show(mList.get(position).getName());
       }
     });
   }

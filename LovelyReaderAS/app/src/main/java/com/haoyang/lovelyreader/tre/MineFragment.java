@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
+import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
  * Created by xin on 18/9/22.
@@ -40,31 +41,31 @@ public class MineFragment extends BaseFragment {
     // ivAvatar
     ivAvatar.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        ToastUtil.show(mContext, "头像");
+        ToastUtils.show("头像");
       }
     });
     // tvNickname
     tvNickname.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        ToastUtil.show(mContext, "点击登录");
+        ToastUtils.show("点击登录");
       }
     });
     // llMember
     llMember.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        ToastUtil.show(mContext, "升级成会员");
+        ToastUtils.show("升级成会员");
       }
     });
     // llFeedback
     llFeedback.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        ToastUtil.show(mContext, "意见反馈");
+        ToastUtils.show("意见反馈");
       }
     });
     // tvLogout
     tvLogout.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        ToastUtil.show(mContext, "切换账号");
+        ToastUtils.show("切换账号");
       }
     });
   }

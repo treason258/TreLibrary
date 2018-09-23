@@ -8,6 +8,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.bean.UserLoginRequest;
+import com.haoyang.lovelyreader.tre.bean.UserLoginResponse;
+import com.haoyang.lovelyreader.tre.http.RequestBuilder;
+import com.haoyang.lovelyreader.tre.http.RequestCallback;
+import com.haoyang.lovelyreader.tre.http.RequestEntity;
+import com.haoyang.lovelyreader.tre.http.UrlConfig;
+import com.haoyang.lovelyreader.tre.util.GsonUtil;
+import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
  * Created by xin on 18/9/22.
@@ -44,18 +52,37 @@ public class LoginActivity extends BaseActivity {
         String password = etPassword.getText().toString();
 
         if (TextUtils.isEmpty(phone)) {
-          ToastUtil.show(mContext, "请输入手机号码");
+          ToastUtils.show("请输入手机号码");
           return;
         }
         if (TextUtils.isEmpty(password)) {
-          ToastUtil.show(mContext, "请输入密码");
+          ToastUtils.show("请输入密码");
           return;
         }
 
-        ToastUtil.show(mContext, "登录 | phone -> " + phone + " | password -> " + password);
+        UserLoginRequest userLoginRequestBean = new UserLoginRequest();
+        userLoginRequestBean.setPhone(phone);
+        userLoginRequestBean.setPwd(password);
 
-        startActivity(new Intent(mContext, MainActivity.class));
-        finish();
+        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserLogin);
+        requestEntity.setRequestBody(GsonUtil.get().toJson(userLoginRequestBean));
+        RequestBuilder.get().send(requestEntity, new RequestCallback<UserLoginResponse>() {
+          @Override public void onStart() {
+
+          }
+
+          @Override public void onSuccess(int code, UserLoginResponse bean) {
+            if (bean != null) {
+              ToastUtils.show(bean.getToken());
+              startActivity(new Intent(mContext, MainActivity.class));
+              finish();
+            }
+          }
+
+          @Override public void onFailure(int code, String msg) {
+            ToastUtils.show(msg);
+          }
+        });
       }
     });
     // tvFindPwd

@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.util.LogUtil;
+import com.mjiayou.trecorelib.util.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,7 +122,7 @@ public class MainActivity extends BaseActivity {
 
       switch (v.getId()) {
         case R.id.ivAdd:
-          ToastUtil.show(mContext, "新增");
+          ToastUtils.show("新增");
           break;
         case R.id.llHome:
           viewPager.setCurrentItem(POSITION_HOME);
