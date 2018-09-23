@@ -12,10 +12,10 @@ import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.UserRegisterRequest;
 import com.haoyang.lovelyreader.tre.bean.UserRegisterResponse;
-import com.haoyang.lovelyreader.tre.http.RequestBuilder;
-import com.haoyang.lovelyreader.tre.http.RequestCallback;
-import com.haoyang.lovelyreader.tre.http.RequestEntity;
-import com.haoyang.lovelyreader.tre.http.UrlConfig;
+import com.haoyang.lovelyreader.tre.config.UrlConfig;
+import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
+import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.http.okhttp.RequestEntity;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**

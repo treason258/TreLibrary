@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.bean.BookBean;
 
 import java.util.List;
 

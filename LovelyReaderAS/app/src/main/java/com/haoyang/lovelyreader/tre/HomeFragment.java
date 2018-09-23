@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 import java.util.ArrayList;

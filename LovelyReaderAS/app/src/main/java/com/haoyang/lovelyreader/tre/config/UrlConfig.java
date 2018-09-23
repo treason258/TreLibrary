@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre.http;
+package com.haoyang.lovelyreader.tre.config;
 
 /**
  * Created by xin on 18/9/23.
