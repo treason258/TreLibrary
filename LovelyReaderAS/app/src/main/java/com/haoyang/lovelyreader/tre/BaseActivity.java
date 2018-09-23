@@ -13,30 +13,33 @@ import android.support.v7.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity {
 
-  // TAG
-  protected final String TAG = this.getClass().getSimpleName();
-
-  // var
-  protected Activity mActivity;
-  protected Context mContext;
-  protected Intent mIntent;
-
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    // TAG
+    protected final String TAG = this.getClass().getSimpleName();
 
     // var
-    mActivity = this;
-    mContext = this;
-  }
+    protected Activity mActivity;
+    protected Context mContext;
+    protected Intent mIntent;
 
-  @Override protected void onResume() {
-    super.onResume();
-  }
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-  @Override protected void onPause() {
-    super.onPause();
-  }
+        // var
+        mActivity = this;
+        mContext = this;
+    }
 
-  protected void initView() {
-  }
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    protected void initView() {
+    }
 }

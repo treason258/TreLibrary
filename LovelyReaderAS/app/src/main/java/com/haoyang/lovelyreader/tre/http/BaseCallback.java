@@ -5,9 +5,9 @@ package com.haoyang.lovelyreader.tre.http;
  */
 public interface BaseCallback {
 
-  void onStart();
+    void onStart();
 
-  void onResult(String response);
+    void onResult(String response);
 
-  void onException(Exception ex);
+    void onException(Exception ex);
 }

@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.haoyang.lovelyreader.R;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,157 +24,165 @@ import java.util.List;
  */
 public class MainActivity extends BaseActivity {
 
-  private static final int POSITION_HOME = 0;
-  private static final int POSITION_MINE = 1;
+    private static final int POSITION_HOME = 0;
+    private static final int POSITION_MINE = 1;
 
-  private ViewPager viewPager;
-  private ImageView ivAdd;
-  private LinearLayout llHome;
-  private ImageView ivHome;
-  private TextView tvHome;
-  private LinearLayout llMine;
-  private ImageView ivMine;
-  private TextView tvMine;
+    private ViewPager viewPager;
+    private ImageView ivAdd;
+    private LinearLayout llHome;
+    private ImageView ivHome;
+    private TextView tvHome;
+    private LinearLayout llMine;
+    private ImageView ivMine;
+    private TextView tvMine;
 
-  private HomeFragment mHomeFragment;
-  private MineFragment mMineFragment;
+    private HomeFragment mHomeFragment;
+    private MineFragment mMineFragment;
 
-  private MainAdapter mMainAdapter;
-  private List<Fragment> mFragmentList;
+    private MainAdapter mMainAdapter;
+    private List<Fragment> mFragmentList;
 
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main_new);
-    initView();
-  }
-
-  /**
-   * initView
-   */
-  @Override protected void initView() {
-    Log.d(TAG, "initView() called");
-
-    // findViewById
-    viewPager = (ViewPager) findViewById(R.id.viewPager);
-    ivAdd = (ImageView) findViewById(R.id.ivAdd);
-    llHome = (LinearLayout) findViewById(R.id.llHome);
-    ivHome = (ImageView) findViewById(R.id.ivHome);
-    tvHome = (TextView) findViewById(R.id.tvHome);
-    llMine = (LinearLayout) findViewById(R.id.llMine);
-    ivMine = (ImageView) findViewById(R.id.ivMine);
-    tvMine = (TextView) findViewById(R.id.tvMine);
-
-    // ivAdd
-    ivAdd.setOnClickListener(mOnClickListener);
-    // llHome
-    llHome.setOnClickListener(mOnClickListener);
-    // llMine
-    llMine.setOnClickListener(mOnClickListener);
-
-    initViewPager();
-  }
-
-  /**
-   * initViewPager
-   */
-  private void initViewPager() {
-    Log.d(TAG, "initViewPager() called");
-
-    mHomeFragment = new HomeFragment();
-    mMineFragment = new MineFragment();
-
-    mFragmentList = new ArrayList<>();
-    mFragmentList.add(mHomeFragment);
-    mFragmentList.add(mMineFragment);
-
-    mMainAdapter = new MainAdapter(getSupportFragmentManager(), mFragmentList);
-    viewPager.setAdapter(mMainAdapter);
-    viewPager.addOnPageChangeListener(mOnPageChangeListener);
-    viewPager.setCurrentItem(POSITION_HOME);
-    updateBottomSelected(POSITION_HOME);
-  }
-
-  /**
-   * updateBottomSelected
-   */
-  private void updateBottomSelected(int position) {
-    LogUtils.d(TAG, "updateBottomSelected() called with: position = [" + position + "]");
-
-    int colorSelected = getResources().getColor(R.color.app_theme);
-    int colorNormal = getResources().getColor(R.color.color_333333);
-
-    switch (position) {
-      case POSITION_HOME:
-        tvHome.setTextColor(colorSelected);
-        tvMine.setTextColor(colorNormal);
-        break;
-      case POSITION_MINE:
-        tvHome.setTextColor(colorNormal);
-        tvMine.setTextColor(colorSelected);
-        break;
-    }
-  }
-
-  /**
-   * mOnClickListener
-   */
-  private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-    @Override public void onClick(View v) {
-      LogUtils.d(TAG, "onClick() called with: v = [" + v + "]");
-
-      switch (v.getId()) {
-        case R.id.ivAdd:
-          ToastUtils.show("新增");
-          break;
-        case R.id.llHome:
-          viewPager.setCurrentItem(POSITION_HOME);
-          break;
-        case R.id.llMine:
-          viewPager.setCurrentItem(POSITION_MINE);
-          break;
-      }
-    }
-  };
-
-  /**
-   * mOnPageChangeListener
-   */
-  private ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {
-    @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-      //LogUtil.d(TAG, "onPageScrolled() called with: position = [" + position + "], positionOffset = [" + positionOffset + "], positionOffsetPixels = [" + positionOffsetPixels + "]");
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_new);
+        initView();
     }
 
-    @Override public void onPageSelected(int position) {
-      LogUtils.d(TAG, "onPageSelected() called with: position = [" + position + "]");
+    /**
+     * initView
+     */
+    @Override
+    protected void initView() {
+        Log.d(TAG, "initView() called");
 
-      updateBottomSelected(position);
+        // findViewById
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        ivAdd = (ImageView) findViewById(R.id.ivAdd);
+        llHome = (LinearLayout) findViewById(R.id.llHome);
+        ivHome = (ImageView) findViewById(R.id.ivHome);
+        tvHome = (TextView) findViewById(R.id.tvHome);
+        llMine = (LinearLayout) findViewById(R.id.llMine);
+        ivMine = (ImageView) findViewById(R.id.ivMine);
+        tvMine = (TextView) findViewById(R.id.tvMine);
+
+        // ivAdd
+        ivAdd.setOnClickListener(mOnClickListener);
+        // llHome
+        llHome.setOnClickListener(mOnClickListener);
+        // llMine
+        llMine.setOnClickListener(mOnClickListener);
+
+        initViewPager();
     }
 
-    @Override public void onPageScrollStateChanged(int state) {
-      LogUtils.d(TAG, "onPageScrollStateChanged() called with: state = [" + state + "]");
+    /**
+     * initViewPager
+     */
+    private void initViewPager() {
+        Log.d(TAG, "initViewPager() called");
+
+        mHomeFragment = new HomeFragment();
+        mMineFragment = new MineFragment();
+
+        mFragmentList = new ArrayList<>();
+        mFragmentList.add(mHomeFragment);
+        mFragmentList.add(mMineFragment);
+
+        mMainAdapter = new MainAdapter(getSupportFragmentManager(), mFragmentList);
+        viewPager.setAdapter(mMainAdapter);
+        viewPager.addOnPageChangeListener(mOnPageChangeListener);
+        viewPager.setCurrentItem(POSITION_HOME);
+        updateBottomSelected(POSITION_HOME);
     }
-  };
 
-  /**
-   * MainAdapter
-   */
-  public class MainAdapter extends FragmentPagerAdapter {
+    /**
+     * updateBottomSelected
+     */
+    private void updateBottomSelected(int position) {
+        LogUtils.d(TAG, "updateBottomSelected() called with: position = [" + position + "]");
 
-    private List<Fragment> mList = new ArrayList<>();
+        int colorSelected = getResources().getColor(R.color.app_theme);
+        int colorNormal = getResources().getColor(R.color.color_333333);
 
-    public MainAdapter(FragmentManager fragmentManager, List<Fragment> list) {
-      super(fragmentManager);
-      this.mList = list;
+        switch (position) {
+            case POSITION_HOME:
+                tvHome.setTextColor(colorSelected);
+                tvMine.setTextColor(colorNormal);
+                break;
+            case POSITION_MINE:
+                tvHome.setTextColor(colorNormal);
+                tvMine.setTextColor(colorSelected);
+                break;
+        }
     }
 
-    @Override public Fragment getItem(int position) {
-      return mList.get(position);
-    }
+    /**
+     * mOnClickListener
+     */
+    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            LogUtils.d(TAG, "onClick() called with: v = [" + v + "]");
 
-    @Override public int getCount() {
-      return mList != null ? mList.size() : 0;
+            switch (v.getId()) {
+                case R.id.ivAdd:
+                    ToastUtils.show("新增");
+                    break;
+                case R.id.llHome:
+                    viewPager.setCurrentItem(POSITION_HOME);
+                    break;
+                case R.id.llMine:
+                    viewPager.setCurrentItem(POSITION_MINE);
+                    break;
+            }
+        }
+    };
+
+    /**
+     * mOnPageChangeListener
+     */
+    private ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            //LogUtil.d(TAG, "onPageScrolled() called with: position = [" + position + "], positionOffset = [" + positionOffset + "], positionOffsetPixels = [" + positionOffsetPixels + "]");
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            LogUtils.d(TAG, "onPageSelected() called with: position = [" + position + "]");
+
+            updateBottomSelected(position);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            LogUtils.d(TAG, "onPageScrollStateChanged() called with: state = [" + state + "]");
+        }
+    };
+
+    /**
+     * MainAdapter
+     */
+    public class MainAdapter extends FragmentPagerAdapter {
+
+        private List<Fragment> mList = new ArrayList<>();
+
+        public MainAdapter(FragmentManager fragmentManager, List<Fragment> list) {
+            super(fragmentManager);
+            this.mList = list;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mList != null ? mList.size() : 0;
+        }
     }
-  }
 }
 
 

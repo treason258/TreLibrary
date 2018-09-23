@@ -1,99 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
 
-  <!-- content -->
-  <android.support.v4.view.ViewPager
-      android:id="@+id/viewPager"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_above="@+id/llBottom"
-      android:layout_weight="1"
-      />
-
-  <!-- 分割线 -->
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="1px"
-      android:layout_above="@+id/llBottom"
-      android:background="#888888"
-      />
-
-  <!-- 新增 -->
-  <ImageView
-      android:id="@+id/ivAdd"
-      android:layout_width="56dp"
-      android:layout_height="56dp"
-      android:layout_above="@+id/llBottom"
-      android:layout_alignParentRight="true"
-      android:layout_marginBottom="25dp"
-      android:layout_marginRight="20dp"
-      android:src="@drawable/ic_launcher"
-      />
-
-  <!-- bottom -->
-  <LinearLayout
-      android:id="@+id/llBottom"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:orientation="horizontal"
-      android:paddingBottom="5dp"
-      android:paddingTop="5dp"
-      >
-
-    <!-- 书架 -->
-    <LinearLayout
-        android:id="@+id/llHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+    <!-- content -->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llBottom"
         android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        >
-      <ImageView
-          android:id="@+id/ivHome"
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:background="@drawable/ic_launcher"
-          />
-      <TextView
-          android:id="@+id/tvHome"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="3dp"
-          android:text="书架"
-          android:textSize="13sp"
-          />
-    </LinearLayout>
-    <!-- 我的 -->
+        />
+
+    <!-- 分割线 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@+id/llBottom"
+        android:background="#888888"
+        />
+
+    <!-- 新增 -->
+    <ImageView
+        android:id="@+id/ivAdd"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_above="@+id/llBottom"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_launcher"
+        />
+
+    <!-- bottom -->
     <LinearLayout
-        android:id="@+id/llMine"
-        android:layout_width="wrap_content"
+        android:id="@+id/llBottom"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
         >
-      <ImageView
-          android:id="@+id/ivMine"
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:background="@drawable/ic_launcher"
-          />
-      <TextView
-          android:id="@+id/tvMine"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="3dp"
-          android:text="我的"
-          android:textSize="13sp"
-          />
+
+        <!-- 书架 -->
+        <LinearLayout
+            android:id="@+id/llHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_launcher"
+                />
+
+            <TextView
+                android:id="@+id/tvHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="书架"
+                android:textSize="13sp"
+                />
+        </LinearLayout>
+        <!-- 我的 -->
+        <LinearLayout
+            android:id="@+id/llMine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/ivMine"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_launcher"
+                />
+
+            <TextView
+                android:id="@+id/tvMine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="我的"
+                android:textSize="13sp"
+                />
+        </LinearLayout>
     </LinearLayout>
-  </LinearLayout>
 </RelativeLayout>

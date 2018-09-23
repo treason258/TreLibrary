@@ -8,8 +8,9 @@ import com.mjiayou.trecorelib.base.TCApp;
  */
 public class MyApplication extends ReaderApplication {
 
-  @Override public void onCreate() {
-    super.onCreate();
-    TCApp.onCreateManual(this);
-  }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        TCApp.onCreateManual(this);
+    }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
+
 import com.haoyang.lovelyreader.R;
 
 /**
@@ -12,28 +13,31 @@ import com.haoyang.lovelyreader.R;
  */
 public class SplashActivity extends BaseActivity {
 
-  private TextView tvTitle;
+    private TextView tvTitle;
 
-  private Handler mHandler;
+    private Handler mHandler;
 
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_splash);
-    initView();
-  }
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
+        initView();
+    }
 
-  @Override protected void initView() {
-    super.initView();
+    @Override
+    protected void initView() {
+        super.initView();
 
-    tvTitle = (TextView) findViewById(R.id.tvTitle);
-    tvTitle.setText("闪屏页面");
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText("闪屏页面");
 
-    mHandler = new Handler();
-    mHandler.postDelayed(new Runnable() {
-      @Override public void run() {
-        startActivity(new Intent(mContext, LoginActivity.class));
-        finish();
-      }
-    }, 2000);
-  }
+        mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(mContext, LoginActivity.class));
+                finish();
+            }
+        }, 2000);
+    }
 }

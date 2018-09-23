@@ -11,20 +11,21 @@ import android.support.v4.app.Fragment;
 
 public class BaseFragment extends Fragment {
 
-  // TAG
-  protected final String TAG = this.getClass().getSimpleName();
+    // TAG
+    protected final String TAG = this.getClass().getSimpleName();
 
-  // var
-  protected Activity mActivity;
-  protected Context mContext;
-  protected Intent mIntent;
+    // var
+    protected Activity mActivity;
+    protected Context mContext;
+    protected Intent mIntent;
 
-  @Override public void onAttach(Activity activity) {
-    super.onAttach(activity);
-    mActivity = activity;
-    mContext = activity;
-  }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = activity;
+        mContext = activity;
+    }
 
-  protected void initView() {
-  }
+    protected void initView() {
+    }
 }
