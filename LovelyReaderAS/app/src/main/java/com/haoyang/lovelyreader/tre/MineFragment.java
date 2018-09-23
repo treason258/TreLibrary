@@ -1,5 +1,6 @@
 package com.haoyang.lovelyreader.tre;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.mjiayou.trecorelib.dialog.DialogHelper;
+import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 /**
  * Created by xin on 18/9/22.
@@ -75,6 +79,18 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ToastUtils.show("切换账号");
+                DialogHelper.createTCAlertDialog(mContext, "", "确认退出登录", "确定", "取消", false, new TCAlertDialog.OnTCActionListener() {
+                    @Override
+                    public void onOkAction() {
+                        UserUtils.doLogout();
+                        startActivity(new Intent(mContext, LoginActivity.class));
+                    }
+
+                    @Override
+                    public void onCancelAction() {
+
+                    }
+                });
             }
         });
     }

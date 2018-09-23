@@ -13,10 +13,12 @@ import com.haoyang.lovelyreader.tre.bean.UserLoginRequest;
 import com.haoyang.lovelyreader.tre.bean.UserLoginResponse;
 import com.haoyang.lovelyreader.tre.config.UrlConfig;
 import com.mjiayou.trecorelib.helper.GsonHelper;
+import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.http.okhttp.RequestEntity;
+import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 /**
  * Created by xin on 18/9/22.
@@ -48,12 +50,22 @@ public class LoginActivity extends BaseActivity {
         tvFindPwd = (TextView) findViewById(R.id.tvFindPwd);
         tvRegister = (TextView) findViewById(R.id.tvRegister);
 
+        // 如果保存登录信息，则自动填充
+        String lastUsername = SharedUtils.get().getAccountUsername();
+        String lastPassword = SharedUtils.get().getAccountPassword();
+        if (!TextUtils.isEmpty(lastUsername)) {
+            etPhone.setText(lastUsername);
+        }
+        if (!TextUtils.isEmpty(lastPassword)) {
+            etPassword.setText(lastPassword);
+        }
+
         // tvLogin
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = etPhone.getText().toString();
-                String password = etPassword.getText().toString();
+                final String phone = etPhone.getText().toString();
+                final String password = etPassword.getText().toString();
 
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtils.show("请输入手机号码");
@@ -80,6 +92,13 @@ public class LoginActivity extends BaseActivity {
                     public void onSuccess(int code, UserLoginResponse bean) {
                         if (bean != null) {
                             ToastUtils.show(bean.getToken());
+
+                            // 保存登录的用户名和密码，下次自动填充
+                            SharedUtils.get().setAccountUsername(phone);
+                            SharedUtils.get().setAccountPassword(password);
+                            // 保存token
+                            UserUtils.doLogin(bean.getToken());
+                            // 页面跳转
                             startActivity(new Intent(mContext, MainActivity.class));
                             finish();
                         }

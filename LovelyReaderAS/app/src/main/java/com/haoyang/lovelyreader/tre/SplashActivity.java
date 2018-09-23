@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 /**
  * Created by xin on 18/9/22.
@@ -35,7 +36,11 @@ public class SplashActivity extends BaseActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(mContext, LoginActivity.class));
+                if (UserUtils.checkLoginStatus()) {
+                    startActivity(new Intent(mContext, MainActivity.class));
+                } else {
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                }
                 finish();
             }
         }, 2000);

@@ -15,7 +15,7 @@ import com.haoyang.lovelyreader.tre.bean.UserRegisterResponse;
 import com.haoyang.lovelyreader.tre.config.UrlConfig;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.http.okhttp.RequestEntity;
+import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
