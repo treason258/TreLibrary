@@ -14,7 +14,7 @@ import com.haoyang.lovelyreader.tre.http.RequestBuilder;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.http.RequestEntity;
 import com.haoyang.lovelyreader.tre.http.UrlConfig;
-import com.haoyang.lovelyreader.tre.util.GsonUtil;
+import com.mjiayou.trecorelib.helper.GsonHelper;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity {
         userLoginRequestBean.setPwd(password);
 
         RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserLogin);
-        requestEntity.setRequestBody(GsonUtil.get().toJson(userLoginRequestBean));
+        requestEntity.setRequestBody(GsonHelper.get().toJson(userLoginRequestBean));
         RequestBuilder.get().send(requestEntity, new RequestCallback<UserLoginResponse>() {
           @Override public void onStart() {
 

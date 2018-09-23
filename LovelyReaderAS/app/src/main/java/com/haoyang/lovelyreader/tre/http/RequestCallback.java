@@ -2,8 +2,8 @@ package com.haoyang.lovelyreader.tre.http;
 
 import com.google.gson.reflect.TypeToken;
 import com.haoyang.lovelyreader.tre.bean.BaseJsonBean;
-import com.haoyang.lovelyreader.tre.util.GsonUtil;
-import com.haoyang.lovelyreader.tre.util.LogUtil;
+import com.mjiayou.trecorelib.helper.GsonHelper;
+import com.mjiayou.trecorelib.util.LogUtils;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -53,10 +53,10 @@ public abstract class RequestCallback<T> implements BaseCallback {
   @Override public void onResult(String response) {
     BaseJsonBean<T> jsonBean = null;
     try {
-      jsonBean = GsonUtil.get().fromJson(response, new TypeToken<BaseJsonBean<Object>>() {
+      jsonBean = GsonHelper.get().fromJson(response, new TypeToken<BaseJsonBean<Object>>() {
       }.getType());
     } catch (Exception e) {
-      LogUtil.printStackTrace(e);
+      LogUtils.printStackTrace(e);
     }
 
     boolean isString = false;
@@ -97,7 +97,7 @@ public abstract class RequestCallback<T> implements BaseCallback {
    * @param ex 异常ex
    */
   @Override public void onException(Exception ex) {
-    LogUtil.printStackTrace(ex);
+    LogUtils.printStackTrace(ex);
     onFailure(CODE_FAILURE_EXCEPTION, MSG_FAILURE_EXCEPTION);
   }
 
@@ -129,9 +129,9 @@ public abstract class RequestCallback<T> implements BaseCallback {
     BaseJsonBean<T> jsonBean = null;
     try {
       Type objectType = getParameterizedType(BaseJsonBean.class, getResultType());
-      jsonBean = GsonUtil.get().fromJson(result, objectType);
+      jsonBean = GsonHelper.get().fromJson(result, objectType);
     } catch (Exception e) {
-      LogUtil.printStackTrace(e);
+      LogUtils.printStackTrace(e);
     }
     return jsonBean;
   }

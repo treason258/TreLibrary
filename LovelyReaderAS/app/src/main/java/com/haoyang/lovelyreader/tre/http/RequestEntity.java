@@ -1,9 +1,8 @@
 package com.haoyang.lovelyreader.tre.http;
 
 import android.text.TextUtils;
-import com.google.gson.Gson;
-import com.haoyang.lovelyreader.tre.util.GsonUtil;
-import com.haoyang.lovelyreader.tre.util.LogUtil;
+import com.mjiayou.trecorelib.helper.GsonHelper;
+import com.mjiayou.trecorelib.util.LogUtils;
 import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -76,7 +75,7 @@ public class RequestEntity implements Serializable {
 
   public void setRequestBody(Object object) {
     if (object != null) {
-      this.requestBody = GsonUtil.get().toJson(object);
+      this.requestBody = GsonHelper.get().toJson(object);
     }
   }
 
@@ -176,9 +175,9 @@ public class RequestEntity implements Serializable {
         }
       }
     } catch (IllegalAccessException e) {
-      LogUtil.printStackTrace(e);
+      LogUtils.printStackTrace(e);
     } catch (IllegalArgumentException e) {
-      LogUtil.printStackTrace(e);
+      LogUtils.printStackTrace(e);
     }
   }
 }

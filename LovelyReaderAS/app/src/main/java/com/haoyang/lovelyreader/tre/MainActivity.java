@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
-import com.haoyang.lovelyreader.tre.util.LogUtil;
+import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity {
    * updateBottomSelected
    */
   private void updateBottomSelected(int position) {
-    LogUtil.d(TAG, "updateBottomSelected() called with: position = [" + position + "]");
+    LogUtils.d(TAG, "updateBottomSelected() called with: position = [" + position + "]");
 
     int colorSelected = getResources().getColor(R.color.app_theme);
     int colorNormal = getResources().getColor(R.color.color_333333);
@@ -118,7 +118,7 @@ public class MainActivity extends BaseActivity {
    */
   private View.OnClickListener mOnClickListener = new View.OnClickListener() {
     @Override public void onClick(View v) {
-      LogUtil.d(TAG, "onClick() called with: v = [" + v + "]");
+      LogUtils.d(TAG, "onClick() called with: v = [" + v + "]");
 
       switch (v.getId()) {
         case R.id.ivAdd:
@@ -143,13 +143,13 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override public void onPageSelected(int position) {
-      LogUtil.d(TAG, "onPageSelected() called with: position = [" + position + "]");
+      LogUtils.d(TAG, "onPageSelected() called with: position = [" + position + "]");
 
       updateBottomSelected(position);
     }
 
     @Override public void onPageScrollStateChanged(int state) {
-      LogUtil.d(TAG, "onPageScrollStateChanged() called with: state = [" + state + "]");
+      LogUtils.d(TAG, "onPageScrollStateChanged() called with: state = [" + state + "]");
     }
   };
 

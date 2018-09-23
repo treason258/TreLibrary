@@ -1,6 +1,6 @@
 package com.haoyang.lovelyreader.tre.http;
 
-import com.haoyang.lovelyreader.tre.util.LogUtil;
+import com.mjiayou.trecorelib.util.LogUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 import okhttp3.Call;
@@ -148,7 +148,7 @@ public class RequestBuilder {
         "request_body -> " + requestEntity.getRequestBody() + "\n" +
         "request_headers -> " + requestEntity.getHeaders() + "\n" +
         "request_params -> " + requestEntity.getParams() + "\n";
-    LogUtil.d(TAG, requestInfo);
+    LogUtils.d(TAG, requestInfo);
   }
 
   /**
@@ -157,6 +157,6 @@ public class RequestBuilder {
   private void logResponse(String method, String responseData) {
     String responseInfo = method + " -> response_info | " + "\n" +
         "response_data -> " + responseData + "\n";
-    LogUtil.d(TAG, responseInfo);
+    LogUtils.d(TAG, responseInfo);
   }
 }
