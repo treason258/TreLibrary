@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
+import com.mjiayou.trecorelib.util.KeyBoardUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+
+        // 默认隐藏键盘
+        KeyBoardUtils.hide(mContext, etSearch);
 
         mList = new ArrayList<>();
         mList.add(new BookBean("三国演义"));

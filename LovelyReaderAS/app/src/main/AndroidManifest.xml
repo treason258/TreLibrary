@@ -37,6 +37,7 @@
         <activity android:name=".tre.LoginActivity"/>
         <activity android:name=".tre.RegisterActivity"/>
         <activity android:name=".tre.FindPwdActivity"/>
+        <activity android:name=".tre.FileActivity"/>
         <activity android:name=".tre.MemberActivity"/>
 
         <activity
