@@ -33,7 +33,9 @@
         <activity
             android:name=".tre.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/MyTheme"/>
+            android:launchMode="singleTask"
+            android:theme="@style/MyTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".tre.LoginActivity"/>
         <activity android:name=".tre.RegisterActivity"/>
         <activity android:name=".tre.FindPwdActivity"/>
@@ -50,6 +52,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity
             android:name="com.haoyang.lovelyreader.FileBrowseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+        <activity
+            android:name="com.haoyang.lovelyreader.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
     </application>

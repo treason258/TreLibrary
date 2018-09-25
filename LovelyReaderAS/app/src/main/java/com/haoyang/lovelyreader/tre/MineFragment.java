@@ -58,6 +58,7 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ToastUtils.show("点击登录");
+                startActivity(new Intent(mContext, LoginActivity.class));
             }
         });
         // llMember

@@ -13,34 +13,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.app.base.exception.DeviceException;
-import com.app.base.service.android.AndroidInfoService;
-import com.haoyang.lovelyreader.FileBrowseActivity;
 import com.haoyang.lovelyreader.R;
-import com.haoyang.lovelyreader.entity.UserBook;
-import com.haoyang.lovelyreader.service.BookService;
-import com.haoyang.lovelyreader.service.UserService;
-import com.haoyang.reader.sdk.Book;
-import com.haoyang.reader.service.bookservice.BookInfoService;
-import com.java.common.utils.Utils;
 import com.mjiayou.trecorelib.util.LogUtils;
-import com.mjiayou.trecorelib.util.ToastUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by xin on 18/9/22.
  */
 public class MainActivity extends BaseActivity {
 
-    private final int REQUEST_CODE_ADD_BOOK_OLD = 101;
     private final int REQUEST_CODE_ADD_BOOK = 102;
 
     private final int FRAGMENT_HOME = 0;
@@ -65,6 +48,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
+
         initView();
     }
 
@@ -74,55 +58,11 @@ public class MainActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_ADD_BOOK:
+                    if (mHomeFragment != null) {
+                        mHomeFragment.onAddBook(data);
+                    }
                     break;
-                case REQUEST_CODE_ADD_BOOK_OLD:
-                    super.onActivityResult(requestCode, resultCode, data);
-                    final Bundle extras = data.getExtras();
 
-                    if (extras == null) {
-                        return;
-                    }
-
-                    String filePath = (String) extras.get("path");
-                    UserBook userBook = new UserBook();
-                    Book book = new Book();
-                    book.path = filePath;
-                    BookInfoService bookInfoService = new BookInfoService();
-                    bookInfoService.init(filePath);
-                    int result = bookInfoService.getBookInfo(book, "ePub");
-                    InputStream is = bookInfoService.getCoverInputStream(filePath);
-                    try {
-                        if (is != null) {
-                            String newFilePath = readBookImage(filePath, is);
-                            userBook.coverPath = newFilePath;
-                        }
-                    } finally {
-                        if (is != null) {
-                            try {
-                                is.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    bookInfoService.clear();
-                    userBook.userId = UserService.user.userId;
-                    userBook.bookPath = filePath;
-                    userBook.bookName = book.bookName;
-                    userBook.times = System.currentTimeMillis();
-
-                    BookService bookService = new BookService(this);
-                    UserBook ub = bookService.loadBookByPath(filePath);
-                    if (ub != null) { // 提示已经以书架中了，
-                        return;
-                    }
-
-                    bookService.saveBook(userBook);
-
-//                    this.clearBookLayout();
-//                    this.initBookLayout();
-                    break;
             }
         }
     }
@@ -146,6 +86,13 @@ public class MainActivity extends BaseActivity {
 
         // ivAdd
         ivAdd.setOnClickListener(mOnClickListener);
+        ivAdd.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                startActivity(new Intent(mContext, com.haoyang.lovelyreader.MainActivity.class));
+                return false;
+            }
+        });
         // llHome
         llHome.setOnClickListener(mOnClickListener);
         // llMine
@@ -155,7 +102,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * initViewPager
+     * 初始化ViewPager
      */
     private void initViewPager() {
         Log.d(TAG, "initViewPager() called");
@@ -205,13 +152,7 @@ public class MainActivity extends BaseActivity {
 
             switch (v.getId()) {
                 case R.id.ivAdd:
-                    ToastUtils.show("新增");
-                    if (new Random().nextBoolean()) {
-                        startActivityForResult(new Intent(mContext, FileActivity.class), REQUEST_CODE_ADD_BOOK);
-                    } else {
-                        startActivity(new Intent(mContext, com.haoyang.lovelyreader.MainActivity.class));
-//                        startActivityForResult(new Intent(mContext, FileBrowseActivity.class), REQUEST_CODE_ADD_BOOK_OLD);
-                    }
+                    startActivityForResult(new Intent(mContext, FileActivity.class), REQUEST_CODE_ADD_BOOK);
                     break;
                 case R.id.llHome:
                     viewPager.setCurrentItem(FRAGMENT_HOME);
@@ -267,66 +208,6 @@ public class MainActivity extends BaseActivity {
             return mList != null ? mList.size() : 0;
         }
     }
-
-    /**
-     * readBookImage
-     */
-    private String readBookImage(String filePath, InputStream is) {
-
-        AndroidInfoService androidInfoService = new AndroidInfoService();
-        String documentPath;
-        try {
-            documentPath = androidInfoService.getDownLoadPath(getApplicationContext());
-        } catch (DeviceException e1) {
-            e1.printStackTrace();
-            return "";
-        }
-
-        String newPath = documentPath + File.separator + "bookimage" + File.separator;
-
-        File file = new File(newPath);
-        if (!file.exists()) {
-            boolean r = file.mkdir();
-            if (!r) {
-                return "";
-            }
-        }
-
-        String md5Id = Utils.md5(filePath.getBytes());
-        newPath += md5Id;
-
-        file = new File(newPath);
-        if (file.exists()) {
-            file.delete();
-        }
-
-        OutputStream out = null;
-        try {
-            file.createNewFile();
-            out = new FileOutputStream(file);
-            byte[] buffer = new byte[1024];
-
-            int len = 0;
-            while ((len = is.read(buffer)) != -1) {
-
-                out.write(buffer, 0, len);
-            } // end while
-
-            return newPath;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
 }
 
 

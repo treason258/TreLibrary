@@ -1,6 +1,8 @@
 package com.haoyang.lovelyreader.tre;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
+import com.mjiayou.trecorelib.base.TCAdapter;
+import com.mjiayou.trecorelib.base.TCViewHolder;
 
 import java.util.List;
 
@@ -18,14 +22,16 @@ import java.util.List;
  * Created by xin on 18/9/22.
  */
 
-public class HomeAdapter extends BaseAdapter {
+public class HomeAdapter extends TCAdapter {
 
     private Context mContext;
     private List<BookBean> mList;
+    private LayoutInflater mLayoutInflater;
 
-    public HomeAdapter(Context context, List<BookBean> list) {
-        this.mContext = context;
-        this.mList = list;
+    HomeAdapter(Context context, List<BookBean> list) {
+        mContext = context;
+        mList = list;
+        mLayoutInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -47,7 +53,7 @@ public class HomeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_home, null);
+            convertView = mLayoutInflater.inflate(R.layout.item_home, null);
             viewHolder = new ViewHolder();
             viewHolder.findView(convertView);
             convertView.setTag(viewHolder);
@@ -55,24 +61,36 @@ public class HomeAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (mList != null && mList.get(position) != null) {
+        if (mList != null && mList.size() > position && mList.get(position) != null) {
             viewHolder.initView(mList.get(position));
         }
         return convertView;
     }
 
-    private class ViewHolder {
+    private class ViewHolder extends TCViewHolder<BookBean> {
         private ImageView ivBook;
         private TextView tvBook;
 
-        private void findView(View view) {
+        @Override
+        protected void findView(View view) {
             ivBook = (ImageView) view.findViewById(R.id.ivBook);
             tvBook = (TextView) view.findViewById(R.id.tvBook);
         }
 
-        private void initView(BookBean bookBean) {
-            if (!TextUtils.isEmpty(bookBean.getName())) {
-                tvBook.setText(bookBean.getName());
+        @Override
+        protected void initView(BookBean bean) {
+            if (bean != null) {
+                // ivBook
+                if (!TextUtils.isEmpty(bean.getCover())) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(bean.getCover());
+                    if (bitmap != null) {
+                        ivBook.setImageBitmap(bitmap);
+                    }
+                }
+                // tvBook
+                if (!TextUtils.isEmpty(bean.getName())) {
+                    tvBook.setText(bean.getName());
+                }
             }
         }
     }
