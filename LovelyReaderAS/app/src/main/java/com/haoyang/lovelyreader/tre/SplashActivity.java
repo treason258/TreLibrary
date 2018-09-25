@@ -36,13 +36,9 @@ public class SplashActivity extends BaseActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (UserUtils.checkLoginStatus()) {
-                    startActivity(new Intent(mContext, MainActivity.class));
-                } else {
-                    startActivity(new Intent(mContext, LoginActivity.class));
-                }
+                startActivity(new Intent(mContext, MainActivity.class));
                 finish();
             }
-        }, 2000);
+        }, 500);
     }
 }
