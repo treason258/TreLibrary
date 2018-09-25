@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.UserLoginRequest;
-import com.haoyang.lovelyreader.tre.bean.UserLoginResponse;
 import com.haoyang.lovelyreader.tre.config.UrlConfig;
 import com.mjiayou.trecorelib.helper.GsonHelper;
 import com.mjiayou.trecorelib.http.RequestEntity;
@@ -82,14 +82,14 @@ public class LoginActivity extends BaseActivity {
 
                 RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserLogin);
                 requestEntity.setRequestBody(GsonHelper.get().toJson(userLoginRequestBean));
-                RequestBuilder.get().send(requestEntity, new RequestCallback<UserLoginResponse>() {
+                RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                     @Override
                     public void onStart() {
 
                     }
 
                     @Override
-                    public void onSuccess(int code, UserLoginResponse bean) {
+                    public void onSuccess(int code, UserBean bean) {
                         if (bean != null) {
                             ToastUtils.show(bean.getToken());
 
@@ -98,6 +98,8 @@ public class LoginActivity extends BaseActivity {
                             SharedUtils.get().setAccountPassword(password);
                             // 保存token
                             UserUtils.doLogin(bean.getToken());
+                            // 保存用户信息
+                            UserUtils.doGetUserInfo(bean);
                             // 页面跳转
                             startActivity(new Intent(mContext, MainActivity.class));
                             finish();

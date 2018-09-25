@@ -3,6 +3,7 @@ package com.haoyang.lovelyreader.tre;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.util.ToastUtils;
@@ -54,13 +56,20 @@ public class MineFragment extends BaseFragment {
             }
         });
         // tvNickname
-        tvNickname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("点击登录");
-                startActivity(new Intent(mContext, LoginActivity.class));
+        if (UserUtils.checkLoginStatus()) {
+            UserBean userBean = (UserBean) UserUtils.getUserInfo();
+            if (userBean != null && !TextUtils.isEmpty(userBean.getUserName())) {
+                tvNickname.setText(userBean.getUserName());
             }
-        });
+        } else {
+            tvNickname.setText("点击登录");
+            tvNickname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                }
+            });
+        }
         // llMember
         llMember.setOnClickListener(new View.OnClickListener() {
             @Override

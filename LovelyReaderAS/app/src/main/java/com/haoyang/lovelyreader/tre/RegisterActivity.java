@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.UserRegisterRequest;
-import com.haoyang.lovelyreader.tre.bean.UserRegisterResponse;
 import com.haoyang.lovelyreader.tre.config.UrlConfig;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
@@ -110,14 +110,14 @@ public class RegisterActivity extends BaseActivity {
 
                 RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserRegister);
                 requestEntity.setRequestBody(userRegisterRequest);
-                RequestBuilder.get().send(requestEntity, new RequestCallback<UserRegisterResponse>() {
+                RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                     @Override
                     public void onStart() {
 
                     }
 
                     @Override
-                    public void onSuccess(int code, UserRegisterResponse bean) {
+                    public void onSuccess(int code, UserBean bean) {
                         if (bean != null) {
                             ToastUtils.show(bean.getUid());
                             startActivity(new Intent(mContext, MainActivity.class));
