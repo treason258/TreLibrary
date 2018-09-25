@@ -12,3 +12,7 @@ PARAM_ERR(902, "参数异常"),
 URL_404(903, "404异常"),
 HTTP_METHOD_ERR(904, "HTTP请求方法异常"),
 TOKEN_EXPIRE(905, "TOKEN过期");
+
+WIFI传书
+https://blog.csdn.net/gorgle/article/details/52788701
+https://github.com/baidusoso/WifiTransfer
