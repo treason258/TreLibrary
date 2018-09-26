@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlTitle"
     android:layout_width="match_parent"
     android:layout_height="44dp"
     android:background="@color/login_header">
@@ -15,9 +16,9 @@
 
     <ImageView
         android:id="@+id/ivBack"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_centerVertical="true"
-        android:padding="10dp"
-        android:src="@drawable/ic_launcher" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:src="@drawable/ic_com_back_white" />
 </RelativeLayout>

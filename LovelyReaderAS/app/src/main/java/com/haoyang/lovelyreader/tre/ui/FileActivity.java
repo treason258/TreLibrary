@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
@@ -34,9 +36,11 @@ public class FileActivity extends BaseActivity {
 
     private final String FILE_SUFFIX_EPUB = "epub";
 
+    private RelativeLayout rlTitle;
     private TextView tvTitle;
+    private ImageView ivBack;
+
     private ListView lvFile;
-    private TextView tvBack;
 
     private FileAdapter mFileAdapter;
     private List<FileBean> mList;
@@ -48,6 +52,12 @@ public class FileActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file);
+
+        // findViewById
+        rlTitle = (RelativeLayout) findViewById(R.id.rlTitle);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        ivBack = (ImageView) findViewById(R.id.ivBack);
+        lvFile = (ListView) findViewById(R.id.lvFile);
 
         // mFileNameService
         mFileNameService = new FileNameService();
@@ -71,18 +81,8 @@ public class FileActivity extends BaseActivity {
     protected void initView() {
         super.initView();
 
-        // findViewById
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        lvFile = (ListView) findViewById(R.id.lvFile);
-        tvBack = (TextView) findViewById(R.id.tvBack);
-
-        // tvBack
-        tvBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        // tvTitle
+        tvTitle.setText("选择电子书");
 
         // lvFile
         File rootFile = Environment.getExternalStorageDirectory();

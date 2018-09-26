@@ -14,9 +14,9 @@ import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.UserRegisterRequest;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
@@ -39,12 +39,6 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        initView();
-    }
-
-    @Override
-    protected void initView() {
-        super.initView();
 
         // findViewById
         ivBack = (ImageView) findViewById(R.id.ivBack);
@@ -56,6 +50,13 @@ public class RegisterActivity extends BaseActivity {
         etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
         tvRegister = (TextView) findViewById(R.id.tvRegister);
         tvProtocol = (TextView) findViewById(R.id.tvProtocol);
+        
+        initView();
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
 
         // ivBack
         ivBack.setOnClickListener(new View.OnClickListener() {

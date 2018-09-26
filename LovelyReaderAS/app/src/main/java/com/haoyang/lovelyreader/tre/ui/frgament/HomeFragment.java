@@ -13,12 +13,13 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.app.base.common.util.Size;
 import com.app.base.exception.DeviceException;
 import com.app.base.service.android.AndroidInfoService;
-import com.haoyang.lovelyreader.*;
+import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
@@ -61,6 +62,7 @@ public class HomeFragment extends BaseFragment {
     private EditText etSearch;
     private ImageView ivDelete;
     private GridView gvBook;
+    private ListView lvSearch;
 
     private HomeAdapter mHomeAdapter;
     private List<BookBean> mList;
@@ -76,10 +78,14 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
         View view = inflater.inflate(R.layout.fragment_home, null);
+
+        // findViewById
         ivSearch = (ImageView) view.findViewById(R.id.ivSearch);
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
         gvBook = (GridView) view.findViewById(R.id.gvBook);
+        lvSearch = (ListView) view.findViewById(R.id.lvSearch);
+
         initView();
         return view;
     }

@@ -52,6 +52,16 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
 
+        // findViewById
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        ivAdd = (ImageView) findViewById(R.id.ivAdd);
+        llHome = (LinearLayout) findViewById(R.id.llHome);
+        ivHome = (ImageView) findViewById(R.id.ivHome);
+        tvHome = (TextView) findViewById(R.id.tvHome);
+        llMine = (LinearLayout) findViewById(R.id.llMine);
+        ivMine = (ImageView) findViewById(R.id.ivMine);
+        tvMine = (TextView) findViewById(R.id.tvMine);
+
         initView();
     }
 
@@ -76,16 +86,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         Log.d(TAG, "initView() called");
-
-        // findViewById
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        ivAdd = (ImageView) findViewById(R.id.ivAdd);
-        llHome = (LinearLayout) findViewById(R.id.llHome);
-        ivHome = (ImageView) findViewById(R.id.ivHome);
-        tvHome = (TextView) findViewById(R.id.tvHome);
-        llMine = (LinearLayout) findViewById(R.id.llMine);
-        ivMine = (ImageView) findViewById(R.id.ivMine);
-        tvMine = (TextView) findViewById(R.id.tvMine);
 
         // ivAdd
         ivAdd.setOnClickListener(mOnClickListener);

@@ -46,11 +46,14 @@ public class MineFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
         View view = inflater.inflate(R.layout.fragment_mine, null);
+
+        // findViewById
         ivAvatar = (ImageView) view.findViewById(R.id.ivAvatar);
         tvNickname = (TextView) view.findViewById(R.id.tvNickname);
         llMember = (LinearLayout) view.findViewById(R.id.llMember);
         llFeedback = (LinearLayout) view.findViewById(R.id.llFeedback);
         tvLogout = (TextView) view.findViewById(R.id.tvLogout);
+
         initView();
         return view;
     }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
@@ -15,6 +16,7 @@ import com.haoyang.lovelyreader.tre.base.BaseActivity;
 
 public class MemberActivity extends BaseActivity {
 
+    private RelativeLayout rlTitle;
     private TextView tvTitle;
     private ImageView ivBack;
 
@@ -23,6 +25,8 @@ public class MemberActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member);
 
+        // findViewById
+        rlTitle = (RelativeLayout) findViewById(R.id.rlTitle);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         ivBack = (ImageView) findViewById(R.id.ivBack);
 

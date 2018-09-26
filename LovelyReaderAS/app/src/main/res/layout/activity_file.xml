@@ -1,17 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="请选择电子书"
-        android:textColor="@color/color_333333"
-        android:textSize="20sp" />
+    <include layout="@layout/layout_title" />
 
     <ListView
         android:id="@+id/lvFile"
@@ -23,15 +14,4 @@
         android:fadeScrollbars="false"
         android:fastScrollEnabled="false"
         android:scrollbarAlwaysDrawVerticalTrack="true" />
-
-    <TextView
-        android:id="@+id/tvBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:padding="10dp"
-        android:text="返回"
-        android:textColor="@color/tc_black"
-        android:textSize="20sp" />
-</RelativeLayout>
+</LinearLayout>

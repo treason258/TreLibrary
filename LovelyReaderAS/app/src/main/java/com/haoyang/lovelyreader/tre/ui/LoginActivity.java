@@ -38,12 +38,6 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        initView();
-    }
-
-    @Override
-    protected void initView() {
-        super.initView();
 
         // findViewById
         etPhone = (EditText) findViewById(R.id.etPhone);
@@ -51,6 +45,14 @@ public class LoginActivity extends BaseActivity {
         tvLogin = (TextView) findViewById(R.id.tvLogin);
         tvFindPwd = (TextView) findViewById(R.id.tvFindPwd);
         tvRegister = (TextView) findViewById(R.id.tvRegister);
+        
+        initView();
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+
 
         // 如果保存登录信息，则自动填充
         String lastUsername = SharedUtils.get().getAccountUsername();
