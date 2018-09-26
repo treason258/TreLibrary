@@ -6,6 +6,8 @@ import com.mjiayou.trecorelib.helper.GsonHelper;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.SharedUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -68,7 +70,7 @@ public class BookDataHelper {
                 return bookStore.getData().get(uid);
             }
         }
-        return null;
+        return new ArrayList<>();
     }
 
     /**
@@ -76,13 +78,24 @@ public class BookDataHelper {
      */
     public static void setBookBeanList(String uid, List<BookBean> bookBeanList) {
         BookData bookData = getBookData();
-        if (bookData != null) {
-            if (bookData.getData() != null) {
-                if (bookData.getData().containsKey(uid)) {
-                    bookData.getData().remove(uid);
-                    bookData.getData().put(uid, bookBeanList);
+        if (bookData == null) {
+            bookData = new BookData();
+            HashMap<String, List<BookBean>> data = new HashMap<>();
+            data.put(uid, bookBeanList);
+            bookData.setData(data);
+            setBookData(bookData);
+        } else {
+            HashMap<String, List<BookBean>> data = bookData.getData();
+            if (data == null) {
+                data = new HashMap<>();
+            } else {
+                if (data.containsKey(uid)) {
+                    data.remove(uid);
                 }
             }
+            data.put(uid, bookBeanList);
+            bookData.setData(data);
+            setBookData(bookData);
         }
     }
 
@@ -98,8 +111,13 @@ public class BookDataHelper {
     /**
      * addBookBean
      */
-    public static void addBookBean(String uid) {
-
+    public static void addBookBean(String uid, BookBean bookBean) {
+        List<BookBean> bookBeanList = getBookBeanList(uid);
+        if (bookBeanList == null) {
+            bookBeanList = new ArrayList<>();
+        }
+        bookBeanList.add(bookBean);
+        setBookBeanList(uid, bookBeanList);
     }
 
     /**

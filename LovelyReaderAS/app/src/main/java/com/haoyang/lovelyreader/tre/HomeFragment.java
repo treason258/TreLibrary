@@ -21,7 +21,10 @@ import com.app.base.service.android.AndroidInfoService;
 import com.haoyang.lovelyreader.*;
 import com.haoyang.lovelyreader.entity.User;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
+import com.haoyang.lovelyreader.tre.bean.BookDataHelper;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
+import com.haoyang.lovelyreader.tre.bean.UserBean;
+import com.haoyang.lovelyreader.tre.config.DBHepler;
 import com.haoyang.reader.sdk.AnimationType;
 import com.haoyang.reader.sdk.Book;
 import com.haoyang.reader.sdk.ColorService;
@@ -34,6 +37,7 @@ import com.haoyang.reader.sdk.SDKParameterInfo;
 import com.haoyang.reader.sdk.ShareEntity;
 import com.haoyang.reader.service.bookservice.BookInfoService;
 import com.java.common.utils.Utils;
+import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.helper.GsonHelper;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
@@ -45,6 +49,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by xin on 18/9/22.
@@ -59,6 +65,8 @@ public class HomeFragment extends BaseFragment {
     private HomeAdapter mHomeAdapter;
     private List<BookBean> mList;
 
+    UserBean mUserBean;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +74,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         View view = inflater.inflate(R.layout.fragment_home, null);
         ivSearch = (ImageView) view.findViewById(R.id.ivSearch);
         etSearch = (EditText) view.findViewById(R.id.etSearch);
@@ -81,7 +90,9 @@ public class HomeFragment extends BaseFragment {
         // etSearch
         etSearch.clearFocus();
 
-        mList = new ArrayList<>();
+        mUserBean = DBHepler.getUserBean();
+        mList = BookDataHelper.getBookBeanList(mUserBean.getUid());
+
         mHomeAdapter = new HomeAdapter(mContext, mList);
         gvBook.setAdapter(mHomeAdapter);
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,13 +103,16 @@ public class HomeFragment extends BaseFragment {
                 Book book = bookBean.getBook();
                 book.bookCover = bookBean.getCover();
 
-                User user = new User();
-                user.userId = "0";
-                user.nickName = "android";
-
-                startReader(book, user);
+                startReader(book, mUserBean);
             }
         });
+    }
+
+    /**
+     * onEvent
+     */
+    public void onEvent(UserLoginStatusEvent event) {
+        initView();
     }
 
     /**
@@ -119,6 +133,14 @@ public class HomeFragment extends BaseFragment {
         bookBean.setSuffix(fileBean.getSuffix());
         bookBean.setPath(fileBean.getPath());
 
+        // 查询该书是否已添加
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i).getPath().equals(bookBean.getPath())) {
+                ToastUtils.show("这本书已经添加过了");
+                return;
+            }
+        }
+
         // bookInfoService操作
         BookInfoService bookInfoService = new BookInfoService();
         bookInfoService.init(bookBean.getPath());
@@ -128,6 +150,8 @@ public class HomeFragment extends BaseFragment {
 
         mList.add(bookBean);
         mHomeAdapter.notifyDataSetChanged();
+
+        BookDataHelper.addBookBean(mUserBean.getUid(), bookBean);
     }
 
     /**
@@ -220,14 +244,14 @@ public class HomeFragment extends BaseFragment {
     /**
      * 启动阅读器进行阅读
      */
-    private void startReader(Book book, User user) {
+    private void startReader(Book book, UserBean userBean) {
         try {
             // parameter
             SDKParameterInfo parameter = new SDKParameterInfo();
             parameter.appId = "773278";
             parameter.appKey = "10f2a8b3759b4304a5414269c5c4bf63";
-            parameter.userId = user.userId; // 接入时需提供应用下唯一的，否则会出现数据错乱。
-            parameter.userName = user.nickName;
+            parameter.userId = userBean.getId(); // 接入时需提供应用下唯一的，否则会出现数据错乱。
+            parameter.userName = userBean.getUserName();
 
             ReaderSDK readerSDK = ReaderSDK.getInstance();
             readerSDK.initSDK(mContext, parameter);

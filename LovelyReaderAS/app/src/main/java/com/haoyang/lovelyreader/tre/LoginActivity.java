@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.UserLoginRequest;
+import com.haoyang.lovelyreader.tre.config.DBHepler;
 import com.haoyang.lovelyreader.tre.config.UrlConfig;
 import com.mjiayou.trecorelib.helper.GsonHelper;
 import com.mjiayou.trecorelib.http.RequestEntity;
@@ -96,10 +97,10 @@ public class LoginActivity extends BaseActivity {
                             // 保存登录的用户名和密码，下次自动填充
                             SharedUtils.get().setAccountUsername(phone);
                             SharedUtils.get().setAccountPassword(password);
-                            // 保存token
-                            UserUtils.doLogin(bean.getToken());
                             // 保存用户信息
-                            UserUtils.doGetUserInfo(bean);
+                            DBHepler.setUserBean(bean);
+                            // 通知登录成功
+                            UserUtils.doLogin(bean.getToken());
                             // 页面跳转
                             startActivity(new Intent(mContext, MainActivity.class));
                             finish();

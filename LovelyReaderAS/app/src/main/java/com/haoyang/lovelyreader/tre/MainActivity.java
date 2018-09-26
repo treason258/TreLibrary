@@ -118,14 +118,14 @@ public class MainActivity extends BaseActivity {
         viewPager.setAdapter(mMainAdapter);
         viewPager.addOnPageChangeListener(mOnPageChangeListener);
         viewPager.setCurrentItem(FRAGMENT_HOME);
-        updateBottomSelected(FRAGMENT_HOME);
+        switchFragment(FRAGMENT_HOME);
     }
 
     /**
-     * updateBottomSelected
+     * switchFragment
      */
-    private void updateBottomSelected(int position) {
-        LogUtils.d(TAG, "updateBottomSelected() called with: position = [" + position + "]");
+    private void switchFragment(int position) {
+        LogUtils.d(TAG, "switchFragment() called with: position = [" + position + "]");
 
         int colorSelected = getResources().getColor(R.color.app_theme);
         int colorNormal = getResources().getColor(R.color.color_333333);
@@ -134,10 +134,12 @@ public class MainActivity extends BaseActivity {
             case FRAGMENT_HOME:
                 tvHome.setTextColor(colorSelected);
                 tvMine.setTextColor(colorNormal);
+                ivAdd.setVisibility(View.VISIBLE);
                 break;
             case FRAGMENT_MINE:
                 tvHome.setTextColor(colorNormal);
                 tvMine.setTextColor(colorSelected);
+                ivAdd.setVisibility(View.GONE);
                 break;
         }
     }
@@ -177,7 +179,7 @@ public class MainActivity extends BaseActivity {
         public void onPageSelected(int position) {
             LogUtils.d(TAG, "onPageSelected() called with: position = [" + position + "]");
 
-            updateBottomSelected(position);
+            switchFragment(position);
         }
 
         @Override
