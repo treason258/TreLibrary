@@ -15,7 +15,9 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.ui.FeedbackActivity;
 import com.haoyang.lovelyreader.tre.ui.LoginActivity;
+import com.haoyang.lovelyreader.tre.ui.MemberActivity;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
@@ -117,6 +119,7 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ToastUtils.show("升级成会员");
+                startActivity(new Intent(mContext, MemberActivity.class));
             }
         });
 
@@ -124,7 +127,7 @@ public class MineFragment extends BaseFragment {
         llFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show("意见反馈");
+                startActivity(new Intent(mContext, FeedbackActivity.class));
             }
         });
     }
