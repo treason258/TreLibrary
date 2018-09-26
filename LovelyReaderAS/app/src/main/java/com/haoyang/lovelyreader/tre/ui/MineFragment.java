@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre;
+package com.haoyang.lovelyreader.tre.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
-import com.haoyang.lovelyreader.tre.config.DBHepler;
+import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
@@ -56,7 +57,7 @@ public class MineFragment extends BaseFragment {
         if (UserUtils.checkLoginStatus()) { // 已登录状态
             // 昵称
             String nickname = "null";
-            UserBean userBean = DBHepler.getUserBean();
+            UserBean userBean = DBHelper.getUserBean();
             if (userBean != null && !TextUtils.isEmpty(userBean.getUserName())) {
                 nickname = userBean.getUserName();
             }
@@ -73,7 +74,7 @@ public class MineFragment extends BaseFragment {
                                 @Override
                                 public void onOkAction() {
                                     // 清除用户信息
-                                    DBHepler.setUserBean(null);
+                                    DBHelper.setUserBean(null);
                                     // 通知注销成功
                                     UserUtils.doLogout();
                                     // 页面跳转

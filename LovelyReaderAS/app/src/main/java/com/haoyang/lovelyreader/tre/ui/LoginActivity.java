@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre;
+package com.haoyang.lovelyreader.tre.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
-import com.haoyang.lovelyreader.tre.bean.UserLoginRequest;
-import com.haoyang.lovelyreader.tre.config.DBHepler;
-import com.haoyang.lovelyreader.tre.config.UrlConfig;
+import com.haoyang.lovelyreader.tre.bean.api.UserLoginRequest;
+import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.mjiayou.trecorelib.helper.GsonHelper;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
@@ -98,7 +99,7 @@ public class LoginActivity extends BaseActivity {
                             SharedUtils.get().setAccountUsername(phone);
                             SharedUtils.get().setAccountPassword(password);
                             // 保存用户信息
-                            DBHepler.setUserBean(bean);
+                            DBHelper.setUserBean(bean);
                             // 通知登录成功
                             UserUtils.doLogin(bean.getToken());
                             // 页面跳转

@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre;
+package com.haoyang.lovelyreader.tre.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
-import com.mjiayou.trecorelib.util.UserUtils;
+import com.haoyang.lovelyreader.tre.base.BaseActivity;
 
 /**
  * Created by xin on 18/9/22.

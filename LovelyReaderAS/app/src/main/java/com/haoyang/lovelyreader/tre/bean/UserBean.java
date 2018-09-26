@@ -8,6 +8,9 @@ import com.mjiayou.trecorelib.bean.entity.TCUser;
 
 public class UserBean extends TCUser {
 
+    public static final String DEFAULT_USER_ID = "0";
+    public static final String DEFAULT_USER_NAME = "default";
+
     //{
     //  "statusCode": 900,
     //  "data": {
@@ -24,6 +27,16 @@ public class UserBean extends TCUser {
     private String userName;
     private String phone;
     private String token;
+
+    /**
+     * 默认用户
+     */
+    public static UserBean getDefault() {
+        UserBean userBean = new UserBean();
+        userBean.setUid(DEFAULT_USER_ID);
+        userBean.setUserName(DEFAULT_USER_NAME);
+        return userBean;
+    }
 
     public String getUid() {
         return uid;

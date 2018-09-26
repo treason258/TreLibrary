@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre;
+package com.haoyang.lovelyreader.tre.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.mjiayou.trecorelib.util.LogUtils;
 
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class MainActivity extends BaseActivity {
         ivAdd.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                startActivity(new Intent(mContext, com.haoyang.lovelyreader.MainActivity.class));
+                startActivity(new Intent(mContext, com.haoyang.lovelyreader.ui.MainActivity.class));
                 return false;
             }
         });

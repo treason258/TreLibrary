@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre;
+package com.haoyang.lovelyreader.tre.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
-import com.haoyang.lovelyreader.tre.bean.UserRegisterRequest;
-import com.haoyang.lovelyreader.tre.config.UrlConfig;
+import com.haoyang.lovelyreader.tre.bean.api.UserRegisterRequest;
+import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
 import com.mjiayou.trecorelib.http.RequestEntity;

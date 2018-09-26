@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre.config;
+package com.haoyang.lovelyreader.tre.helper;
 
 /**
  * Created by xin on 18/9/23.

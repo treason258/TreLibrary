@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader;
+package com.haoyang.lovelyreader.ui;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.app.base.common.util.Size;
 import com.app.base.exception.DeviceException;
 import com.app.base.service.android.AndroidInfoService;
+import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.entity.User;
 import com.haoyang.lovelyreader.entity.UserBook;
 import com.haoyang.lovelyreader.service.BookService;

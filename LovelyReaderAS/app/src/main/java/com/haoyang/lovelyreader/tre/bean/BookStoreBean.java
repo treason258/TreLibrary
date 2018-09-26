@@ -7,7 +7,7 @@ import java.util.List;
  * Created by treason on 2018/9/25.
  */
 
-public class BookData {
+public class BookStoreBean {
 
     private HashMap<String, List<BookBean>> data;
 

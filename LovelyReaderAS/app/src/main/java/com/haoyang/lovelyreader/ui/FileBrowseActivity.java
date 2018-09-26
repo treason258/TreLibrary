@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader;
+package com.haoyang.lovelyreader.ui;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.haoyang.lovelyreader.R;
 import com.java.common.service.file.FileNameService;
 
 public class FileBrowseActivity extends Activity {

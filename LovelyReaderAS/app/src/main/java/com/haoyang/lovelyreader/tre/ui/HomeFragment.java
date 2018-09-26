@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre;
+package com.haoyang.lovelyreader.tre.ui;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -19,12 +19,11 @@ import com.app.base.common.util.Size;
 import com.app.base.exception.DeviceException;
 import com.app.base.service.android.AndroidInfoService;
 import com.haoyang.lovelyreader.*;
-import com.haoyang.lovelyreader.entity.User;
+import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
-import com.haoyang.lovelyreader.tre.bean.BookDataHelper;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
-import com.haoyang.lovelyreader.tre.config.DBHepler;
+import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.reader.sdk.AnimationType;
 import com.haoyang.reader.sdk.Book;
 import com.haoyang.reader.sdk.ColorService;
@@ -90,8 +89,8 @@ public class HomeFragment extends BaseFragment {
         // etSearch
         etSearch.clearFocus();
 
-        mUserBean = DBHepler.getUserBean();
-        mList = BookDataHelper.getBookBeanList(mUserBean.getUid());
+        mUserBean = DBHelper.getUserBean();
+        mList = DBHelper.getBookBeanList(mUserBean.getUid());
 
         mHomeAdapter = new HomeAdapter(mContext, mList);
         gvBook.setAdapter(mHomeAdapter);
@@ -151,7 +150,7 @@ public class HomeFragment extends BaseFragment {
         mList.add(bookBean);
         mHomeAdapter.notifyDataSetChanged();
 
-        BookDataHelper.addBookBean(mUserBean.getUid(), bookBean);
+        DBHelper.addBookBean(mUserBean.getUid(), bookBean);
     }
 
     /**

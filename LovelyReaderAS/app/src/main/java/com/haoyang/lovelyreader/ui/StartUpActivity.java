@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.haoyang.lovelyreader;
+package com.haoyang.lovelyreader.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import com.app.base.service.android.SharedPreferenceService;
 import com.app.base.service.business.BusinessJsonResultListener;
 import com.app.base.service.business.Error;
 import com.google.gson.JsonObject;
+import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.service.DataSynService;
 import com.java.common.service.CommonKeys;
 

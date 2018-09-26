@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre;
+package com.haoyang.lovelyreader.tre.base;
 
 import android.app.Activity;
 import android.content.Context;

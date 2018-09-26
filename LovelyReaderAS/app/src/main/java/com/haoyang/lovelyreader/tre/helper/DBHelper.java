@@ -1,7 +1,10 @@
-package com.haoyang.lovelyreader.tre.bean;
+package com.haoyang.lovelyreader.tre.helper;
 
 import android.text.TextUtils;
 
+import com.haoyang.lovelyreader.tre.bean.BookBean;
+import com.haoyang.lovelyreader.tre.bean.BookStoreBean;
+import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.mjiayou.trecorelib.helper.GsonHelper;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.SharedUtils;
@@ -11,23 +14,44 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by treason on 2018/9/25.
+ * Created by xin on 18/9/26.
  */
 
-public class BookDataHelper {
+public class DBHelper {
 
-    private static final String KEY_BOOK_STORE = "key_book_store";
+    private static final String KEY_USER_BEAN = "key_user_bean";
+    private static final String KEY_BOOK_STORE_BEAN = "key_book_store_bean";
 
-    // ******************************** BookStore ********************************
+    // ******************************** UserBean ********************************
+
+    public static void setUserBean(UserBean userBean) {
+        String data = "";
+        if (userBean != null) {
+            data = GsonHelper.get().toJson(userBean);
+        }
+        SharedUtils.get().setCommon(KEY_USER_BEAN, data);
+    }
+
+    public static UserBean getUserBean() {
+        String data = SharedUtils.get().getCommon(KEY_USER_BEAN);
+        if (!TextUtils.isEmpty(data)) {
+            return GsonHelper.get().fromJson(data, UserBean.class);
+        } else {
+            // 如果当前没有用户，则设置默认用户
+            return UserBean.getDefault();
+        }
+    }
+
+    // ******************************** BookStoreBean ********************************
 
     /**
-     * getBookStore
+     * getBookStoreBean
      */
-    public static BookData getBookData() {
+    public static BookStoreBean getBookStoreBean() {
         try {
-            String data = SharedUtils.get().getCommon(KEY_BOOK_STORE);
+            String data = SharedUtils.get().getCommon(KEY_BOOK_STORE_BEAN);
             if (!TextUtils.isEmpty(data)) {
-                return GsonHelper.get().fromJson(data, BookData.class);
+                return GsonHelper.get().fromJson(data, BookStoreBean.class);
             }
         } catch (Exception e) {
             LogUtils.printStackTrace(e);
@@ -36,14 +60,14 @@ public class BookDataHelper {
     }
 
     /**
-     * setBookData
+     * setBookStoreBean
      */
-    public static void setBookData(BookData bookStore) {
+    public static void setBookStoreBean(BookStoreBean bookStore) {
         try {
             if (bookStore != null) {
                 String data = GsonHelper.get().toJson(bookStore);
                 if (!TextUtils.isEmpty(data)) {
-                    SharedUtils.get().setCommon(KEY_BOOK_STORE, data);
+                    SharedUtils.get().setCommon(KEY_BOOK_STORE_BEAN, data);
                 }
             }
         } catch (Exception e) {
@@ -64,7 +88,7 @@ public class BookDataHelper {
      * getBookBeanList
      */
     public static List<BookBean> getBookBeanList(String uid) {
-        BookData bookStore = getBookData();
+        BookStoreBean bookStore = getBookStoreBean();
         if (bookStore != null && bookStore.getData() != null) {
             if (bookStore.getData().containsKey(uid)) {
                 return bookStore.getData().get(uid);
@@ -77,15 +101,15 @@ public class BookDataHelper {
      * setBookBeanList
      */
     public static void setBookBeanList(String uid, List<BookBean> bookBeanList) {
-        BookData bookData = getBookData();
-        if (bookData == null) {
-            bookData = new BookData();
+        BookStoreBean bookStoreBean = getBookStoreBean();
+        if (bookStoreBean == null) {
+            bookStoreBean = new BookStoreBean();
             HashMap<String, List<BookBean>> data = new HashMap<>();
             data.put(uid, bookBeanList);
-            bookData.setData(data);
-            setBookData(bookData);
+            bookStoreBean.setData(data);
+            setBookStoreBean(bookStoreBean);
         } else {
-            HashMap<String, List<BookBean>> data = bookData.getData();
+            HashMap<String, List<BookBean>> data = bookStoreBean.getData();
             if (data == null) {
                 data = new HashMap<>();
             } else {
@@ -94,12 +118,12 @@ public class BookDataHelper {
                 }
             }
             data.put(uid, bookBeanList);
-            bookData.setData(data);
-            setBookData(bookData);
+            bookStoreBean.setData(data);
+            setBookStoreBean(bookStoreBean);
         }
     }
 
-    // ******************************** test ********************************
+    // ******************************** BookBean ********************************
 
     /**
      * containBookBean
