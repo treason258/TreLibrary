@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre.ui;
+package com.haoyang.lovelyreader.tre.ui.frgament;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -24,6 +24,7 @@ import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.ui.FileActivity;
 import com.haoyang.reader.sdk.AnimationType;
 import com.haoyang.reader.sdk.Book;
 import com.haoyang.reader.sdk.ColorService;
@@ -97,11 +98,13 @@ public class HomeFragment extends BaseFragment {
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtils.d(TAG, "onItemClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + position + "], id = [" + id + "]");
                 BookBean bookBean = mList.get(position);
 
                 Book book = bookBean.getBook();
                 book.bookCover = bookBean.getCover();
 
+                ToastUtils.show("正在打开书籍...");
                 startReader(book, mUserBean);
             }
         });
@@ -249,7 +252,7 @@ public class HomeFragment extends BaseFragment {
             SDKParameterInfo parameter = new SDKParameterInfo();
             parameter.appId = "773278";
             parameter.appKey = "10f2a8b3759b4304a5414269c5c4bf63";
-            parameter.userId = userBean.getId(); // 接入时需提供应用下唯一的，否则会出现数据错乱。
+            parameter.userId = userBean.getUid(); // 接入时需提供应用下唯一的，否则会出现数据错乱。
             parameter.userName = userBean.getUserName();
 
             ReaderSDK readerSDK = ReaderSDK.getInstance();

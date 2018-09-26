@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
+import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
+import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
 import com.mjiayou.trecorelib.util.LogUtils;
 
 import java.util.ArrayList;

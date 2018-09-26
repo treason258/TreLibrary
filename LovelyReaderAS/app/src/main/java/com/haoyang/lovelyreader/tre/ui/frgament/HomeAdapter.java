@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre.ui;
+package com.haoyang.lovelyreader.tre.ui.frgament;
 
 import android.content.Context;
 import android.graphics.Bitmap;
