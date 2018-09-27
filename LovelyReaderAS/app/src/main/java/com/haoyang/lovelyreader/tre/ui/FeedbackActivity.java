@@ -36,7 +36,9 @@ public class FeedbackActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
+        // tvTitle
         tvTitle.setText("意见反馈");
+        // ivBack
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

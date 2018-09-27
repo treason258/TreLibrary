@@ -259,7 +259,7 @@ public class HomeFragment extends BaseFragment {
             parameter.appId = "773278";
             parameter.appKey = "10f2a8b3759b4304a5414269c5c4bf63";
             parameter.userId = userBean.getUid(); // 接入时需提供应用下唯一的，否则会出现数据错乱。
-            parameter.userName = userBean.getUserName();
+            parameter.userName = userBean.getNickName();
 
             ReaderSDK readerSDK = ReaderSDK.getInstance();
             readerSDK.initSDK(mContext, parameter);

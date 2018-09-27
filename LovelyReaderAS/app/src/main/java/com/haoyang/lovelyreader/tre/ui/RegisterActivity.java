@@ -13,17 +13,26 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.UserRegisterRequest;
+import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 /**
  * Created by xin on 18/9/22.
  */
 
 public class RegisterActivity extends BaseActivity {
+
+    public static final String EXTRA_PAGE_TYPE = "extra_page_type";
+
+    public static final int PAGE_TYPE_REGISTER = 0;
+    public static final int PAGE_TYPE_FIND_PWD = 1;
+    private int mPageType = PAGE_TYPE_REGISTER;
 
     private ImageView ivBack;
     private EditText etNickname;
@@ -32,7 +41,7 @@ public class RegisterActivity extends BaseActivity {
     private TextView tvCode;
     private EditText etPassword;
     private EditText etPasswordConfirm;
-    private TextView tvRegister;
+    private TextView tvSubmit;
     private TextView tvProtocol;
 
     @Override
@@ -48,15 +57,40 @@ public class RegisterActivity extends BaseActivity {
         tvCode = (TextView) findViewById(R.id.tvCode);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
-        tvRegister = (TextView) findViewById(R.id.tvRegister);
+        tvSubmit = (TextView) findViewById(R.id.tvSubmit);
         tvProtocol = (TextView) findViewById(R.id.tvProtocol);
-        
+
+        // mPageType
+        if (getIntent() != null) {
+            mPageType = getIntent().getIntExtra(EXTRA_PAGE_TYPE, PAGE_TYPE_REGISTER);
+        }
+
         initView();
     }
 
     @Override
     protected void initView() {
         super.initView();
+
+        switch (mPageType) {
+            case PAGE_TYPE_REGISTER: // 注册
+                tvSubmit.setText("注册");
+                etNickname.setVisibility(View.VISIBLE);
+                tvProtocol.setVisibility(View.VISIBLE);
+                tvProtocol.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ToastUtils.show("协议");
+                    }
+                });
+
+                break;
+            case PAGE_TYPE_FIND_PWD: // 找回密码
+                tvSubmit.setText("确定");
+                etNickname.setVisibility(View.GONE);
+                tvProtocol.setVisibility(View.GONE);
+                break;
+        }
 
         // ivBack
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -70,21 +104,41 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ToastUtils.show("获取验证码");
+                RequestEntity requestEntity = new RequestEntity(UrlConfig.apiSmsSendrigstersms);
+                RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onSuccess(int code, UserBean obj) {
+
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+
+                    }
+                });
             }
         });
-        // tvRegister
-        tvRegister.setOnClickListener(new View.OnClickListener() {
+
+        // tvSubmit
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nickname = etNickname.getText().toString();
-                String phone = etPhone.getText().toString();
+                final String phone = etPhone.getText().toString();
                 String code = etCode.getText().toString();
-                String password = etPassword.getText().toString();
+                final String password = etPassword.getText().toString();
                 String passwordConfirm = etPasswordConfirm.getText().toString();
 
-                if (TextUtils.isEmpty(nickname)) {
-                    ToastUtils.show("请输入昵称");
-                    return;
+                if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入昵称
+                    if (TextUtils.isEmpty(nickname)) {
+                        ToastUtils.show("请输入昵称");
+                        return;
+                    }
                 }
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtils.show("请输入手机号码");
@@ -104,41 +158,73 @@ public class RegisterActivity extends BaseActivity {
                 }
 
                 UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
-                userRegisterRequest.setUserName(nickname);
+                if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入昵称
+                    userRegisterRequest.setNickName(nickname);
+                }
                 userRegisterRequest.setPhone(phone);
                 userRegisterRequest.setSmsCode(code);
                 userRegisterRequest.setPwd(password);
                 userRegisterRequest.setConfirmPwd(passwordConfirm);
 
-                RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserRegister);
-                requestEntity.setRequestBody(userRegisterRequest);
-                RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
-                    @Override
-                    public void onStart() {
+                switch (mPageType) {
+                    case PAGE_TYPE_REGISTER: {
+                        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserRegister);
+                        requestEntity.setRequestBody(userRegisterRequest);
+                        RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
+                            @Override
+                            public void onStart() {
 
-                    }
+                            }
 
-                    @Override
-                    public void onSuccess(int code, UserBean bean) {
-                        if (bean != null) {
-                            ToastUtils.show(bean.getUid());
-                            startActivity(new Intent(mContext, MainActivity.class));
-                            finish();
-                        }
-                    }
+                            @Override
+                            public void onSuccess(int code, UserBean bean) {
+                                if (bean != null) {
+                                    ToastUtils.show("注册成功-" + bean.getToken());
 
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        ToastUtils.show(msg);
+                                    // 保存登录的用户名和密码，下次自动填充
+                                    SharedUtils.get().setAccountUsername(phone);
+                                    SharedUtils.get().setAccountPassword(password);
+                                    // 保存用户信息
+                                    DBHelper.setUserBean(bean);
+                                    // 通知登录成功
+                                    UserUtils.doLogin(bean.getToken());
+
+                                    // 页面跳转
+                                    startActivity(new Intent(mContext, MainActivity.class));
+                                    finish();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int code, String msg) {
+                                ToastUtils.show(msg);
+                            }
+                        });
+                        break;
                     }
-                });
-            }
-        });
-        // tvProtocol
-        tvProtocol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("协议");
+                    case PAGE_TYPE_FIND_PWD: {
+                        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserFindPwd);
+                        requestEntity.setRequestBody(userRegisterRequest);
+                        RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onSuccess(int code, String bean) {
+                                ToastUtils.show("找回密码成功");
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(int code, String msg) {
+                                ToastUtils.show(msg);
+                            }
+                        });
+                        break;
+                    }
+                }
             }
         });
     }

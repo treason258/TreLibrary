@@ -8,14 +8,14 @@ import com.mjiayou.trecorelib.bean.entity.TCUser;
 
 public class UserBean extends TCUser {
 
-    public static final String DEFAULT_USER_ID = "0";
-    public static final String DEFAULT_USER_NAME = "default";
+    private static final String DEFAULT_USER_ID = "0";
+    private static final String DEFAULT_NICK_NAME = "default";
 
     //{
     //  "statusCode": 900,
     //  "data": {
     //      "uid": 2,
-    //      "userName": "treason",
+    //      "nickName": "treason",
     //      "phone": "18600574121",
     //      "token": "31bfb6e4-04f3-449d-abc0-91b42a1d3184"
     //  },
@@ -24,7 +24,7 @@ public class UserBean extends TCUser {
     //}
 
     private String uid;
-    private String userName;
+    private String nickName;
     private String phone;
     private String token;
 
@@ -34,7 +34,7 @@ public class UserBean extends TCUser {
     public static UserBean getDefault() {
         UserBean userBean = new UserBean();
         userBean.setUid(DEFAULT_USER_ID);
-        userBean.setUserName(DEFAULT_USER_NAME);
+        userBean.setNickName(DEFAULT_NICK_NAME);
         return userBean;
     }
 
@@ -46,12 +46,12 @@ public class UserBean extends TCUser {
         this.uid = uid;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getPhone() {

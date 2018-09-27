@@ -86,7 +86,7 @@ public class HomeAdapter extends TCAdapter {
                         ivBook.setImageBitmap(bitmap);
                     }
                 } else {
-                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher));
+                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_main_book_default));
                 }
                 // tvBook
                 if (!TextUtils.isEmpty(bean.getName())) {

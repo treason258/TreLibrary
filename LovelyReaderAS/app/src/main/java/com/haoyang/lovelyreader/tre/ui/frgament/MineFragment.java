@@ -64,8 +64,8 @@ public class MineFragment extends BaseFragment {
             // 昵称
             String nickname = "null";
             UserBean userBean = DBHelper.getUserBean();
-            if (userBean != null && !TextUtils.isEmpty(userBean.getUserName())) {
-                nickname = userBean.getUserName();
+            if (userBean != null && !TextUtils.isEmpty(userBean.getNickName())) {
+                nickname = userBean.getNickName();
             }
             tvNickname.setText(nickname);
             tvNickname.setOnClickListener(null);

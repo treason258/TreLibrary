@@ -11,21 +11,22 @@ public class UserRegisterRequest {
     //  "phone": "18600574121",
     //  "pwd": "123456",
     //  "smsCode": "1234",
-    //  "userName": "treason"
+    //  "nickName": "treason"
     //}
 
-    private String userName;
+    private String nickName;
     private String phone;
     private String smsCode;
     private String pwd;
     private String confirmPwd;
 
-    public String getUserName() {
-        return userName;
+
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getPhone() {

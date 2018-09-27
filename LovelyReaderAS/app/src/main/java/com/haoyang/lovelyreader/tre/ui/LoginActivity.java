@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity {
         tvLogin = (TextView) findViewById(R.id.tvLogin);
         tvFindPwd = (TextView) findViewById(R.id.tvFindPwd);
         tvRegister = (TextView) findViewById(R.id.tvRegister);
-        
+
         initView();
     }
 
@@ -117,18 +117,22 @@ public class LoginActivity extends BaseActivity {
                 });
             }
         });
-        // tvFindPwd
-        tvFindPwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, FindPwdActivity.class));
-            }
-        });
         // tvRegister
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mContext, RegisterActivity.class));
+                mIntent = new Intent(mContext, RegisterActivity.class);
+                mIntent.putExtra(RegisterActivity.EXTRA_PAGE_TYPE, RegisterActivity.PAGE_TYPE_REGISTER);
+                startActivity(mIntent);
+            }
+        });
+        // tvFindPwd
+        tvFindPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mIntent = new Intent(mContext, RegisterActivity.class);
+                mIntent.putExtra(RegisterActivity.EXTRA_PAGE_TYPE, RegisterActivity.PAGE_TYPE_FIND_PWD);
+                startActivity(mIntent);
             }
         });
     }

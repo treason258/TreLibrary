@@ -83,6 +83,13 @@ public class FileActivity extends BaseActivity {
 
         // tvTitle
         tvTitle.setText("选择电子书");
+        // ivBack
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // lvFile
         File rootFile = Environment.getExternalStorageDirectory();
