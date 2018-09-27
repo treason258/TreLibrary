@@ -16,6 +16,7 @@ import com.haoyang.lovelyreader.tre.bean.api.UserRegisterRequest;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.mjiayou.trecorelib.http.RequestEntity;
+import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
 import com.mjiayou.trecorelib.util.SharedUtils;
@@ -105,14 +106,15 @@ public class RegisterActivity extends BaseActivity {
             public void onClick(View v) {
                 ToastUtils.show("获取验证码");
                 RequestEntity requestEntity = new RequestEntity(UrlConfig.apiSmsSendrigstersms);
-                RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
+                requestEntity.addParam("", "");
+                RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
                     @Override
                     public void onStart() {
 
                     }
 
                     @Override
-                    public void onSuccess(int code, UserBean obj) {
+                    public void onSuccess(int code, String object) {
 
                     }
 
@@ -169,7 +171,8 @@ public class RegisterActivity extends BaseActivity {
                 switch (mPageType) {
                     case PAGE_TYPE_REGISTER: {
                         RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserRegister);
-                        requestEntity.setRequestBody(userRegisterRequest);
+                        requestEntity.setMethod(RequestMethod.POST_STRING);
+                        requestEntity.setContent(userRegisterRequest);
                         RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                             @Override
                             public void onStart() {
@@ -204,7 +207,8 @@ public class RegisterActivity extends BaseActivity {
                     }
                     case PAGE_TYPE_FIND_PWD: {
                         RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserFindPwd);
-                        requestEntity.setRequestBody(userRegisterRequest);
+                        requestEntity.setMethod(RequestMethod.POST_STRING);
+                        requestEntity.setContent(userRegisterRequest);
                         RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
                             @Override
                             public void onStart() {
