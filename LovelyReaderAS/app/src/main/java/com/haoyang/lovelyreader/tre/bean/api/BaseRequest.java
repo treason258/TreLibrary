@@ -5,4 +5,5 @@ package com.haoyang.lovelyreader.tre.bean.api;
  */
 
 public class BaseRequest {
+
 }

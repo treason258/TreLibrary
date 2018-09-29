@@ -16,3 +16,27 @@ TOKEN_EXPIRE(905, "TOKEN过期");
 WIFI传书
 https://blog.csdn.net/gorgle/article/details/52788701
 https://github.com/baidusoso/WifiTransfer
+
+
+http://112.126.80.1:8090/login.action?os_destination=%2Findex.action
+常量定义
+http://112.126.80.1:8090/pages/viewpage.action?pageId=589833
+签名逻辑
+http://112.126.80.1:8090/pages/viewpage.action?pageId=917511
+
+
+后台地址
+http://112.126.80.1:9002/
+用户名密码 admin/111111
+
+
+9001不变,先调功能.  9004 调签名
+
+randomChar = MgwboM
+sign
+
+md5Secret = "111"
+str = "111MgwboM111"
+
+
+111randomChar=123111
