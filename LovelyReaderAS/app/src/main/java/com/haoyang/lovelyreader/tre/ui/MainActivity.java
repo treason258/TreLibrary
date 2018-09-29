@@ -15,9 +15,17 @@ import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
+import com.haoyang.lovelyreader.tre.bean.api.AppUpgradeRequest;
+import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
+import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
+import com.mjiayou.trecorelib.http.RequestEntity;
+import com.mjiayou.trecorelib.http.RequestMethod;
+import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
+import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
 import com.mjiayou.trecorelib.util.LogUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +83,6 @@ public class MainActivity extends BaseActivity {
                         mHomeFragment.onAddBook(data);
                     }
                     break;
-
             }
         }
     }
@@ -135,11 +142,15 @@ public class MainActivity extends BaseActivity {
 
         switch (position) {
             case FRAGMENT_HOME:
+                ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_home_selected));
+                ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_normal));
                 tvHome.setTextColor(colorSelected);
                 tvMine.setTextColor(colorNormal);
                 ivAdd.setVisibility(View.VISIBLE);
                 break;
             case FRAGMENT_MINE:
+                ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_home_normal));
+                ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_selected));
                 tvHome.setTextColor(colorNormal);
                 tvMine.setTextColor(colorSelected);
                 ivAdd.setVisibility(View.GONE);

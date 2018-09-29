@@ -84,7 +84,6 @@ public class RegisterActivity extends BaseActivity {
                         ToastUtils.show("协议");
                     }
                 });
-
                 break;
             case PAGE_TYPE_FIND_PWD: // 找回密码
                 tvSubmit.setText("确定");

@@ -54,7 +54,7 @@
                 android:id="@+id/ivHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_main_home_selected" />
+                android:src="@drawable/ic_main_home_normal" />
 
             <TextView
                 android:id="@+id/tvHome"
@@ -78,7 +78,7 @@
                 android:id="@+id/ivMine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_main_mine_selected" />
+                android:src="@drawable/ic_main_mine_normal" />
 
             <TextView
                 android:id="@+id/tvMine"
