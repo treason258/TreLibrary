@@ -21,8 +21,10 @@ import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.ui.dialog.UpdateDialog;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
+import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
@@ -263,7 +265,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSuccess(int code, UpdateBean updateBean) {
                 if (updateBean != null) {
-                    ToastUtils.show("发现新版本：" + updateBean.getAppName());
+                    showUpdateDialog(updateBean);
                 }
             }
 
@@ -272,6 +274,29 @@ public class MainActivity extends BaseActivity {
                 ToastUtils.show(msg);
             }
         });
+    }
+
+    /**
+     * 提示升级窗口
+     */
+    private void showUpdateDialog(UpdateBean updateBean) {
+        UpdateDialog dialog = new UpdateDialog(mContext);
+        dialog.setTitle("有新版本");
+        dialog.setMessage(updateBean.getDesc());
+        dialog.setOkMenu("升级");
+        dialog.setCancelMenu("取消");
+        dialog.setTCActionListener(new TCAlertDialog.OnTCActionListener() {
+            @Override
+            public void onOkAction() {
+                ToastUtils.show("开始下载...");
+            }
+
+            @Override
+            public void onCancelAction() {
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.show();
     }
 }
 
