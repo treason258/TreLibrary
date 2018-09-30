@@ -4,7 +4,7 @@ package com.haoyang.lovelyreader.tre.bean.api;
  * Created by xin on 18/9/29.
  */
 
-public class AppUpgradeRequest {
+public class AppUpgradeParam {
 
 //    {
 //        "terminal": "string",

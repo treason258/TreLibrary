@@ -4,7 +4,7 @@ package com.haoyang.lovelyreader.tre.bean.api;
  * Created by xin on 18/9/23.
  */
 
-public class UserLoginRequest {
+public class UserLoginParam extends BaseParam {
 
     //{
     //  "phone": "18600574121",

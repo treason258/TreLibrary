@@ -2,11 +2,9 @@ package com.haoyang.lovelyreader.tre.helper;
 
 import android.text.TextUtils;
 
-import com.mjiayou.trecorelib.util.ConvertUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.MD5Utils;
 
-import java.net.URLEncoder;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
@@ -87,17 +85,6 @@ public class EncodeHelper {
         params.put("sign", sign);
         String paramStrWithSign = getParamStr(params);
         LogUtils.d(TAG, "paramStrWithSign -> " + paramStrWithSign);
-
-//        try {
-//            paramStrWithSign = URLEncoder.encode(new String(paramStrWithSign.getBytes(), "UTF-8"), "UTF-8");
-//        } catch (Exception e) {
-//            LogUtils.printStackTrace(e);
-//        }
-//        LogUtils.d(TAG, "paramStrWithSign -> " + paramStrWithSign);
-
-//        paramStrWithSign = paramStrWithSign.replace("{", "%7b");
-//        paramStrWithSign = paramStrWithSign.replace("}", "%7d");
-//        LogUtils.d(TAG, "paramStrWithSign -> " + paramStrWithSign);
 
         String urlWithSign = url + "?" + paramStrWithSign;
         LogUtils.d(TAG, "urlWithSign -> " + urlWithSign);

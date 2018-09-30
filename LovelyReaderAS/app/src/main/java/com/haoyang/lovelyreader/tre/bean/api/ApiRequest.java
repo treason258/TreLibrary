@@ -7,7 +7,7 @@ package com.haoyang.lovelyreader.tre.bean.api;
 public class ApiRequest {
 
     private CommonData commonData;
-    private BaseRequest param;
+    private BaseParam param;
 
     public CommonData getCommonData() {
         return commonData;
@@ -17,11 +17,11 @@ public class ApiRequest {
         this.commonData = commonData;
     }
 
-    public BaseRequest getParam() {
+    public BaseParam getParam() {
         return param;
     }
 
-    public void setParam(BaseRequest param) {
+    public void setParam(BaseParam param) {
         this.param = param;
     }
 }

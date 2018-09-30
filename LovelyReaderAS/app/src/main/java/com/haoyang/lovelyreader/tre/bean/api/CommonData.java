@@ -6,18 +6,22 @@ package com.haoyang.lovelyreader.tre.bean.api;
 
 public class CommonData {
 
-    private String sign;
     private String terminal;
     private String timestamp;
-    private String token;
-    private String type;
 
-    public String getSign() {
-        return sign;
+    public CommonData() {
     }
 
-    public void setSign(String sign) {
-        this.sign = sign;
+    public CommonData(String terminal, String timestamp) {
+        this.terminal = terminal;
+        this.timestamp = timestamp;
+    }
+
+    public static CommonData get() {
+        CommonData commonData = new CommonData();
+        commonData.terminal = "ANDROID_PHONE";
+        commonData.timestamp = String.valueOf(System.currentTimeMillis());
+        return commonData;
     }
 
     public String getTerminal() {
@@ -34,21 +38,5 @@ public class CommonData {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

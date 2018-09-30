@@ -12,7 +12,7 @@
 //import com.haoyang.lovelyreader.R;
 //import com.haoyang.lovelyreader.tre.base.BaseActivity;
 //import com.haoyang.lovelyreader.tre.bean.UserBean;
-//import com.haoyang.lovelyreader.tre.bean.api.UserRegisterRequest;
+//import com.haoyang.lovelyreader.tre.bean.api.UserRegisterParam;
 //import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 //import com.mjiayou.trecorelib.http.RequestEntity;
 //import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
@@ -103,7 +103,7 @@
 //                    return;
 //                }
 //
-//                UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
+//                UserRegisterParam userRegisterRequest = new UserRegisterParam();
 //                userRegisterRequest.setUserName(nickname);
 //                userRegisterRequest.setPhone(phone);
 //                userRegisterRequest.setSmsCode(code);

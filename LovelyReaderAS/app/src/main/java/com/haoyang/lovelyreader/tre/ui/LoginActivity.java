@@ -11,14 +11,15 @@ import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
-import com.haoyang.lovelyreader.tre.bean.api.UserLoginRequest;
+import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
+import com.haoyang.lovelyreader.tre.bean.api.CommonData;
+import com.haoyang.lovelyreader.tre.bean.api.UserLoginParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -81,13 +82,16 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
 
-                UserLoginRequest userLoginRequestBean = new UserLoginRequest();
-                userLoginRequestBean.setPhone(phone);
-                userLoginRequestBean.setPwd(password);
+                UserLoginParam userLoginParamBean = new UserLoginParam();
+                userLoginParamBean.setPhone(phone);
+                userLoginParamBean.setPwd(password);
+                ApiRequest apiRequest = new ApiRequest();
+                apiRequest.setCommonData(CommonData.get());
+                apiRequest.setParam(userLoginParamBean);
 
                 RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserLogin);
                 requestEntity.setMethod(RequestMethod.POST_STRING);
-                requestEntity.setContent(JsonHelper.get().toJson(userLoginRequestBean));
+                requestEntity.setContent(apiRequest);
                 RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                     @Override
                     public void onStart() {

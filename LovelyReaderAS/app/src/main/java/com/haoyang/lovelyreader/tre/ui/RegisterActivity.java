@@ -12,7 +12,10 @@ import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
-import com.haoyang.lovelyreader.tre.bean.api.UserRegisterRequest;
+import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
+import com.haoyang.lovelyreader.tre.bean.api.CommonData;
+import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
+import com.haoyang.lovelyreader.tre.bean.api.UserRegisterParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.mjiayou.trecorelib.http.RequestEntity;
@@ -103,9 +106,22 @@ public class RegisterActivity extends BaseActivity {
         tvCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show("获取验证码");
+                final String phone = etPhone.getText().toString();
+
+                if (TextUtils.isEmpty(phone)) {
+                    ToastUtils.show("请输入手机号码");
+                    return;
+                }
+
+                CommonParam commonParam = new CommonParam();
+                commonParam.setData(phone);
+                ApiRequest apiRequest = new ApiRequest();
+                apiRequest.setCommonData(CommonData.get());
+                apiRequest.setParam(commonParam);
+
                 RequestEntity requestEntity = new RequestEntity(UrlConfig.apiSmsSendrigstersms);
-                requestEntity.addParam("", "");
+                requestEntity.setMethod(RequestMethod.POST_STRING);
+                requestEntity.setContent(apiRequest);
                 RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
                     @Override
                     public void onStart() {
@@ -114,12 +130,12 @@ public class RegisterActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(int code, String object) {
-
+                        ToastUtils.show("验证码发送成功");
                     }
 
                     @Override
                     public void onFailure(int code, String msg) {
-
+                        ToastUtils.show(msg);
                     }
                 });
             }
@@ -158,20 +174,23 @@ public class RegisterActivity extends BaseActivity {
                     return;
                 }
 
-                UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
+                UserRegisterParam userRegisterParam = new UserRegisterParam();
                 if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入昵称
-                    userRegisterRequest.setNickName(nickname);
+                    userRegisterParam.setNickName(nickname);
                 }
-                userRegisterRequest.setPhone(phone);
-                userRegisterRequest.setSmsCode(code);
-                userRegisterRequest.setPwd(password);
-                userRegisterRequest.setConfirmPwd(passwordConfirm);
+                userRegisterParam.setPhone(phone);
+                userRegisterParam.setSmsCode(code);
+                userRegisterParam.setPwd(password);
+                userRegisterParam.setConfirmPwd(passwordConfirm);
+                ApiRequest apiRequest = new ApiRequest();
+                apiRequest.setCommonData(CommonData.get());
+                apiRequest.setParam(userRegisterParam);
 
                 switch (mPageType) {
                     case PAGE_TYPE_REGISTER: {
                         RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserRegister);
                         requestEntity.setMethod(RequestMethod.POST_STRING);
-                        requestEntity.setContent(userRegisterRequest);
+                        requestEntity.setContent(apiRequest);
                         RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                             @Override
                             public void onStart() {
@@ -207,7 +226,7 @@ public class RegisterActivity extends BaseActivity {
                     case PAGE_TYPE_FIND_PWD: {
                         RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserFindPwd);
                         requestEntity.setMethod(RequestMethod.POST_STRING);
-                        requestEntity.setContent(userRegisterRequest);
+                        requestEntity.setContent(apiRequest);
                         RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
                             @Override
                             public void onStart() {
