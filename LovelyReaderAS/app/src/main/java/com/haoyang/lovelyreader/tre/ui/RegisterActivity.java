@@ -102,6 +102,7 @@ public class RegisterActivity extends BaseActivity {
                 finish();
             }
         });
+
         // tvCode
         tvCode.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
@@ -15,11 +16,13 @@ import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.UserLoginParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -30,6 +33,7 @@ import com.mjiayou.trecorelib.util.UserUtils;
 
 public class LoginActivity extends BaseActivity {
 
+    private ImageView ivBack;
     private EditText etPhone;
     private EditText etPassword;
     private TextView tvLogin;
@@ -42,6 +46,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
 
         // findViewById
+        ivBack = (ImageView) findViewById(R.id.ivBack);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etPassword = (EditText) findViewById(R.id.etPassword);
         tvLogin = (TextView) findViewById(R.id.tvLogin);
@@ -55,7 +60,6 @@ public class LoginActivity extends BaseActivity {
     protected void initView() {
         super.initView();
 
-
         // 如果保存登录信息，则自动填充
         String lastUsername = SharedUtils.get().getAccountUsername();
         String lastPassword = SharedUtils.get().getAccountPassword();
@@ -65,6 +69,14 @@ public class LoginActivity extends BaseActivity {
         if (!TextUtils.isEmpty(lastPassword)) {
             etPassword.setText(lastPassword);
         }
+
+        // ivBack
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // tvLogin
         tvLogin.setOnClickListener(new View.OnClickListener() {
@@ -88,10 +100,13 @@ public class LoginActivity extends BaseActivity {
                 ApiRequest apiRequest = new ApiRequest();
                 apiRequest.setCommonData(CommonData.get());
                 apiRequest.setParam(userLoginParamBean);
+                String content = JsonHelper.get().toJson(apiRequest);
 
                 RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserLogin);
                 requestEntity.setMethod(RequestMethod.POST_STRING);
-                requestEntity.setContent(apiRequest);
+                requestEntity.setContent(content);
+                requestEntity.addHeader("token", UserUtils.getToken());
+                requestEntity.addHeader("sign", EncodeHelper.getSign(content));
                 RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                     @Override
                     public void onStart() {
@@ -123,6 +138,7 @@ public class LoginActivity extends BaseActivity {
                 });
             }
         });
+
         // tvRegister
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +148,7 @@ public class LoginActivity extends BaseActivity {
                 startActivity(mIntent);
             }
         });
+
         // tvFindPwd
         tvFindPwd.setOnClickListener(new View.OnClickListener() {
             @Override

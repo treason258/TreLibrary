@@ -23,7 +23,7 @@ public class EncodeHelper {
 
     // ******************************** 获取sign ********************************
 
-    private static String getSign(String key) {
+    public static String getSign(String key) {
         return MD5Utils.md5(MD5_SECRET + key + MD5_SECRET);
     }
 

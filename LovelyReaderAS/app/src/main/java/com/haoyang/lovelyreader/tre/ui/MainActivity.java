@@ -19,6 +19,7 @@ import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
+import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
@@ -26,8 +27,10 @@ import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -244,12 +247,13 @@ public class MainActivity extends BaseActivity {
         ApiRequest apiRequest = new ApiRequest();
         apiRequest.setCommonData(CommonData.get());
         apiRequest.setParam(commonParam);
+        String content = JsonHelper.get().toJson(apiRequest);
 
         RequestEntity requestEntity = new RequestEntity(UrlConfig.apiAppUpgrade);
         requestEntity.setMethod(RequestMethod.POST_STRING);
-        requestEntity.setContent(apiRequest);
-        requestEntity.addHeader("token", "");
-        requestEntity.addHeader("sign", "");
+        requestEntity.setContent(content);
+        requestEntity.addHeader("token", UserUtils.getToken());
+        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
         RequestBuilder.get().send(requestEntity, new RequestCallback<UpdateBean>() {
             @Override
             public void onStart() {

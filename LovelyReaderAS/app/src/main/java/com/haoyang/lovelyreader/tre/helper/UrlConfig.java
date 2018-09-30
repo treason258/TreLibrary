@@ -6,7 +6,7 @@ package com.haoyang.lovelyreader.tre.helper;
 
 public class UrlConfig {
 
-    private static String mRootUrl = "http://112.126.80.1:9001";
+    private static String mRootUrl = "http://112.126.80.1:9004";
 
     // APP版本升级 Api接口
     public static String apiAppUpgrade = mRootUrl + "/api/appupgrade/v1/check";

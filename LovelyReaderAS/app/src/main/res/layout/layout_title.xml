@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rlTitle"
     android:layout_width="match_parent"
-    android:layout_height="44dp"
+    android:layout_height="50dp"
     android:background="@color/login_header">
 
     <TextView

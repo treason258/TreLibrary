@@ -83,7 +83,7 @@ public class FileAdapter extends BaseAdapter {
             if (bean.isFolder()) { // 是文件夹
                 ivFile.setVisibility(View.VISIBLE);
             } else {
-                ivFile.setVisibility(View.INVISIBLE);
+                ivFile.setVisibility(View.GONE);
             }
             // tvFile
             if (!TextUtils.isEmpty(bean.getPath())) {
