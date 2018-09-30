@@ -89,8 +89,8 @@ public class HomeAdapter extends TCAdapter {
                     ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_main_book_default));
                 }
                 // tvBook
-                if (!TextUtils.isEmpty(bean.getName())) {
-                    tvBook.setText(bean.getName());
+                if (bean.getBook() != null && !TextUtils.isEmpty(bean.getBook().bookName)) {
+                    tvBook.setText(bean.getBook().bookName);
                 }
             }
         }

@@ -263,7 +263,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSuccess(int code, UpdateBean updateBean) {
                 if (updateBean != null) {
-                    ToastUtils.show(updateBean.getAppName());
+                    ToastUtils.show("发现新版本：" + updateBean.getAppName());
                 }
             }
 

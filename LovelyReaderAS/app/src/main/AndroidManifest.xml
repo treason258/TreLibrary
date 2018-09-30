@@ -35,7 +35,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/MyTheme"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".tre.ui.LoginActivity" />
         <activity android:name=".tre.ui.RegisterActivity" />
         <activity android:name=".tre.ui.FileActivity" />

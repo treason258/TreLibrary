@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +67,7 @@ public class HomeFragment extends BaseFragment {
     private ListView lvSearch;
 
     private HomeAdapter mHomeAdapter;
-    private List<BookBean> mList;
+    private List<BookBean> mList = new ArrayList<>();
 
     UserBean mUserBean;
 
@@ -94,11 +96,46 @@ public class HomeFragment extends BaseFragment {
     protected void initView() {
 
         // etSearch
-        etSearch.clearFocus();
+//        etSearch.clearFocus();
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String key = s.toString();
+                if (TextUtils.isEmpty(key)) {
+                    mList.clear();
+                    mList.addAll(DBHelper.getBookBeanList(mUserBean.getUid()));
+                } else {
+                    mList.clear();
+                    mList.addAll(DBHelper.getBookBeanListByKey(mUserBean.getUid(), key));
+                }
+                if (mHomeAdapter != null) {
+                    mHomeAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        // ivDelete
+        ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etSearch.setText("");
+                etSearch.clearFocus();
+            }
+        });
+
+        // gvBook
         mUserBean = DBHelper.getUserBean();
-        mList = DBHelper.getBookBeanList(mUserBean.getUid());
-
+        mList.addAll(DBHelper.getBookBeanList(mUserBean.getUid()));
         mHomeAdapter = new HomeAdapter(mContext, mList);
         gvBook.setAdapter(mHomeAdapter);
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {

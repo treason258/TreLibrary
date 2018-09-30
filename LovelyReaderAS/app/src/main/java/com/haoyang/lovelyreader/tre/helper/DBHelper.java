@@ -150,4 +150,22 @@ public class DBHelper {
     public static void delBookBean(String uid, BookBean bookBean) {
     }
 
+    // ******************************** searchBook ********************************
+
+    /**
+     * 搜索书
+     */
+    public static List<BookBean> getBookBeanListByKey(String uid, String key) {
+        List<BookBean> searchResult = new ArrayList<>();
+        if (!TextUtils.isEmpty(key)) {
+            List<BookBean> bookBeanList = getBookBeanList(uid);
+            for (int i = 0; i < bookBeanList.size(); i++) {
+                BookBean bookBean = bookBeanList.get(i);
+                if (bookBean != null && bookBean.getBook() != null && bookBean.getBook().bookName != null && bookBean.getBook().bookName.contains(key)) {
+                    searchResult.add(bookBean);
+                }
+            }
+        }
+        return searchResult;
+    }
 }
