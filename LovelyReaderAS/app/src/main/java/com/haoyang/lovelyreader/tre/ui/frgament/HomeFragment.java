@@ -39,7 +39,7 @@ import com.haoyang.reader.sdk.ShareEntity;
 import com.haoyang.reader.service.bookservice.BookInfoService;
 import com.java.common.utils.Utils;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
-import com.mjiayou.trecorelib.helper.GsonHelper;
+import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
@@ -375,7 +375,7 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public void feedback(FeedBack feedBack) {
-            LogUtils.d(TAG, "feedback() called with: feedBack = [" + GsonHelper.get().toJson(feedBack) + "]");
+            LogUtils.d(TAG, "feedback() called with: feedBack = [" + JsonHelper.get().toJson(feedBack) + "]");
             ToastUtils.show("意见反馈");
         }
 

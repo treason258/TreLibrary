@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.BookStoreBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
-import com.mjiayou.trecorelib.helper.GsonHelper;
+import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.SharedUtils;
 
@@ -27,7 +27,7 @@ public class DBHelper {
     public static void setUserBean(UserBean userBean) {
         String data = "";
         if (userBean != null) {
-            data = GsonHelper.get().toJson(userBean);
+            data = JsonHelper.get().toJson(userBean);
         }
         SharedUtils.get().setCommon(KEY_USER_BEAN, data);
     }
@@ -35,7 +35,7 @@ public class DBHelper {
     public static UserBean getUserBean() {
         String data = SharedUtils.get().getCommon(KEY_USER_BEAN);
         if (!TextUtils.isEmpty(data)) {
-            return GsonHelper.get().fromJson(data, UserBean.class);
+            return JsonHelper.get().fromJson(data, UserBean.class);
         } else {
             // 如果当前没有用户，则设置默认用户
             return UserBean.getDefault();
@@ -51,7 +51,7 @@ public class DBHelper {
         try {
             String data = SharedUtils.get().getCommon(KEY_BOOK_STORE_BEAN);
             if (!TextUtils.isEmpty(data)) {
-                return GsonHelper.get().fromJson(data, BookStoreBean.class);
+                return JsonHelper.get().fromJson(data, BookStoreBean.class);
             }
         } catch (Exception e) {
             LogUtils.printStackTrace(e);
@@ -65,7 +65,7 @@ public class DBHelper {
     public static void setBookStoreBean(BookStoreBean bookStore) {
         try {
             if (bookStore != null) {
-                String data = GsonHelper.get().toJson(bookStore);
+                String data = JsonHelper.get().toJson(bookStore);
                 if (!TextUtils.isEmpty(data)) {
                     SharedUtils.get().setCommon(KEY_BOOK_STORE_BEAN, data);
                 }

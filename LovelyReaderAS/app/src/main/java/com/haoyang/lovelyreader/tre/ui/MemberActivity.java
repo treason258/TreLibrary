@@ -12,11 +12,11 @@ import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.api.AppUpgradeRequest;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
-import com.mjiayou.trecorelib.helper.GsonHelper;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.net.URLEncoder;
@@ -100,7 +100,7 @@ public class MemberActivity extends BaseActivity {
         String url = UrlConfig.apiAppUpgrade;
         String token = UserUtils.getToken();
         String type = "2";
-        String jsonData = GsonHelper.get().toJson(appUpgradeRequest);
+        String jsonData = JsonHelper.get().toJson(appUpgradeRequest);
         String urlWithSign = EncodeHelper.getUrlWithSign(url, token, type, jsonData);
         RequestEntity requestEntity = new RequestEntity(urlWithSign);
         requestEntity.setMethod(RequestMethod.POST_STRING);

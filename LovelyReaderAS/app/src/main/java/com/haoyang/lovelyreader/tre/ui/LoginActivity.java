@@ -14,11 +14,11 @@ import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.UserLoginRequest;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
-import com.mjiayou.trecorelib.helper.GsonHelper;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -87,7 +87,7 @@ public class LoginActivity extends BaseActivity {
 
                 RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserLogin);
                 requestEntity.setMethod(RequestMethod.POST_STRING);
-                requestEntity.setContent(GsonHelper.get().toJson(userLoginRequestBean));
+                requestEntity.setContent(JsonHelper.get().toJson(userLoginRequestBean));
                 RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                     @Override
                     public void onStart() {
