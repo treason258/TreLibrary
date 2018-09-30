@@ -38,7 +38,6 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".tre.ui.LoginActivity" />
         <activity android:name=".tre.ui.RegisterActivity" />
-        <activity android:name=".tre.ui.FindPwdActivity" />
         <activity android:name=".tre.ui.FileActivity" />
         <activity android:name=".tre.ui.MemberActivity" />
         <activity android:name=".tre.ui.FeedbackActivity" />
