@@ -43,8 +43,6 @@ public class MemberActivity extends BaseActivity {
         ivBack = (ImageView) findViewById(R.id.ivBack);
 
         initView();
-
-        getToken();
     }
 
     @Override
@@ -55,45 +53,6 @@ public class MemberActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-    }
-
-    /**
-     * 获取临时token
-     */
-    private void getToken() {
-
-//        requestEntity.addParam("randomChar", randomChar);
-//        requestEntity.addParam("sign", EncodeHelper.getSignForToken(randomChar));
-
-        String randomChar = EncodeHelper.getRandomChar();
-        CommonParam commonParam = new CommonParam();
-        commonParam.setData(randomChar);
-        ApiRequest apiRequest = new ApiRequest();
-        apiRequest.setCommonData(CommonData.get());
-        apiRequest.setParam(commonParam);
-        String content = JsonHelper.get().toJson(apiRequest);
-
-        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiTokenTemp);
-        requestEntity.setMethod(RequestMethod.POST_STRING);
-        requestEntity.setContent(content);
-//        requestEntity.addHeader("token", UserUtils.getToken());
-        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
-        RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onSuccess(int code, String object) {
-
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                ToastUtils.show(msg);
             }
         });
     }

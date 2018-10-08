@@ -104,13 +104,13 @@ public class FeedbackActivity extends BaseActivity {
                 requestEntity.setContent(content);
                 requestEntity.addHeader("token", UserUtils.getToken());
                 requestEntity.addHeader("sign", EncodeHelper.getSign(content));
-                RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
+                RequestBuilder.get().send(requestEntity, new RequestCallback<Object>() {
                     @Override
                     public void onStart() {
                     }
 
                     @Override
-                    public void onSuccess(int code, String object) {
+                    public void onSuccess(int code, Object object) {
                         ToastUtils.show("提交成功");
                         finish();
                     }

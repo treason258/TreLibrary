@@ -2,6 +2,7 @@ package com.haoyang.lovelyreader.tre.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,11 +18,14 @@ import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.bean.api.UserRegisterParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.util.TokenUtils;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -47,6 +51,8 @@ public class RegisterActivity extends BaseActivity {
     private EditText etPasswordConfirm;
     private TextView tvSubmit;
     private TextView tvProtocol;
+
+    private boolean isCountting;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,29 +120,42 @@ public class RegisterActivity extends BaseActivity {
                     return;
                 }
 
-                CommonParam commonParam = new CommonParam();
-                commonParam.setData(phone);
-                ApiRequest apiRequest = new ApiRequest();
-                apiRequest.setCommonData(CommonData.get());
-                apiRequest.setParam(commonParam);
-
-                RequestEntity requestEntity = new RequestEntity(UrlConfig.apiSmsSendrigstersms);
-                requestEntity.setMethod(RequestMethod.POST_STRING);
-                requestEntity.setContent(apiRequest);
-                RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
+                TokenUtils.getTempToken(new TokenUtils.OnGetTempTokenListener() {
                     @Override
-                    public void onStart() {
+                    public void onGetTempToken(String tempToken) {
+                        CommonParam commonParam = new CommonParam();
+                        commonParam.setData(phone);
+                        ApiRequest apiRequest = new ApiRequest();
+                        apiRequest.setCommonData(CommonData.get());
+                        apiRequest.setParam(commonParam);
+                        String content = JsonHelper.get().toJson(apiRequest);
 
-                    }
+                        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiSmsSendrigstersms);
+                        requestEntity.setMethod(RequestMethod.POST_STRING);
+                        requestEntity.setContent(content);
+                        requestEntity.addHeader("token", tempToken);
+                        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
+                        RequestBuilder.get().send(requestEntity, new RequestCallback<Object>() {
+                            @Override
+                            public void onStart() {
 
-                    @Override
-                    public void onSuccess(int code, String object) {
-                        ToastUtils.show("验证码发送成功");
-                    }
+                            }
 
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        ToastUtils.show(msg);
+                            @Override
+                            public void onSuccess(int code, Object object) {
+                                ToastUtils.show("验证码发送成功");
+                                if (isCountting) { // 防止多次点击
+                                    return;
+                                }
+                                isCountting = true;
+                                mCountDownTimer.start();
+                            }
+
+                            @Override
+                            public void onFailure(int code, String msg) {
+                                ToastUtils.show(msg);
+                            }
+                        });
                     }
                 });
             }
@@ -186,12 +205,15 @@ public class RegisterActivity extends BaseActivity {
                 ApiRequest apiRequest = new ApiRequest();
                 apiRequest.setCommonData(CommonData.get());
                 apiRequest.setParam(userRegisterParam);
+                final String content = JsonHelper.get().toJson(apiRequest);
 
                 switch (mPageType) {
                     case PAGE_TYPE_REGISTER: {
                         RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserRegister);
                         requestEntity.setMethod(RequestMethod.POST_STRING);
-                        requestEntity.setContent(apiRequest);
+                        requestEntity.setContent(content);
+                        requestEntity.addHeader("token", UserUtils.getToken());
+                        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
                         RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                             @Override
                             public void onStart() {
@@ -225,24 +247,31 @@ public class RegisterActivity extends BaseActivity {
                         break;
                     }
                     case PAGE_TYPE_FIND_PWD: {
-                        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserFindPwd);
-                        requestEntity.setMethod(RequestMethod.POST_STRING);
-                        requestEntity.setContent(apiRequest);
-                        RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
+                        TokenUtils.getTempToken(new TokenUtils.OnGetTempTokenListener() {
                             @Override
-                            public void onStart() {
+                            public void onGetTempToken(String tempToken) {
+                                RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserFindPwd);
+                                requestEntity.setMethod(RequestMethod.POST_STRING);
+                                requestEntity.setContent(content);
+                                requestEntity.addHeader("token", tempToken);
+                                requestEntity.addHeader("sign", EncodeHelper.getSign(content));
+                                RequestBuilder.get().send(requestEntity, new RequestCallback<Object>() {
+                                    @Override
+                                    public void onStart() {
 
-                            }
+                                    }
 
-                            @Override
-                            public void onSuccess(int code, String bean) {
-                                ToastUtils.show("找回密码成功");
-                                finish();
-                            }
+                                    @Override
+                                    public void onSuccess(int code, Object bean) {
+                                        ToastUtils.show("找回密码成功");
+                                        finish();
+                                    }
 
-                            @Override
-                            public void onFailure(int code, String msg) {
-                                ToastUtils.show(msg);
+                                    @Override
+                                    public void onFailure(int code, String msg) {
+                                        ToastUtils.show(msg);
+                                    }
+                                });
                             }
                         });
                         break;
@@ -251,4 +280,22 @@ public class RegisterActivity extends BaseActivity {
             }
         });
     }
+
+    /**
+     * mCountDownTimer
+     */
+    private CountDownTimer mCountDownTimer = new CountDownTimer(30 * 1000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            tvCode.setEnabled(false);
+            tvCode.setText(millisUntilFinished / 1000 + "秒后重发");
+        }
+
+        @Override
+        public void onFinish() {
+            isCountting = false;
+            tvCode.setEnabled(true);
+            tvCode.setText("获取验证码");
+        }
+    };
 }

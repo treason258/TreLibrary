@@ -121,8 +121,8 @@ public class MineFragment extends BaseFragment {
         llMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show("升级成会员");
-                startActivity(new Intent(mContext, MemberActivity.class));
+                ToastUtils.show("功能暂未开放");
+//                startActivity(new Intent(mContext, MemberActivity.class));
             }
         });
 

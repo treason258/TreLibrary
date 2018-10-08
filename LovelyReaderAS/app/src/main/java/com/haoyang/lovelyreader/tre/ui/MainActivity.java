@@ -1,16 +1,28 @@
 package com.haoyang.lovelyreader.tre.ui;
 
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
@@ -21,9 +33,11 @@ import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.net.MyFileCallback;
 import com.haoyang.lovelyreader.tre.ui.dialog.UpdateDialog;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
+import com.haoyang.lovelyreader.tre.util.Utils;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
@@ -33,9 +47,14 @@ import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 /**
  * Created by xin on 18/9/22.
@@ -61,6 +80,14 @@ public class MainActivity extends BaseActivity {
 
     private MainAdapter mMainAdapter;
     private List<Fragment> mFragmentList;
+
+    private UpdateBean mUpdateBean;
+    private String mPkgPath;
+    private String mPkgName;
+    private RemoteViews mNotificationView;
+    private Notification mNotification;
+    private NotificationManager mNotificationManager;
+    private int mPreProgress = -1; //记录上次进度值，用于采样
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -279,7 +306,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 提示升级窗口
      */
-    private void showUpdateDialog(UpdateBean updateBean) {
+    private void showUpdateDialog(final UpdateBean updateBean) {
         UpdateDialog dialog = new UpdateDialog(mContext);
         dialog.setTitle("有新版本");
         dialog.setMessage(updateBean.getDesc());
@@ -289,6 +316,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onOkAction() {
                 ToastUtils.show("开始下载...");
+                String testUrl = "http://172.16.70.25:8080/download/c_release_A/builds/148/archive/uxinUsedCar/build/outputs/apk/UxinUsedcar_release_148.apk";
+                updateBean.setAppUrl(testUrl);
+                downloadInstallApk(updateBean);
             }
 
             @Override
@@ -297,6 +327,161 @@ public class MainActivity extends BaseActivity {
         });
         dialog.setCancelable(false);
         dialog.show();
+    }
+
+    /***
+     * 点击升级后执行下载安装方法
+     */
+    public void downloadInstallApk(UpdateBean updateBean) {
+        LogUtils.d(TAG, "downloadInstallApk() called with: updateBean = [" + updateBean + "]");
+
+        if (updateBean == null) {
+            return;
+        }
+        mUpdateBean = updateBean;
+        mPkgPath = Environment.getExternalStorageDirectory().getPath() + "/LovelyReader/";
+        mPkgName = mContext.getPackageName();
+        File pkg = new File(mPkgPath, mPkgName + ".apk");
+        if (pkg.exists()) {
+            installNewApk(mActivity, pkg);
+        } else {
+            downloadApk();
+        }
+    }
+
+    /**
+     * 下载apk
+     */
+    private void downloadApk() {
+        LogUtils.d(TAG, "downloadApk() called");
+
+        if (mUpdateBean == null) {
+            return;
+        }
+        OkHttpUtils.get()
+                .url(mUpdateBean.getAppUrl())
+                .build()
+                .execute(new MyFileCallback(mPkgPath, mPkgName) {
+                    @Override
+                    public void onBefore(Request request, int id) {
+                        super.onBefore(request, id);
+                        mPreProgress = -1;
+                        createNotification();
+                    }
+
+                    @Override
+                    public void inProgress(long progress, long total, int id) {
+                        super.inProgress(progress, total, id);
+                        setNotificationProgress(total, progress);
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        refreshNotificationState(null, false);
+                    }
+
+                    @Override
+                    public void onResponse(Object response, int id) {
+                        File pkg = new File(mPkgPath, mPkgName + ".apk");
+                        File f = (File) response;
+                        f.renameTo(pkg); // 改名以标记下载完成
+                        refreshNotificationState(pkg, true);
+                        installNewApk(mActivity, pkg);
+                    }
+                });
+    }
+
+    /**
+     * 开始下载，非强制更新，在通知栏显示下载进度
+     */
+    protected void createNotification() {
+        LogUtils.d(TAG, "createNotification() called");
+
+        mNotification = new Notification();
+        mNotification.icon = android.R.drawable.stat_sys_download;
+        mNotification.tickerText = "正在下载";
+        mNotification.flags = Notification.FLAG_AUTO_CANCEL;
+
+        mNotificationView = new RemoteViews(mContext.getPackageName(), R.layout.notification_item);
+        mNotificationView.setImageViewBitmap(R.id.notificationImage, Utils.getAppIcon(mContext, mPkgName));
+
+        mNotificationView.setTextViewText(R.id.notificationTitle, "正在下载");
+        mNotificationView.setTextViewText(R.id.notificationPercent, "0%");
+        mNotificationView.setProgressBar(R.id.notificationProgress, 100, 0, false);
+        if (android.os.Build.VERSION.SDK_INT >= 16) {
+            mNotification.bigContentView = mNotificationView;
+            mNotification.contentView = mNotificationView;
+        } else {
+            mNotification.contentView = mNotificationView;
+        }
+        mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(R.layout.notification_item, mNotification);
+    }
+
+    /**
+     * 正在下载，更新通知栏进度条
+     */
+    private void setNotificationProgress(long total, long current) {
+        LogUtils.d(TAG, "setNotificationProgress() called with: total = [" + total + "], current = [" + current + "]");
+        int progress = (int) (current * 100 / total);
+        if (progress == mPreProgress) return;
+        mPreProgress = progress;
+        mNotificationView.setTextViewText(R.id.notificationPercent, progress + "%");
+        mNotificationView.setProgressBar(R.id.notificationProgress, 100, progress, false);
+        mNotification.contentView = mNotificationView;
+        mNotificationManager.notify(R.layout.notification_item, mNotification);
+    }
+
+    /**
+     * 下载成功，通知栏可点击／失败提示
+     *
+     * @param isSuccess 是否下载成功
+     */
+    protected void refreshNotificationState(File pkg, boolean isSuccess) {
+        LogUtils.d(TAG, "refreshNotificationState() called with: pkg = [" + pkg + "], isSuccess = [" + isSuccess + "]");
+        mNotificationView.setTextViewText(R.id.notificationTitle, isSuccess ? "下载完成，点击安装" : "下载失败，请重试");
+        mNotificationView.setTextViewText(R.id.notificationPercent, "100%");
+        mNotificationView.setProgressBar(R.id.notificationProgress, 100, 100, false);
+        mNotification.contentView = mNotificationView;
+        if (isSuccess) {
+            Intent updateIntent = new Intent(Intent.ACTION_VIEW);
+            Uri data;
+            if (Build.VERSION.SDK_INT >= 24) {
+                data = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".fileprovider", pkg);
+                updateIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } else {
+                data = Uri.fromFile(pkg);
+            }
+            updateIntent.setDataAndType(data, "application/vnd.android.package-archive");
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, updateIntent, 0);
+            mNotification.contentIntent = pendingIntent;
+        }
+        mNotificationManager.notify(R.layout.notification_item, mNotification);
+    }
+
+    private void installNewApk(Activity context, File file) {
+        LogUtils.d(TAG, "installNewApk() called with: context = [" + context + "], file = [" + file + "]");
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri data;
+        if (Build.VERSION.SDK_INT >= 24) {
+            data =
+                    FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".fileprovider", file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            data = Uri.fromFile(file);
+        }
+        intent.setDataAndType(data, "application/vnd.android.package-archive");
+
+        //handle target application have the uri permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                context.grantUriPermission(packageName, data, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+        }
+
+        context.startActivity(intent);
     }
 }
 
