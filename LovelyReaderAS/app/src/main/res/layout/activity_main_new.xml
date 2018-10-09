@@ -19,17 +19,6 @@
         android:layout_above="@+id/llBottom"
         android:background="#888888" />
 
-    <!-- 新增 -->
-    <ImageView
-        android:id="@+id/ivAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/llBottom"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/ic_main_add_book" />
-
     <!-- bottom -->
     <LinearLayout
         android:id="@+id/llBottom"

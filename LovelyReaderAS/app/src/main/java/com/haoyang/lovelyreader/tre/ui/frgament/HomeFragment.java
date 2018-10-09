@@ -1,5 +1,8 @@
 package com.haoyang.lovelyreader.tre.ui.frgament;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -26,8 +30,14 @@ import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
+import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.helper.OnBookAddEvent;
 import com.haoyang.lovelyreader.tre.ui.FileActivity;
+import com.haoyang.lovelyreader.tre.ui.MainActivity;
+import com.haoyang.lovelyreader.tre.wifi.Constants;
+import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
+import com.haoyang.lovelyreader.tre.wifi.WebService;
 import com.haoyang.reader.sdk.AnimationType;
 import com.haoyang.reader.sdk.Book;
 import com.haoyang.reader.sdk.ColorService;
@@ -39,9 +49,14 @@ import com.haoyang.reader.sdk.ReaderSDK;
 import com.haoyang.reader.sdk.SDKParameterInfo;
 import com.haoyang.reader.sdk.ShareEntity;
 import com.haoyang.reader.service.bookservice.BookInfoService;
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
+import com.hwangjr.rxbus.thread.EventThread;
 import com.java.common.utils.Utils;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.json.JsonHelper;
+import com.mjiayou.trecorelib.util.ConvertUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
@@ -54,17 +69,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import timber.log.Timber;
 
 /**
  * Created by xin on 18/9/22.
  */
 public class HomeFragment extends BaseFragment {
 
+    private final int REQUEST_CODE_ADD_BOOK = 102;
+
     private ImageView ivSearch;
     private EditText etSearch;
     private ImageView ivDelete;
     private GridView gvBook;
     private ListView lvSearch;
+    private ImageView ivAdd;
 
     private HomeAdapter mHomeAdapter;
     private List<BookBean> mList = new ArrayList<>();
@@ -79,6 +98,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
+        RxBus.get().register(this);
         View view = inflater.inflate(R.layout.fragment_home, null);
 
         // findViewById
@@ -87,9 +107,34 @@ public class HomeFragment extends BaseFragment {
         ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
         gvBook = (GridView) view.findViewById(R.id.gvBook);
         lvSearch = (ListView) view.findViewById(R.id.lvSearch);
+        ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
 
         initView();
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        WebService.stop(mContext);
+        RxBus.get().unregister(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_ADD_BOOK:
+                    FileBean fileBean = (FileBean) data.getSerializableExtra(FileActivity.EXTRA_FILE_BEAN);
+                    if (fileBean == null) {
+                        return;
+                    }
+
+                    onAddBook(fileBean);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -135,6 +180,7 @@ public class HomeFragment extends BaseFragment {
 
         // gvBook
         mUserBean = DBHelper.getUserBean();
+        mList.clear();
         mList.addAll(DBHelper.getBookBeanList(mUserBean.getUid()));
         mHomeAdapter = new HomeAdapter(mContext, mList);
         gvBook.setAdapter(mHomeAdapter);
@@ -151,24 +197,98 @@ public class HomeFragment extends BaseFragment {
                 startReader(book, mUserBean);
             }
         });
+
+        // ivAdd
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(mContext, FileActivity.class), REQUEST_CODE_ADD_BOOK);
+
+            }
+        });
+        ivAdd.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+//                startActivity(new Intent(mContext, com.haoyang.lovelyreader.ui.MainActivity.class));
+                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(ivAdd, "translationY", 0, ivAdd.getHeight() * 2).setDuration(200L);
+                objectAnimator.setInterpolator(new AccelerateInterpolator());
+                objectAnimator.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        WebService.start(mContext);
+                        new PopupMenuDialog(mContext).builder().setCancelable(false).setCanceledOnTouchOutside(false).show();
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                });
+                objectAnimator.start();
+                return false;
+            }
+        });
+    }
+
+    @Subscribe(tags = {@Tag(Constants.RxBusEventType.POPUP_MENU_DIALOG_SHOW_DISMISS)})
+    public void onPopupMenuDialogDismiss(Integer type) {
+        WebService.stop(mContext);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(ivAdd, "translationY", ivAdd.getHeight() * 2, 0).setDuration(200L);
+        objectAnimator.setInterpolator(new AccelerateInterpolator());
+        objectAnimator.start();
+    }
+
+    @Subscribe(thread = EventThread.IO, tags = {@Tag(Constants.RxBusEventType.LOAD_BOOK_LIST)})
+    public void loadBookList(Integer type) {
+        Timber.d("loadBookList:" + Thread.currentThread().getName());
+        List<String> books = new ArrayList<>();
+        File dir = Configs.DIR_BOOK;
+        if (dir.exists() && dir.isDirectory()) {
+            String[] fileNames = dir.list();
+            if (fileNames != null) {
+                for (String fileName : fileNames) {
+                    books.add(fileName);
+                }
+            }
+        }
+        mActivity.runOnUiThread(() -> {
+            LogUtils.d(TAG, ConvertUtils.parseString(books, "\n"));
+//            mBooks.clear();
+//            mBooks.addAll(books);
+//            mBookshelfAdapter.notifyDataSetChanged();
+        });
     }
 
     /**
      * onEvent
      */
     public void onEvent(UserLoginStatusEvent event) {
+        LogUtils.d(TAG, "onEvent() called with: event = [" + event + "]");
         initView();
     }
+
+    public void onEvent(OnBookAddEvent event) {
+        LogUtils.d(TAG, "onEvent() called with: event = [" + event + "]");
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                onAddBook(event.getFileBean());
+            }
+        });
+    }
+
 
     /**
      * onAddBook
      */
-    public void onAddBook(Intent data) {
-        if (data == null) {
-            return;
-        }
-
-        FileBean fileBean = (FileBean) data.getSerializableExtra(FileActivity.EXTRA_FILE_BEAN);
+    public void onAddBook(FileBean fileBean) {
         if (fileBean == null) {
             return;
         }

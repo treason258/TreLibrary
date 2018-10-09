@@ -31,6 +31,7 @@ import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
+import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.net.MyFileCallback;
@@ -61,13 +62,10 @@ import okhttp3.Request;
  */
 public class MainActivity extends BaseActivity {
 
-    private final int REQUEST_CODE_ADD_BOOK = 102;
-
     private final int FRAGMENT_HOME = 0;
     private final int FRAGMENT_MINE = 1;
 
     private ViewPager viewPager;
-    private ImageView ivAdd;
     private LinearLayout llHome;
     private ImageView ivHome;
     private TextView tvHome;
@@ -96,7 +94,6 @@ public class MainActivity extends BaseActivity {
 
         // findViewById
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        ivAdd = (ImageView) findViewById(R.id.ivAdd);
         llHome = (LinearLayout) findViewById(R.id.llHome);
         ivHome = (ImageView) findViewById(R.id.ivHome);
         tvHome = (TextView) findViewById(R.id.tvHome);
@@ -111,15 +108,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_CODE_ADD_BOOK:
-                    if (mHomeFragment != null) {
-                        mHomeFragment.onAddBook(data);
-                    }
-                    break;
-            }
-        }
     }
 
     /**
@@ -129,15 +117,6 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         Log.d(TAG, "initView() called");
 
-        // ivAdd
-        ivAdd.setOnClickListener(mOnClickListener);
-        ivAdd.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                startActivity(new Intent(mContext, com.haoyang.lovelyreader.ui.MainActivity.class));
-                return false;
-            }
-        });
         // llHome
         llHome.setOnClickListener(mOnClickListener);
         // llMine
@@ -181,14 +160,12 @@ public class MainActivity extends BaseActivity {
                 ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_normal));
                 tvHome.setTextColor(colorSelected);
                 tvMine.setTextColor(colorNormal);
-                ivAdd.setVisibility(View.VISIBLE);
                 break;
             case FRAGMENT_MINE:
                 ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_home_normal));
                 ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_selected));
                 tvHome.setTextColor(colorNormal);
                 tvMine.setTextColor(colorSelected);
-                ivAdd.setVisibility(View.GONE);
                 break;
         }
     }
@@ -202,9 +179,6 @@ public class MainActivity extends BaseActivity {
             LogUtils.d(TAG, "onClick() called with: v = [" + v + "]");
 
             switch (v.getId()) {
-                case R.id.ivAdd:
-                    startActivityForResult(new Intent(mContext, FileActivity.class), REQUEST_CODE_ADD_BOOK);
-                    break;
                 case R.id.llHome:
                     viewPager.setCurrentItem(FRAGMENT_HOME);
                     break;
@@ -264,12 +238,6 @@ public class MainActivity extends BaseActivity {
      * 检查更新
      */
     private void checkUpdate() {
-
-//        String url = UrlConfig.apiAppUpgrade;
-//        String token = UserUtils.getToken();
-//        String type = "2";
-//        String jsonData = JsonHelper.get().toJson(appUpgradeRequest);
-//        String urlWithSign = EncodeHelper.getUrlWithSign(url, token, type, jsonData);
 
         CommonParam commonParam = new CommonParam();
         commonParam.setData("1.0.0");
@@ -339,7 +307,7 @@ public class MainActivity extends BaseActivity {
             return;
         }
         mUpdateBean = updateBean;
-        mPkgPath = Environment.getExternalStorageDirectory().getPath() + "/LovelyReader/";
+        mPkgPath = Configs.DIR_UPDATE;
         mPkgName = mContext.getPackageName();
         File pkg = new File(mPkgPath, mPkgName + ".apk");
         if (pkg.exists()) {

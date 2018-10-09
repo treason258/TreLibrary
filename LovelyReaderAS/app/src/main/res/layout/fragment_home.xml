@@ -57,11 +57,23 @@
             android:background="@color/tc_white"
             android:numColumns="3" />
 
+        <!-- 搜索历史记录 -->
         <ListView
             android:id="@+id/lvSearch"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@color/tc_white"
             android:visibility="gone" />
+
+        <!-- 新增 -->
+        <ImageView
+            android:id="@+id/ivAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:paddingBottom="25dp"
+            android:src="@drawable/ic_main_add_book" />
     </RelativeLayout>
 </LinearLayout>
