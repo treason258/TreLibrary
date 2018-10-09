@@ -130,7 +130,11 @@ public class RegisterActivity extends BaseActivity {
                         apiRequest.setParam(commonParam);
                         String content = JsonHelper.get().toJson(apiRequest);
 
-                        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiSmsSendrigstersms);
+                        String url = UrlConfig.apiSmsSendrigstersms;
+                        if (mPageType == PAGE_TYPE_FIND_PWD) { // 找回密码
+                            url = UrlConfig.apiSmsSendchangepwdsms;
+                        }
+                        RequestEntity requestEntity = new RequestEntity(url);
                         requestEntity.setMethod(RequestMethod.POST_STRING);
                         requestEntity.setContent(content);
                         requestEntity.addHeader("token", tempToken);
