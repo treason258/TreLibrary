@@ -284,8 +284,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onOkAction() {
                 ToastUtils.show("开始下载...");
-                String testUrl = "http://172.16.70.25:8080/download/c_release_A/builds/148/archive/uxinUsedCar/build/outputs/apk/UxinUsedcar_release_148.apk";
-                updateBean.setAppUrl(testUrl);
+//                String testUrl = "http://172.16.70.25:8080/download/c_release_A/builds/148/archive/uxinUsedCar/build/outputs/apk/UxinUsedcar_release_148.apk";
+//                updateBean.setAppUrl(testUrl);
                 downloadInstallApk(updateBean);
             }
 
