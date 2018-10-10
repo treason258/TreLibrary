@@ -168,4 +168,34 @@ public class DBHelper {
         }
         return searchResult;
     }
+
+    // ******************************** syncGuestBook ********************************
+
+    /**
+     * 对登录用户同步本设备游客添加的书籍
+     */
+    public static void syncGuestBook() {
+        // 游客添加的书籍
+        List<BookBean> guestBookBeanList = getBookBeanList(UserBean.getDefault().getUid());
+        // 当前用户
+        UserBean userBean = getUserBean();
+        // 当前用户的书
+        List<BookBean> bookBeanList = getBookBeanList(userBean.getUid());
+        // 合并
+        for (int i = 0; i < guestBookBeanList.size(); i++) {
+            BookBean guestBook = guestBookBeanList.get(i);
+            boolean hasThisBook = false;
+            for (int j = 0; j < bookBeanList.size(); j++) {
+                if (guestBook.getPath().equals(bookBeanList.get(j).getPath())) {
+                    hasThisBook = true;
+                    break;
+                }
+            }
+            if (!hasThisBook) {
+                bookBeanList.add(guestBook);
+            }
+        }
+        // 重新赋值
+        DBHelper.setBookBeanList(userBean.getUid(), bookBeanList);
+    }
 }

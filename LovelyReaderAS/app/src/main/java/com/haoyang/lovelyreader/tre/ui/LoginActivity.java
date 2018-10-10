@@ -126,8 +126,8 @@ public class LoginActivity extends BaseActivity {
                             SharedUtils.get().setAccountPassword(password);
                             // 保存用户信息
                             DBHelper.setUserBean(bean);
-                            // 把游客添加的书籍复制到该账户
-                            syncGuestBookList();
+                            // 同步游客书籍
+                            DBHelper.syncGuestBook();
                             // 通知登录成功
                             UserUtils.doLogin(bean.getToken());
 
@@ -164,23 +164,5 @@ public class LoginActivity extends BaseActivity {
                 startActivity(mIntent);
             }
         });
-    }
-
-    /**
-     * syncGuestBookList
-     */
-    private void syncGuestBookList() {
-        // 游客用户
-        UserBean guest = UserBean.getDefault();
-        // 游客用户的书
-        List<BookBean> guestBookBeanList = DBHelper.getBookBeanList(guest.getUid());
-        // 当前用户
-        UserBean userBean = DBHelper.getUserBean();
-        // 当前用户的书
-        List<BookBean> bookBeanList = DBHelper.getBookBeanList(userBean.getUid());
-        // 合并
-        bookBeanList.addAll(guestBookBeanList);
-        // 重新赋值
-        DBHelper.setBookBeanList(userBean.getUid(), bookBeanList);
     }
 }
