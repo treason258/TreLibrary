@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
+import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CommonData;
@@ -29,6 +30,8 @@ import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
+
+import java.util.List;
 
 /**
  * Created by xin on 18/9/22.
@@ -227,13 +230,15 @@ public class RegisterActivity extends BaseActivity {
                             @Override
                             public void onSuccess(int code, UserBean bean) {
                                 if (bean != null) {
-                                    ToastUtils.show("注册成功-" + bean.getToken());
+                                    ToastUtils.show("注册成功");
 
                                     // 保存登录的用户名和密码，下次自动填充
                                     SharedUtils.get().setAccountUsername(phone);
                                     SharedUtils.get().setAccountPassword(password);
                                     // 保存用户信息
                                     DBHelper.setUserBean(bean);
+                                    // 把游客添加的书籍复制到该账户
+                                    syncGuestBookList();
                                     // 通知登录成功
                                     UserUtils.doLogin(bean.getToken());
 
@@ -302,4 +307,22 @@ public class RegisterActivity extends BaseActivity {
             tvCode.setText("获取验证码");
         }
     };
+
+    /**
+     * syncGuestBookList
+     */
+    private void syncGuestBookList() {
+        // 游客用户
+        UserBean guest = UserBean.getDefault();
+        // 游客用户的书
+        List<BookBean> guestBookBeanList = DBHelper.getBookBeanList(guest.getUid());
+        // 当前用户
+        UserBean userBean = DBHelper.getUserBean();
+        // 当前用户的书
+        List<BookBean> bookBeanList = DBHelper.getBookBeanList(userBean.getUid());
+        // 合并
+        bookBeanList.addAll(guestBookBeanList);
+        // 重新赋值
+        DBHelper.setBookBeanList(userBean.getUid(), bookBeanList);
+    }
 }
