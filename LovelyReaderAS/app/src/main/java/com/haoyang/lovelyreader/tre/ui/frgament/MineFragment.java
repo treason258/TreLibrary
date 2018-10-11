@@ -14,13 +14,22 @@ import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
+import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
+import com.haoyang.lovelyreader.tre.bean.api.CommonData;
+import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
+import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.ui.FeedbackActivity;
 import com.haoyang.lovelyreader.tre.ui.LoginActivity;
-import com.haoyang.lovelyreader.tre.ui.MemberActivity;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
+import com.mjiayou.trecorelib.http.RequestEntity;
+import com.mjiayou.trecorelib.http.RequestMethod;
+import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
+import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.json.JsonHelper;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
 
@@ -79,6 +88,35 @@ public class MineFragment extends BaseFragment {
                             , new TCAlertDialog.OnTCActionListener() {
                                 @Override
                                 public void onOkAction() {
+                                    // 退出登录
+                                    CommonParam commonParam = new CommonParam();
+                                    commonParam.setData("");
+                                    ApiRequest apiRequest = new ApiRequest();
+                                    apiRequest.setCommonData(CommonData.get());
+                                    apiRequest.setParam(commonParam);
+                                    String content = JsonHelper.get().toJson(apiRequest);
+
+                                    RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserLogout);
+                                    requestEntity.setMethod(RequestMethod.POST_STRING);
+                                    requestEntity.setContent(content);
+                                    requestEntity.addHeader("token", UserUtils.getToken());
+                                    requestEntity.addHeader("sign", EncodeHelper.getSign(content));
+                                    RequestBuilder.get().send(requestEntity, new RequestCallback<Object>() {
+                                        @Override
+                                        public void onStart() {
+
+                                        }
+
+                                        @Override
+                                        public void onSuccess(int code, Object object) {
+                                            ToastUtils.show("已退出登录");
+                                        }
+
+                                        @Override
+                                        public void onFailure(int code, String msg) {
+                                            ToastUtils.show(msg);
+                                        }
+                                    });
                                     // 清除用户信息
                                     DBHelper.setUserBean(null);
                                     // 通知注销成功
