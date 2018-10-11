@@ -29,6 +29,7 @@ import java.util.Stack;
 
 public class FileActivity extends BaseActivity {
 
+    public static final String EXTRA_FILE_LIST = "file_list";
     public static final String EXTRA_FILE_BEAN = "file_bean";
     public static final String EXTRA_FILE_PATH = "file_path";
     public static final String EXTRA_FILE_NAME = "file_name";
@@ -41,10 +42,13 @@ public class FileActivity extends BaseActivity {
     private ImageView ivBack;
 
     private ListView lvFile;
+    private TextView tvCount;
+    private TextView tvSubmit;
 
     private FileAdapter mFileAdapter;
     private List<FileBean> mList;
     private Stack<File> mFileStack = new Stack<>();
+    private ArrayList<FileBean> mSelectedFileBeanList = new ArrayList<>();
 
     private FileNameService mFileNameService;
 
@@ -58,6 +62,8 @@ public class FileActivity extends BaseActivity {
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         ivBack = (ImageView) findViewById(R.id.ivBack);
         lvFile = (ListView) findViewById(R.id.lvFile);
+        tvCount = (TextView) findViewById(R.id.tvCount);
+        tvSubmit = (TextView) findViewById(R.id.tvSubmit);
 
         // mFileNameService
         mFileNameService = new FileNameService();
@@ -112,12 +118,32 @@ public class FileActivity extends BaseActivity {
                         mList = getFileList(file);
                         mFileAdapter.setList(mList);
                     } else {
-                        Intent intent = new Intent();
-                        intent.putExtra(EXTRA_FILE_BEAN, fileBean);
-                        setResult(RESULT_OK, intent);
-                        finish();
+                        if (fileBean.isSelected()) {
+                            fileBean.setSelected(false);
+                            if (mSelectedFileBeanList.contains(fileBean)) {
+                                mSelectedFileBeanList.remove(fileBean);
+                            }
+                        } else {
+                            fileBean.setSelected(true);
+                            if (!mSelectedFileBeanList.contains(fileBean)) {
+                                mSelectedFileBeanList.add(fileBean);
+                            }
+                        }
+                        tvCount.setText("已选择了" + mSelectedFileBeanList.size() + "个文件");
+                        mFileAdapter.notifyDataSetChanged();
                     }
                 }
+            }
+        });
+
+        // tvSubmit
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putParcelableArrayListExtra(EXTRA_FILE_LIST, mSelectedFileBeanList);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }

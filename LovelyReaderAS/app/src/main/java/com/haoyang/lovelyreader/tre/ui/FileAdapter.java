@@ -69,11 +69,13 @@ public class FileAdapter extends BaseAdapter {
 
     private class ViewHolder extends TCViewHolder<FileBean> {
         private ImageView ivFile;
+        private ImageView ivSelect;
         private TextView tvFile;
 
         @Override
         protected void findView(View view) {
             ivFile = (ImageView) view.findViewById(R.id.ivFile);
+            ivSelect = (ImageView) view.findViewById(R.id.ivSelect);
             tvFile = (TextView) view.findViewById(R.id.tvFile);
         }
 
@@ -82,8 +84,15 @@ public class FileAdapter extends BaseAdapter {
             // ivFile
             if (bean.isFolder()) { // 是文件夹
                 ivFile.setVisibility(View.VISIBLE);
+                ivSelect.setVisibility(View.GONE);
             } else {
                 ivFile.setVisibility(View.GONE);
+                ivSelect.setVisibility(View.VISIBLE);
+                if (bean.isSelected()) {
+                    ivSelect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_file_selected));
+                } else {
+                    ivSelect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_file_unselected));
+                }
             }
             // tvFile
             if (!TextUtils.isEmpty(bean.getPath())) {

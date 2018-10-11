@@ -126,12 +126,17 @@ public class HomeFragment extends BaseFragment {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_ADD_BOOK:
-                    FileBean fileBean = (FileBean) data.getSerializableExtra(FileActivity.EXTRA_FILE_BEAN);
-                    if (fileBean == null) {
+                    ArrayList<FileBean> fileBeanArrayList = data.getParcelableArrayListExtra(FileActivity.EXTRA_FILE_LIST);
+                    if (fileBeanArrayList == null) {
                         return;
                     }
 
-                    onAddBook(fileBean);
+                    for (int i = 0; i < fileBeanArrayList.size(); i++) {
+                        FileBean fileBean = fileBeanArrayList.get(i);
+                        if (fileBean != null) {
+                            onAddBook(fileBean);
+                        }
+                    }
                     break;
             }
         }
