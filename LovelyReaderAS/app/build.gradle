@@ -16,6 +16,22 @@ android {
 
         testInstrumentationRunner rootProject.testInstrumentationRunner
     }
+
+    signingConfigs {
+        debug {
+            storeFile file('../keystore/LovelyReader.keystore')
+            storePassword 'wDTW09PK'
+            keyAlias 'LovelyReader'
+            keyPassword "FZmFx7t0"
+        }
+        release {
+            storeFile file('../keystore/LovelyReader.keystore')
+            storePassword 'wDTW09PK'
+            keyAlias 'LovelyReader'
+            keyPassword "FZmFx7t0"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
