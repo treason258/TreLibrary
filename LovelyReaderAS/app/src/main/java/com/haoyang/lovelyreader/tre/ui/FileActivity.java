@@ -16,6 +16,7 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
 import com.java.common.service.file.FileNameService;
+import com.mjiayou.trecorelib.util.ToastUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -80,6 +81,8 @@ public class FileActivity extends BaseActivity {
             File file = mFileStack.peek();
             mList = getFileList(file);
             mFileAdapter.setList(mList);
+            mSelectedFileBeanList.clear();
+            tvCount.setText("已选择了" + mSelectedFileBeanList.size() + "个文件");
         }
     }
 
@@ -93,7 +96,7 @@ public class FileActivity extends BaseActivity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -117,6 +120,8 @@ public class FileActivity extends BaseActivity {
                         mFileStack.add(file);
                         mList = getFileList(file);
                         mFileAdapter.setList(mList);
+                        mSelectedFileBeanList.clear();
+                        tvCount.setText("已选择了" + mSelectedFileBeanList.size() + "个文件");
                     } else {
                         if (fileBean.isSelected()) {
                             fileBean.setSelected(false);
@@ -140,6 +145,10 @@ public class FileActivity extends BaseActivity {
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mSelectedFileBeanList.size() == 0) {
+                    ToastUtils.show("请选择电子书");
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.putParcelableArrayListExtra(EXTRA_FILE_LIST, mSelectedFileBeanList);
                 setResult(RESULT_OK, intent);
