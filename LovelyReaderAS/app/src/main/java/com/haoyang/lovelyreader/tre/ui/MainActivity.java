@@ -45,9 +45,11 @@ import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
 import com.mjiayou.trecorelib.json.JsonHelper;
+import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
+import com.mjiayou.trecorelib.util.VersionUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
@@ -240,7 +242,7 @@ public class MainActivity extends BaseActivity {
     private void checkUpdate() {
 
         CommonParam commonParam = new CommonParam();
-        commonParam.setData("1.0.0");
+        commonParam.setData(AppUtils.getVersionName(mContext));
         ApiRequest apiRequest = new ApiRequest();
         apiRequest.setCommonData(CommonData.get());
         apiRequest.setParam(commonParam);
