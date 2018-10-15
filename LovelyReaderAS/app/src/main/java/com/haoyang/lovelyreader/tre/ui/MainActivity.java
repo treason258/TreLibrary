@@ -34,6 +34,7 @@ import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.net.MyFileCallback;
 import com.haoyang.lovelyreader.tre.ui.dialog.UpdateDialog;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
@@ -240,19 +241,10 @@ public class MainActivity extends BaseActivity {
      * 检查更新
      */
     private void checkUpdate() {
+        String content = ApiRequest.getContent(CommonParam.get(AppUtils.getVersionName(mContext)));
 
-        CommonParam commonParam = new CommonParam();
-        commonParam.setData(AppUtils.getVersionName(mContext));
-        ApiRequest apiRequest = new ApiRequest();
-        apiRequest.setCommonData(CommonData.get());
-        apiRequest.setParam(commonParam);
-        String content = JsonHelper.get().toJson(apiRequest);
-
-        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiAppUpgrade);
-        requestEntity.setMethod(RequestMethod.POST_STRING);
+        MyRequestEntity requestEntity = new MyRequestEntity(UrlConfig.apiAppUpgrade);
         requestEntity.setContent(content);
-        requestEntity.addHeader("token", UserUtils.getToken());
-        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
         RequestBuilder.get().send(requestEntity, new RequestCallback<UpdateBean>() {
             @Override
             public void onStart() {

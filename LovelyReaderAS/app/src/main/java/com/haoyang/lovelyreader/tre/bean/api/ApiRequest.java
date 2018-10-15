@@ -1,5 +1,7 @@
 package com.haoyang.lovelyreader.tre.bean.api;
 
+import com.mjiayou.trecorelib.json.JsonHelper;
+
 /**
  * Created by xin on 18/9/29.
  */
@@ -8,6 +10,20 @@ public class ApiRequest {
 
     private CommonData commonData;
     private BaseParam param;
+
+    public ApiRequest() {
+    }
+
+    public static ApiRequest get(BaseParam param) {
+        ApiRequest apiRequest = new ApiRequest();
+        apiRequest.setCommonData(CommonData.get());
+        apiRequest.setParam(param);
+        return apiRequest;
+    }
+
+    public static String getContent(BaseParam param) {
+        return JsonHelper.get().toJson(get(param));
+    }
 
     public CommonData getCommonData() {
         return commonData;

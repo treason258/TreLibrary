@@ -19,6 +19,7 @@ import com.haoyang.lovelyreader.tre.bean.api.UserLoginParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
@@ -100,16 +101,10 @@ public class LoginActivity extends BaseActivity {
                 UserLoginParam userLoginParamBean = new UserLoginParam();
                 userLoginParamBean.setPhone(phone);
                 userLoginParamBean.setPwd(password);
-                ApiRequest apiRequest = new ApiRequest();
-                apiRequest.setCommonData(CommonData.get());
-                apiRequest.setParam(userLoginParamBean);
-                String content = JsonHelper.get().toJson(apiRequest);
+                String content = ApiRequest.getContent(userLoginParamBean);
 
-                RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserLogin);
-                requestEntity.setMethod(RequestMethod.POST_STRING);
+                MyRequestEntity requestEntity = new MyRequestEntity(UrlConfig.apiUserLogin);
                 requestEntity.setContent(content);
-                requestEntity.addHeader("token", UserUtils.getToken());
-                requestEntity.addHeader("sign", EncodeHelper.getSign(content));
                 RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                     @Override
                     public void onStart() {

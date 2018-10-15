@@ -8,6 +8,15 @@ public class CommonParam extends BaseParam {
 
     private String data;
 
+    public CommonParam() {
+    }
+
+    public static CommonParam get(String data) {
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(data);
+        return commonParam;
+    }
+
     public String getData() {
         return data;
     }
