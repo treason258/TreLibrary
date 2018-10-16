@@ -46,20 +46,18 @@ ext {
             'constraint'     : 'com.android.support.constraint:constraint-layout:1.0.0-alpha8',
             'recyclerviewV7' : 'com.android.support:recyclerview-v7:24.2.1',
 
-            'gson'           : 'com.google.code.gson:gson:2.7',
-            'volley'         : 'com.android.volley:volley:1.0.0',
-            'volley2'        : 'com.mcxiaoke.volley:library:1.0.7',
-            'okhttputils'    : 'com.zhy:okhttputils:2.6.2',
-
-            'butterknife'    : 'com.jakewharton:butterknife:5.1.2',
-            'eventbus'       : 'de.greenrobot:eventbus:2.2.1',
-            'dart'           : 'com.f2prateek.dart:dart:1.1.0',
-            'imageloader'    : 'com.nostra13.universalimageloader:universal-image-loader:1.9.4',
-            'glide'          : 'com.github.bumptech.glide:glide:3.6.1',
-
-            'logger'         : 'com.orhanobut:logger:1.15',
+            'gson'           : 'com.google.code.gson:gson:2.7',             // https://github.com/google/gson
+            'volley'         : 'com.android.volley:volley:1.0.0',           // https://github.com/google/volley
+            'volley2'        : 'com.mcxiaoke.volley:library:1.0.7',         // https://github.com/mcxiaoke/android-volley
+            'okhttputils'    : 'com.zhy:okhttputils:2.6.2',                 // https://github.com/hongyangAndroid/okhttputils
+            'butterknife'    : 'com.jakewharton:butterknife:5.1.2',         // https://github.com/JakeWharton/butterknife
+            'eventbus'       : 'de.greenrobot:eventbus:2.2.1',              // https://github.com/greenrobot/EventBus
+            'dart'           : 'com.f2prateek.dart:dart:1.1.0',             // https://github.com/f2prateek/dart
+            'imageloader'    : 'com.nostra13.universalimageloader:universal-image-loader:1.9.4',    // https://github.com/nostra13/Android-Universal-Image-Loader
+            'glide'          : 'com.github.bumptech.glide:glide:3.7.0',     // https://github.com/bumptech/glide/releases
+            'logger'         : 'com.orhanobut:logger:1.15',                 // https://github.com/orhanobut/logger
             'umeng_analytics': 'com.umeng.analytics:analytics:latest.integration',
-            'meituan_walle'  : 'com.meituan.android.walle:payload_reader:1.1.4',
-            'fastjson'       : 'com.alibaba:fastjson:1.2.49',
+            'meituan_walle'  : 'com.meituan.android.walle:payload_reader:1.1.4',    // https://github.com/Meituan-Dianping/walle
+            'fastjson'       : 'com.alibaba:fastjson:1.2.49',               // https://github.com/alibaba/fastjson
     ]
 }
