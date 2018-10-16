@@ -22,7 +22,7 @@ import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.json.JsonHelper;
+import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
 
@@ -97,7 +97,7 @@ public class FeedbackActivity extends BaseActivity {
                 ApiRequest apiRequest = new ApiRequest();
                 apiRequest.setCommonData(CommonData.get());
                 apiRequest.setParam(feedbackAddParam);
-                String content = JsonHelper.get().toJson(apiRequest);
+                String content = JsonParser.get().toJson(apiRequest);
 
                 RequestEntity requestEntity = new RequestEntity(UrlConfig.apiFeedbackAdd);
                 requestEntity.setMethod(RequestMethod.POST_STRING);

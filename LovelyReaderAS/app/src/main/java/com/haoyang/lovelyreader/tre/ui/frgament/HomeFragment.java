@@ -34,7 +34,6 @@ import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.OnBookAddEvent;
 import com.haoyang.lovelyreader.tre.ui.FileActivity;
-import com.haoyang.lovelyreader.tre.ui.MainActivity;
 import com.haoyang.lovelyreader.tre.wifi.Constants;
 import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
 import com.haoyang.lovelyreader.tre.wifi.WebService;
@@ -55,7 +54,7 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.java.common.utils.Utils;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
-import com.mjiayou.trecorelib.json.JsonHelper;
+import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ConvertUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
@@ -537,7 +536,7 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public void feedback(FeedBack feedBack) {
-            LogUtils.d(TAG, "feedback() called with: feedBack = [" + JsonHelper.get().toJson(feedBack) + "]");
+            LogUtils.d(TAG, "feedback() called with: feedBack = [" + JsonParser.get().toJson(feedBack) + "]");
             ToastUtils.show("意见反馈");
         }
 

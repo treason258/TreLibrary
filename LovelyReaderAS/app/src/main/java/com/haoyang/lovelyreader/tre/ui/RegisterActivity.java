@@ -25,7 +25,7 @@ import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.json.JsonHelper;
+import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -128,7 +128,7 @@ public class RegisterActivity extends BaseActivity {
                         ApiRequest apiRequest = new ApiRequest();
                         apiRequest.setCommonData(CommonData.get());
                         apiRequest.setParam(commonParam);
-                        String content = JsonHelper.get().toJson(apiRequest);
+                        String content = JsonParser.get().toJson(apiRequest);
 
                         String url = UrlConfig.apiSmsSendrigstersms;
                         if (mPageType == PAGE_TYPE_FIND_PWD) { // 找回密码
@@ -209,7 +209,7 @@ public class RegisterActivity extends BaseActivity {
                 ApiRequest apiRequest = new ApiRequest();
                 apiRequest.setCommonData(CommonData.get());
                 apiRequest.setParam(userRegisterParam);
-                final String content = JsonHelper.get().toJson(apiRequest);
+                final String content = JsonParser.get().toJson(apiRequest);
 
                 switch (mPageType) {
                     case PAGE_TYPE_REGISTER: {

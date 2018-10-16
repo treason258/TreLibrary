@@ -9,7 +9,7 @@ import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.json.JsonHelper;
+import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
@@ -26,7 +26,7 @@ public class TokenUtils {
         ApiRequest apiRequest = new ApiRequest();
         apiRequest.setCommonData(CommonData.get());
         apiRequest.setParam(commonParam);
-        String content = JsonHelper.get().toJson(apiRequest);
+        String content = JsonParser.get().toJson(apiRequest);
 
         RequestEntity requestEntity = new RequestEntity(UrlConfig.apiTokenTemp);
         requestEntity.setMethod(RequestMethod.POST_STRING);

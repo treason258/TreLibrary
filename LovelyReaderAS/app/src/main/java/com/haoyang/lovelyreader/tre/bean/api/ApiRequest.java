@@ -1,6 +1,6 @@
 package com.haoyang.lovelyreader.tre.bean.api;
 
-import com.mjiayou.trecorelib.json.JsonHelper;
+import com.mjiayou.trecorelib.json.JsonParser;
 
 /**
  * Created by xin on 18/9/29.
@@ -22,7 +22,7 @@ public class ApiRequest {
     }
 
     public static String getContent(BaseParam param) {
-        return JsonHelper.get().toJson(get(param));
+        return JsonParser.get().toJson(get(param));
     }
 
     public CommonData getCommonData() {
