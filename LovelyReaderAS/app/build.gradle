@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
@@ -6,6 +8,7 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
 
+    // 默认配置：包名、版本号
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
@@ -19,6 +22,7 @@ android {
         multiDexEnabled true
     }
 
+    // 签名配置
     signingConfigs {
         debug {
             storeFile file('../keystore/LovelyReader.keystore')
@@ -34,12 +38,92 @@ android {
         }
     }
 
+    // 编译配置
     buildTypes {
+        debug {
+            minifyEnabled false // 是否开启混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro' // 混淆文件位置
+
+            debuggable true
+            zipAlignEnabled false // 是否开启ZipAlign优化
+            shrinkResources false // 是否移除无用的resource文件
+            signingConfig signingConfigs.debug // 使用release的签名
+            applicationIdSuffix "" // 包名后缀
+            versionNameSuffix "_d${buildTime("yyMMddHHmm")}" // 版本号后缀
+
+            buildConfigField "boolean", "GRADLE_DEBUG", "true"
+
+            resValue "string", "gradle_build_types_name", "debug"
+            resValue "string", "gradle_build_types_value", "开发模式"
+
+            resValue "string", "gradle_app_name", "TreCoreDebug"
+            manifestPlaceholders = [gradle_tc_id: "debug-0000000000000000", gradle_tc_key: "debug-xxxxxxxxxxxxxxxx"]
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false // 是否开启混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro' // 混淆文件位置
+
+            debuggable false
+            zipAlignEnabled false // 是否开启ZipAlign优化
+            shrinkResources false // 是否移除无用的resource文件
+            signingConfig signingConfigs.release // 使用release的签名
+            applicationIdSuffix "" // 包名后缀
+            versionNameSuffix "" // 版本号后缀
+
+            buildConfigField "boolean", "GRADLE_DEBUG", "false"
+
+            resValue "string", "gradle_build_types_name", "debug"
+            resValue "string", "gradle_build_types_value", "发布模式"
+
+            resValue "string", "gradle_app_name", "TreCore"
+            manifestPlaceholders = [gradle_tc_id: "release-0000000000000000", gradle_tc_key: "release-xxxxxxxxxxxxxxxx"]
         }
     }
+
+    // 发布配置
+    productFlavors {
+        // 默认渠道 - official
+        official {
+            buildConfigField "boolean", "GRADLE_OFFICIAL", "true"
+
+            resValue "string", "gradle_product_flavors_name", name
+            resValue "string", "gradle_product_flavors_value", "官网"
+        }
+//        // 应用宝 - yingyongbao
+//        yingyongbao {
+//            buildConfigField "boolean", "GRADLE_OFFICIAL", "false"
+//
+//            resValue "string", "gradle_product_flavors_name", name
+//            resValue "string", "gradle_product_flavors_value", "应用宝"
+//        }
+    }
+    productFlavors.all {
+        flavor ->
+            flavor.manifestPlaceholders = [gradle_tc_channel: name]
+    }
+
+    // 定义输出文件名
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.each {
+                output ->
+                    // 输出APK文件名为：TreCore-1.0.0.1-release-official.apk
+                    def fileName = "LovelyReader-${defaultConfig.versionName}-${buildType.name}-${variant.productFlavors[0].name}.apk"
+                    output.outputFile = new File(output.outputFile.parent, fileName)
+                    // println("gradle | output | fileName -> " + fileName)
+            }
+    }
+
+    // 打包时的相关配置
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
+    // 移除lint检测的error：编译的lint开关，程序在buid的时候，会执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+    lintOptions {
+        abortOnError false
+    }
+
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
@@ -65,4 +149,15 @@ dependencies {
     }
     compile "com.koushikdutta.async:androidasync:2.+"
     compile 'com.jakewharton.timber:timber:4.1.2'
+}
+
+/**
+ * 构建时间
+ * @param yyMMddHHmm -> yyMMddHHmm | yyMMdd | yyMM
+ * @return
+ */
+def buildTime(String yyMMddHHmm) {
+    def simpleDateFormat = new SimpleDateFormat(yyMMddHHmm)
+    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8")) // TimeZone.getTimeZone("UTC")
+    return simpleDateFormat.format(new Date()) // return new Date().format(yyMMddHHmm, TimeZone.getTimeZone("GMT+8"))
 }
