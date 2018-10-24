@@ -128,6 +128,21 @@
         android:textSize="18sp"
         android:theme="@style/LoginEditTextTheme" />
 
+    <!-- 渠道码 -->
+    <EditText
+        android:id="@+id/etChannel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dp"
+        android:hint="渠道码"
+        android:inputType="textPassword"
+        android:textColor="@color/color_333333"
+        android:textColorHint="@color/color_d1d0d0"
+        android:textSize="18sp"
+        android:theme="@style/LoginEditTextTheme" />
+
     <!-- 注册 -->
     <TextView
         android:id="@+id/tvSubmit"

@@ -49,6 +49,7 @@ public class RegisterActivity extends BaseActivity {
     private TextView tvCode;
     private EditText etPassword;
     private EditText etPasswordConfirm;
+    private EditText etChannel;
     private TextView tvSubmit;
     private TextView tvProtocol;
 
@@ -67,6 +68,7 @@ public class RegisterActivity extends BaseActivity {
         tvCode = (TextView) findViewById(R.id.tvCode);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
+        etChannel = (EditText) findViewById(R.id.etChannel);
         tvSubmit = (TextView) findViewById(R.id.tvSubmit);
         tvProtocol = (TextView) findViewById(R.id.tvProtocol);
 
@@ -86,6 +88,7 @@ public class RegisterActivity extends BaseActivity {
             case PAGE_TYPE_REGISTER: // 注册
                 tvSubmit.setText("注册");
                 etNickname.setVisibility(View.VISIBLE);
+                etChannel.setVisibility(View.VISIBLE);
                 tvProtocol.setVisibility(View.VISIBLE);
                 tvProtocol.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -97,6 +100,7 @@ public class RegisterActivity extends BaseActivity {
             case PAGE_TYPE_FIND_PWD: // 找回密码
                 tvSubmit.setText("确定");
                 etNickname.setVisibility(View.GONE);
+                etChannel.setVisibility(View.GONE);
                 tvProtocol.setVisibility(View.GONE);
                 break;
         }
@@ -170,10 +174,11 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String nickname = etNickname.getText().toString();
-                final String phone = etPhone.getText().toString();
+                String phone = etPhone.getText().toString();
                 String code = etCode.getText().toString();
-                final String password = etPassword.getText().toString();
+                String password = etPassword.getText().toString();
                 String passwordConfirm = etPasswordConfirm.getText().toString();
+                String channel = etChannel.getText().toString();
 
                 if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入昵称
                     if (TextUtils.isEmpty(nickname)) {
@@ -197,10 +202,17 @@ public class RegisterActivity extends BaseActivity {
                     ToastUtils.show("请输入确认密码");
                     return;
                 }
+                if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入渠道码
+                    if (TextUtils.isEmpty(channel)) {
+                        ToastUtils.show("请输入渠道码");
+                        return;
+                    }
+                }
 
                 UserRegisterParam userRegisterParam = new UserRegisterParam();
-                if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入昵称
+                if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入昵称、注册才需要输入渠道码
                     userRegisterParam.setNickName(nickname);
+                    userRegisterParam.setChannel(channel);
                 }
                 userRegisterParam.setPhone(phone);
                 userRegisterParam.setSmsCode(code);
