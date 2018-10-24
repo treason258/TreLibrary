@@ -1,15 +1,12 @@
 package com.haoyang.lovelyreader.tre.util;
 
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
-import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
-import com.mjiayou.trecorelib.http.RequestEntity;
-import com.mjiayou.trecorelib.http.RequestMethod;
+import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
@@ -19,20 +16,12 @@ import com.mjiayou.trecorelib.util.ToastUtils;
 public class TokenUtils {
 
     public static void getTempToken(final OnGetTempTokenListener onGetTempTokenListener) {
-
-        String randomChar = EncodeHelper.getRandomChar();
         CommonParam commonParam = new CommonParam();
-        commonParam.setData(randomChar);
-        ApiRequest apiRequest = new ApiRequest();
-        apiRequest.setCommonData(CommonData.get());
-        apiRequest.setParam(commonParam);
-        String content = JsonParser.get().toJson(apiRequest);
+        commonParam.setData(EncodeHelper.getRandomChar());
 
-        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiTokenTemp);
-        requestEntity.setMethod(RequestMethod.POST_STRING);
-        requestEntity.setContent(content);
-        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
-        RequestBuilder.get().send(requestEntity, new RequestCallback<String>() {
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiTokenTemp);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam), null);
+        RequestBuilder.get().send(myRequestEntity, new RequestCallback<String>() {
             @Override
             public void onStart() {
 

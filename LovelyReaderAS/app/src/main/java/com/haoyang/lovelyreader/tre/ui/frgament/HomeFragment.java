@@ -69,7 +69,6 @@ import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ConvertUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
-import com.zhy.http.okhttp.builder.PostFormBuilder;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -202,31 +201,7 @@ public class HomeFragment extends BaseFragment {
         tvAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoryParam categoryParam = new CategoryParam();
-                categoryParam.setParentId("0");
-                categoryParam.setCategoryName("一级分类");
-
-                MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAdd);
-                myRequestEntity.setContent(ApiRequest.getContent(categoryParam));
-                RequestBuilder.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onSuccess(int code, CategoryBean categoryBean) {
-                        if (categoryBean != null) {
-                            ToastUtils.show(categoryBean.getCategoryId() + " - " + categoryBean.getCategoryName());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int code, String msg) {
-
-                    }
-                });
-
+                addCategory();
             }
         });
 
@@ -365,7 +340,7 @@ public class HomeFragment extends BaseFragment {
         bookBean.setCover(getBookCover(bookInfoService, bookBean.getPath())); // 读取封面图片
         bookInfoService.clear();
 
-        addBook();
+        addBook(bookBean);
 
         mList.add(bookBean);
         mHomeAdapter.notifyDataSetChanged();
@@ -675,11 +650,20 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-    public void addBook() {
+    public void addBook(BookBean bookBean) {
         BookAddParam bookAddParam = new BookAddParam();
+        bookAddParam.setAuthor(bookBean.getBook().authors); // 作者
+        bookAddParam.setBookCategory(""); // 图书目录
+        bookAddParam.setBookDesc(""); // 图书简介
+        bookAddParam.setBookDocId(""); // 电子书文档ID
+        bookAddParam.setBookName(bookBean.getBook().bookName); // 电子书名称
+        bookAddParam.setBookPath(""); // 电子书路径
+        bookAddParam.setCategoryId(""); // 分类ID
+        bookAddParam.setCoverDocId(""); // 图书封面文档ID
+        bookAddParam.setCoverPath(""); // 图书封面路径
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookAdd);
-        myRequestEntity.setContent(ApiRequest.getContent(bookAddParam));
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookAddParam));
         RequestBuilder.get().send(myRequestEntity, new RequestCallback<BookSyncBean>() {
             @Override
             public void onStart() {
@@ -704,7 +688,7 @@ public class HomeFragment extends BaseFragment {
         bookSyncParam.setLastSyncDate("0");
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookSync);
-        myRequestEntity.setContent(ApiRequest.getContent(bookSyncParam));
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookSyncParam));
         RequestBuilder.get().send(myRequestEntity, new RequestCallback<List<BookSyncBean>>() {
             @Override
             public void onStart() {
@@ -714,6 +698,33 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onSuccess(int code, List<BookSyncBean> object) {
 
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+        });
+    }
+
+    public void addCategory() {
+        CategoryParam categoryParam = new CategoryParam();
+        categoryParam.setParentId("-1");
+        categoryParam.setCategoryName("一级分类");
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAdd);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(categoryParam));
+        RequestBuilder.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(int code, CategoryBean categoryBean) {
+                if (categoryBean != null) {
+                    ToastUtils.show(categoryBean.getCategoryId() + " - " + categoryBean.getCategoryName());
+                }
             }
 
             @Override

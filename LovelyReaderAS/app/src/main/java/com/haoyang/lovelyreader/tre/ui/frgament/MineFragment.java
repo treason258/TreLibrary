@@ -20,6 +20,7 @@ import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.ui.FeedbackActivity;
 import com.haoyang.lovelyreader.tre.ui.LoginActivity;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
@@ -91,17 +92,10 @@ public class MineFragment extends BaseFragment {
                                     // 退出登录
                                     CommonParam commonParam = new CommonParam();
                                     commonParam.setData("");
-                                    ApiRequest apiRequest = new ApiRequest();
-                                    apiRequest.setCommonData(CommonData.get());
-                                    apiRequest.setParam(commonParam);
-                                    String content = JsonParser.get().toJson(apiRequest);
 
-                                    RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserLogout);
-                                    requestEntity.setMethod(RequestMethod.POST_STRING);
-                                    requestEntity.setContent(content);
-                                    requestEntity.addHeader("token", UserUtils.getToken());
-                                    requestEntity.addHeader("sign", EncodeHelper.getSign(content));
-                                    RequestBuilder.get().send(requestEntity, new RequestCallback<Object>() {
+                                    MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiUserLogout);
+                                    myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
+                                    RequestBuilder.get().send(myRequestEntity, new RequestCallback<Object>() {
                                         @Override
                                         public void onStart() {
 

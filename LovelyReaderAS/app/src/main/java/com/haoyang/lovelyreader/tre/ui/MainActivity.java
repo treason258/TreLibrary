@@ -233,10 +233,11 @@ public class MainActivity extends BaseActivity {
      * 检查更新
      */
     private void checkUpdate() {
-        String content = ApiRequest.getContent(CommonParam.get(AppUtils.getVersionName(mContext)));
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(AppUtils.getVersionName(mContext));
 
         MyRequestEntity requestEntity = new MyRequestEntity(UrlConfig.apiAppUpgrade);
-        requestEntity.setContent(content);
+        requestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
         RequestBuilder.get().send(requestEntity, new RequestCallback<UpdateBean>() {
             @Override
             public void onStart() {

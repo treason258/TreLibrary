@@ -14,18 +14,14 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
-import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.bean.api.UserRegisterParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
-import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.util.TokenUtils;
-import com.mjiayou.trecorelib.http.RequestEntity;
-import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -129,21 +125,14 @@ public class RegisterActivity extends BaseActivity {
                     public void onGetTempToken(String tempToken) {
                         CommonParam commonParam = new CommonParam();
                         commonParam.setData(phone);
-                        ApiRequest apiRequest = new ApiRequest();
-                        apiRequest.setCommonData(CommonData.get());
-                        apiRequest.setParam(commonParam);
-                        String content = JsonParser.get().toJson(apiRequest);
 
                         String url = UrlConfig.apiSmsSendrigstersms;
                         if (mPageType == PAGE_TYPE_FIND_PWD) { // 找回密码
                             url = UrlConfig.apiSmsSendchangepwdsms;
                         }
-                        RequestEntity requestEntity = new RequestEntity(url);
-                        requestEntity.setMethod(RequestMethod.POST_STRING);
-                        requestEntity.setContent(content);
-                        requestEntity.addHeader("token", tempToken);
-                        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
-                        RequestBuilder.get().send(requestEntity, new RequestCallback<Object>() {
+                        MyRequestEntity myRequestEntity = new MyRequestEntity(url);
+                        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam), tempToken);
+                        RequestBuilder.get().send(myRequestEntity, new RequestCallback<Object>() {
                             @Override
                             public void onStart() {
 
@@ -218,19 +207,13 @@ public class RegisterActivity extends BaseActivity {
                 userRegisterParam.setSmsCode(code);
                 userRegisterParam.setPwd(password);
                 userRegisterParam.setConfirmPwd(passwordConfirm);
-                ApiRequest apiRequest = new ApiRequest();
-                apiRequest.setCommonData(CommonData.get());
-                apiRequest.setParam(userRegisterParam);
-                final String content = JsonParser.get().toJson(apiRequest);
+                String content = ApiRequest.getContent(userRegisterParam);
 
                 switch (mPageType) {
                     case PAGE_TYPE_REGISTER: {
-                        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserRegister);
-                        requestEntity.setMethod(RequestMethod.POST_STRING);
-                        requestEntity.setContent(content);
-                        requestEntity.addHeader("token", UserUtils.getToken());
-                        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
-                        RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
+                        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiUserRegister);
+                        myRequestEntity.setContentWithHeader(content);
+                        RequestBuilder.get().send(myRequestEntity, new RequestCallback<UserBean>() {
                             @Override
                             public void onStart() {
 
@@ -268,12 +251,9 @@ public class RegisterActivity extends BaseActivity {
                         TokenUtils.getTempToken(new TokenUtils.OnGetTempTokenListener() {
                             @Override
                             public void onGetTempToken(String tempToken) {
-                                RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUserFindPwd);
-                                requestEntity.setMethod(RequestMethod.POST_STRING);
-                                requestEntity.setContent(content);
-                                requestEntity.addHeader("token", tempToken);
-                                requestEntity.addHeader("sign", EncodeHelper.getSign(content));
-                                RequestBuilder.get().send(requestEntity, new RequestCallback<Object>() {
+                                MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiUserFindPwd);
+                                myRequestEntity.setContentWithHeader(content, tempToken);
+                                RequestBuilder.get().send(myRequestEntity, new RequestCallback<Object>() {
                                     @Override
                                     public void onStart() {
 

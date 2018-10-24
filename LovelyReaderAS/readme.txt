@@ -1,6 +1,7 @@
 
 接口
 http://112.126.80.1:9001/swagger-ui.html#/APP%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%20Api%E6%8E%A5%E5%8F%A3/checkUsingPOST
+http://112.126.80.1:9004/swagger-ui.html#/
 
 设计图
 https://lanhuapp.com/web/#/item/board?pid=7c8eb1c1-714c-4ce2-9183-54043266f4d1

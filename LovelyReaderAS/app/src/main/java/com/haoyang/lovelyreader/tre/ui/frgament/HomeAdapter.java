@@ -14,7 +14,6 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.UploadBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
-import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
@@ -26,7 +25,6 @@ import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
 import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
@@ -121,13 +119,9 @@ public class HomeAdapter extends TCAdapter {
                         TokenUtils.getTempToken(new TokenUtils.OnGetTempTokenListener() {
                             @Override
                             public void onGetTempToken(String tempToken) {
-                                String randomChar = EncodeHelper.getRandomChar();
                                 CommonParam commonParam = new CommonParam();
-                                commonParam.setData(randomChar);
-                                ApiRequest apiRequest = new ApiRequest();
-                                apiRequest.setCommonData(CommonData.get());
-                                apiRequest.setParam(commonParam);
-                                String content = JsonParser.get().toJson(apiRequest);
+                                commonParam.setData(EncodeHelper.getRandomChar());
+                                String content = ApiRequest.getContent(commonParam);
 
                                 RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUploadBook);
                                 requestEntity.setMethod(RequestMethod.POST_FILE);

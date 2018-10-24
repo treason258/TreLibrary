@@ -7,7 +7,7 @@ package com.haoyang.lovelyreader.tre.bean.api;
 public class CategoryParam extends BaseParam {
 
     private String categoryName; // 分类名称
-    private String parentId; // 父分类ID
+    private String parentId; // 父分类ID，添加一级分类则传-1
 
     public String getCategoryName() {
         return categoryName;

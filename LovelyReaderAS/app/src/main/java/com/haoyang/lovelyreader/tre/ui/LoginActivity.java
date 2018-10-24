@@ -96,7 +96,7 @@ public class LoginActivity extends BaseActivity {
                 String content = ApiRequest.getContent(userLoginParamBean);
 
                 MyRequestEntity requestEntity = new MyRequestEntity(UrlConfig.apiUserLogin);
-                requestEntity.setContent(content);
+                requestEntity.setContentWithHeader(content);
                 RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
                     @Override
                     public void onStart() {
