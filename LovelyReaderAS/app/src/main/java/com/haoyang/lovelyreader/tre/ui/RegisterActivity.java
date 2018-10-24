@@ -21,7 +21,7 @@ import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.util.TokenUtils;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.mjiayou.trecorelib.http.RequestCallback;
+import com.mjiayou.trecorelib.http.callback.RequestCallback;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;

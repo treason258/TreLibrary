@@ -18,7 +18,7 @@ import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.mjiayou.trecorelib.http.RequestCallback;
+import com.mjiayou.trecorelib.http.callback.RequestCallback;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 import java.util.ArrayList;

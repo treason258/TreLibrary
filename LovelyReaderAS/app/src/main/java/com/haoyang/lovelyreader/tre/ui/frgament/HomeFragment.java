@@ -64,7 +64,7 @@ import com.hwangjr.rxbus.thread.EventThread;
 import com.java.common.utils.Utils;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.mjiayou.trecorelib.http.RequestCallback;
+import com.mjiayou.trecorelib.http.callback.RequestCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ConvertUtils;
 import com.mjiayou.trecorelib.util.LogUtils;

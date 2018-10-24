@@ -24,7 +24,7 @@ import com.mjiayou.trecorelib.base.TCViewHolder;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.mjiayou.trecorelib.http.RequestCallback;
+import com.mjiayou.trecorelib.http.callback.RequestCallback;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
