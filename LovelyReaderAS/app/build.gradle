@@ -49,7 +49,7 @@ android {
             shrinkResources false // 是否移除无用的resource文件
             signingConfig signingConfigs.debug // 使用release的签名
             applicationIdSuffix "" // 包名后缀
-            versionNameSuffix "_d${buildTime("yyMMddHHmm")}" // 版本号后缀
+            versionNameSuffix "" // 版本号后缀
 
             buildConfigField "boolean", "GRADLE_DEBUG", "true"
 
