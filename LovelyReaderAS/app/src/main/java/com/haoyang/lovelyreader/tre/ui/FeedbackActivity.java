@@ -17,8 +17,8 @@ import com.haoyang.lovelyreader.tre.bean.api.FeedbackAddParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
-import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
-import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.RequestCallback;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class FeedbackActivity extends BaseActivity {
 
                 MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiFeedbackAdd);
                 myRequestEntity.setContentWithHeader(ApiRequest.getContent(feedbackAddParam));
-                RequestBuilder.get().send(myRequestEntity, new RequestCallback<Object>() {
+                RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
                     @Override
                     public void onStart() {
                     }

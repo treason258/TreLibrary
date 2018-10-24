@@ -23,8 +23,8 @@ import com.mjiayou.trecorelib.base.TCAdapter;
 import com.mjiayou.trecorelib.base.TCViewHolder;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
-import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
-import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.RequestCallback;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
@@ -129,7 +129,7 @@ public class HomeAdapter extends TCAdapter {
                                 requestEntity.addHeader("token", tempToken);
                                 requestEntity.addParam("data", content);
                                 requestEntity.addFile("bookFile", new File(bean.getPath()));
-                                RequestBuilder.get().send(requestEntity, new RequestCallback<UploadBean>() {
+                                RequestSender.get().send(requestEntity, new RequestCallback<UploadBean>() {
                                     @Override
                                     public void onStart() {
                                     }
@@ -161,7 +161,7 @@ public class HomeAdapter extends TCAdapter {
                     @Override
                     public void onClick(View v) {
                         String fileUrl = "http://112.126.80.1:80//doc/book//2018-10-24/3154d92b44054c3494b12ea5991f92ec.epub";
-                        RequestBuilder.get().downloadFile(fileUrl, new FileCallBack(Configs.DIR_BOOK.getAbsolutePath(), "下载文件.epub") {
+                        RequestSender.get().downloadFile(fileUrl, new FileCallBack(Configs.DIR_BOOK.getAbsolutePath(), "下载文件.epub") {
 
                             @Override
                             public void inProgress(float progress, long total, int id) {

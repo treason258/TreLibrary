@@ -15,10 +15,8 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
-import com.haoyang.lovelyreader.tre.bean.api.CommonData;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
-import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.ui.FeedbackActivity;
@@ -26,11 +24,8 @@ import com.haoyang.lovelyreader.tre.ui.LoginActivity;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
-import com.mjiayou.trecorelib.http.RequestEntity;
-import com.mjiayou.trecorelib.http.RequestMethod;
-import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
-import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
-import com.mjiayou.trecorelib.json.JsonParser;
+import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.RequestCallback;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
 
@@ -95,7 +90,7 @@ public class MineFragment extends BaseFragment {
 
                                     MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiUserLogout);
                                     myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
-                                    RequestBuilder.get().send(myRequestEntity, new RequestCallback<Object>() {
+                                    RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
                                         @Override
                                         public void onStart() {
 

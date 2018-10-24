@@ -38,8 +38,8 @@ import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
 import com.haoyang.lovelyreader.tre.util.Utils;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
-import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
-import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.RequestCallback;
 import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
@@ -238,7 +238,7 @@ public class MainActivity extends BaseActivity {
 
         MyRequestEntity requestEntity = new MyRequestEntity(UrlConfig.apiAppUpgrade);
         requestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
-        RequestBuilder.get().send(requestEntity, new RequestCallback<UpdateBean>() {
+        RequestSender.get().send(requestEntity, new RequestCallback<UpdateBean>() {
             @Override
             public void onStart() {
 

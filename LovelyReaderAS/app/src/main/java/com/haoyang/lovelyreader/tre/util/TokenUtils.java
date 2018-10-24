@@ -5,8 +5,8 @@ import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
-import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
-import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.RequestCallback;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
@@ -21,7 +21,7 @@ public class TokenUtils {
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiTokenTemp);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam), null);
-        RequestBuilder.get().send(myRequestEntity, new RequestCallback<String>() {
+        RequestSender.get().send(myRequestEntity, new RequestCallback<String>() {
             @Override
             public void onStart() {
 

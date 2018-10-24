@@ -17,8 +17,8 @@ import com.haoyang.lovelyreader.tre.bean.api.UserLoginParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
-import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
-import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.RequestCallback;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity {
 
                 MyRequestEntity requestEntity = new MyRequestEntity(UrlConfig.apiUserLogin);
                 requestEntity.setContentWithHeader(content);
-                RequestBuilder.get().send(requestEntity, new RequestCallback<UserBean>() {
+                RequestSender.get().send(requestEntity, new RequestCallback<UserBean>() {
                     @Override
                     public void onStart() {
 

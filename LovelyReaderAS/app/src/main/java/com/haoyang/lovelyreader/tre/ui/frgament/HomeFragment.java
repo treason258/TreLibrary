@@ -63,8 +63,8 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.java.common.utils.Utils;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
-import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
-import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.RequestCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ConvertUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
@@ -664,7 +664,7 @@ public class HomeFragment extends BaseFragment {
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookAdd);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookAddParam));
-        RequestBuilder.get().send(myRequestEntity, new RequestCallback<BookSyncBean>() {
+        RequestSender.get().send(myRequestEntity, new RequestCallback<BookSyncBean>() {
             @Override
             public void onStart() {
 
@@ -689,7 +689,7 @@ public class HomeFragment extends BaseFragment {
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookSync);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookSyncParam));
-        RequestBuilder.get().send(myRequestEntity, new RequestCallback<List<BookSyncBean>>() {
+        RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookSyncBean>>() {
             @Override
             public void onStart() {
 
@@ -714,7 +714,7 @@ public class HomeFragment extends BaseFragment {
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAdd);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(categoryParam));
-        RequestBuilder.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
+        RequestSender.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
             @Override
             public void onStart() {
 

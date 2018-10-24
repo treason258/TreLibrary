@@ -20,8 +20,8 @@ import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.util.TokenUtils;
-import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
-import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
+import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.RequestCallback;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -132,7 +132,7 @@ public class RegisterActivity extends BaseActivity {
                         }
                         MyRequestEntity myRequestEntity = new MyRequestEntity(url);
                         myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam), tempToken);
-                        RequestBuilder.get().send(myRequestEntity, new RequestCallback<Object>() {
+                        RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
                             @Override
                             public void onStart() {
 
@@ -213,7 +213,7 @@ public class RegisterActivity extends BaseActivity {
                     case PAGE_TYPE_REGISTER: {
                         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiUserRegister);
                         myRequestEntity.setContentWithHeader(content);
-                        RequestBuilder.get().send(myRequestEntity, new RequestCallback<UserBean>() {
+                        RequestSender.get().send(myRequestEntity, new RequestCallback<UserBean>() {
                             @Override
                             public void onStart() {
 
@@ -253,7 +253,7 @@ public class RegisterActivity extends BaseActivity {
                             public void onGetTempToken(String tempToken) {
                                 MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiUserFindPwd);
                                 myRequestEntity.setContentWithHeader(content, tempToken);
-                                RequestBuilder.get().send(myRequestEntity, new RequestCallback<Object>() {
+                                RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
                                     @Override
                                     public void onStart() {
 
