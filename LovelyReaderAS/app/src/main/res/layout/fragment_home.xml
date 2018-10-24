@@ -47,6 +47,16 @@
             android:src="@drawable/ic_main_search_close" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvAddCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="新增一级分类"
+        android:textColor="@color/white" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

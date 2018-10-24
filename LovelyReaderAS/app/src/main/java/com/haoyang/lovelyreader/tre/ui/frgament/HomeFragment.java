@@ -21,6 +21,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.app.base.common.util.Size;
 import com.app.base.exception.DeviceException;
@@ -28,11 +29,19 @@ import com.app.base.service.android.AndroidInfoService;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
+import com.haoyang.lovelyreader.tre.bean.BookSyncBean;
+import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
+import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
+import com.haoyang.lovelyreader.tre.bean.api.BookAddParam;
+import com.haoyang.lovelyreader.tre.bean.api.BookSyncParam;
+import com.haoyang.lovelyreader.tre.bean.api.CategoryParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.OnBookAddEvent;
+import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.ui.FileActivity;
 import com.haoyang.lovelyreader.tre.wifi.Constants;
 import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
@@ -54,10 +63,13 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.java.common.utils.Utils;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
+import com.mjiayou.trecorelib.http.okhttp.RequestBuilder;
+import com.mjiayou.trecorelib.http.okhttp.RequestCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ConvertUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.zhy.http.okhttp.builder.PostFormBuilder;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,6 +92,7 @@ public class HomeFragment extends BaseFragment {
     private ImageView ivSearch;
     private EditText etSearch;
     private ImageView ivDelete;
+    private TextView tvAddCategory;
     private GridView gvBook;
     private ListView lvSearch;
     private ImageView ivAdd;
@@ -104,11 +117,14 @@ public class HomeFragment extends BaseFragment {
         ivSearch = (ImageView) view.findViewById(R.id.ivSearch);
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
+        tvAddCategory = (TextView) view.findViewById(R.id.tvAddCategory);
         gvBook = (GridView) view.findViewById(R.id.gvBook);
         lvSearch = (ListView) view.findViewById(R.id.lvSearch);
         ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
 
         initView();
+
+        getBookList();
         return view;
     }
 
@@ -179,6 +195,38 @@ public class HomeFragment extends BaseFragment {
             public void onClick(View v) {
                 etSearch.setText("");
                 etSearch.clearFocus();
+            }
+        });
+
+        // tvAddCategory
+        tvAddCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CategoryParam categoryParam = new CategoryParam();
+                categoryParam.setParentId("0");
+                categoryParam.setCategoryName("一级分类");
+
+                MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAdd);
+                myRequestEntity.setContent(ApiRequest.getContent(categoryParam));
+                RequestBuilder.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onSuccess(int code, CategoryBean categoryBean) {
+                        if (categoryBean != null) {
+                            ToastUtils.show(categoryBean.getCategoryId() + " - " + categoryBean.getCategoryName());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+
+                    }
+                });
+
             }
         });
 
@@ -316,6 +364,8 @@ public class HomeFragment extends BaseFragment {
         bookBean.setBook(getBookInfo(bookInfoService, bookBean.getPath())); // 读取书籍信息
         bookBean.setCover(getBookCover(bookInfoService, bookBean.getPath())); // 读取封面图片
         bookInfoService.clear();
+
+        addBook();
 
         mList.add(bookBean);
         mHomeAdapter.notifyDataSetChanged();
@@ -622,5 +672,54 @@ public class HomeFragment extends BaseFragment {
             pageStyleList.add(pageStyle);
         }
         return pageStyleList;
+    }
+
+
+    public void addBook() {
+        BookAddParam bookAddParam = new BookAddParam();
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookAdd);
+        myRequestEntity.setContent(ApiRequest.getContent(bookAddParam));
+        RequestBuilder.get().send(myRequestEntity, new RequestCallback<BookSyncBean>() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(int code, BookSyncBean object) {
+
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+        });
+    }
+
+    public void getBookList() {
+        BookSyncParam bookSyncParam = new BookSyncParam();
+        bookSyncParam.setSyncType("1");
+        bookSyncParam.setLastSyncDate("0");
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookSync);
+        myRequestEntity.setContent(ApiRequest.getContent(bookSyncParam));
+        RequestBuilder.get().send(myRequestEntity, new RequestCallback<List<BookSyncBean>>() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(int code, List<BookSyncBean> object) {
+
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+        });
     }
 }
