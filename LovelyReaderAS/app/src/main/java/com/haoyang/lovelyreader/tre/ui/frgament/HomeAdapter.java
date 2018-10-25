@@ -135,8 +135,8 @@ public class HomeAdapter extends TCAdapter {
                                     }
 
                                     @Override
-                                    public void inProgress(float progress, long total) {
-                                        super.inProgress(progress, total);
+                                    public void onProgress(float progress, long total) {
+                                        super.onProgress(progress, total);
                                         int percent = (int) (progress * 100.0f);
                                         ToastUtils.show("正在上传：" + percent + "%");
                                     }
