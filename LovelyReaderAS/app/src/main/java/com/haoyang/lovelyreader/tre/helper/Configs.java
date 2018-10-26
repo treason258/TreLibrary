@@ -10,9 +10,13 @@ import java.io.File;
 
 public class Configs {
     public static final int HTTP_PORT = 12345;
-    public static final String DIR_IN_SDCARD = "LovelyReader";
-    public static final String DIR_IN_SDCARD_BOOK = "LovelyReader/book";
-    public static final String DIR_IN_SDCARD_UPDATE = "LovelyReader/update";
-    public static final File DIR_BOOK = new File(Environment.getExternalStorageDirectory() + File.separator + Configs.DIR_IN_SDCARD_BOOK);
-    public static final String DIR_UPDATE = Environment.getExternalStorageDirectory() + File.separator + Configs.DIR_IN_SDCARD_UPDATE;
+    public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
+    public static final String DIR_SDCARD_PROJECT = DIR_SDCARD + "/LovelyReader";
+    public static final String DIR_SDCARD_PROJECT_BOOK = DIR_SDCARD_PROJECT + "/book";
+    public static final String DIR_SDCARD_PROJECT_UPDATE = DIR_SDCARD_PROJECT + "/update";
+    public static final String DIR_SDCARD_PROJECT_COVER = DIR_SDCARD_PROJECT + "/cover";
+
+    public static final File FILE_SDCARD_PROJECT_BOOK = new File(DIR_SDCARD_PROJECT_BOOK);
+
+    public static final String CATEGORY_ROOT = "-1";
 }

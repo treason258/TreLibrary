@@ -294,7 +294,7 @@ public class MainActivity extends BaseActivity {
             return;
         }
         mUpdateBean = updateBean;
-        mPkgPath = Configs.DIR_UPDATE;
+        mPkgPath = Configs.DIR_SDCARD_PROJECT_UPDATE;
         mPkgName = mContext.getPackageName();
         File pkg = new File(mPkgPath, mPkgName + ".apk");
         if (pkg.exists()) {

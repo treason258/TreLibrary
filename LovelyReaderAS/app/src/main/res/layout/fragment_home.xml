@@ -57,6 +57,16 @@
         android:text="新增一级分类"
         android:textColor="@color/white" />
 
+    <TextView
+        android:id="@+id/tvAddBook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="新增电子书"
+        android:textColor="@color/white" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

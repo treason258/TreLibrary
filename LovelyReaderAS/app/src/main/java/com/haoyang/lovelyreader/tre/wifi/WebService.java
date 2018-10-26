@@ -123,7 +123,7 @@ public class WebService extends TCService {
         server.get("/files", (AsyncHttpServerRequest request, AsyncHttpServerResponse response) -> {
             LogUtils.d(TAG, "startServer() called | query upload list");
             JSONArray array = new JSONArray();
-            File dir = Configs.DIR_BOOK;
+            File dir = Configs.FILE_SDCARD_PROJECT_BOOK;
             if (dir.exists() && dir.isDirectory()) {
                 String[] fileNames = dir.list();
                 if (fileNames != null) {
@@ -211,7 +211,7 @@ public class WebService extends TCService {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                File file = new File(Configs.DIR_BOOK, path);
+                File file = new File(Configs.FILE_SDCARD_PROJECT_BOOK, path);
                 if (file.exists() && file.isFile()) {
                     file.delete();
                     RxBus.get().post(Constants.RxBusEventType.LOAD_BOOK_LIST, 0);
@@ -228,7 +228,7 @@ public class WebService extends TCService {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            File file = new File(Configs.DIR_BOOK, path);
+            File file = new File(Configs.FILE_SDCARD_PROJECT_BOOK, path);
             if (file.exists() && file.isFile()) {
                 try {
                     response.getHeaders().add("Content-Disposition", "attachment;filename=" + URLEncoder.encode(file.getName(), "utf-8"));
@@ -369,10 +369,10 @@ public class WebService extends TCService {
             LogUtils.d(TAG, "FileUploadHolder | setFileName() called with: fileName = [" + fileName + "]");
             this.fileName = fileName;
             totalSize = 0;
-            if (!Configs.DIR_BOOK.exists()) {
-                Configs.DIR_BOOK.mkdirs();
+            if (!Configs.FILE_SDCARD_PROJECT_BOOK.exists()) {
+                Configs.FILE_SDCARD_PROJECT_BOOK.mkdirs();
             }
-            this.receivedFile = new File(Configs.DIR_BOOK, this.fileName);
+            this.receivedFile = new File(Configs.FILE_SDCARD_PROJECT_BOOK, this.fileName);
             Timber.d(receivedFile.getAbsolutePath());
             try {
                 fileOutPutStream = new BufferedOutputStream(new FileOutputStream(receivedFile));

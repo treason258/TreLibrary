@@ -14,11 +14,10 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.UploadBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
-import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
+import com.haoyang.lovelyreader.tre.bean.api.UploadBookParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
-import com.haoyang.lovelyreader.tre.util.TokenUtils;
 import com.mjiayou.trecorelib.base.TCAdapter;
 import com.mjiayou.trecorelib.base.TCViewHolder;
 import com.mjiayou.trecorelib.http.RequestEntity;
@@ -26,6 +25,7 @@ import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.RequestCallback;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
 import java.io.File;
@@ -116,42 +116,40 @@ public class HomeAdapter extends TCAdapter {
                 tvUpload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        TokenUtils.getTempToken(new TokenUtils.OnGetTempTokenListener() {
+                        UploadBookParam uploadBookParam = new UploadBookParam();
+                        uploadBookParam.setBookId("");
+                        uploadBookParam.setUuid(EncodeHelper.getRandomChar());
+                        String content = ApiRequest.getContent(uploadBookParam);
+
+                        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUploadBook);
+                        requestEntity.setMethod(RequestMethod.POST_FILE);
+                        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
+                        requestEntity.addHeader("token", UserUtils.getToken());
+                        requestEntity.addParam("data", content);
+                        requestEntity.addFile("bookFile", new File(bean.getPath()));
+                        requestEntity.addFile("imgFile", new File(bean.getCover()));
+                        RequestSender.get().send(requestEntity, new RequestCallback<UploadBean>() {
                             @Override
-                            public void onGetTempToken(String tempToken) {
-                                CommonParam commonParam = new CommonParam();
-                                commonParam.setData(EncodeHelper.getRandomChar());
-                                String content = ApiRequest.getContent(commonParam);
+                            public void onStart() {
+                            }
 
-                                RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUploadBook);
-                                requestEntity.setMethod(RequestMethod.POST_FILE);
-                                requestEntity.addHeader("sign", EncodeHelper.getSign(content));
-                                requestEntity.addHeader("token", tempToken);
-                                requestEntity.addParam("data", content);
-                                requestEntity.addFile("bookFile", new File(bean.getPath()));
-                                RequestSender.get().send(requestEntity, new RequestCallback<UploadBean>() {
-                                    @Override
-                                    public void onStart() {
-                                    }
+                            @Override
+                            public void onProgress(float progress, long total) {
+                                super.onProgress(progress, total);
+                                int percent = (int) (progress * 100.0f);
+                                ToastUtils.show("正在上传：" + percent + "%");
+                            }
 
-                                    @Override
-                                    public void onProgress(float progress, long total) {
-                                        super.onProgress(progress, total);
-                                        int percent = (int) (progress * 100.0f);
-                                        ToastUtils.show("正在上传：" + percent + "%");
-                                    }
+                            @Override
+                            public void onSuccess(int code, UploadBean uploadBean) {
+                                if (uploadBean != null) {
+                                    ToastUtils.show("上传成功：" + uploadBean.getFullFilePath());
+                                }
+                            }
 
-                                    @Override
-                                    public void onSuccess(int code, UploadBean uploadBean) {
-                                        if (uploadBean != null) {
-                                            ToastUtils.show("上传成功：" + uploadBean.getFullFilePath());
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(int code, String msg) {
-                                    }
-                                });
+                            @Override
+                            public void onFailure(int code, String msg) {
+                                ToastUtils.show(msg);
                             }
                         });
                     }
@@ -161,7 +159,7 @@ public class HomeAdapter extends TCAdapter {
                     @Override
                     public void onClick(View v) {
                         String fileUrl = "http://112.126.80.1:80//doc/book//2018-10-24/3154d92b44054c3494b12ea5991f92ec.epub";
-                        RequestSender.get().downloadFile(fileUrl, new FileCallBack(Configs.DIR_BOOK.getAbsolutePath(), "下载文件.epub") {
+                        RequestSender.get().downloadFile(fileUrl, new FileCallBack(Configs.FILE_SDCARD_PROJECT_BOOK.getAbsolutePath(), "下载文件.epub") {
 
                             @Override
                             public void inProgress(float progress, long total, int id) {

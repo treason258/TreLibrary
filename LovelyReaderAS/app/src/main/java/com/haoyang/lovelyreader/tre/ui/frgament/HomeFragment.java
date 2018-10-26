@@ -37,8 +37,10 @@ import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.BookAddParam;
 import com.haoyang.lovelyreader.tre.bean.api.BookSyncParam;
 import com.haoyang.lovelyreader.tre.bean.api.CategoryParam;
+import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.OnBookAddEvent;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
@@ -92,6 +94,7 @@ public class HomeFragment extends BaseFragment {
     private EditText etSearch;
     private ImageView ivDelete;
     private TextView tvAddCategory;
+    private TextView tvAddBook;
     private GridView gvBook;
     private ListView lvSearch;
     private ImageView ivAdd;
@@ -117,6 +120,7 @@ public class HomeFragment extends BaseFragment {
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
         tvAddCategory = (TextView) view.findViewById(R.id.tvAddCategory);
+        tvAddBook = (TextView) view.findViewById(R.id.tvAddBook);
         gvBook = (GridView) view.findViewById(R.id.gvBook);
         lvSearch = (ListView) view.findViewById(R.id.lvSearch);
         ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
@@ -124,6 +128,7 @@ public class HomeFragment extends BaseFragment {
         initView();
 
         getBookList();
+        getCategoryList();
         return view;
     }
 
@@ -205,6 +210,14 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
+        // tvAddBook
+        tvAddBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBook(null);
+            }
+        });
+
         // gvBook
         mUserBean = DBHelper.getUserBean();
         mList.clear();
@@ -276,7 +289,7 @@ public class HomeFragment extends BaseFragment {
     public void loadBookList(Integer type) {
         Timber.d("loadBookList:" + Thread.currentThread().getName());
         List<String> books = new ArrayList<>();
-        File dir = Configs.DIR_BOOK;
+        File dir = Configs.FILE_SDCARD_PROJECT_BOOK;
         if (dir.exists() && dir.isDirectory()) {
             String[] fileNames = dir.list();
             if (fileNames != null) {
@@ -651,16 +664,20 @@ public class HomeFragment extends BaseFragment {
 
 
     public void addBook(BookBean bookBean) {
+        if (bookBean == null) {
+            Book book = new Book();
+            String id = String.valueOf(System.currentTimeMillis());
+            book.authors = "测试作者" + id;
+            book.bookName = "测试书名" + id;
+            bookBean = new BookBean();
+            bookBean.setBook(book);
+        }
         BookAddParam bookAddParam = new BookAddParam();
         bookAddParam.setAuthor(bookBean.getBook().authors); // 作者
         bookAddParam.setBookCategory(""); // 图书目录
         bookAddParam.setBookDesc(""); // 图书简介
-        bookAddParam.setBookDocId(""); // 电子书文档ID
         bookAddParam.setBookName(bookBean.getBook().bookName); // 电子书名称
-        bookAddParam.setBookPath(""); // 电子书路径
-        bookAddParam.setCategoryId(""); // 分类ID
-        bookAddParam.setCoverDocId(""); // 图书封面文档ID
-        bookAddParam.setCoverPath(""); // 图书封面路径
+        bookAddParam.setCategoryId("1"); // 分类ID
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookAdd);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookAddParam));
@@ -671,13 +688,15 @@ public class HomeFragment extends BaseFragment {
             }
 
             @Override
-            public void onSuccess(int code, BookSyncBean object) {
-
+            public void onSuccess(int code, BookSyncBean bookSyncBean) {
+                if (bookSyncBean != null) {
+                    ToastUtils.show("bookId" + bookSyncBean.getBookDocId());
+                }
             }
 
             @Override
             public void onFailure(int code, String msg) {
-
+                ToastUtils.show(msg);
             }
         });
     }
@@ -702,15 +721,16 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onFailure(int code, String msg) {
-
+                ToastUtils.show(msg);
             }
         });
     }
 
     public void addCategory() {
         CategoryParam categoryParam = new CategoryParam();
-        categoryParam.setParentId("-1");
-        categoryParam.setCategoryName("一级分类");
+        categoryParam.setParentId(Configs.CATEGORY_ROOT);
+        String id = String.valueOf(System.currentTimeMillis());
+        categoryParam.setCategoryName("测试分类" + id);
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAdd);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(categoryParam));
@@ -729,7 +749,33 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onFailure(int code, String msg) {
+                ToastUtils.show(msg);
+            }
+        });
+    }
 
+    public void getCategoryList() {
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(EncodeHelper.getRandomChar());
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAll);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(int code, CategoryBean categoryBean) {
+                if (categoryBean != null) {
+                    ToastUtils.show("id -> " + categoryBean.getCategoryId());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtils.show(msg);
             }
         });
     }

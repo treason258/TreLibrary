@@ -14,7 +14,6 @@ public class BookSyncBean {
     private String bookName; // 电子书名称
     private String bookPath; // 电子书路径
     private String categoryId; // 分类ID
-    private String categoryName; // 分类名称
     private String coverDocId; // 图书封面文档ID
     private String coverPath; // 图书封面路径
     private String createDate; // createDate
@@ -81,14 +80,6 @@ public class BookSyncBean {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
     }
 
     public String getCoverDocId() {
