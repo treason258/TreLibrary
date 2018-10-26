@@ -117,7 +117,7 @@ public class HomeAdapter extends TCAdapter {
                     @Override
                     public void onClick(View v) {
                         UploadBookParam uploadBookParam = new UploadBookParam();
-                        uploadBookParam.setBookId("");
+                        uploadBookParam.setBookId("2");
                         uploadBookParam.setUuid(EncodeHelper.getRandomChar());
                         String content = ApiRequest.getContent(uploadBookParam);
 
@@ -159,7 +159,7 @@ public class HomeAdapter extends TCAdapter {
                     @Override
                     public void onClick(View v) {
                         String fileUrl = "http://112.126.80.1:80//doc/book//2018-10-24/3154d92b44054c3494b12ea5991f92ec.epub";
-                        RequestSender.get().downloadFile(fileUrl, new FileCallBack(Configs.FILE_SDCARD_PROJECT_BOOK.getAbsolutePath(), "下载文件.epub") {
+                        RequestSender.get().downloadFile(fileUrl, new FileCallBack(Configs.DIR_SDCARD_PROJECT_BOOK, "下载文件.epub") {
 
                             @Override
                             public void inProgress(float progress, long total, int id) {

@@ -16,7 +16,7 @@ public class Configs {
     public static final String DIR_SDCARD_PROJECT_UPDATE = DIR_SDCARD_PROJECT + "/update";
     public static final String DIR_SDCARD_PROJECT_COVER = DIR_SDCARD_PROJECT + "/cover";
 
-    public static final File FILE_SDCARD_PROJECT_BOOK = new File(DIR_SDCARD_PROJECT_BOOK);
+//    public static final File FILE_SDCARD_PROJECT_BOOK = new File(DIR_SDCARD_PROJECT_BOOK);
 
     public static final String CATEGORY_ROOT = "-1";
 }

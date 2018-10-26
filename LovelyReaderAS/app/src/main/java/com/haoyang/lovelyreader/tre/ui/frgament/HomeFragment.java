@@ -24,8 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.base.common.util.Size;
-import com.app.base.exception.DeviceException;
-import com.app.base.service.android.AndroidInfoService;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
@@ -289,7 +287,7 @@ public class HomeFragment extends BaseFragment {
     public void loadBookList(Integer type) {
         Timber.d("loadBookList:" + Thread.currentThread().getName());
         List<String> books = new ArrayList<>();
-        File dir = Configs.FILE_SDCARD_PROJECT_BOOK;
+        File dir = new File(Configs.DIR_SDCARD_PROJECT_BOOK);
         if (dir.exists() && dir.isDirectory()) {
             String[] fileNames = dir.list();
             if (fileNames != null) {
@@ -389,41 +387,39 @@ public class HomeFragment extends BaseFragment {
         }
 
         try {
-            AndroidInfoService androidInfoService = new AndroidInfoService();
-            String documentPath;
-            try {
-                documentPath = androidInfoService.getDownLoadPath(mContext);
-            } catch (DeviceException e) {
-                e.printStackTrace();
-                return null;
-            }
+//            AndroidInfoService androidInfoService = new AndroidInfoService();
+//            String documentPath;
+//            try {
+//                documentPath = androidInfoService.getDownLoadPath(mContext);
+//            } catch (DeviceException e) {
+//                e.printStackTrace();
+//                return null;
+//            }
 
-            String newPath = documentPath + File.separator + "bookimage" + File.separator;
-            File file = new File(newPath);
-            if (!file.exists()) {
-                boolean mkdir = file.mkdir();
-                if (!mkdir) {
+            // 存放图片的目录
+            File coverDirFile = new File(Configs.DIR_SDCARD_PROJECT_COVER);
+            if (!coverDirFile.exists()) {
+                if (!coverDirFile.mkdir()) {
                     return null;
                 }
             }
 
-            String md5Id = Utils.md5(filePath.getBytes());
-            newPath += md5Id;
-            file = new File(newPath);
-            if (file.exists()) {
-                file.delete();
+            // 图片文件
+            File coverPathFile = new File(coverDirFile, Utils.md5(filePath.getBytes()) + ".jpg");
+            if (coverPathFile.exists()) {
+                coverPathFile.delete();
             }
 
             OutputStream outputStream = null;
             try {
-                file.createNewFile();
-                outputStream = new FileOutputStream(file);
+                coverPathFile.createNewFile();
+                outputStream = new FileOutputStream(coverPathFile);
                 byte[] buffer = new byte[1024];
                 int len = 0;
                 while ((len = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, len);
                 }
-                return newPath;
+                return coverPathFile.getAbsolutePath();
             } catch (IOException e) {
                 LogUtils.printStackTrace(e);
                 return null;
@@ -760,16 +756,16 @@ public class HomeFragment extends BaseFragment {
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAll);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
+        RequestSender.get().send(myRequestEntity, new RequestCallback<List<CategoryBean>>() {
             @Override
             public void onStart() {
 
             }
 
             @Override
-            public void onSuccess(int code, CategoryBean categoryBean) {
+            public void onSuccess(int code, List<CategoryBean> categoryBean) {
                 if (categoryBean != null) {
-                    ToastUtils.show("id -> " + categoryBean.getCategoryId());
+//                    ToastUtils.show("id -> " + categoryBean.getCategoryId());
                 }
             }
 
