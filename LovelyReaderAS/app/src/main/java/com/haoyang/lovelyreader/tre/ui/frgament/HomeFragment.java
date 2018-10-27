@@ -27,7 +27,6 @@ import com.app.base.common.util.Size;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
-import com.haoyang.lovelyreader.tre.bean.BookSyncBean;
 import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
@@ -351,7 +350,7 @@ public class HomeFragment extends BaseFragment {
         bookBean.setCover(getBookCover(bookInfoService, bookBean.getPath())); // 读取封面图片
         bookInfoService.clear();
 
-        addBook(bookBean);
+//        addBook(bookBean);
 
         mList.add(bookBean);
         mHomeAdapter.notifyDataSetChanged();
@@ -677,14 +676,14 @@ public class HomeFragment extends BaseFragment {
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookAdd);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookAddParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<BookSyncBean>() {
+        RequestSender.get().send(myRequestEntity, new RequestCallback<BookBean>() {
             @Override
             public void onStart() {
 
             }
 
             @Override
-            public void onSuccess(int code, BookSyncBean bookSyncBean) {
+            public void onSuccess(int code, BookBean bookSyncBean) {
                 if (bookSyncBean != null) {
                     ToastUtils.show("bookId" + bookSyncBean.getBookDocId());
                 }
@@ -704,14 +703,14 @@ public class HomeFragment extends BaseFragment {
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookSync);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookSyncParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookSyncBean>>() {
+        RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookBean>>() {
             @Override
             public void onStart() {
 
             }
 
             @Override
-            public void onSuccess(int code, List<BookSyncBean> object) {
+            public void onSuccess(int code, List<BookBean> object) {
 
             }
 
