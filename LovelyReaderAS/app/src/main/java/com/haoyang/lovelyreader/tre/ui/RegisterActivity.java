@@ -229,8 +229,6 @@ public class RegisterActivity extends BaseActivity {
                                     SharedUtils.get().setAccountPassword(password);
                                     // 保存用户信息
                                     DBHelper.setUserBean(bean);
-                                    // 同步游客书籍
-                                    DBHelper.syncGuestBook();
                                     // 通知登录成功
                                     UserUtils.doLogin(bean.getToken());
 

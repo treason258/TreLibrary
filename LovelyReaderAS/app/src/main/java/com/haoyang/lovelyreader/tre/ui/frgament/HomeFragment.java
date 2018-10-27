@@ -122,7 +122,7 @@ public class HomeFragment extends BaseFragment {
         lvSearch = (ListView) view.findViewById(R.id.lvSearch);
         ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
 
-        initView();
+        initView(false);
         return view;
     }
 
@@ -155,8 +155,7 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    @Override
-    protected void initView() {
+    protected void initView(boolean isFirstLogin) {
         // mUserBean
         mUserBean = DBHelper.getUserBean();
 
@@ -202,7 +201,7 @@ public class HomeFragment extends BaseFragment {
         tvTemp1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                syncBookListFromServer();
+                syncBookListFromServer(false);
             }
         });
 
@@ -305,7 +304,7 @@ public class HomeFragment extends BaseFragment {
 
         // 如果用户已登录，则自动同步电子书
         if (UserUtils.checkLoginStatus()) {
-            syncBookListFromServer();
+            syncBookListFromServer(isFirstLogin);
         }
     }
 
@@ -343,7 +342,7 @@ public class HomeFragment extends BaseFragment {
      */
     public void onEvent(UserLoginStatusEvent event) {
         LogUtils.d(TAG, "onEvent() called with: event = [" + event + "]");
-        initView();
+        initView(true);
     }
 
     public void onEvent(OnBookAddEvent event) {
@@ -402,7 +401,7 @@ public class HomeFragment extends BaseFragment {
         } else {
             mList.add(0, bookBean);
             mHomeAdapter.setList(mList);
-            DBHelper.addBookBean(mUserBean.getUid(), bookBean);
+            DBHelper.setBookBeanList(mUserBean.getUid(), mList);
         }
     }
 
@@ -620,6 +619,48 @@ public class HomeFragment extends BaseFragment {
         return pageStyleList;
     }
 
+    /**
+     * syncGuestBook
+     */
+    private void syncGuestBook() {
+        // 游客用户
+        UserBean userBeanDefault = UserBean.getDefault();
+        // 游客用户添加的书
+        List<BookBean> bookBeanListDefault = DBHelper.getBookBeanList(userBeanDefault.getUid());
+
+        // 当前用户
+        UserBean userBean = DBHelper.getUserBean();
+        // 当前用户添加的书
+        List<BookBean> bookBeanList = DBHelper.getBookBeanList(userBean.getUid());
+
+        // 待上传的书
+        List<BookBean> bookBeanListUnAdd = new ArrayList<>();
+
+        // 合并
+        for (int i = 0; i < bookBeanListDefault.size(); i++) {
+            BookBean bookBeanDefault = bookBeanListDefault.get(i);
+            boolean hasThisBook = false;
+            for (int j = 0; j < bookBeanList.size(); j++) {
+                BookBean bookBean = bookBeanList.get(j);
+                if (!TextUtils.isEmpty(bookBeanDefault.getLocalBookPath())
+                        && !TextUtils.isEmpty(bookBean.getLocalBookPath())
+                        && bookBeanDefault.getLocalBookPath().equals(bookBean.getLocalBookPath())) {
+                    hasThisBook = true;
+                    break;
+                }
+            }
+            if (!hasThisBook) {
+                bookBeanListUnAdd.add(bookBeanDefault);
+            }
+        }
+
+        for (int i = 0; i < bookBeanListUnAdd.size(); i++) {
+            addBookToServer(bookBeanListUnAdd.get(i));
+        }
+
+        // 清空游客数据
+        DBHelper.setBookBeanList(userBeanDefault.getUid(), new ArrayList<>());
+    }
 
     /**
      * 新增电子书
@@ -647,7 +688,7 @@ public class HomeFragment extends BaseFragment {
                     bookBean.setBookId(bookSyncBean.getBookId());
                     mList.add(0, bookBean);
                     mHomeAdapter.setList(mList);
-                    DBHelper.addBookBean(mUserBean.getUid(), bookBean);
+                    DBHelper.setBookBeanList(mUserBean.getUid(), mList);
                 }
             }
 
@@ -692,7 +733,7 @@ public class HomeFragment extends BaseFragment {
     /**
      * 同步电子书
      */
-    public void syncBookListFromServer() {
+    public void syncBookListFromServer(boolean isFirstLogin) {
         BookSyncParam bookSyncParam = new BookSyncParam();
         long timestamp = DBHelper.getLastSyncDate(mUserBean.getUid());
         if (timestamp == 0) {
@@ -738,6 +779,11 @@ public class HomeFragment extends BaseFragment {
                 mHomeAdapter.setList(mList);
                 DBHelper.setBookBeanList(mUserBean.getUid(), mList);
                 DBHelper.setLastSyncDate(mUserBean.getUid(), System.currentTimeMillis());
+
+                // 如果来自刚登录的初始化，还需要同步游客数据
+                if (isFirstLogin) {
+                    syncGuestBook();
+                }
             }
 
             @Override
