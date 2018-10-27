@@ -16,6 +16,7 @@ import com.haoyang.lovelyreader.tre.bean.UploadBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.UploadBookParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
+import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
@@ -28,6 +29,8 @@ import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.RequestCallback;
+import com.mjiayou.trecorelib.image.ImageLoader;
+import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
@@ -107,6 +110,8 @@ public class HomeAdapter extends TCAdapter {
                     if (bitmap != null) {
                         ivBook.setImageBitmap(bitmap);
                     }
+                } else if (!TextUtils.isEmpty(bookBean.getCoverPath())) {
+                    ImageLoader.get().load(ivBook, bookBean.getCoverPath());
                 } else {
                     ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_main_book_default));
                 }
@@ -181,13 +186,24 @@ public class HomeAdapter extends TCAdapter {
     }
 
     /**
-     * 上传书文件
+     * getList
+     */
+    public List<BookBean> getList() {
+        return mList;
+    }
+
+    /**
+     * setList
+     */
+    public void setList(List<BookBean> list) {
+        mList = list;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 上传电子书文件
      */
     private void uploadBook(BookBean bookBean, int position) {
-        if (TextUtils.isEmpty(bookBean.getBookId())) {
-            ToastUtils.show("TextUtils.isEmpty(bean.getBookId()) == true");
-            return;
-        }
         UploadBookParam uploadBookParam = new UploadBookParam();
         uploadBookParam.setBookId(bookBean.getBookId());
         uploadBookParam.setUuid(EncodeHelper.getRandomChar());
@@ -215,12 +231,14 @@ public class HomeAdapter extends TCAdapter {
             @Override
             public void onSuccess(int code, UploadBean uploadBean) {
                 if (uploadBean != null) {
-                    ToastUtils.show("上传成功：" + uploadBean.getBookPath());
+                    ToastUtils.show("上传成功");
+                    LogUtils.i("上传成功 -> " + uploadBean.getBookPath());
 
                     bookBean.setBookDocId(uploadBean.getBookDocId());
                     bookBean.setBookPath(uploadBean.getBookPath());
                     bookBean.setCoverDocId(uploadBean.getCoverDocId());
                     bookBean.setCoverPath(uploadBean.getCoverPath());
+
                     mList.set(position, bookBean);
                     notifyDataSetChanged();
                 }
@@ -234,12 +252,12 @@ public class HomeAdapter extends TCAdapter {
     }
 
     /**
-     * 下载书文件
+     * 下载电子书文件
      */
     private void downloadBook(BookBean bookBean, int position) {
         String fileUrl = bookBean.getBookPath();
         String fileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
-        String fileName = bookBean.getBookId() + "-" + bookBean.getBookName() + ".epub";
+        String fileName = DBHelper.getUserBean().getUid() + "-" + bookBean.getBookId() + "-" + bookBean.getBookName() + ".epub";
         RequestSender.get().downloadFile(fileUrl, new FileCallBack(fileDir, fileName) {
 
             @Override
@@ -252,13 +270,13 @@ public class HomeAdapter extends TCAdapter {
             @Override
             public void onResponse(File file, int id) {
                 if (file != null) {
-                    ToastUtils.show("下载成功：" + file.getAbsolutePath());
+                    ToastUtils.show("下载成功");
+                    LogUtils.i("下载成功 -> " + file.getAbsolutePath());
 
-                    FileNameService fileNameService = new FileNameService();
                     String filePath = file.getAbsolutePath();
+                    FileNameService fileNameService = new FileNameService();
                     String fileName = fileNameService.getFileName(filePath);
                     String fileSuffix = fileNameService.getFileExtendName(filePath);
-
                     bookBean.setFileName(fileName);
                     bookBean.setFileSuffix(fileSuffix);
                     bookBean.setLocalBookPath(filePath);

@@ -61,6 +61,7 @@ import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
+import com.java.common.service.file.FileNameService;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
@@ -182,7 +183,7 @@ public class HomeFragment extends BaseFragment {
                     mList.addAll(DBHelper.getBookBeanListByKey(mUserBean.getUid(), key));
                 }
                 if (mHomeAdapter != null) {
-                    mHomeAdapter.notifyDataSetChanged();
+                    mHomeAdapter.setList(mList);
                 }
             }
         });
@@ -201,7 +202,7 @@ public class HomeFragment extends BaseFragment {
         tvTemp1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getBookListFromServer(DBHelper.getLastSyncDate(mUserBean.getUid()));
+                syncBookListFromServer();
             }
         });
 
@@ -297,8 +298,15 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        // 展示数据
-        showData();
+        // 展示本地数据
+        mList.clear();
+        mList.addAll(DBHelper.getBookBeanList(mUserBean.getUid()));
+        mHomeAdapter.setList(mList);
+
+        // 如果用户已登录，则自动同步电子书
+        if (UserUtils.checkLoginStatus()) {
+            syncBookListFromServer();
+        }
     }
 
     @Subscribe(tags = {@Tag(Constants.RxBusEventType.POPUP_MENU_DIALOG_SHOW_DISMISS)})
@@ -326,7 +334,7 @@ public class HomeFragment extends BaseFragment {
             LogUtils.d(TAG, ConvertUtils.parseString(books, "\n"));
 //            mBooks.clear();
 //            mBooks.addAll(books);
-//            mBookshelfAdapter.notifyDataSetChanged();
+//            mHomeAdapter.setList(mList);
         });
     }
 
@@ -352,19 +360,6 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * 展示本地数据
-     */
-    private void showData() {
-        mList.clear();
-        mList.addAll(DBHelper.getBookBeanList(mUserBean.getUid()));
-        mHomeAdapter.notifyDataSetChanged();
-
-        if (UserUtils.checkLoginStatus()) {
-            getBookListFromServer(DBHelper.getLastSyncDate(mUserBean.getUid()));
-        }
-    }
-
-    /**
      * onAddBook
      */
     public void onAddBook(FileBean fileBean) {
@@ -381,7 +376,7 @@ public class HomeFragment extends BaseFragment {
         for (int i = 0; i < mList.size(); i++) {
             if (!TextUtils.isEmpty(mList.get(i).getLocalBookPath())
                     && mList.get(i).getLocalBookPath().equals(bookBean.getLocalBookPath())) {
-                ToastUtils.show(bookBean.getFileName() + "-这本书已经添加过了");
+                ToastUtils.show(bookBean.getFileName() + bookBean.getFileSuffix() + "-这本书已经添加过了");
                 return;
             }
         }
@@ -405,9 +400,8 @@ public class HomeFragment extends BaseFragment {
         if (UserUtils.checkLoginStatus()) {
             addBookToServer(bookBean);
         } else {
-            mList.add(bookBean);
-            mHomeAdapter.notifyDataSetChanged();
-
+            mList.add(0, bookBean);
+            mHomeAdapter.setList(mList);
             DBHelper.addBookBean(mUserBean.getUid(), bookBean);
         }
     }
@@ -651,8 +645,8 @@ public class HomeFragment extends BaseFragment {
                     ToastUtils.show("新增电子书成功 | " + bookSyncBean.getBookId() + " - " + bookSyncBean.getBookName());
 
                     bookBean.setBookId(bookSyncBean.getBookId());
-                    mList.add(bookBean);
-                    mHomeAdapter.notifyDataSetChanged();
+                    mList.add(0, bookBean);
+                    mHomeAdapter.setList(mList);
                     DBHelper.addBookBean(mUserBean.getUid(), bookBean);
                 }
             }
@@ -683,7 +677,7 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(int code, Object object) {
                 if (object != null) {
                     mList.remove(bookBean);
-                    mHomeAdapter.notifyDataSetChanged();
+                    mHomeAdapter.setList(mList);
                     DBHelper.delBookBean(mUserBean.getUid(), bookBean.getBookId());
                 }
             }
@@ -698,8 +692,9 @@ public class HomeFragment extends BaseFragment {
     /**
      * 同步电子书
      */
-    public void getBookListFromServer(long timestamp) {
+    public void syncBookListFromServer() {
         BookSyncParam bookSyncParam = new BookSyncParam();
+        long timestamp = DBHelper.getLastSyncDate(mUserBean.getUid());
         if (timestamp == 0) {
             bookSyncParam.setSyncType("1");
             bookSyncParam.setLastSyncDate("0");
@@ -717,8 +712,30 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onSuccess(int code, List<BookBean> bookBeanList) {
-                mList.addAll(bookBeanList);
-                mHomeAdapter.notifyDataSetChanged();
+                for (int i = bookBeanList.size() - 1; i >= 0; i--) {
+                    BookBean bookBean = bookBeanList.get(i);
+                    String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
+                    String bookFileName = DBHelper.getUserBean().getUid() + "-" + bookBean.getBookId() + "-" + bookBean.getBookName() + ".epub";
+                    File bookFile = new File(bookFileDir, bookFileName);
+                    if (bookFile.exists()) {
+                        String filePath = bookFile.getAbsolutePath();
+                        FileNameService fileNameService = new FileNameService();
+                        String fileName = fileNameService.getFileName(filePath);
+                        String fileSuffix = fileNameService.getFileExtendName(filePath);
+                        bookBean.setFileName(fileName);
+                        bookBean.setFileSuffix(fileSuffix);
+                        bookBean.setLocalBookPath(filePath);
+                        BookInfoService bookInfoService = new BookInfoService();
+                        bookInfoService.init(bookBean.getLocalBookPath());
+                        Book book = BookInfoUtils.getBookInfo(bookInfoService, bookBean.getLocalBookPath());
+                        String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, bookBean.getLocalBookPath());
+                        bookInfoService.clear();
+                        bookBean.setBook(book);
+                        bookBean.setLocalCoverPath(localCoverPath);
+                    }
+                    mList.add(0, bookBean);
+                }
+                mHomeAdapter.setList(mList);
                 DBHelper.setBookBeanList(mUserBean.getUid(), mList);
                 DBHelper.setLastSyncDate(mUserBean.getUid(), System.currentTimeMillis());
             }
