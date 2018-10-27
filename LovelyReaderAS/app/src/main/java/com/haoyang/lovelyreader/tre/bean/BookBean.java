@@ -10,11 +10,10 @@ import java.io.Serializable;
 
 public class BookBean implements Serializable {
 
-    private String name; // 名字
-    private String suffix; // 后缀
-    private String path; // 本地路径
-    private String cover; // 封面
-    private String url; // 网络路径
+    private String fileName; // 名字
+    private String fileSuffix; // 后缀
+    private String localBookPath; // 书的本地路径
+    private String localCoverPath; // 封面图片本地路径
     private Book book; // 书的信息
 
     // 接口需要
@@ -29,6 +28,9 @@ public class BookBean implements Serializable {
     private String coverDocId; // 图书封面文档ID
     private String coverPath; // 图书封面路径
     private String createDate; // 创建时间
+
+    public BookBean() {
+    }
 
     public String getAuthor() {
         return author;
@@ -118,47 +120,36 @@ public class BookBean implements Serializable {
         this.createDate = createDate;
     }
 
-    public BookBean() {
+    public String getLocalBookPath() {
+        return localBookPath;
     }
 
-    public String getUrl() {
-        return url;
+    public void setLocalBookPath(String localBookPath) {
+        this.localBookPath = localBookPath;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public String getFileName() {
+        return fileName;
     }
 
-    public String getPath() {
-        return path;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public String getLocalCoverPath() {
+        return localCoverPath;
     }
 
-    public String getName() {
-        return name;
+    public void setLocalCoverPath(String cover) {
+        this.localCoverPath = cover;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFileSuffix() {
+        return fileSuffix;
     }
 
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
+    public void setFileSuffix(String fileSuffix) {
+        this.fileSuffix = fileSuffix;
     }
 
     public Book getBook() {

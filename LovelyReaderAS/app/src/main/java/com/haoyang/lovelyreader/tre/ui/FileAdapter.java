@@ -62,7 +62,7 @@ public class FileAdapter extends BaseAdapter {
         }
 
         if (mList != null && mList.get(position) != null) {
-            viewHolder.initView(mList.get(position));
+            viewHolder.initView(mList.get(position), position);
         }
         return convertView;
     }
@@ -80,7 +80,7 @@ public class FileAdapter extends BaseAdapter {
         }
 
         @Override
-        protected void initView(FileBean bean) {
+        protected void initView(FileBean bean, int position) {
             // ivFile
             if (bean.isFolder()) { // 是文件夹
                 ivFile.setVisibility(View.VISIBLE);

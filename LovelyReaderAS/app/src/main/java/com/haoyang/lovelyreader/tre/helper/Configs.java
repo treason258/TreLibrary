@@ -19,4 +19,5 @@ public class Configs {
 //    public static final File FILE_SDCARD_PROJECT_BOOK = new File(DIR_SDCARD_PROJECT_BOOK);
 
     public static final String CATEGORY_ROOT = "-1";
+    public static final String CATEGORY_DEFAULT = "1";
 }

@@ -18,6 +18,10 @@ import com.haoyang.lovelyreader.tre.bean.api.UploadBookParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
+import com.haoyang.reader.sdk.Book;
+import com.haoyang.reader.service.bookservice.BookInfoService;
+import com.java.common.service.file.FileNameService;
 import com.mjiayou.trecorelib.base.TCAdapter;
 import com.mjiayou.trecorelib.base.TCViewHolder;
 import com.mjiayou.trecorelib.http.RequestEntity;
@@ -77,7 +81,7 @@ public class HomeAdapter extends TCAdapter {
         }
 
         if (mList != null && mList.size() > position && mList.get(position) != null) {
-            viewHolder.initView(mList.get(position));
+            viewHolder.initView(mList.get(position), position);
         }
         return convertView;
     }
@@ -85,23 +89,21 @@ public class HomeAdapter extends TCAdapter {
     private class ViewHolder extends TCViewHolder<BookBean> {
         private ImageView ivBook;
         private TextView tvBook;
-        private TextView tvUpload;
-        private TextView tvDownload;
+        private TextView tvSync;
 
         @Override
         protected void findView(View view) {
             ivBook = (ImageView) view.findViewById(R.id.ivBook);
             tvBook = (TextView) view.findViewById(R.id.tvBook);
-            tvUpload = (TextView) view.findViewById(R.id.tvUpload);
-            tvDownload = (TextView) view.findViewById(R.id.tvDownload);
+            tvSync = (TextView) view.findViewById(R.id.tvSync);
         }
 
         @Override
-        protected void initView(BookBean bean) {
-            if (bean != null) {
+        protected void initView(BookBean bookBean, int position) {
+            if (bookBean != null) {
                 // ivBook
-                if (!TextUtils.isEmpty(bean.getCover())) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(bean.getCover());
+                if (!TextUtils.isEmpty(bookBean.getLocalCoverPath())) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(bookBean.getLocalCoverPath());
                     if (bitmap != null) {
                         ivBook.setImageBitmap(bitmap);
                     }
@@ -109,80 +111,176 @@ public class HomeAdapter extends TCAdapter {
                     ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_main_book_default));
                 }
                 // tvBook
-                if (bean.getBook() != null && !TextUtils.isEmpty(bean.getBook().bookName)) {
-                    tvBook.setText(bean.getBook().bookName);
+                if (!TextUtils.isEmpty(bookBean.getBookName())) {
+                    tvBook.setText(bookBean.getBookName());
                 }
-                // tvUpload
-                tvUpload.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UploadBookParam uploadBookParam = new UploadBookParam();
-                        uploadBookParam.setBookId("2");
-                        uploadBookParam.setUuid(EncodeHelper.getRandomChar());
-                        String content = ApiRequest.getContent(uploadBookParam);
-
-                        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUploadBook);
-                        requestEntity.setMethod(RequestMethod.POST_FILE);
-                        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
-                        requestEntity.addHeader("token", UserUtils.getToken());
-                        requestEntity.addParam("data", content);
-                        requestEntity.addFile("bookFile", new File(bean.getPath()));
-                        requestEntity.addFile("imgFile", new File(bean.getCover()));
-                        RequestSender.get().send(requestEntity, new RequestCallback<UploadBean>() {
+                // tvSync-分四种情况
+                // 1-服务器有文件，本地有文件，则隐藏按钮
+                // 2-服务器有文件，本地没有文件，则显示"下载"
+                // 3-服务器没有文件，本地有文件，则显示"上传"
+                // 4-服务器没有文件，本地没有文件，则显示"异常"
+                final int SYNC_TYPE_HIDE = 1;
+                final int SYNC_TYPE_DOWNLOAD = 2;
+                final int SYNC_TYPE_UPLOAD = 3;
+                final int SYNC_TYPE_ERROR = 4;
+                int syncType = SYNC_TYPE_HIDE;
+                String bookUrl = bookBean.getBookPath();
+                String bookPath = bookBean.getLocalBookPath();
+                if (!TextUtils.isEmpty(bookUrl)) {
+                    if (!TextUtils.isEmpty(bookPath)) {
+                        syncType = SYNC_TYPE_HIDE;
+                    } else {
+                        syncType = SYNC_TYPE_DOWNLOAD;
+                    }
+                } else {
+                    if (!TextUtils.isEmpty(bookPath)) {
+                        syncType = SYNC_TYPE_UPLOAD;
+                    } else {
+                        syncType = SYNC_TYPE_ERROR;
+                    }
+                }
+                switch (syncType) {
+                    default:
+                    case SYNC_TYPE_HIDE:
+                        tvSync.setText("隐藏");
+                        tvSync.setVisibility(View.GONE);
+                        break;
+                    case SYNC_TYPE_DOWNLOAD:
+                        tvSync.setText("下载");
+                        tvSync.setVisibility(View.VISIBLE);
+                        tvSync.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onStart() {
-                            }
-
-                            @Override
-                            public void onProgress(float progress, long total) {
-                                super.onProgress(progress, total);
-                                int percent = (int) (progress * 100.0f);
-                                ToastUtils.show("正在上传：" + percent + "%");
-                            }
-
-                            @Override
-                            public void onSuccess(int code, UploadBean uploadBean) {
-                                if (uploadBean != null) {
-                                    ToastUtils.show("上传成功：" + uploadBean.getFullFilePath());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(int code, String msg) {
-                                ToastUtils.show(msg);
+                            public void onClick(View v) {
+                                downloadBook(bookBean, position);
                             }
                         });
-                    }
-                });
-                // tvDownload
-                tvDownload.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String fileUrl = "http://112.126.80.1:80//doc/book//2018-10-24/3154d92b44054c3494b12ea5991f92ec.epub";
-                        RequestSender.get().downloadFile(fileUrl, new FileCallBack(Configs.DIR_SDCARD_PROJECT_BOOK, "下载文件.epub") {
-
+                        break;
+                    case SYNC_TYPE_UPLOAD:
+                        tvSync.setText("上传");
+                        tvSync.setVisibility(View.VISIBLE);
+                        tvSync.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void inProgress(float progress, long total, int id) {
-                                super.inProgress(progress, total, id);
-                                int percent = (int) (progress * 100.0f);
-                                ToastUtils.show("正在下载：" + percent + "%");
-                            }
-
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-
-                            }
-
-                            @Override
-                            public void onResponse(File file, int id) {
-                                if (file != null) {
-                                    ToastUtils.show("下载成功：" + file.getAbsolutePath());
-                                }
+                            public void onClick(View v) {
+                                uploadBook(bookBean, position);
                             }
                         });
-                    }
-                });
+                        break;
+                    case SYNC_TYPE_ERROR:
+                        tvSync.setText("异常");
+                        tvSync.setVisibility(View.VISIBLE);
+                        tvSync.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtils.show("服务端和本地均没有书文件");
+                            }
+                        });
+                        break;
+                }
             }
         }
     }
+
+    /**
+     * 上传书文件
+     */
+    private void uploadBook(BookBean bookBean, int position) {
+        if (TextUtils.isEmpty(bookBean.getBookId())) {
+            ToastUtils.show("TextUtils.isEmpty(bean.getBookId()) == true");
+            return;
+        }
+        UploadBookParam uploadBookParam = new UploadBookParam();
+        uploadBookParam.setBookId(bookBean.getBookId());
+        uploadBookParam.setUuid(EncodeHelper.getRandomChar());
+        String content = ApiRequest.getContent(uploadBookParam);
+
+        RequestEntity requestEntity = new RequestEntity(UrlConfig.apiUploadBook);
+        requestEntity.setMethod(RequestMethod.POST_FILE);
+        requestEntity.addHeader("sign", EncodeHelper.getSign(content));
+        requestEntity.addHeader("token", UserUtils.getToken());
+        requestEntity.addParam("data", content);
+        requestEntity.addFile("bookFile", new File(bookBean.getLocalBookPath()));
+        requestEntity.addFile("imgFile", new File(bookBean.getLocalCoverPath()));
+        RequestSender.get().send(requestEntity, new RequestCallback<UploadBean>() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onProgress(float progress, long total) {
+                super.onProgress(progress, total);
+                int percent = (int) (progress * 100.0f);
+                ToastUtils.show("正在上传：" + percent + "%");
+            }
+
+            @Override
+            public void onSuccess(int code, UploadBean uploadBean) {
+                if (uploadBean != null) {
+                    ToastUtils.show("上传成功：" + uploadBean.getBookPath());
+
+                    bookBean.setBookDocId(uploadBean.getBookDocId());
+                    bookBean.setBookPath(uploadBean.getBookPath());
+                    bookBean.setCoverDocId(uploadBean.getCoverDocId());
+                    bookBean.setCoverPath(uploadBean.getCoverPath());
+                    mList.set(position, bookBean);
+                    notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtils.show(msg);
+            }
+        });
+    }
+
+    /**
+     * 下载书文件
+     */
+    private void downloadBook(BookBean bookBean, int position) {
+        String fileUrl = bookBean.getBookPath();
+        String fileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
+        String fileName = bookBean.getBookId() + "-" + bookBean.getBookName() + ".epub";
+        RequestSender.get().downloadFile(fileUrl, new FileCallBack(fileDir, fileName) {
+
+            @Override
+            public void inProgress(float progress, long total, int id) {
+                super.inProgress(progress, total, id);
+                int percent = (int) (progress * 100.0f);
+                ToastUtils.show("正在下载：" + percent + "%");
+            }
+
+            @Override
+            public void onResponse(File file, int id) {
+                if (file != null) {
+                    ToastUtils.show("下载成功：" + file.getAbsolutePath());
+
+                    FileNameService fileNameService = new FileNameService();
+                    String filePath = file.getAbsolutePath();
+                    String fileName = fileNameService.getFileName(filePath);
+                    String fileSuffix = fileNameService.getFileExtendName(filePath);
+
+                    bookBean.setFileName(fileName);
+                    bookBean.setFileSuffix(fileSuffix);
+                    bookBean.setLocalBookPath(filePath);
+                    BookInfoService bookInfoService = new BookInfoService();
+                    bookInfoService.init(bookBean.getLocalBookPath());
+                    Book book = BookInfoUtils.getBookInfo(bookInfoService, bookBean.getLocalBookPath());
+                    String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, bookBean.getLocalBookPath());
+                    bookInfoService.clear();
+                    bookBean.setBook(book);
+                    bookBean.setLocalCoverPath(localCoverPath);
+
+                    mList.set(position, bookBean);
+                    notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtils.show(e.toString());
+            }
+        });
+    }
+
+
 }

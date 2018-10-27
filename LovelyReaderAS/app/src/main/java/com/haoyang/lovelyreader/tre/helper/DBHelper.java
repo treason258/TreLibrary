@@ -4,9 +4,9 @@ import android.text.TextUtils;
 
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.BookStoreBean;
+import com.haoyang.lovelyreader.tre.bean.LastSyncDateStore;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.mjiayou.trecorelib.json.JsonParser;
-import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.SharedUtils;
 
 import java.util.ArrayList;
@@ -21,8 +21,10 @@ public class DBHelper {
 
     private static final String KEY_USER_BEAN = "key_user_bean";
     private static final String KEY_BOOK_STORE_BEAN = "key_book_store_bean";
+    private static final String KEY_LAST_SYNC_DATE = "key_last_sync_date";
+    private static final String KEY_BOOK_UNUPLOAD = "key_book_unupload";
 
-    // ******************************** UserBean ********************************
+    // ******************************** KEY_USER_BEAN ********************************
 
     public static void setUserBean(UserBean userBean) {
         String data = "";
@@ -37,65 +39,49 @@ public class DBHelper {
         if (!TextUtils.isEmpty(data)) {
             return JsonParser.get().toObject(data, UserBean.class);
         } else {
-            // 如果当前没有用户，则设置默认用户
-            return UserBean.getDefault();
+            return UserBean.getDefault(); // 如果当前没有用户，则设置默认用户
         }
     }
 
-    // ******************************** BookStoreBean ********************************
+    // ******************************** KEY_BOOK_STORE_BEAN ********************************
 
-    /**
-     * getBookStoreBean
-     */
+    public static void setBookStoreBean(BookStoreBean bookStoreBean) {
+        String data = "";
+        if (bookStoreBean != null) {
+            data = JsonParser.get().toJson(bookStoreBean);
+        }
+        SharedUtils.get().setCommon(KEY_BOOK_STORE_BEAN, data);
+    }
+
     public static BookStoreBean getBookStoreBean() {
-        try {
-            String data = SharedUtils.get().getCommon(KEY_BOOK_STORE_BEAN);
-            if (!TextUtils.isEmpty(data)) {
-                return JsonParser.get().toObject(data, BookStoreBean.class);
-            }
-        } catch (Exception e) {
-            LogUtils.printStackTrace(e);
-        }
-        return null;
-    }
-
-    /**
-     * setBookStoreBean
-     */
-    public static void setBookStoreBean(BookStoreBean bookStore) {
-        try {
-            if (bookStore != null) {
-                String data = JsonParser.get().toJson(bookStore);
-                if (!TextUtils.isEmpty(data)) {
-                    SharedUtils.get().setCommon(KEY_BOOK_STORE_BEAN, data);
-                }
-            }
-        } catch (Exception e) {
-            LogUtils.printStackTrace(e);
+        String data = SharedUtils.get().getCommon(KEY_BOOK_STORE_BEAN);
+        if (!TextUtils.isEmpty(data)) {
+            return JsonParser.get().toObject(data, BookStoreBean.class);
+        } else {
+            return null;
         }
     }
 
-    // ******************************** List<BookBean> ********************************
+    // ******************************** KEY_LAST_SYNC_DATE ********************************
 
-    /**
-     * containUid
-     */
-    public static boolean containUid() {
-        return false;
-    }
-
-    /**
-     * getBookBeanList
-     */
-    public static List<BookBean> getBookBeanList(String uid) {
-        BookStoreBean bookStore = getBookStoreBean();
-        if (bookStore != null && bookStore.getData() != null) {
-            if (bookStore.getData().containsKey(uid)) {
-                return bookStore.getData().get(uid);
-            }
+    public static void setLastSyncDateStore(LastSyncDateStore lastSyncDateStore) {
+        String data = "";
+        if (lastSyncDateStore != null) {
+            data = JsonParser.get().toJson(lastSyncDateStore);
         }
-        return new ArrayList<>();
+        SharedUtils.get().setCommon(KEY_LAST_SYNC_DATE, data);
     }
+
+    public static LastSyncDateStore getLastSyncDateStore() {
+        String data = SharedUtils.get().getCommon(KEY_LAST_SYNC_DATE);
+        if (!TextUtils.isEmpty(data)) {
+            return JsonParser.get().toObject(data, LastSyncDateStore.class);
+        } else {
+            return null;
+        }
+    }
+
+    // ******************************** setBookBeanList ********************************
 
     /**
      * setBookBeanList
@@ -107,7 +93,6 @@ public class DBHelper {
             HashMap<String, List<BookBean>> data = new HashMap<>();
             data.put(uid, bookBeanList);
             bookStoreBean.setData(data);
-            setBookStoreBean(bookStoreBean);
         } else {
             HashMap<String, List<BookBean>> data = bookStoreBean.getData();
             if (data == null) {
@@ -119,18 +104,37 @@ public class DBHelper {
             }
             data.put(uid, bookBeanList);
             bookStoreBean.setData(data);
-            setBookStoreBean(bookStoreBean);
         }
+        setBookStoreBean(bookStoreBean);
     }
-
-    // ******************************** BookBean ********************************
 
     /**
-     * containBookBean
+     * getBookBeanList
      */
-    public static boolean containBookBean(String uid, BookBean bookBean) {
+    public static List<BookBean> getBookBeanList(String uid) {
+        BookStoreBean bookStoreBean = getBookStoreBean();
+        if (bookStoreBean != null && bookStoreBean.getData() != null) {
+            if (bookStoreBean.getData().containsKey(uid)) {
+                return bookStoreBean.getData().get(uid);
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    /**
+     * containUid
+     */
+    public static boolean containUid(String uid) {
+        BookStoreBean bookStoreBean = getBookStoreBean();
+        if (bookStoreBean != null && bookStoreBean.getData() != null) {
+            if (bookStoreBean.getData().containsKey(uid)) {
+                return true;
+            }
+        }
         return false;
     }
+
+    // ******************************** addBookBean ********************************
 
     /**
      * addBookBean
@@ -147,7 +151,36 @@ public class DBHelper {
     /**
      * delBookBean
      */
-    public static void delBookBean(String uid, BookBean bookBean) {
+    public static void delBookBean(String uid, String bookId) {
+        List<BookBean> bookBeanList = getBookBeanList(uid);
+        for (int i = 0; i < bookBeanList.size(); i++) {
+            if (!TextUtils.isEmpty(bookBeanList.get(i).getBookId()) && bookBeanList.get(i).getBookId().equals(bookId)) {
+                bookBeanList.remove(i);
+                break;
+            }
+        }
+        setBookBeanList(uid, bookBeanList);
+    }
+
+    /**
+     * modifyBookBean
+     */
+    public static void modifyBookBean(String uid, BookBean bookBeanNew) {
+        List<BookBean> bookBeanList = getBookBeanList(uid);
+        for (int i = 0; i < bookBeanList.size(); i++) {
+            if (!TextUtils.isEmpty(bookBeanList.get(i).getBookId()) && bookBeanList.get(i).getBookId().equals(bookBeanNew.getBookId())) {
+                bookBeanList.set(i, bookBeanNew);
+                break;
+            }
+        }
+        setBookBeanList(uid, bookBeanList);
+    }
+
+    /**
+     * containBookBean
+     */
+    public static boolean containBookBean(String uid, BookBean bookBean) {
+        return false;
     }
 
     // ******************************** searchBook ********************************
@@ -161,7 +194,7 @@ public class DBHelper {
             List<BookBean> bookBeanList = getBookBeanList(uid);
             for (int i = 0; i < bookBeanList.size(); i++) {
                 BookBean bookBean = bookBeanList.get(i);
-                if (bookBean != null && bookBean.getBook() != null && bookBean.getBook().bookName != null && bookBean.getBook().bookName.contains(key)) {
+                if (bookBean != null && bookBean.getBookName() != null && bookBean.getBookName().contains(key)) {
                     searchResult.add(bookBean);
                 }
             }
@@ -175,27 +208,69 @@ public class DBHelper {
      * 对登录用户同步本设备游客添加的书籍
      */
     public static void syncGuestBook() {
-        // 游客添加的书籍
-        List<BookBean> guestBookBeanList = getBookBeanList(UserBean.getDefault().getUid());
+
+        // 游客用户
+        UserBean userBeanDefault = UserBean.getDefault();
+        // 游客用户添加的书
+        List<BookBean> bookBeanListDefault = getBookBeanList(userBeanDefault.getUid());
+
         // 当前用户
         UserBean userBean = getUserBean();
-        // 当前用户的书
+        // 当前用户添加的书
         List<BookBean> bookBeanList = getBookBeanList(userBean.getUid());
+
         // 合并
-        for (int i = 0; i < guestBookBeanList.size(); i++) {
-            BookBean guestBook = guestBookBeanList.get(i);
+        for (int i = 0; i < bookBeanListDefault.size(); i++) {
+            BookBean bookBeanDefault = bookBeanListDefault.get(i);
             boolean hasThisBook = false;
             for (int j = 0; j < bookBeanList.size(); j++) {
-                if (guestBook.getPath().equals(bookBeanList.get(j).getPath())) {
+                if (bookBeanDefault.getLocalBookPath().equals(bookBeanList.get(j).getLocalBookPath())) {
                     hasThisBook = true;
                     break;
                 }
             }
             if (!hasThisBook) {
-                bookBeanList.add(guestBook);
+                bookBeanList.add(bookBeanDefault);
             }
         }
-        // 重新赋值
+
+        // 清空游客数据
+        DBHelper.setBookBeanList(userBeanDefault.getUid(), new ArrayList<>());
+        // 同步当前用户数据
         DBHelper.setBookBeanList(userBean.getUid(), bookBeanList);
+    }
+
+    // ******************************** setLastSyncDate ********************************
+
+    public static void setLastSyncDate(String uid, long timestamp) {
+        LastSyncDateStore lastSyncDateStore = getLastSyncDateStore();
+        if (lastSyncDateStore == null) {
+            lastSyncDateStore = new LastSyncDateStore();
+            HashMap<String, Long> data = new HashMap<>();
+            data.put(uid, timestamp);
+            lastSyncDateStore.setData(data);
+        } else {
+            HashMap<String, Long> data = lastSyncDateStore.getData();
+            if (data == null) {
+                data = new HashMap<>();
+            } else {
+                if (data.containsKey(uid)) {
+                    data.remove(uid);
+                }
+            }
+            data.put(uid, timestamp);
+            lastSyncDateStore.setData(data);
+        }
+        setLastSyncDateStore(lastSyncDateStore);
+    }
+
+    public static long getLastSyncDate(String uid) {
+        LastSyncDateStore lastSyncDateStore = getLastSyncDateStore();
+        if (lastSyncDateStore != null && lastSyncDateStore.getData() != null) {
+            if (lastSyncDateStore.getData().containsKey(uid)) {
+                return lastSyncDateStore.getData().get(uid);
+            }
+        }
+        return 0;
     }
 }

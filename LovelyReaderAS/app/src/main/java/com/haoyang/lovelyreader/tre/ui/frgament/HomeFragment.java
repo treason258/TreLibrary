@@ -42,6 +42,7 @@ import com.haoyang.lovelyreader.tre.helper.OnBookAddEvent;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.ui.FileActivity;
+import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.wifi.Constants;
 import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
 import com.haoyang.lovelyreader.tre.wifi.WebService;
@@ -60,7 +61,8 @@ import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
-import com.java.common.utils.Utils;
+import com.mjiayou.trecorelib.dialog.DialogHelper;
+import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.RequestCallback;
@@ -68,12 +70,9 @@ import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.ConvertUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,8 +89,8 @@ public class HomeFragment extends BaseFragment {
     private ImageView ivSearch;
     private EditText etSearch;
     private ImageView ivDelete;
-    private TextView tvAddCategory;
-    private TextView tvAddBook;
+    private TextView tvTemp1;
+    private TextView tvTemp2;
     private GridView gvBook;
     private ListView lvSearch;
     private ImageView ivAdd;
@@ -116,16 +115,13 @@ public class HomeFragment extends BaseFragment {
         ivSearch = (ImageView) view.findViewById(R.id.ivSearch);
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
-        tvAddCategory = (TextView) view.findViewById(R.id.tvAddCategory);
-        tvAddBook = (TextView) view.findViewById(R.id.tvAddBook);
+        tvTemp1 = (TextView) view.findViewById(R.id.tvTemp1);
+        tvTemp2 = (TextView) view.findViewById(R.id.tvTemp2);
         gvBook = (GridView) view.findViewById(R.id.gvBook);
         lvSearch = (ListView) view.findViewById(R.id.lvSearch);
         ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
 
         initView();
-
-        getBookList();
-        getCategoryList();
         return view;
     }
 
@@ -160,9 +156,10 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        // mUserBean
+        mUserBean = DBHelper.getUserBean();
 
         // etSearch
-//        etSearch.clearFocus();
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -199,39 +196,66 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        // tvAddCategory
-        tvAddCategory.setOnClickListener(new View.OnClickListener() {
+        // tvTemp1
+        tvTemp1.setText("同步电子书");
+        tvTemp1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addCategory();
+                getBookListFromServer(DBHelper.getLastSyncDate(mUserBean.getUid()));
             }
         });
 
-        // tvAddBook
-        tvAddBook.setOnClickListener(new View.OnClickListener() {
+        // tvTemp2
+        tvTemp2.setText("null");
+        tvTemp2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBook(null);
             }
         });
 
         // gvBook
-        mUserBean = DBHelper.getUserBean();
-        mList.clear();
-        mList.addAll(DBHelper.getBookBeanList(mUserBean.getUid()));
         mHomeAdapter = new HomeAdapter(mContext, mList);
         gvBook.setAdapter(mHomeAdapter);
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 LogUtils.d(TAG, "onItemClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + position + "], id = [" + id + "]");
+
                 BookBean bookBean = mList.get(position);
+                if (bookBean == null
+                        || TextUtils.isEmpty(bookBean.getLocalBookPath())
+                        || TextUtils.isEmpty(bookBean.getLocalCoverPath())
+                        || bookBean.getBook() == null) {
+                    ToastUtils.show("书文件不存在，请下载");
+                    return;
+                }
 
                 Book book = bookBean.getBook();
-                book.bookCover = bookBean.getCover();
+                book.bookCover = bookBean.getLocalCoverPath();
 
                 ToastUtils.show("正在打开书籍...");
                 startReader(book, mUserBean);
+            }
+        });
+        gvBook.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtils.d(TAG, "onItemLongClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + position + "], id = [" + id + "]");
+                BookBean bookBean = mList.get(position);
+                if (bookBean != null) {
+                    DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除？", "确定", "取消", true,
+                            new TCAlertDialog.OnTCActionListener() {
+                                @Override
+                                public void onOkAction() {
+                                    deleteBookFromServer(bookBean);
+                                }
+
+                                @Override
+                                public void onCancelAction() {
+                                }
+                            }).show();
+                }
+                return true;
             }
         });
 
@@ -272,6 +296,9 @@ public class HomeFragment extends BaseFragment {
                 return false;
             }
         });
+
+        // 展示数据
+        showData();
     }
 
     @Subscribe(tags = {@Tag(Constants.RxBusEventType.POPUP_MENU_DIALOG_SHOW_DISMISS)})
@@ -316,11 +343,26 @@ public class HomeFragment extends BaseFragment {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                onAddBook(event.getFileBean());
+                FileBean fileBean = event.getFileBean();
+                if (fileBean != null) {
+                    onAddBook(fileBean);
+                }
             }
         });
     }
 
+    /**
+     * 展示本地数据
+     */
+    private void showData() {
+        mList.clear();
+        mList.addAll(DBHelper.getBookBeanList(mUserBean.getUid()));
+        mHomeAdapter.notifyDataSetChanged();
+
+        if (UserUtils.checkLoginStatus()) {
+            getBookListFromServer(DBHelper.getLastSyncDate(mUserBean.getUid()));
+        }
+    }
 
     /**
      * onAddBook
@@ -331,116 +373,43 @@ public class HomeFragment extends BaseFragment {
         }
 
         BookBean bookBean = new BookBean();
-        bookBean.setName(fileBean.getName());
-        bookBean.setSuffix(fileBean.getSuffix());
-        bookBean.setPath(fileBean.getPath());
+        bookBean.setFileName(fileBean.getName());
+        bookBean.setFileSuffix(fileBean.getSuffix());
+        bookBean.setLocalBookPath(fileBean.getPath());
 
         // 查询该书是否已添加
         for (int i = 0; i < mList.size(); i++) {
-            if (mList.get(i).getPath().equals(bookBean.getPath())) {
-                ToastUtils.show("这本书已经添加过了");
+            if (!TextUtils.isEmpty(mList.get(i).getLocalBookPath())
+                    && mList.get(i).getLocalBookPath().equals(bookBean.getLocalBookPath())) {
+                ToastUtils.show(bookBean.getFileName() + "-这本书已经添加过了");
                 return;
             }
         }
 
         // bookInfoService操作
         BookInfoService bookInfoService = new BookInfoService();
-        bookInfoService.init(bookBean.getPath());
-        bookBean.setBook(getBookInfo(bookInfoService, bookBean.getPath())); // 读取书籍信息
-        bookBean.setCover(getBookCover(bookInfoService, bookBean.getPath())); // 读取封面图片
+        bookInfoService.init(bookBean.getLocalBookPath());
+        Book book = BookInfoUtils.getBookInfo(bookInfoService, bookBean.getLocalBookPath());
+        String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, bookBean.getLocalBookPath());
         bookInfoService.clear();
 
-//        addBook(bookBean);
+        bookBean.setBook(book);
+        bookBean.setLocalCoverPath(localCoverPath); // 读取封面图片
+        bookBean.setAuthor(book.authors);
+        bookBean.setBookName(book.bookName);
+        bookBean.setBookCategory("");
+        bookBean.setBookDesc("");
+        bookBean.setCategoryId(Configs.CATEGORY_DEFAULT);
 
-        mList.add(bookBean);
-        mHomeAdapter.notifyDataSetChanged();
+        // 如果已登录，则添加到服务端；如果未登录，则只添加到本地
+        if (UserUtils.checkLoginStatus()) {
+            addBookToServer(bookBean);
+        } else {
+            mList.add(bookBean);
+            mHomeAdapter.notifyDataSetChanged();
 
-        DBHelper.addBookBean(mUserBean.getUid(), bookBean);
-    }
-
-    /**
-     * getBookInfo
-     */
-    private Book getBookInfo(BookInfoService bookInfoService, String filePath) {
-        if (bookInfoService == null || TextUtils.isEmpty(filePath)) {
-            return null;
+            DBHelper.addBookBean(mUserBean.getUid(), bookBean);
         }
-
-        Book book = new Book();
-        book.path = filePath;
-        bookInfoService.getBookInfo(book, "ePub");
-        return book;
-    }
-
-    /**
-     * getBookCover
-     */
-    private String getBookCover(BookInfoService bookInfoService, String filePath) {
-        if (bookInfoService == null || TextUtils.isEmpty(filePath)) {
-            return null;
-        }
-
-        InputStream inputStream = bookInfoService.getCoverInputStream(filePath);
-        if (inputStream == null) {
-            return null;
-        }
-
-        try {
-//            AndroidInfoService androidInfoService = new AndroidInfoService();
-//            String documentPath;
-//            try {
-//                documentPath = androidInfoService.getDownLoadPath(mContext);
-//            } catch (DeviceException e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-
-            // 存放图片的目录
-            File coverDirFile = new File(Configs.DIR_SDCARD_PROJECT_COVER);
-            if (!coverDirFile.exists()) {
-                if (!coverDirFile.mkdir()) {
-                    return null;
-                }
-            }
-
-            // 图片文件
-            File coverPathFile = new File(coverDirFile, Utils.md5(filePath.getBytes()) + ".jpg");
-            if (coverPathFile.exists()) {
-                coverPathFile.delete();
-            }
-
-            OutputStream outputStream = null;
-            try {
-                coverPathFile.createNewFile();
-                outputStream = new FileOutputStream(coverPathFile);
-                byte[] buffer = new byte[1024];
-                int len = 0;
-                while ((len = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, len);
-                }
-                return coverPathFile.getAbsolutePath();
-            } catch (IOException e) {
-                LogUtils.printStackTrace(e);
-                return null;
-            } finally {
-                if (outputStream != null) {
-                    try {
-                        outputStream.close();
-                    } catch (IOException e) {
-                        LogUtils.printStackTrace(e);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            LogUtils.printStackTrace(e);
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                LogUtils.printStackTrace(e);
-            }
-        }
-        return null;
     }
 
     /**
@@ -658,34 +627,33 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-    public void addBook(BookBean bookBean) {
-        if (bookBean == null) {
-            Book book = new Book();
-            String id = String.valueOf(System.currentTimeMillis());
-            book.authors = "测试作者" + id;
-            book.bookName = "测试书名" + id;
-            bookBean = new BookBean();
-            bookBean.setBook(book);
-        }
+    /**
+     * 新增电子书
+     */
+    public void addBookToServer(BookBean bookBean) {
         BookAddParam bookAddParam = new BookAddParam();
-        bookAddParam.setAuthor(bookBean.getBook().authors); // 作者
-        bookAddParam.setBookCategory(""); // 图书目录
-        bookAddParam.setBookDesc(""); // 图书简介
-        bookAddParam.setBookName(bookBean.getBook().bookName); // 电子书名称
-        bookAddParam.setCategoryId("1"); // 分类ID
+        bookAddParam.setAuthor(bookBean.getAuthor()); // 作者
+        bookAddParam.setBookCategory(bookBean.getBookCategory()); // 图书目录
+        bookAddParam.setBookDesc(bookBean.getBookDesc()); // 图书简介
+        bookAddParam.setBookName(bookBean.getBookName()); // 电子书名称
+        bookAddParam.setCategoryId(bookBean.getCategoryId()); // 分类ID
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookAdd);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookAddParam));
         RequestSender.get().send(myRequestEntity, new RequestCallback<BookBean>() {
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onSuccess(int code, BookBean bookSyncBean) {
                 if (bookSyncBean != null) {
-                    ToastUtils.show("bookId" + bookSyncBean.getBookDocId());
+                    ToastUtils.show("新增电子书成功 | " + bookSyncBean.getBookId() + " - " + bookSyncBean.getBookName());
+
+                    bookBean.setBookId(bookSyncBean.getBookId());
+                    mList.add(bookBean);
+                    mHomeAdapter.notifyDataSetChanged();
+                    DBHelper.addBookBean(mUserBean.getUid(), bookBean);
                 }
             }
 
@@ -696,22 +664,63 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    public void getBookList() {
-        BookSyncParam bookSyncParam = new BookSyncParam();
-        bookSyncParam.setSyncType("1");
-        bookSyncParam.setLastSyncDate("0");
+    /**
+     * 删除电子书
+     */
+    public void deleteBookFromServer(BookBean bookBean) {
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(bookBean.getBookId());
 
-        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookSync);
-        myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookSyncParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookBean>>() {
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookDel);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
             @Override
             public void onStart() {
 
             }
 
             @Override
-            public void onSuccess(int code, List<BookBean> object) {
+            public void onSuccess(int code, Object object) {
+                if (object != null) {
+                    mList.remove(bookBean);
+                    mHomeAdapter.notifyDataSetChanged();
+                    DBHelper.delBookBean(mUserBean.getUid(), bookBean.getBookId());
+                }
+            }
 
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+        });
+    }
+
+    /**
+     * 同步电子书
+     */
+    public void getBookListFromServer(long timestamp) {
+        BookSyncParam bookSyncParam = new BookSyncParam();
+        if (timestamp == 0) {
+            bookSyncParam.setSyncType("1");
+            bookSyncParam.setLastSyncDate("0");
+        } else {
+            bookSyncParam.setSyncType("2");
+            bookSyncParam.setLastSyncDate(String.valueOf(timestamp));
+        }
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookSync);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookSyncParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookBean>>() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(int code, List<BookBean> bookBeanList) {
+                mList.addAll(bookBeanList);
+                mHomeAdapter.notifyDataSetChanged();
+                DBHelper.setBookBeanList(mUserBean.getUid(), mList);
+                DBHelper.setLastSyncDate(mUserBean.getUid(), System.currentTimeMillis());
             }
 
             @Override
@@ -721,6 +730,9 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 新增分类
+     */
     public void addCategory() {
         CategoryParam categoryParam = new CategoryParam();
         categoryParam.setParentId(Configs.CATEGORY_ROOT);
@@ -732,7 +744,6 @@ public class HomeFragment extends BaseFragment {
         RequestSender.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
             @Override
             public void onStart() {
-
             }
 
             @Override
@@ -749,6 +760,9 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 获取用户的所有分类
+     */
     public void getCategoryList() {
         CommonParam commonParam = new CommonParam();
         commonParam.setData(EncodeHelper.getRandomChar());
@@ -758,13 +772,11 @@ public class HomeFragment extends BaseFragment {
         RequestSender.get().send(myRequestEntity, new RequestCallback<List<CategoryBean>>() {
             @Override
             public void onStart() {
-
             }
 
             @Override
-            public void onSuccess(int code, List<CategoryBean> categoryBean) {
-                if (categoryBean != null) {
-//                    ToastUtils.show("id -> " + categoryBean.getCategoryId());
+            public void onSuccess(int code, List<CategoryBean> categoryBeanList) {
+                if (categoryBeanList != null) {
                 }
             }
 

@@ -1,9 +1,6 @@
 package com.haoyang.lovelyreader.tre.ui.frgament;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
-import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.mjiayou.trecorelib.base.TCAdapter;
 import com.mjiayou.trecorelib.base.TCViewHolder;
 import com.mjiayou.trecorelib.util.ToastUtils;
@@ -62,7 +58,7 @@ public class HomeSearchAdapter extends TCAdapter {
         }
 
         if (mList != null && mList.size() > position && mList.get(position) != null) {
-            viewHolder.initView(mList.get(position));
+            viewHolder.initView(mList.get(position), position);
         }
         return convertView;
     }
@@ -78,7 +74,7 @@ public class HomeSearchAdapter extends TCAdapter {
         }
 
         @Override
-        protected void initView(String bean) {
+        protected void initView(String bean, int position) {
             if (bean != null) {
                 // tvHistory
                 tvHistory.setText(bean);
