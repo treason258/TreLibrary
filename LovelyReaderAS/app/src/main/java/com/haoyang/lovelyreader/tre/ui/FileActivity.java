@@ -194,7 +194,6 @@ public class FileActivity extends BaseActivity {
             fileBean.setName(fileName);
             fileBean.setSuffix(fileSuffix);
             fileBean.setPath(filePath);
-            fileBean.setIcon(null);
             fileBean.setFolder(true);
             fileBeanList.add(fileBean);
         }
@@ -215,7 +214,6 @@ public class FileActivity extends BaseActivity {
             fileBean.setName(fileName);
             fileBean.setSuffix(fileSuffix);
             fileBean.setPath(filePath);
-            fileBean.setIcon(null);
             fileBean.setFolder(false);
             fileBeanList.add(fileBean);
         }

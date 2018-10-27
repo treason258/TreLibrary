@@ -192,7 +192,6 @@ public class WebService extends TCService {
                         fileBean.setName(fileName);
                         fileBean.setSuffix(fileSuffix);
                         fileBean.setPath(filePath);
-                        fileBean.setIcon(null);
                         fileBean.setFolder(false);
 
                         EventBus.getDefault().post(new OnBookAddEvent(fileBean));

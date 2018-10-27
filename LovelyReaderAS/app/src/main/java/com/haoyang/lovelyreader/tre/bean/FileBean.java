@@ -12,7 +12,6 @@ public class FileBean implements Parcelable {
     private String name; // 名字
     private String suffix; // 后缀
     private String path; // 本地路径
-    private String icon; // 图标
     private boolean isFolder; // 是否是文件夹
     private boolean isSelected; // 是否选中状态
 
@@ -23,7 +22,6 @@ public class FileBean implements Parcelable {
         name = in.readString();
         suffix = in.readString();
         path = in.readString();
-        icon = in.readString();
         isFolder = in.readByte() != 0;
         isSelected = in.readByte() != 0;
     }
@@ -50,7 +48,6 @@ public class FileBean implements Parcelable {
         dest.writeString(name);
         dest.writeString(suffix);
         dest.writeString(path);
-        dest.writeString(icon);
         dest.writeByte((byte) (isFolder ? 1 : 0));
         dest.writeByte((byte) (isSelected ? 1 : 0));
     }
@@ -61,14 +58,6 @@ public class FileBean implements Parcelable {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 
     public boolean isFolder() {
