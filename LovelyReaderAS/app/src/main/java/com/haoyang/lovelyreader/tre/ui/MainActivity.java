@@ -234,7 +234,7 @@ public class MainActivity extends BaseActivity {
      */
     private void checkUpdate() {
         CommonParam commonParam = new CommonParam();
-        commonParam.setData(AppUtils.getVersionName(mContext));
+        commonParam.setData(String.valueOf(AppUtils.getVersionCode(mContext)));
 
         MyRequestEntity requestEntity = new MyRequestEntity(UrlConfig.apiAppUpgrade);
         requestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
