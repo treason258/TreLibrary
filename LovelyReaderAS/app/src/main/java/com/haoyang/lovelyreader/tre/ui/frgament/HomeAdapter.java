@@ -20,6 +20,7 @@ import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
+import com.haoyang.lovelyreader.tre.util.Utils;
 import com.haoyang.reader.sdk.Book;
 import com.haoyang.reader.service.bookservice.BookInfoService;
 import com.java.common.service.file.FileNameService;
@@ -257,7 +258,7 @@ public class HomeAdapter extends TCAdapter {
     private void downloadBook(BookBean bookBean, int position) {
         String fileUrl = bookBean.getBookPath();
         String fileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
-        String fileName = DBHelper.getUserBean().getUid() + "-" + bookBean.getBookId() + "-" + bookBean.getBookName() + ".epub";
+        String fileName = Utils.getBookName(DBHelper.getUserBean(), bookBean);
         RequestSender.get().downloadFile(fileUrl, new FileCallBack(fileDir, fileName) {
 
             @Override

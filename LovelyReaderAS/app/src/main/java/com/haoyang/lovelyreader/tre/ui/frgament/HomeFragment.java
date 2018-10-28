@@ -43,6 +43,8 @@ import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.ui.FileActivity;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
+import com.haoyang.lovelyreader.tre.util.FileUtils;
+import com.haoyang.lovelyreader.tre.util.Utils;
 import com.haoyang.lovelyreader.tre.wifi.Constants;
 import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
 import com.haoyang.lovelyreader.tre.wifi.WebService;
@@ -394,6 +396,13 @@ public class HomeFragment extends BaseFragment {
         bookBean.setBookCategory("");
         bookBean.setBookDesc("");
         bookBean.setCategoryId(Configs.CATEGORY_DEFAULT);
+
+        // 移动到book文件夹下，并且以文件的md5命名
+        String md5 = Utils.getFileMD5(new File(fileBean.getPath()));
+        String fileName = Utils.getBookName(mUserBean, bookBean);
+        String localBookPath = Configs.DIR_SDCARD_PROJECT_BOOK + "/" + fileName;
+        FileUtils.copyFile(fileBean.getPath(), localBookPath);
+        bookBean.setLocalBookPath(localBookPath);
 
         // 如果已登录，则添加到服务端；如果未登录，则只添加到本地
         if (UserUtils.checkLoginStatus()) {
@@ -756,7 +765,7 @@ public class HomeFragment extends BaseFragment {
                 for (int i = bookBeanList.size() - 1; i >= 0; i--) {
                     BookBean bookBean = bookBeanList.get(i);
                     String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
-                    String bookFileName = DBHelper.getUserBean().getUid() + "-" + bookBean.getBookId() + "-" + bookBean.getBookName() + ".epub";
+                    String bookFileName = Utils.getBookName(DBHelper.getUserBean(), bookBean);
                     File bookFile = new File(bookFileDir, bookFileName);
                     if (bookFile.exists()) {
                         String filePath = bookFile.getAbsolutePath();
