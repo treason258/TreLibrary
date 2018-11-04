@@ -149,6 +149,11 @@ dependencies {
     }
     compile "com.koushikdutta.async:androidasync:2.+"
     compile 'com.jakewharton.timber:timber:4.1.2'
+
+    // materialdrawer
+    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
+        transitive = true
+    }
 }
 
 /**
