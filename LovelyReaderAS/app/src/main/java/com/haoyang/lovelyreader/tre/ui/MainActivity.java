@@ -21,9 +21,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
@@ -460,8 +462,20 @@ public class MainActivity extends BaseActivity {
         TextView tvSync = (TextView) categoryView.findViewById(R.id.tvSync);
         lvCategory = (ListView) categoryView.findViewById(R.id.lvCategory);
         TextView tvAddCategory = (TextView) categoryView.findViewById(R.id.tvAddCategory);
+        RelativeLayout rlAddCategory = (RelativeLayout) categoryView.findViewById(R.id.rlAddCategory);
+        EditText etCategoryName = (EditText) categoryView.findViewById(R.id.etCategoryName);
+        TextView tvSubmit = (TextView) categoryView.findViewById(R.id.tvSubmit);
+        TextView tvCannel = (TextView) categoryView.findViewById(R.id.tvCannel);
 
-        // lvCategory
+        // tvSync-同步数据
+        tvSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.show("同步数据");
+            }
+        });
+
+        // lvCategory-分类列表
         mListCategory = new ArrayList<>();
         mCategoryAdapter = new CategoryAdapter(mContext, mListCategory);
         lvCategory.setAdapter(mCategoryAdapter);
@@ -475,19 +489,27 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        // tvSync
-        tvSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("同步数据");
-            }
-        });
-
-        // tvAddCategory
+        // tvAddCategory-新增分类
         tvAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show("新增分类");
+                rlAddCategory.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // tvSubmit-新增分类-提交
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // tvCannel-新增分类-取消
+        tvCannel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlAddCategory.setVisibility(View.GONE);
             }
         });
 
@@ -495,8 +517,6 @@ public class MainActivity extends BaseActivity {
                 .withActivity(this)
                 .withCustomView(categoryView)
                 .build();
-//        drawer.openDrawer();
-//        drawer.closeDrawer();
     }
 
     /**
