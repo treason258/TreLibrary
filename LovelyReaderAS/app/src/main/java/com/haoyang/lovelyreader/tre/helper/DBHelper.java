@@ -3,9 +3,11 @@ package com.haoyang.lovelyreader.tre.helper;
 import android.text.TextUtils;
 
 import com.haoyang.lovelyreader.tre.bean.BookBean;
-import com.haoyang.lovelyreader.tre.bean.BookStoreBean;
-import com.haoyang.lovelyreader.tre.bean.LastSyncDateStore;
+import com.haoyang.lovelyreader.tre.bean.CategoryBean;
+import com.haoyang.lovelyreader.tre.bean.store.BookStore;
+import com.haoyang.lovelyreader.tre.bean.store.LastSyncDateStore;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
+import com.haoyang.lovelyreader.tre.bean.store.CategoryStore;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.SharedUtils;
 
@@ -20,9 +22,9 @@ import java.util.List;
 public class DBHelper {
 
     private static final String KEY_USER_BEAN = "key_user_bean";
-    private static final String KEY_BOOK_STORE_BEAN = "key_book_store_bean";
-    private static final String KEY_LAST_SYNC_DATE = "key_last_sync_date";
-    private static final String KEY_BOOK_UNUPLOAD = "key_book_unupload";
+    private static final String KEY_BOOK_STORE = "key_book_store";
+    private static final String KEY_CATEGORY_STORE = "key_category_store";
+    private static final String KEY_LAST_SYNC_DATE_STORE = "key_last_sync_date_store";
 
     // ******************************** KEY_USER_BEAN ********************************
 
@@ -43,37 +45,56 @@ public class DBHelper {
         }
     }
 
-    // ******************************** KEY_BOOK_STORE_BEAN ********************************
+    // ******************************** KEY_BOOK_STORE ********************************
 
-    public static void setBookStoreBean(BookStoreBean bookStoreBean) {
+    public static void setBookStore(BookStore bookStore) {
         String data = "";
-        if (bookStoreBean != null) {
-            data = JsonParser.get().toJson(bookStoreBean);
+        if (bookStore != null) {
+            data = JsonParser.get().toJson(bookStore);
         }
-        SharedUtils.get().setCommon(KEY_BOOK_STORE_BEAN, data);
+        SharedUtils.get().setCommon(KEY_BOOK_STORE, data);
     }
 
-    public static BookStoreBean getBookStoreBean() {
-        String data = SharedUtils.get().getCommon(KEY_BOOK_STORE_BEAN);
+    public static BookStore getBookStore() {
+        String data = SharedUtils.get().getCommon(KEY_BOOK_STORE);
         if (!TextUtils.isEmpty(data)) {
-            return JsonParser.get().toObject(data, BookStoreBean.class);
+            return JsonParser.get().toObject(data, BookStore.class);
         } else {
             return null;
         }
     }
 
-    // ******************************** KEY_LAST_SYNC_DATE ********************************
+    // ******************************** KEY_CATEGORY_STORE ********************************
+
+    public static void setCategoryStore(CategoryStore categoryStore) {
+        String data = "";
+        if (categoryStore != null) {
+            data = JsonParser.get().toJson(categoryStore);
+        }
+        SharedUtils.get().setCommon(KEY_CATEGORY_STORE, data);
+    }
+
+    public static CategoryStore getCategoryStore() {
+        String data = SharedUtils.get().getCommon(KEY_CATEGORY_STORE);
+        if (!TextUtils.isEmpty(data)) {
+            return JsonParser.get().toObject(data, CategoryStore.class);
+        } else {
+            return null;
+        }
+    }
+
+    // ******************************** KEY_LAST_SYNC_DATE_STORE ********************************
 
     public static void setLastSyncDateStore(LastSyncDateStore lastSyncDateStore) {
         String data = "";
         if (lastSyncDateStore != null) {
             data = JsonParser.get().toJson(lastSyncDateStore);
         }
-        SharedUtils.get().setCommon(KEY_LAST_SYNC_DATE, data);
+        SharedUtils.get().setCommon(KEY_LAST_SYNC_DATE_STORE, data);
     }
 
     public static LastSyncDateStore getLastSyncDateStore() {
-        String data = SharedUtils.get().getCommon(KEY_LAST_SYNC_DATE);
+        String data = SharedUtils.get().getCommon(KEY_LAST_SYNC_DATE_STORE);
         if (!TextUtils.isEmpty(data)) {
             return JsonParser.get().toObject(data, LastSyncDateStore.class);
         } else {
@@ -87,14 +108,14 @@ public class DBHelper {
      * setBookBeanList
      */
     public static void setBookBeanList(String uid, List<BookBean> bookBeanList) {
-        BookStoreBean bookStoreBean = getBookStoreBean();
-        if (bookStoreBean == null) {
-            bookStoreBean = new BookStoreBean();
+        BookStore bookStore = getBookStore();
+        if (bookStore == null) {
+            bookStore = new BookStore();
             HashMap<String, List<BookBean>> data = new HashMap<>();
             data.put(uid, bookBeanList);
-            bookStoreBean.setData(data);
+            bookStore.setData(data);
         } else {
-            HashMap<String, List<BookBean>> data = bookStoreBean.getData();
+            HashMap<String, List<BookBean>> data = bookStore.getData();
             if (data == null) {
                 data = new HashMap<>();
             } else {
@@ -103,31 +124,31 @@ public class DBHelper {
                 }
             }
             data.put(uid, bookBeanList);
-            bookStoreBean.setData(data);
+            bookStore.setData(data);
         }
-        setBookStoreBean(bookStoreBean);
+        setBookStore(bookStore);
     }
 
     /**
      * getBookBeanList
      */
     public static List<BookBean> getBookBeanList(String uid) {
-        BookStoreBean bookStoreBean = getBookStoreBean();
-        if (bookStoreBean != null && bookStoreBean.getData() != null) {
-            if (bookStoreBean.getData().containsKey(uid)) {
-                return bookStoreBean.getData().get(uid);
+        BookStore bookStore = getBookStore();
+        if (bookStore != null && bookStore.getData() != null) {
+            if (bookStore.getData().containsKey(uid)) {
+                return bookStore.getData().get(uid);
             }
         }
         return new ArrayList<>();
     }
 
     /**
-     * containUid
+     * containUidInBookStore
      */
-    public static boolean containUid(String uid) {
-        BookStoreBean bookStoreBean = getBookStoreBean();
-        if (bookStoreBean != null && bookStoreBean.getData() != null) {
-            if (bookStoreBean.getData().containsKey(uid)) {
+    public static boolean containUidInBookStore(String uid) {
+        BookStore bookStore = getBookStore();
+        if (bookStore != null && bookStore.getData() != null) {
+            if (bookStore.getData().containsKey(uid)) {
                 return true;
             }
         }
@@ -179,7 +200,7 @@ public class DBHelper {
     /**
      * containBookBean
      */
-    public static boolean containBookBean(String uid, BookBean bookBean) {
+    public static boolean containBookBeanInBookStore(String uid, BookBean bookBean) {
         return false;
     }
 
@@ -242,6 +263,9 @@ public class DBHelper {
 
     // ******************************** setLastSyncDate ********************************
 
+    /**
+     * setLastSyncDate
+     */
     public static void setLastSyncDate(String uid, long timestamp) {
         LastSyncDateStore lastSyncDateStore = getLastSyncDateStore();
         if (lastSyncDateStore == null) {
@@ -264,6 +288,9 @@ public class DBHelper {
         setLastSyncDateStore(lastSyncDateStore);
     }
 
+    /**
+     * getLastSyncDate
+     */
     public static long getLastSyncDate(String uid) {
         LastSyncDateStore lastSyncDateStore = getLastSyncDateStore();
         if (lastSyncDateStore != null && lastSyncDateStore.getData() != null) {
@@ -272,5 +299,45 @@ public class DBHelper {
             }
         }
         return 0;
+    }
+
+    // ******************************** setCategoryBeanList ********************************
+
+    /**
+     * setCategoryBeanList
+     */
+    public static void setCategoryBeanList(String uid, List<CategoryBean> categoryBeanList) {
+        CategoryStore categoryStore = getCategoryStore();
+        if (categoryStore == null) {
+            categoryStore = new CategoryStore();
+            HashMap<String, List<CategoryBean>> data = new HashMap<>();
+            data.put(uid, categoryBeanList);
+            categoryStore.setData(data);
+        } else {
+            HashMap<String, List<CategoryBean>> data = categoryStore.getData();
+            if (data == null) {
+                data = new HashMap<>();
+            } else {
+                if (data.containsKey(uid)) {
+                    data.remove(uid);
+                }
+            }
+            data.put(uid, categoryBeanList);
+            categoryStore.setData(data);
+        }
+        setCategoryStore(categoryStore);
+    }
+
+    /**
+     * getCategoryBeanList
+     */
+    public static List<CategoryBean> getCategoryBeanList(String uid) {
+        CategoryStore categoryStore = getCategoryStore();
+        if (categoryStore != null && categoryStore.getData() != null) {
+            if (categoryStore.getData().containsKey(uid)) {
+                return categoryStore.getData().get(uid);
+            }
+        }
+        return new ArrayList<>();
     }
 }

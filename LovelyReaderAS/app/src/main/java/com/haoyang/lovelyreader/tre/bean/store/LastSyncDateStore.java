@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre.bean;
+package com.haoyang.lovelyreader.tre.bean.store;
 
 import java.util.HashMap;
 

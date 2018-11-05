@@ -1,4 +1,6 @@
-package com.haoyang.lovelyreader.tre.bean;
+package com.haoyang.lovelyreader.tre.bean.store;
+
+import com.haoyang.lovelyreader.tre.bean.BookBean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
  * Created by treason on 2018/9/25.
  */
 
-public class BookStoreBean {
+public class BookStore {
 
     private HashMap<String, List<BookBean>> data;
 

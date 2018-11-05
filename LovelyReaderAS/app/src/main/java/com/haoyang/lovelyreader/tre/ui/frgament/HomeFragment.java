@@ -42,6 +42,7 @@ import com.haoyang.lovelyreader.tre.helper.OnBookAddEvent;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.ui.FileActivity;
+import com.haoyang.lovelyreader.tre.ui.MainActivity;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.util.FileUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;
@@ -64,6 +65,7 @@ import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.java.common.service.file.FileNameService;
+import com.mjiayou.trecorelib.bean.entity.TCMenu;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
@@ -93,7 +95,6 @@ public class HomeFragment extends BaseFragment {
     private EditText etSearch;
     private ImageView ivDelete;
     private TextView tvTemp1;
-    private TextView tvTemp2;
     private GridView gvBook;
     private ListView lvSearch;
     private ImageView ivAdd;
@@ -119,7 +120,6 @@ public class HomeFragment extends BaseFragment {
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
         tvTemp1 = (TextView) view.findViewById(R.id.tvTemp1);
-        tvTemp2 = (TextView) view.findViewById(R.id.tvTemp2);
         gvBook = (GridView) view.findViewById(R.id.gvBook);
         lvSearch = (ListView) view.findViewById(R.id.lvSearch);
         ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
@@ -199,19 +199,11 @@ public class HomeFragment extends BaseFragment {
         });
 
         // tvTemp1
-        tvTemp1.setText("同步电子书");
+        tvTemp1.setText("showTestDialog");
         tvTemp1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                syncBookListFromServer(false);
-            }
-        });
-
-        // tvTemp2
-        tvTemp2.setText("null");
-        tvTemp2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                showTestDialog();
             }
         });
 
@@ -299,14 +291,21 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        // 展示本地数据
+        // 展示本地数据-书
         mList.clear();
         mList.addAll(DBHelper.getBookBeanList(mUserBean.getUid()));
         mHomeAdapter.setList(mList);
 
+        // 展示本地数据-分类
+        List<CategoryBean> categoryBeanList = DBHelper.getCategoryBeanList(mUserBean.getUid());
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).refreshCategoryView(categoryBeanList);
+        }
+
         // 如果用户已登录，则自动同步电子书
         if (UserUtils.checkLoginStatus()) {
             syncBookListFromServer(isFirstLogin);
+            getCategoryList();
         }
     }
 
@@ -395,7 +394,7 @@ public class HomeFragment extends BaseFragment {
         bookBean.setBookName(book.bookName);
         bookBean.setBookCategory("");
         bookBean.setBookDesc("");
-        bookBean.setCategoryId(Configs.CATEGORY_DEFAULT);
+        bookBean.setCategoryId(CategoryBean.CATEGORY_DEFAULT);
 
         // 移动到book文件夹下，并且以文件的md5命名
         String md5 = Utils.getFileMD5(new File(fileBean.getPath()));
@@ -807,9 +806,8 @@ public class HomeFragment extends BaseFragment {
      */
     public void addCategory() {
         CategoryParam categoryParam = new CategoryParam();
-        categoryParam.setParentId(Configs.CATEGORY_ROOT);
-        String id = String.valueOf(System.currentTimeMillis());
-        categoryParam.setCategoryName("测试分类" + id);
+        categoryParam.setParentId(CategoryBean.CATEGORY_ROOT_ID);
+        categoryParam.setCategoryName("一级分类" + System.currentTimeMillis());
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAdd);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(categoryParam));
@@ -849,6 +847,10 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onSuccess(int code, List<CategoryBean> categoryBeanList) {
                 if (categoryBeanList != null) {
+                    DBHelper.setCategoryBeanList(mUserBean.getUid(), categoryBeanList);
+                    if (getActivity() instanceof MainActivity) {
+                        ((MainActivity) getActivity()).refreshCategoryView(categoryBeanList);
+                    }
                 }
             }
 
@@ -857,5 +859,26 @@ public class HomeFragment extends BaseFragment {
                 ToastUtils.show(msg);
             }
         });
+    }
+
+    /**
+     * showTestDialog
+     */
+    public void showTestDialog() {
+        List<TCMenu> tcMenus = new ArrayList<>();
+        tcMenus.add(new TCMenu("同步电子书以及分类", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                syncBookListFromServer(false);
+                getCategoryList();
+            }
+        }));
+        tcMenus.add(new TCMenu("新增分类", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addCategory();
+            }
+        }));
+        DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();
     }
 }

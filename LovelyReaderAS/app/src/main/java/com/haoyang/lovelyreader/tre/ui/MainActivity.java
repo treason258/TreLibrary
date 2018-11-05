@@ -18,14 +18,18 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
+import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
@@ -34,25 +38,19 @@ import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.net.MyFileCallback;
 import com.haoyang.lovelyreader.tre.ui.dialog.UpdateDialog;
+import com.haoyang.lovelyreader.tre.ui.frgament.CategoryAdapter;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
 import com.haoyang.lovelyreader.tre.util.Utils;
-import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.RequestCallback;
 import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.widget.FitListView;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
@@ -92,6 +90,10 @@ public class MainActivity extends BaseActivity {
     private NotificationManager mNotificationManager;
     private int mPreProgress = -1; //记录上次进度值，用于采样
 
+    private ListView lvCategory;
+    private CategoryAdapter mCategoryAdapter;
+    private List<CategoryBean> mListCategory;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,9 +110,6 @@ public class MainActivity extends BaseActivity {
 
         initView();
         checkUpdate();
-
-        // MaterialDrawer
-        initMaterialDrawer();
     }
 
     @Override
@@ -130,6 +129,7 @@ public class MainActivity extends BaseActivity {
         // llMine
         llMine.setOnClickListener(mOnClickListener);
 
+        initCategoryView();
         initViewPager();
     }
 
@@ -453,60 +453,98 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * MaterialDrawer
+     * 分类面板
      */
-    private void initMaterialDrawer() {
-        // accountHeader
-        AccountHeader accountHeader = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withCompactStyle(true)
-                .withHeaderBackground(R.drawable.tc_shape_rect_gradient_theme)
-                .addProfiles(
-                        new ProfileDrawerItem().withName("NameA").withEmail("EmailA").withIdentifier(0).withIcon(R.mipmap.tc_launcher),
-                        new ProfileDrawerItem().withName("NameB").withEmail("EmailB").withIdentifier(1).withIcon(R.mipmap.tc_launcher),
-                        new ProfileDrawerItem().withName("NameC").withEmail("EmailC").withIdentifier(2).withIcon(R.mipmap.tc_launcher))
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean current) {
-                        ToastUtils.show("onProfileChanged | profile.getIdentifier() -> " + profile.getIdentifier() + " | profile.getName() -> " + profile.getName());
-                        return true;
-                    }
-                })
-                .build();
-        accountHeader.setActiveProfile(0);
+    private void initCategoryView() {
+        View categoryView = LayoutInflater.from(mContext).inflate(R.layout.view_category, null);
+        TextView tvSync = (TextView) categoryView.findViewById(R.id.tvSync);
+        lvCategory = (ListView) categoryView.findViewById(R.id.lvCategory);
+        TextView tvAddCategory = (TextView) categoryView.findViewById(R.id.tvAddCategory);
 
-        // drawerBuilder
+        // lvCategory
+        mListCategory = new ArrayList<>();
+        mCategoryAdapter = new CategoryAdapter(mContext, mListCategory);
+        lvCategory.setAdapter(mCategoryAdapter);
+        lvCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                for (int i = 0; i < mListCategory.size(); i++) {
+                    mListCategory.get(i).setSelected(i == position);
+                }
+                mCategoryAdapter.notifyDataSetChanged();
+            }
+        });
+
+        // tvSync
+        tvSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.show("同步数据");
+            }
+        });
+
+        // tvAddCategory
+        tvAddCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.show("新增分类");
+            }
+        });
+
         Drawer drawer = new DrawerBuilder()
                 .withActivity(this)
-                .withSliderBackgroundColor(getResources().getColor(R.color.tc_white_alpha_light))
-                .withAccountHeader(accountHeader)
-                .addDrawerItems(
-                        new SectionDrawerItem().withName("SectionDrawerA"),
-                        new PrimaryDrawerItem().withName("PrimaryDrawer000").withIcon(R.mipmap.tc_launcher).withIdentifier(0).withDescription("description000"),
-                        new SectionDrawerItem().withName("SectionDrawerB"),
-                        new PrimaryDrawerItem().withName("PrimaryDrawer111").withIcon(R.mipmap.tc_launcher).withIdentifier(1),
-                        new SectionDrawerItem().withName("SectionDrawerC"),
-                        new PrimaryDrawerItem().withName("PrimaryDrawer222").withIcon(R.mipmap.tc_launcher),
-                        new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName("PrimaryDrawer333"),
-                        new PrimaryDrawerItem().withName("PrimaryDrawer444")
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        ToastUtils.show("onItemClick | drawerItem.getIdentifier() -> " + drawerItem.getIdentifier());
-                        return true;
-                    }
-                })
-                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(View view, int position, IDrawerItem drawerItem) {
-                        ToastUtils.show("onItemLongClick | drawerItem.getIdentifier() -> " + drawerItem.getIdentifier());
-                        return true;
-                    }
-                })
+                .withCustomView(categoryView)
                 .build();
-        drawer.setSelection(0);
+//        drawer.openDrawer();
+//        drawer.closeDrawer();
+    }
+
+    /**
+     * 更新分类面板
+     */
+    public void refreshCategoryView(List<CategoryBean> categoryBeanList) {
+        mListCategory.clear();
+        mListCategory.addAll(convertCategoryList(categoryBeanList));
+        mCategoryAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 分类数据转换
+     */
+    private List<CategoryBean> convertCategoryList(List<CategoryBean> categoryBeanL1List) {
+        List<CategoryBean> result = new ArrayList<>();
+        CategoryBean categoryBeanL0 = new CategoryBean();
+        categoryBeanL0.setCategoryId(CategoryBean.CATEGORY_ROOT_ID);
+        categoryBeanL0.setCategoryName(CategoryBean.CATEGORY_ROOT_NAME);
+        categoryBeanL0.setLevel(CategoryBean.LEVEL_1);
+        result.add(categoryBeanL0);
+
+        if (categoryBeanL1List != null && categoryBeanL1List.size() > 0) {
+            for (int i = 0; i < categoryBeanL1List.size(); i++) {
+                CategoryBean categoryBeanL1 = categoryBeanL1List.get(i);
+                categoryBeanL1.setLevel(CategoryBean.LEVEL_1);
+                result.add(categoryBeanL1);
+
+                List<CategoryBean> categoryBeanL2List = categoryBeanL1.getChildList();
+                if (categoryBeanL2List != null && categoryBeanL2List.size() > 0) {
+                    for (int j = 0; j < categoryBeanL2List.size(); j++) {
+                        CategoryBean categoryBeanL2 = categoryBeanL2List.get(j);
+                        categoryBeanL2.setLevel(CategoryBean.LEVEL_2);
+                        result.add(categoryBeanL2);
+
+                        List<CategoryBean> categoryBeanL3List = categoryBeanL2.getChildList();
+                        if (categoryBeanL3List != null && categoryBeanL3List.size() > 0) {
+                            for (int k = 0; k < categoryBeanL3List.size(); k++) {
+                                CategoryBean categoryBeanL3 = categoryBeanL3List.get(k);
+                                categoryBeanL3.setLevel(CategoryBean.LEVEL_3);
+                                result.add(categoryBeanL3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
 
