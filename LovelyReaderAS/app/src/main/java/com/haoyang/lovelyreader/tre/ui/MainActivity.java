@@ -35,16 +35,19 @@ import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
+import com.haoyang.lovelyreader.tre.bean.api.CategoryAddParam;
+import com.haoyang.lovelyreader.tre.bean.api.CategoryEditParam;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
+import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.net.MyFileCallback;
 import com.haoyang.lovelyreader.tre.ui.dialog.UpdateDialog;
-import com.haoyang.lovelyreader.tre.ui.frgament.CategoryAdapter;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
 import com.haoyang.lovelyreader.tre.util.Utils;
+import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.RequestCallback;
@@ -67,6 +70,12 @@ public class MainActivity extends BaseActivity {
 
     private final int FRAGMENT_HOME = 0;
     private final int FRAGMENT_MINE = 1;
+
+    private final int CATEGORY_OPTION_NONE = 11;
+    private final int CATEGORY_OPTION_ADD = 12;
+    private final int CATEGORY_OPTION_MODIFY = 13;
+    private int mCategoryOption = CATEGORY_OPTION_NONE;
+    private CategoryBean mCurrentSelectedCategory = null;
 
     private ViewPager viewPager;
     private LinearLayout llHome;
@@ -164,6 +173,27 @@ public class MainActivity extends BaseActivity {
         // lvCategory-分类列表
         mListCategory = new ArrayList<>();
         mCategoryAdapter = new CategoryAdapter(mContext, mListCategory);
+        mCategoryAdapter.setOnOptionListener(new CategoryAdapter.OnOptionListener() {
+            @Override
+            public void onModify(CategoryBean categoryBean, int position) {
+                showCategoryAddView(CATEGORY_OPTION_MODIFY);
+            }
+
+            @Override
+            public void onDelete(CategoryBean categoryBean, int position) {
+                DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除分类 " + categoryBean.getCategoryName() + "？", "确定", "取消", true,
+                        new TCAlertDialog.OnTCActionListener() {
+                            @Override
+                            public void onOkAction() {
+                                deleteCategory(categoryBean.getCategoryId(), position);
+                            }
+
+                            @Override
+                            public void onCancelAction() {
+                            }
+                        }).show();
+            }
+        });
         lvCategory.setAdapter(mCategoryAdapter);
         lvCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -171,6 +201,7 @@ public class MainActivity extends BaseActivity {
                 for (int i = 0; i < mListCategory.size(); i++) {
                     mListCategory.get(i).setSelected(i == position);
                 }
+                mCurrentSelectedCategory = mListCategory.get(position);
                 mCategoryAdapter.notifyDataSetChanged();
             }
         });
@@ -179,7 +210,7 @@ public class MainActivity extends BaseActivity {
         tvAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rlAddCategory.setVisibility(View.VISIBLE);
+                showCategoryAddView(CATEGORY_OPTION_ADD);
             }
         });
 
@@ -187,7 +218,6 @@ public class MainActivity extends BaseActivity {
         rlAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rlAddCategory.setVisibility(View.GONE);
             }
         });
 
@@ -200,7 +230,33 @@ public class MainActivity extends BaseActivity {
                     ToastUtils.show("请输入分类名称");
                     return;
                 }
-                ToastUtils.show(categoryName);
+                switch (mCategoryOption) {
+                    default:
+                    case CATEGORY_OPTION_NONE:
+                        break;
+                    case CATEGORY_OPTION_ADD:
+                        if (mCurrentSelectedCategory == null) {
+                            ToastUtils.show("未选中所属分类");
+                            return;
+                        }
+                        if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_3) {
+                            ToastUtils.show("三级分类下不可再创建子分类");
+                            return;
+                        }
+                        addCategory(categoryName, mCurrentSelectedCategory);
+                        break;
+                    case CATEGORY_OPTION_MODIFY:
+                        if (mCurrentSelectedCategory == null) {
+                            ToastUtils.show("未选中任何分类");
+                            return;
+                        }
+                        if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_0) {
+                            ToastUtils.show("默认目录不可修改");
+                            return;
+                        }
+                        modifyCategory(categoryName, mCurrentSelectedCategory);
+                        break;
+                }
             }
         });
 
@@ -208,7 +264,7 @@ public class MainActivity extends BaseActivity {
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rlAddCategory.setVisibility(View.GONE);
+                hideCategoryAddView();
             }
         });
 
@@ -539,47 +595,8 @@ public class MainActivity extends BaseActivity {
      */
     public void refreshCategoryView(List<CategoryBean> categoryBeanList) {
         mListCategory.clear();
-        mListCategory.addAll(convertCategoryList(categoryBeanList));
+        mListCategory.addAll(CategoryBean.convertToShow(categoryBeanList));
         mCategoryAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * 分类数据转换
-     */
-    private List<CategoryBean> convertCategoryList(List<CategoryBean> categoryBeanL1List) {
-        List<CategoryBean> result = new ArrayList<>();
-        CategoryBean categoryBeanL0 = new CategoryBean();
-        categoryBeanL0.setCategoryId(CategoryBean.CATEGORY_ROOT_ID);
-        categoryBeanL0.setCategoryName(CategoryBean.CATEGORY_ROOT_NAME);
-        categoryBeanL0.setLevel(CategoryBean.LEVEL_1);
-        result.add(categoryBeanL0);
-
-        if (categoryBeanL1List != null && categoryBeanL1List.size() > 0) {
-            for (int i = 0; i < categoryBeanL1List.size(); i++) {
-                CategoryBean categoryBeanL1 = categoryBeanL1List.get(i);
-                categoryBeanL1.setLevel(CategoryBean.LEVEL_1);
-                result.add(categoryBeanL1);
-
-                List<CategoryBean> categoryBeanL2List = categoryBeanL1.getChildList();
-                if (categoryBeanL2List != null && categoryBeanL2List.size() > 0) {
-                    for (int j = 0; j < categoryBeanL2List.size(); j++) {
-                        CategoryBean categoryBeanL2 = categoryBeanL2List.get(j);
-                        categoryBeanL2.setLevel(CategoryBean.LEVEL_2);
-                        result.add(categoryBeanL2);
-
-                        List<CategoryBean> categoryBeanL3List = categoryBeanL2.getChildList();
-                        if (categoryBeanL3List != null && categoryBeanL3List.size() > 0) {
-                            for (int k = 0; k < categoryBeanL3List.size(); k++) {
-                                CategoryBean categoryBeanL3 = categoryBeanL3List.get(k);
-                                categoryBeanL3.setLevel(CategoryBean.LEVEL_3);
-                                result.add(categoryBeanL3);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return result;
     }
 
     /**
@@ -591,6 +608,136 @@ public class MainActivity extends BaseActivity {
         } else {
             dlMain.openDrawer(rlCategory);
         }
+    }
+
+    /**
+     * 显示新增编辑分类浮层
+     */
+    private void showCategoryAddView(int categoryOption) {
+        mCategoryOption = categoryOption;
+
+        rlAddCategory.setVisibility(View.VISIBLE);
+        if (mCategoryOption == CATEGORY_OPTION_MODIFY && mCurrentSelectedCategory != null) {
+            etCategoryName.setText(mCurrentSelectedCategory.getCategoryName());
+        }
+    }
+
+    /**
+     * 隐藏新增编辑分类浮层
+     */
+    private void hideCategoryAddView() {
+        mCategoryOption = CATEGORY_OPTION_NONE;
+
+        rlAddCategory.setVisibility(View.GONE);
+        etCategoryName.setText("");
+    }
+
+    /**
+     * 新增分类
+     */
+    private void addCategory(String categoryName, CategoryBean parentCategory) {
+        CategoryAddParam categoryAddParam = new CategoryAddParam();
+        categoryAddParam.setCategoryName(categoryName);
+        categoryAddParam.setParentId(parentCategory.getCategoryId());
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAdd);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(categoryAddParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(int code, CategoryBean categoryBean) {
+                if (categoryBean != null) {
+                    int parentIndex = mListCategory.indexOf(parentCategory);
+                    categoryBean.setLevel(parentCategory.getLevel() + 1);
+
+                    mListCategory.add(parentIndex + 1, categoryBean);
+                    mCategoryAdapter.notifyDataSetChanged();
+
+                    ToastUtils.show("新增分类成功 | " + categoryBean.getCategoryId() + " | " + categoryBean.getCategoryName());
+                    hideCategoryAddView();
+                } else {
+                    ToastUtils.show("新增分类失败");
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtils.show(msg);
+            }
+        });
+    }
+
+    /**
+     * 删除分类
+     */
+    private void deleteCategory(String categoryId, int position) {
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(categoryId);
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryDel);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(int code, Object object) {
+                if (object != null) {
+                    mListCategory.remove(position);
+                    mCategoryAdapter.notifyDataSetChanged();
+
+                    ToastUtils.show("删除分类成功 | " + categoryId);
+                } else {
+                    ToastUtils.show("删除分类失败");
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtils.show(msg);
+            }
+        });
+    }
+
+    /**
+     * 修改分类
+     */
+    private void modifyCategory(String categoryName, CategoryBean selectedCategory) {
+        CategoryEditParam categoryEditParam = new CategoryEditParam();
+        categoryEditParam.setCategoryId(selectedCategory.getCategoryId());
+        categoryEditParam.setCategoryName(categoryName);
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryEdit);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(categoryEditParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(int code, CategoryBean categoryBean) {
+                if (categoryBean != null) {
+                    int selectedIndex = mListCategory.indexOf(selectedCategory);
+                    selectedCategory.setCategoryName(categoryBean.getCategoryName());
+                    mListCategory.set(selectedIndex, selectedCategory);
+                    mCategoryAdapter.notifyDataSetChanged();
+
+                    ToastUtils.show("修改分类成功 | " + categoryBean.getCategoryId() + " | " + categoryBean.getCategoryName());
+                    hideCategoryAddView();
+                } else {
+                    ToastUtils.show("修改分类失败");
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtils.show(msg);
+            }
+        });
     }
 }
 

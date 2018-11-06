@@ -33,7 +33,6 @@ import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.BookAddParam;
 import com.haoyang.lovelyreader.tre.bean.api.BookSyncParam;
-import com.haoyang.lovelyreader.tre.bean.api.CategoryParam;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
@@ -167,9 +166,7 @@ public class HomeFragment extends BaseFragment {
         ivCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).toggleDrawer();
-                }
+                toggleDrawer();
             }
         });
 
@@ -310,9 +307,7 @@ public class HomeFragment extends BaseFragment {
 
         // 展示本地数据-分类
         List<CategoryBean> categoryBeanList = DBHelper.getCategoryBeanList(mUserBean.getUid());
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).refreshCategoryView(categoryBeanList);
-        }
+        refreshCategoryView(categoryBeanList);
 
         // 如果用户已登录，则自动同步电子书
         if (UserUtils.checkLoginStatus()) {
@@ -813,34 +808,6 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    /**
-     * 新增分类
-     */
-    public void addCategory() {
-        CategoryParam categoryParam = new CategoryParam();
-        categoryParam.setParentId(CategoryBean.CATEGORY_ROOT_ID);
-        categoryParam.setCategoryName("一级分类" + System.currentTimeMillis());
-
-        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAdd);
-        myRequestEntity.setContentWithHeader(ApiRequest.getContent(categoryParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
-            @Override
-            public void onStart() {
-            }
-
-            @Override
-            public void onSuccess(int code, CategoryBean categoryBean) {
-                if (categoryBean != null) {
-                    ToastUtils.show(categoryBean.getCategoryId() + " - " + categoryBean.getCategoryName());
-                }
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                ToastUtils.show(msg);
-            }
-        });
-    }
 
     /**
      * 获取用户的所有分类
@@ -860,9 +827,7 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(int code, List<CategoryBean> categoryBeanList) {
                 if (categoryBeanList != null) {
                     DBHelper.setCategoryBeanList(mUserBean.getUid(), categoryBeanList);
-                    if (getActivity() instanceof MainActivity) {
-                        ((MainActivity) getActivity()).refreshCategoryView(categoryBeanList);
-                    }
+                    refreshCategoryView(categoryBeanList);
                 }
             }
 
@@ -885,12 +850,24 @@ public class HomeFragment extends BaseFragment {
                 getCategoryList();
             }
         }));
-        tcMenus.add(new TCMenu("新增分类", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addCategory();
-            }
-        }));
         DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();
+    }
+
+    /**
+     * refreshCategoryView
+     */
+    private void refreshCategoryView(List<CategoryBean> categoryBeanList) {
+        if (mActivity != null && mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).refreshCategoryView(categoryBeanList);
+        }
+    }
+
+    /**
+     * toggleDrawer
+     */
+    private void toggleDrawer() {
+        if (mActivity != null && mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).toggleDrawer();
+        }
     }
 }

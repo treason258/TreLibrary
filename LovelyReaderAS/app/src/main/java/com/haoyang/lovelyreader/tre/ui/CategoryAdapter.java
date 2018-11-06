@@ -1,4 +1,4 @@
-package com.haoyang.lovelyreader.tre.ui.frgament;
+package com.haoyang.lovelyreader.tre.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.mjiayou.trecorelib.base.TCAdapter;
 import com.mjiayou.trecorelib.base.TCViewHolder;
-import com.mjiayou.trecorelib.util.ToastUtils;
 
 import java.util.List;
 
@@ -93,8 +92,15 @@ public class CategoryAdapter extends TCAdapter {
             tvCategoryL3.setVisibility(View.GONE);
             switch (categoryBean.getLevel()) {
                 default:
+                case CategoryBean.LEVEL_0:
+                    ivIcon.setVisibility(View.VISIBLE);
+                    ivIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher));
+                    tvCategoryL1.setText(categoryBean.getCategoryName());
+                    tvCategoryL1.setVisibility(View.VISIBLE);
+                    break;
                 case CategoryBean.LEVEL_1:
                     ivIcon.setVisibility(View.VISIBLE);
+                    ivIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.tc_launcher));
                     tvCategoryL1.setText(categoryBean.getCategoryName());
                     tvCategoryL1.setVisibility(View.VISIBLE);
                     break;
@@ -114,7 +120,9 @@ public class CategoryAdapter extends TCAdapter {
             ivModify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtils.show("编辑 | " + categoryBean.getCategoryId() + " | "+ categoryBean.getCategoryName());
+                    if (mOnOptionListener != null) {
+                        mOnOptionListener.onModify(categoryBean, position);
+                    }
                 }
             });
 
@@ -122,12 +130,14 @@ public class CategoryAdapter extends TCAdapter {
             ivDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtils.show("删除 | " + categoryBean.getCategoryId() + " | "+ categoryBean.getCategoryName());
+                    if (mOnOptionListener != null) {
+                        mOnOptionListener.onDelete(categoryBean, position);
+                    }
                 }
             });
 
             // 选中状态
-            if(categoryBean.isSelected()) {
+            if (categoryBean.isSelected()) {
                 llBackground.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.tc_shape_rect_stroke_gray_corners));
                 ivModify.setVisibility(View.VISIBLE);
                 ivDelete.setVisibility(View.VISIBLE);
@@ -137,5 +147,20 @@ public class CategoryAdapter extends TCAdapter {
                 ivDelete.setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    /**
+     * OnOptionListener
+     */
+    public interface OnOptionListener {
+        void onModify(CategoryBean categoryBean, int position);
+
+        void onDelete(CategoryBean categoryBean, int position);
+    }
+
+    private OnOptionListener mOnOptionListener;
+
+    public void setOnOptionListener(OnOptionListener onOptionListener) {
+        mOnOptionListener = onOptionListener;
     }
 }
