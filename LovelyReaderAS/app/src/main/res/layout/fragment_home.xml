@@ -5,6 +5,29 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <!-- title -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/ivCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/tc_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="Reader"
+            android:textColor="@color/tc_black"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
     <!-- 搜索框 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +35,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/shape_home_search_bg"
         android:focusable="true"
         android:focusableInTouchMode="true"

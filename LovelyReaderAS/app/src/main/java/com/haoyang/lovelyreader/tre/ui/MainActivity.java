@@ -17,8 +17,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -44,15 +45,12 @@ import com.haoyang.lovelyreader.tre.ui.frgament.CategoryAdapter;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
 import com.haoyang.lovelyreader.tre.util.Utils;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.RequestCallback;
 import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
-import com.mjiayou.trecorelib.widget.FitListView;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
@@ -92,7 +90,17 @@ public class MainActivity extends BaseActivity {
     private NotificationManager mNotificationManager;
     private int mPreProgress = -1; //记录上次进度值，用于采样
 
+    // 分类面板
+    private DrawerLayout dlMain;
+    private RelativeLayout rlCategory;
+    private TextView tvSync;
     private ListView lvCategory;
+    private TextView tvAddCategory;
+    private RelativeLayout rlAddCategory;
+    private EditText etCategoryName;
+    private TextView tvSubmit;
+    private TextView tvCancel;
+
     private CategoryAdapter mCategoryAdapter;
     private List<CategoryBean> mListCategory;
 
@@ -109,6 +117,16 @@ public class MainActivity extends BaseActivity {
         llMine = (LinearLayout) findViewById(R.id.llMine);
         ivMine = (ImageView) findViewById(R.id.ivMine);
         tvMine = (TextView) findViewById(R.id.tvMine);
+        // 分类面板
+        dlMain = (DrawerLayout) findViewById(R.id.dlMain);
+        rlCategory = (RelativeLayout) findViewById(R.id.rlCategory);
+        tvSync = (TextView) findViewById(R.id.tvSync);
+        lvCategory = (ListView) findViewById(R.id.lvCategory);
+        tvAddCategory = (TextView) findViewById(R.id.tvAddCategory);
+        rlAddCategory = (RelativeLayout) findViewById(R.id.rlAddCategory);
+        etCategoryName = (EditText) findViewById(R.id.etCategoryName);
+        tvSubmit = (TextView) findViewById(R.id.tvSubmit);
+        tvCancel = (TextView) findViewById(R.id.tvCancel);
 
         initView();
         checkUpdate();
@@ -126,12 +144,74 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         Log.d(TAG, "initView() called");
 
-        // llHome
+        // llHome-首页
         llHome.setOnClickListener(mOnClickListener);
-        // llMine
+
+        // llMine-我的
         llMine.setOnClickListener(mOnClickListener);
 
-        initCategoryView();
+        // dlMain
+        dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        // tvSync-同步数据
+        tvSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.show("同步数据");
+            }
+        });
+
+        // lvCategory-分类列表
+        mListCategory = new ArrayList<>();
+        mCategoryAdapter = new CategoryAdapter(mContext, mListCategory);
+        lvCategory.setAdapter(mCategoryAdapter);
+        lvCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                for (int i = 0; i < mListCategory.size(); i++) {
+                    mListCategory.get(i).setSelected(i == position);
+                }
+                mCategoryAdapter.notifyDataSetChanged();
+            }
+        });
+
+        // tvAddCategory-新增分类
+        tvAddCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlAddCategory.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // rlAddCategory-新增分类面板
+        rlAddCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlAddCategory.setVisibility(View.GONE);
+            }
+        });
+
+        // tvSubmit-新增分类-提交
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String categoryName = etCategoryName.getText().toString();
+                if (TextUtils.isEmpty(categoryName)) {
+                    ToastUtils.show("请输入分类名称");
+                    return;
+                }
+                ToastUtils.show(categoryName);
+            }
+        });
+
+        // tvCancel-新增分类-取消
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlAddCategory.setVisibility(View.GONE);
+            }
+        });
+
         initViewPager();
     }
 
@@ -455,71 +535,6 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * 分类面板
-     */
-    private void initCategoryView() {
-        View categoryView = LayoutInflater.from(mContext).inflate(R.layout.view_category, null);
-        TextView tvSync = (TextView) categoryView.findViewById(R.id.tvSync);
-        lvCategory = (ListView) categoryView.findViewById(R.id.lvCategory);
-        TextView tvAddCategory = (TextView) categoryView.findViewById(R.id.tvAddCategory);
-        RelativeLayout rlAddCategory = (RelativeLayout) categoryView.findViewById(R.id.rlAddCategory);
-        EditText etCategoryName = (EditText) categoryView.findViewById(R.id.etCategoryName);
-        TextView tvSubmit = (TextView) categoryView.findViewById(R.id.tvSubmit);
-        TextView tvCannel = (TextView) categoryView.findViewById(R.id.tvCannel);
-
-        // tvSync-同步数据
-        tvSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("同步数据");
-            }
-        });
-
-        // lvCategory-分类列表
-        mListCategory = new ArrayList<>();
-        mCategoryAdapter = new CategoryAdapter(mContext, mListCategory);
-        lvCategory.setAdapter(mCategoryAdapter);
-        lvCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (int i = 0; i < mListCategory.size(); i++) {
-                    mListCategory.get(i).setSelected(i == position);
-                }
-                mCategoryAdapter.notifyDataSetChanged();
-            }
-        });
-
-        // tvAddCategory-新增分类
-        tvAddCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rlAddCategory.setVisibility(View.VISIBLE);
-            }
-        });
-
-        // tvSubmit-新增分类-提交
-        tvSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        // tvCannel-新增分类-取消
-        tvCannel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rlAddCategory.setVisibility(View.GONE);
-            }
-        });
-
-        Drawer drawer = new DrawerBuilder()
-                .withActivity(this)
-                .withCustomView(categoryView)
-                .build();
-    }
-
-    /**
      * 更新分类面板
      */
     public void refreshCategoryView(List<CategoryBean> categoryBeanList) {
@@ -565,6 +580,17 @@ public class MainActivity extends BaseActivity {
             }
         }
         return result;
+    }
+
+    /**
+     * 开关分类面板
+     */
+    public void toggleDrawer() {
+        if (dlMain.isDrawerOpen(rlCategory)) {
+            dlMain.closeDrawer(rlCategory);
+        } else {
+            dlMain.openDrawer(rlCategory);
+        }
     }
 }
 

@@ -91,6 +91,7 @@ public class HomeFragment extends BaseFragment {
 
     private final int REQUEST_CODE_ADD_BOOK = 102;
 
+    private ImageView ivCategory;
     private ImageView ivSearch;
     private EditText etSearch;
     private ImageView ivDelete;
@@ -116,6 +117,7 @@ public class HomeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_home, null);
 
         // findViewById
+        ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
         ivSearch = (ImageView) view.findViewById(R.id.ivSearch);
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
@@ -160,6 +162,16 @@ public class HomeFragment extends BaseFragment {
     protected void initView(boolean isFirstLogin) {
         // mUserBean
         mUserBean = DBHelper.getUserBean();
+
+        // ivCategory
+        ivCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).toggleDrawer();
+                }
+            }
+        });
 
         // etSearch
         etSearch.addTextChangedListener(new TextWatcher() {
