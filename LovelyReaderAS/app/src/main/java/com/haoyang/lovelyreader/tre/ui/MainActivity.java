@@ -176,16 +176,32 @@ public class MainActivity extends BaseActivity {
         mCategoryAdapter.setOnOptionListener(new CategoryAdapter.OnOptionListener() {
             @Override
             public void onModify(CategoryBean categoryBean, int position) {
+                if (mCurrentSelectedCategory == null) {
+                    ToastUtils.show("未选中任何分类");
+                    return;
+                }
+                if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_0) {
+                    ToastUtils.show("默认目录不可修改");
+                    return;
+                }
                 showCategoryAddView(CATEGORY_OPTION_MODIFY);
             }
 
             @Override
             public void onDelete(CategoryBean categoryBean, int position) {
-                DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除分类 " + categoryBean.getCategoryName() + "？", "确定", "取消", true,
+                if (mCurrentSelectedCategory == null) {
+                    ToastUtils.show("未选中任何分类");
+                    return;
+                }
+                if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_0) {
+                    ToastUtils.show("默认目录不可删除");
+                    return;
+                }
+                DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除分类 " + mCurrentSelectedCategory.getCategoryName() + "？", "确定", "取消", true,
                         new TCAlertDialog.OnTCActionListener() {
                             @Override
                             public void onOkAction() {
-                                deleteCategory(categoryBean.getCategoryId(), position);
+                                deleteCategory(mCurrentSelectedCategory, position);
                             }
 
                             @Override
@@ -210,11 +226,19 @@ public class MainActivity extends BaseActivity {
         tvAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mCurrentSelectedCategory == null) {
+                    ToastUtils.show("未选中所属分类");
+                    return;
+                }
+                if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_3) {
+                    ToastUtils.show("三级分类下不可再创建子分类");
+                    return;
+                }
                 showCategoryAddView(CATEGORY_OPTION_ADD);
             }
         });
 
-        // rlAddCategory-新增分类面板
+        // rlAddCategory-新增分类背景面板
         rlAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -235,25 +259,9 @@ public class MainActivity extends BaseActivity {
                     case CATEGORY_OPTION_NONE:
                         break;
                     case CATEGORY_OPTION_ADD:
-                        if (mCurrentSelectedCategory == null) {
-                            ToastUtils.show("未选中所属分类");
-                            return;
-                        }
-                        if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_3) {
-                            ToastUtils.show("三级分类下不可再创建子分类");
-                            return;
-                        }
                         addCategory(categoryName, mCurrentSelectedCategory);
                         break;
                     case CATEGORY_OPTION_MODIFY:
-                        if (mCurrentSelectedCategory == null) {
-                            ToastUtils.show("未选中任何分类");
-                            return;
-                        }
-                        if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_0) {
-                            ToastUtils.show("默认目录不可修改");
-                            return;
-                        }
                         modifyCategory(categoryName, mCurrentSelectedCategory);
                         break;
                 }
@@ -671,39 +679,6 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * 删除分类
-     */
-    private void deleteCategory(String categoryId, int position) {
-        CommonParam commonParam = new CommonParam();
-        commonParam.setData(categoryId);
-
-        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryDel);
-        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
-            @Override
-            public void onStart() {
-            }
-
-            @Override
-            public void onSuccess(int code, Object object) {
-                if (object != null) {
-                    mListCategory.remove(position);
-                    mCategoryAdapter.notifyDataSetChanged();
-
-                    ToastUtils.show("删除分类成功 | " + categoryId);
-                } else {
-                    ToastUtils.show("删除分类失败");
-                }
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                ToastUtils.show(msg);
-            }
-        });
-    }
-
-    /**
      * 修改分类
      */
     private void modifyCategory(String categoryName, CategoryBean selectedCategory) {
@@ -723,6 +698,7 @@ public class MainActivity extends BaseActivity {
                 if (categoryBean != null) {
                     int selectedIndex = mListCategory.indexOf(selectedCategory);
                     selectedCategory.setCategoryName(categoryBean.getCategoryName());
+
                     mListCategory.set(selectedIndex, selectedCategory);
                     mCategoryAdapter.notifyDataSetChanged();
 
@@ -730,6 +706,39 @@ public class MainActivity extends BaseActivity {
                     hideCategoryAddView();
                 } else {
                     ToastUtils.show("修改分类失败");
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtils.show(msg);
+            }
+        });
+    }
+
+    /**
+     * 删除分类
+     */
+    private void deleteCategory(CategoryBean categoryBean, int position) {
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(categoryBean.getCategoryId());
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryDel);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(int code, Object object) {
+                if (object != null) {
+                    mListCategory.remove(position);
+                    mCategoryAdapter.notifyDataSetChanged();
+
+                    ToastUtils.show("删除分类成功 | " + categoryBean.getCategoryId());
+                } else {
+                    ToastUtils.show("删除分类失败");
                 }
             }
 
