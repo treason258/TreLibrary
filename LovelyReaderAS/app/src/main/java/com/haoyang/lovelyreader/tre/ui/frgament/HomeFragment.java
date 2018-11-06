@@ -693,10 +693,12 @@ public class HomeFragment extends BaseFragment {
         RequestSender.get().send(myRequestEntity, new RequestCallback<BookBean>() {
             @Override
             public void onStart() {
+                showLoading(true);
             }
 
             @Override
             public void onSuccess(int code, BookBean bookSyncBean) {
+                showLoading(false);
                 if (bookSyncBean != null) {
                     ToastUtils.show("新增电子书成功 | " + bookSyncBean.getBookId() + " - " + bookSyncBean.getBookName());
 
@@ -709,6 +711,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onFailure(int code, String msg) {
+                showLoading(false);
                 ToastUtils.show(msg);
             }
         });
@@ -726,11 +729,12 @@ public class HomeFragment extends BaseFragment {
         RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
             @Override
             public void onStart() {
-
+                showLoading(true);
             }
 
             @Override
             public void onSuccess(int code, Object object) {
+                showLoading(false);
                 if (object != null) {
                     mList.remove(bookBean);
                     mHomeAdapter.setList(mList);
@@ -740,7 +744,8 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onFailure(int code, String msg) {
-
+                showLoading(false);
+                ToastUtils.show(msg);
             }
         });
     }
@@ -764,10 +769,12 @@ public class HomeFragment extends BaseFragment {
         RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookBean>>() {
             @Override
             public void onStart() {
+                showLoading(true);
             }
 
             @Override
             public void onSuccess(int code, List<BookBean> bookBeanList) {
+                showLoading(false);
                 for (int i = bookBeanList.size() - 1; i >= 0; i--) {
                     BookBean bookBean = bookBeanList.get(i);
                     String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
@@ -803,6 +810,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onFailure(int code, String msg) {
+                showLoading(false);
                 ToastUtils.show(msg);
             }
         });
@@ -821,10 +829,12 @@ public class HomeFragment extends BaseFragment {
         RequestSender.get().send(myRequestEntity, new RequestCallback<List<CategoryBean>>() {
             @Override
             public void onStart() {
+                showLoading(true);
             }
 
             @Override
             public void onSuccess(int code, List<CategoryBean> categoryBeanList) {
+                showLoading(false);
                 if (categoryBeanList != null) {
                     DBHelper.setCategoryBeanList(mUserBean.getUid(), categoryBeanList);
                     refreshCategoryView(categoryBeanList);
@@ -833,6 +843,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onFailure(int code, String msg) {
+                showLoading(false);
                 ToastUtils.show(msg);
             }
         });
@@ -868,6 +879,15 @@ public class HomeFragment extends BaseFragment {
     private void toggleDrawer() {
         if (mActivity != null && mActivity instanceof MainActivity) {
             ((MainActivity) mActivity).toggleDrawer();
+        }
+    }
+
+    /**
+     * showLoading
+     */
+    private void showLoading(boolean show) {
+        if (mActivity != null && mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).showLoading(show);
         }
     }
 }

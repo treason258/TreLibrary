@@ -100,11 +100,12 @@ public class LoginActivity extends BaseActivity {
                 RequestSender.get().send(requestEntity, new RequestCallback<UserBean>() {
                     @Override
                     public void onStart() {
-
+                        showLoading(true);
                     }
 
                     @Override
                     public void onSuccess(int code, UserBean bean) {
+                        showLoading(false);
                         if (bean != null) {
                             ToastUtils.show("登录成功");
 
@@ -124,6 +125,7 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(int code, String msg) {
+                        showLoading(false);
                         ToastUtils.show(msg);
                     }
                 });

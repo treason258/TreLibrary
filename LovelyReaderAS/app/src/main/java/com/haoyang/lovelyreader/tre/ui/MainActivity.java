@@ -653,10 +653,12 @@ public class MainActivity extends BaseActivity {
         RequestSender.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
             @Override
             public void onStart() {
+                showLoading(true);
             }
 
             @Override
             public void onSuccess(int code, CategoryBean categoryBean) {
+                showLoading(false);
                 if (categoryBean != null) {
                     int parentIndex = mListCategory.indexOf(parentCategory);
                     categoryBean.setLevel(parentCategory.getLevel() + 1);
@@ -673,6 +675,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailure(int code, String msg) {
+                showLoading(false);
                 ToastUtils.show(msg);
             }
         });
@@ -691,10 +694,12 @@ public class MainActivity extends BaseActivity {
         RequestSender.get().send(myRequestEntity, new RequestCallback<CategoryBean>() {
             @Override
             public void onStart() {
+                showLoading(true);
             }
 
             @Override
             public void onSuccess(int code, CategoryBean categoryBean) {
+                showLoading(false);
                 if (categoryBean != null) {
                     int selectedIndex = mListCategory.indexOf(selectedCategory);
                     selectedCategory.setCategoryName(categoryBean.getCategoryName());
@@ -711,6 +716,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailure(int code, String msg) {
+                showLoading(false);
                 ToastUtils.show(msg);
             }
         });
@@ -728,10 +734,12 @@ public class MainActivity extends BaseActivity {
         RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
             @Override
             public void onStart() {
+                showLoading(true);
             }
 
             @Override
             public void onSuccess(int code, Object object) {
+                showLoading(false);
                 if (object != null) {
                     mListCategory.remove(position);
                     mCategoryAdapter.notifyDataSetChanged();
@@ -744,6 +752,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailure(int code, String msg) {
+                showLoading(false);
                 ToastUtils.show(msg);
             }
         });
