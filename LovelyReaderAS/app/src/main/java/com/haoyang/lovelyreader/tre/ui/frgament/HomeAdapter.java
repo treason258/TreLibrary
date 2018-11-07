@@ -90,6 +90,21 @@ public class HomeAdapter extends TCAdapter {
         return convertView;
     }
 
+    /**
+     * getList
+     */
+    public List<BookBean> getList() {
+        return mList;
+    }
+
+    /**
+     * setList
+     */
+    public void setList(List<BookBean> list) {
+        mList = list;
+        notifyDataSetChanged();
+    }
+
     private class ViewHolder extends TCViewHolder<BookBean> {
         private ImageView ivBook;
         private TextView tvBook;
@@ -184,21 +199,6 @@ public class HomeAdapter extends TCAdapter {
                 }
             }
         }
-    }
-
-    /**
-     * getList
-     */
-    public List<BookBean> getList() {
-        return mList;
-    }
-
-    /**
-     * setList
-     */
-    public void setList(List<BookBean> list) {
-        mList = list;
-        notifyDataSetChanged();
     }
 
     /**

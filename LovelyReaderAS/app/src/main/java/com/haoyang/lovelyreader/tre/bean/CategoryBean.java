@@ -9,10 +9,9 @@ import java.util.List;
 
 public class CategoryBean {
 
+    // 所有电子书
     public static final String CATEGORY_ROOT_ID = "-1";
     public static final String CATEGORY_ROOT_NAME = "所有电子书";
-
-    public static final String CATEGORY_DEFAULT = "1";
 
     public static final int LEVEL_0 = 10; // 所有电子书
     public static final int LEVEL_1 = 11; // 一级分类

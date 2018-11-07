@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.mjiayou.trecorelib.base.TCAdapter;
 import com.mjiayou.trecorelib.base.TCViewHolder;
@@ -62,6 +63,21 @@ public class CategoryAdapter extends TCAdapter {
             viewHolder.initView(mList.get(position), position);
         }
         return convertView;
+    }
+
+    /**
+     * getList
+     */
+    public List<CategoryBean> getList() {
+        return mList;
+    }
+
+    /**
+     * setList
+     */
+    public void setList(List<CategoryBean> list) {
+        mList = list;
+        notifyDataSetChanged();
     }
 
     private class ViewHolder extends TCViewHolder<CategoryBean> {

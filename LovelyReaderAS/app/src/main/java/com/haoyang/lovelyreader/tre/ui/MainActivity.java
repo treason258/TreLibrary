@@ -30,6 +30,7 @@ import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CategoryAddParam;
 import com.haoyang.lovelyreader.tre.bean.api.CategoryEditParam;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
+import com.haoyang.lovelyreader.tre.helper.Global;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.ui.dialog.UpdateDialog;
@@ -59,8 +60,6 @@ public class MainActivity extends BaseActivity {
     private final int CATEGORY_OPTION_ADD = 12;
     private final int CATEGORY_OPTION_MODIFY = 13;
     private int mCategoryOption = CATEGORY_OPTION_NONE;
-    private CategoryBean mCurrentSelectedCategory = null;
-    private String mCurrentCategoryId = CategoryBean.CATEGORY_ROOT_ID;
 
     private ViewPager viewPager;
     private LinearLayout llHome;
@@ -128,7 +127,7 @@ public class MainActivity extends BaseActivity {
      */
     @Override
     protected void initView() {
-        Log.d(TAG, "initView() called");
+        LogUtils.d(TAG, "initView() called");
 
         // llHome-首页
         llHome.setOnClickListener(mOnClickListener);
@@ -147,17 +146,27 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        initCategoryView();
+        initViewPager();
+    }
+
+    /**
+     * 初始化分类面板
+     */
+    private void initCategoryView() {
+        LogUtils.d(TAG, "initCategoryView() called");
+
         // lvCategory-分类列表
         mListCategory = new ArrayList<>();
         mCategoryAdapter = new CategoryAdapter(mContext, mListCategory);
         mCategoryAdapter.setOnOptionListener(new CategoryAdapter.OnOptionListener() {
             @Override
             public void onModify(CategoryBean categoryBean, int position) {
-                if (mCurrentSelectedCategory == null) {
+                if (Global.mCurrentCategory == null) {
                     ToastUtils.show("未选中任何分类");
                     return;
                 }
-                if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_0) {
+                if (Global.mCurrentCategory.getLevel() == CategoryBean.LEVEL_0) {
                     ToastUtils.show("默认目录不可修改");
                     return;
                 }
@@ -166,19 +175,19 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onDelete(CategoryBean categoryBean, int position) {
-                if (mCurrentSelectedCategory == null) {
+                if (Global.mCurrentCategory == null) {
                     ToastUtils.show("未选中任何分类");
                     return;
                 }
-                if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_0) {
+                if (Global.mCurrentCategory.getLevel() == CategoryBean.LEVEL_0) {
                     ToastUtils.show("默认目录不可删除");
                     return;
                 }
-                DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除分类 " + mCurrentSelectedCategory.getCategoryName() + "？", "确定", "取消", true,
+                DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除分类 " + Global.mCurrentCategory.getCategoryName() + "？", "确定", "取消", true,
                         new TCAlertDialog.OnTCActionListener() {
                             @Override
                             public void onOkAction() {
-                                deleteCategory(mCurrentSelectedCategory, position);
+                                deleteCategory(Global.mCurrentCategory, position);
                             }
 
                             @Override
@@ -194,8 +203,11 @@ public class MainActivity extends BaseActivity {
                 for (int i = 0; i < mListCategory.size(); i++) {
                     mListCategory.get(i).setSelected(i == position);
                 }
-                mCurrentSelectedCategory = mListCategory.get(position);
+                Global.mCurrentCategory = mListCategory.get(position);
                 mCategoryAdapter.notifyDataSetChanged();
+
+                // 同时更新首页书籍展示
+                mHomeFragment.updateBookList(Global.mCurrentCategory);
             }
         });
 
@@ -203,11 +215,11 @@ public class MainActivity extends BaseActivity {
         tvAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCurrentSelectedCategory == null) {
+                if (Global.mCurrentCategory == null) {
                     ToastUtils.show("未选中所属分类");
                     return;
                 }
-                if (mCurrentSelectedCategory.getLevel() == CategoryBean.LEVEL_3) {
+                if (Global.mCurrentCategory.getLevel() == CategoryBean.LEVEL_3) {
                     ToastUtils.show("三级分类下不可再创建子分类");
                     return;
                 }
@@ -236,10 +248,10 @@ public class MainActivity extends BaseActivity {
                     case CATEGORY_OPTION_NONE:
                         break;
                     case CATEGORY_OPTION_ADD:
-                        addCategory(categoryName, mCurrentSelectedCategory);
+                        addCategory(categoryName, Global.mCurrentCategory);
                         break;
                     case CATEGORY_OPTION_MODIFY:
-                        modifyCategory(categoryName, mCurrentSelectedCategory);
+                        modifyCategory(categoryName, Global.mCurrentCategory);
                         break;
                 }
             }
@@ -252,15 +264,13 @@ public class MainActivity extends BaseActivity {
                 hideCategoryAddView();
             }
         });
-
-        initViewPager();
     }
 
     /**
      * 初始化ViewPager
      */
     private void initViewPager() {
-        Log.d(TAG, "initViewPager() called");
+        LogUtils.d(TAG, "initViewPager() called");
 
         mHomeFragment = new HomeFragment();
         mMineFragment = new MineFragment();
@@ -426,7 +436,16 @@ public class MainActivity extends BaseActivity {
     public void refreshCategoryView(List<CategoryBean> categoryBeanList) {
         mListCategory.clear();
         mListCategory.addAll(CategoryBean.convertToShow(categoryBeanList));
-        mCategoryAdapter.notifyDataSetChanged();
+
+        // 默认选中所有电子书分类
+        Global.mCurrentCategory = mListCategory.get(0);
+        for (int i = 0; i < mListCategory.size(); i++) {
+            mListCategory.get(i).setSelected(i == 0);
+        }
+        mCategoryAdapter.setList(mListCategory);
+
+        // 同时更新首页书籍展示
+        mHomeFragment.updateBookList(Global.mCurrentCategory);
     }
 
     /**
@@ -447,8 +466,8 @@ public class MainActivity extends BaseActivity {
         mCategoryOption = categoryOption;
 
         rlAddCategory.setVisibility(View.VISIBLE);
-        if (mCategoryOption == CATEGORY_OPTION_MODIFY && mCurrentSelectedCategory != null) {
-            etCategoryName.setText(mCurrentSelectedCategory.getCategoryName());
+        if (mCategoryOption == CATEGORY_OPTION_MODIFY && Global.mCurrentCategory != null) {
+            etCategoryName.setText(Global.mCurrentCategory.getCategoryName());
         }
     }
 
