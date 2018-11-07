@@ -15,5 +15,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CommentApp from './comment/CommentApp.js';
+import Header from './test/Header.js';
+import All from './test/All.js';
 
-ReactDOM.render(<CommentApp/>, document.getElementById('root'));
+ReactDOM.render(<All/>, document.getElementById('root'));
