@@ -1,7 +1,5 @@
 package com.haoyang.lovelyreader.tre.ui;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -19,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
@@ -30,6 +26,8 @@ import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CategoryAddParam;
 import com.haoyang.lovelyreader.tre.bean.api.CategoryEditParam;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
+import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.Global;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
@@ -142,7 +140,7 @@ public class MainActivity extends BaseActivity {
         tvSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show("同步数据");
+                syncServerData();
             }
         });
 
@@ -207,7 +205,7 @@ public class MainActivity extends BaseActivity {
                 mCategoryAdapter.notifyDataSetChanged();
 
                 // 同时更新首页书籍展示
-                mHomeFragment.updateBookList(Global.mCurrentCategory);
+                updateBookList(Global.mCurrentCategory);
             }
         });
 
@@ -433,7 +431,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 更新分类面板
      */
-    public void refreshCategoryView(List<CategoryBean> categoryBeanList) {
+    public void updateCategoryList(List<CategoryBean> categoryBeanList) {
         mListCategory.clear();
         mListCategory.addAll(CategoryBean.convertToShow(categoryBeanList));
 
@@ -445,7 +443,7 @@ public class MainActivity extends BaseActivity {
         mCategoryAdapter.setList(mListCategory);
 
         // 同时更新首页书籍展示
-        mHomeFragment.updateBookList(Global.mCurrentCategory);
+        updateBookList(Global.mCurrentCategory);
     }
 
     /**
@@ -597,6 +595,56 @@ public class MainActivity extends BaseActivity {
                 ToastUtils.show(msg);
             }
         });
+    }
+
+    /**
+     * 获取用户的所有分类
+     */
+    public void getCategoryList() {
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(EncodeHelper.getRandomChar());
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryAll);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<List<CategoryBean>>() {
+            @Override
+            public void onStart() {
+                showLoading(true);
+            }
+
+            @Override
+            public void onSuccess(int code, List<CategoryBean> categoryBeanList) {
+                showLoading(false);
+                if (categoryBeanList != null) {
+                    DBHelper.setCategoryBeanList(Global.mCurrentUser.getUid(), categoryBeanList);
+                    updateCategoryList(categoryBeanList);
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                showLoading(false);
+                ToastUtils.show(msg);
+            }
+        });
+    }
+
+    /**
+     * HomeFragment-updateBookList
+     */
+    public void updateBookList(CategoryBean categoryBean) {
+        if (mHomeFragment != null) {
+            mHomeFragment.updateBookList(categoryBean);
+        }
+    }
+
+    /**
+     * HomeFragment-syncServerData
+     */
+    public void syncServerData() {
+        if (mHomeFragment != null) {
+            mHomeFragment.syncServerData();
+        }
     }
 }
 

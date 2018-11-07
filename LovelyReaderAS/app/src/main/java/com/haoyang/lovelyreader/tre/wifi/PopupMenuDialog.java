@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.event.OnWifiDialogDismissEvent;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
@@ -29,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.greenrobot.event.EventBus;
 import timber.log.Timber;
 
 /**
@@ -181,6 +183,7 @@ public class PopupMenuDialog {
         if (mUnbinder != null) {
             mUnbinder.unbind();
             RxBus.get().post(Constants.RxBusEventType.POPUP_MENU_DIALOG_SHOW_DISMISS, 0);
+            EventBus.getDefault().post(new OnWifiDialogDismissEvent(true));
             unregisterWifiConnectChangedReceiver();
             RxBus.get().unregister(PopupMenuDialog.this);
         }
