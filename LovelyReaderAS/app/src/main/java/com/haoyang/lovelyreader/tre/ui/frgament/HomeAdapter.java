@@ -216,7 +216,9 @@ public class HomeAdapter extends TCAdapter {
         requestEntity.addHeader("token", UserUtils.getToken());
         requestEntity.addParam("data", content);
         requestEntity.addFile("bookFile", new File(bookBean.getLocalBookPath()));
-        requestEntity.addFile("imgFile", new File(bookBean.getLocalCoverPath()));
+        if (!TextUtils.isEmpty(bookBean.getLocalCoverPath())) {
+            requestEntity.addFile("imgFile", new File(bookBean.getLocalCoverPath()));
+        }
         RequestSender.get().send(requestEntity, new RequestCallback<UploadBean>() {
             @Override
             public void onStart() {
