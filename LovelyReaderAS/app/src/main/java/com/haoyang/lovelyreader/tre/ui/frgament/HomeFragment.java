@@ -569,26 +569,30 @@ public class HomeFragment extends BaseFragment {
                 showLoading(false);
                 for (int i = bookBeanList.size() - 1; i >= 0; i--) {
                     BookBean bookBean = bookBeanList.get(i);
-                    String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
-                    String bookFileName = Utils.getBookName(DBHelper.getUserBean(), bookBean);
-                    File bookFile = new File(bookFileDir, bookFileName);
-                    if (bookFile.exists()) {
-                        String filePath = bookFile.getAbsolutePath();
-                        FileNameService fileNameService = new FileNameService();
-                        String fileName = fileNameService.getFileName(filePath);
-                        String fileSuffix = fileNameService.getFileExtendName(filePath);
-                        bookBean.setFileName(fileName);
-                        bookBean.setFileSuffix(fileSuffix);
-                        bookBean.setLocalBookPath(filePath);
-                        BookInfoService bookInfoService = new BookInfoService();
-                        bookInfoService.init(bookBean.getLocalBookPath());
-                        Book book = BookInfoUtils.getBookInfo(bookInfoService, bookBean.getLocalBookPath());
-                        String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, bookBean.getLocalBookPath());
-                        bookInfoService.clear();
-                        bookBean.setBook(book);
-                        bookBean.setLocalCoverPath(localCoverPath);
+                    if (Boolean.valueOf(bookBean.getIsDel())) { // 删除的书
+                        // TODO
+                    } else {
+                        String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
+                        String bookFileName = Utils.getBookName(DBHelper.getUserBean(), bookBean);
+                        File bookFile = new File(bookFileDir, bookFileName);
+                        if (bookFile.exists()) {
+                            String filePath = bookFile.getAbsolutePath();
+                            FileNameService fileNameService = new FileNameService();
+                            String fileName = fileNameService.getFileName(filePath);
+                            String fileSuffix = fileNameService.getFileExtendName(filePath);
+                            bookBean.setFileName(fileName);
+                            bookBean.setFileSuffix(fileSuffix);
+                            bookBean.setLocalBookPath(filePath);
+                            BookInfoService bookInfoService = new BookInfoService();
+                            bookInfoService.init(bookBean.getLocalBookPath());
+                            Book book = BookInfoUtils.getBookInfo(bookInfoService, bookBean.getLocalBookPath());
+                            String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, bookBean.getLocalBookPath());
+                            bookInfoService.clear();
+                            bookBean.setBook(book);
+                            bookBean.setLocalCoverPath(localCoverPath);
+                        }
+                        mListBookAll.add(0, bookBean);
                     }
-                    mListBookAll.add(0, bookBean);
                 }
 //                mHomeAdapter.setList(mList);
                 DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mListBookAll);
@@ -689,7 +693,7 @@ public class HomeFragment extends BaseFragment {
      * updateBookList
      */
     public void updateBookList(CategoryBean categoryBean) {
-        if(categoryBean.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+        if (categoryBean.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
             mList.clear();
             mList.addAll(mListBookAll);
         } else {

@@ -28,8 +28,17 @@ public class BookBean implements Serializable {
     private String coverDocId; // 图书封面文档ID
     private String coverPath; // 图书封面路径
     private String createDate; // 创建时间
+    private String isDel; // 是否是删除的
 
     public BookBean() {
+    }
+
+    public String getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(String isDel) {
+        this.isDel = isDel;
     }
 
     public String getAuthor() {
