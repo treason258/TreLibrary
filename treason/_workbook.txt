@@ -1,0 +1,1637 @@
+
+
+****************************************************************
+****************************************************************
+****************************************************************
+
+首页
+
+搜索框
+顶部轮播图
+品宣区
+活动入口
+商城热卖
+品牌、车系、价格导航
+好车急降、天天特价、今日新上
+一成购、真实车况、超值好车、三天无理由
+猜你喜欢
+查看更多车源
+客服入口
+
+
+
+
+搜索高筛
+
+搜索页
+高级筛选页
+筛选条件组件
+
+****************************************************************
+
+http://fe.test.youxinjinrong.com:5009/loan-post/repay/rote?data=%7B%22userid%22%3A1590218544%2C%22mobile%22%3A%2214620874406%22%2C%22fullname%22%3A%22%5Cu65b9%5Cu5e73%5Cu4f1f%22%2C%22id_card_num%22%3A%22361021198108121957%22%7D&sn=84947e3b319bd5fc517a69c648f829e4
+
+
+http://fe.test.youxinjinrong.com:5009/valetpay/valet/uxin/valet/wx_pay?payInfo={%22package%22:%22Sign=WXPay%22,%22appid%22:%22wx272e252af4ac7924%22,%22sign%22:%22053C3D6E664B342DF356D126A5075E90%22,%22partnerid%22:%221273609101%22,%22prepayid%22:%22wx02110150805676e6ade0e0433185604684%22,%22noncestr%22:%22vLtWfZ0Xdvr6KszV%22,%22timestamp%22:%221541127710%22}
+
+http://fe.test.youxinjinrong.com:5009/valetpay/valet/uxin/valet/wx_pay?payInfo={"package":"Sign=WXPay","appid":"wx272e252af4ac7924","sign":"053C3D6E664B342DF356D126A5075E90","partnerid":"1273609101","prepayid":"wx02110150805676e6ade0e0433185604684","noncestr":"vLtWfZ0Xdvr6KszV","timestamp":"1541127710"}
+
+valetpay/valet/uxin/valet/wx_pay
+
+****************************************************************
+
+找过大文件 ： 
+git verify-pack -v .git/objects/pack/pack-*.idx | sort -k 3 -g | tail -5
+
+第一行的字母其实相当于文件的id,用以下命令可以找出id 对应的文件名： 
+git rev-list --objects --all | grep e7a14b541c212beb06d4416c9ece0e21e50f6c06
+
+file_name 可以 是文件 夹名，加-r参数
+
+git filter-branch --index-filter 'git rm --cached --ignore-unmatch EasyPRDemo/OpencvNative/libs/mips/libopencv_java3.so'
+rm -rf .git/refs/original/
+git reflog expire --expire=now --all
+git fsck --full --unreachable
+git repack -A -d
+git gc --aggressive --prune=now
+git push --force [remote] master
+
+****************************************************************
+
+Git如何删除历史记录中的大文件详解
+https://www.jb51.net/article/142924.htm
+EasyPRDemo/OpencvNative/libs/x86/libopencv_java3.so
+e7a14b541c212beb06d4416c9ece0e21e50f6c06
+
+git verify-pack -v .git/objects/pack/pack-*.idx | sort -k 3 -g | tail -10
+
+2064f302cbd750b301854634dd1c0e0553dd5439 blob   5991292 1465037 127924026
+fa282ad61df31acd147864ca25d0b01128567ebd blob   7511210 7494930 1398468
+840984097889f2a5a11583a9d4d7564f4522b632 blob   7546668 2067665 107577826
+92cc9be67488c05f2487e569092bc85c8aca6ab0 blob   7648756 2054234 104233801
+f0d3649d8bb00736efbc68adde1c4b681f6da79c blob   8358536 4228068 90580436
+bf6ba3119e75bfdf913ada686559ac5aff507918 blob   8620732 4345989 22022675
+ee652ff9fc7ceb1b2c423d9a5d97fe3089ea3981 blob   13699840 5639859 15913950
+a9c7d270ea82b170a38191d94f844942cd3ead20 blob   14962368 5666177 129389063
+aa23ae1f1ee21f3de41f88ac535ca168305ae08e blob   15043584 9215654 39401274
+5b805a97998c9b805204ca77e9d600c0f19152c8 blob   15518560 6688580 109645491
+
+git rev-list --objects --all | grep 2064f302cbd750b301854634dd1c0e0553dd5439
+git rev-list --objects --all | grep fa282ad61df31acd147864ca25d0b01128567ebd
+git rev-list --objects --all | grep 840984097889f2a5a11583a9d4d7564f4522b632
+git rev-list --objects --all | grep 92cc9be67488c05f2487e569092bc85c8aca6ab0
+git rev-list --objects --all | grep f0d3649d8bb00736efbc68adde1c4b681f6da79c
+git rev-list --objects --all | grep bf6ba3119e75bfdf913ada686559ac5aff507918
+git rev-list --objects --all | grep ee652ff9fc7ceb1b2c423d9a5d97fe3089ea3981
+git rev-list --objects --all | grep a9c7d270ea82b170a38191d94f844942cd3ead20
+git rev-list --objects --all | grep aa23ae1f1ee21f3de41f88ac535ca168305ae08e
+git rev-list --objects --all | grep 5b805a97998c9b805204ca77e9d600c0f19152c8
+
+git log --pretty=oneline --branches -- EasyPRDemo/OpencvNative/libs/x86/libopencv_java3.so
+
+git filter-branch --index-filter 'git rm --cached --ignore-unmatch EasyPRDemo/OpencvNative/libs/x86/libopencv_java3.so'
+git filter-branch --index-filter 'git rm --cached --ignore-unmatch EasyPRDemo/OpencvNative/*'
+
+rm -Rf .git/refs/original
+rm -Rf .git/logs/
+git gc
+git prune
+
+git push --force
+
+****************************************************************
+
+BaseWebViewActivity
+
+MyBibleWebViewActivity          问答详情web
+PriceAnalysisWebActivity
+WebViewAccordActivity
+WebViewActivity
+WebViewCashInActivity
+WebViewConvertCashActivity
+WebViewHalfCarActivity
+WebViewMaintenanceReportActivity
+WebViewMaintenanceServiceActivity
+WebViewPushActivity
+WebViewRepairIntroduceActivity
+WebViewShopLocationActivity
+WebViewUserCreditActivity
+WebViewUserHalfCarActivity
+WebvViewForNewActivity
+
+
+
+****************************************************************
+
+
+我问下哈  之前让替换的两个地址分别是  
+
+电子签的path路径应该是
+uxin/esign/contract-list
+
+养车的path应该是
+uxin/cash/loading 
+
+
+http://fe.test.youxinjinrong.com:5013/loan-post/repay/sumOfMoney?can_advance_settle=1&has_digital_sign=1&advance_settle_apply=0
+http://m.youxinjinrong.com/loan-post/repay/sumOfMoney?can_advance_settle=1&has_digital_sign=1&advance_settle_apply=0
+
+
+/storage/emulated/0/Android/data/com.uxin.usedcar/cache/IMG_20181030_174719.jpg
+/storage/emulated/0/Android/data/com.uxin.usedcar/cache/compress/IMG_20181030_174719.jpg
+/c/20181030/1749/5bd8292f3ac86414146.jpg
+javascript:window.UxJsBridge.CallBack('1540892771168_0', '{"url":"\/c\/20181030\/1749\/5bd8292f3ac86414146.jpg"}');
+
+/storage/emulated/0/DCIM/Camera/IMG_20181030_162349.jpg
+/storage/emulated/0/Android/data/com.uxin.usedcar/cache/compress/IMG_20181030_174719.jpg
+
+
+
+****************************************************************
+
+独立业务
+        首页
+        车辆列表（搜索结果、猜你喜欢、车市）
+        详情
+        卖车（估价）
+        宝典
+        我的
+        搜索（高筛）
+        其他业务（后期再拆分）
+公共业务
+        品牌（车系）
+        城市
+        H5
+        登录
+        优二IM
+公共组件
+        视频
+        分享
+        上传图片
+
+马腾飞   首页、搜索高筛         
+徐子明   车辆列表、品牌车系
+马为华   详情、分享、城市        
+从东冶   卖车估价、宝典、上传图片、优二IM
+李剑     我的、H5、登陆、视频     
+
+****************************************************************
+
+首页猜你喜欢AB
+瑕疵图展示优化
+
+liusisi
+金融会员特惠商城
+
+xiongyingying
+WebView拦截scheme统一处理
+Scheme新增调起相机和相册
+
+----
+广告位调整
+环信获取相机相册方式待定
+之前整理的金融url做成在线配置
+
+****************************************************************
+
+升级弹窗出现：update_app           当提示更新的窗口弹出的时候触发
+立即升级：update_now_app          当点击“现在升级”按钮时触发
+升级成功：update_success_app
+
+****************************************************************
+
+case R.id.huiyuanshangcheng: //会员商城
+
+****************************************************************
+
+uri
+usedcarnative://carPurchasingConsultant/carPurchasingConsultant?param=%7B%22origin%22%3A%22home%22%2C%22rn_from%22%3A%22home_tool%22%7D
+
+host - carPurchasingConsultant
+scheme - usedcarnative
+paramsString - {"origin":"home","rn_from":"home_tool"}
+paramsString - {"origin":"home","rn_from":"home_customer_chat"}
+
+****************************************************************
+
+bugly Android二手车appid：
+正式：0c4ec146ff
+测试：91622483ff
+
+****************************************************************
+
+发现新版本：v10.0.0
+
+VR看车全新来袭，360度全景呈现
+视频升级，节点显示更清晰
+图片升级，高清实拍看不停
+
+
+已发灰度，请安排抽测！
+灰度渠道：俊柏、华为、OPPO
+
+
+二手车Android 10.0.0 已发布灰度测试
+灰度渠道：俊柏、华为、OPPO
+灰度总量：3000
+ 
+
+Hi ALL：
+二手车C端Android 10.0.0目前线上灰度 crash率低于千分之2，满足发布标准，已全量发布！
+辛苦测试同学抽验！
+
+****************************************************************
+
+InputStream input = connection.getInputStream();
+ByteArrayOutputStream baos = new ByteArrayOutputStream();
+byte[] buffer = new byte[1024];
+int len;
+while ((len = input.read(buffer)) > -1) {
+    baos.write(buffer, 0, len);
+}
+baos.flush();
+InputStream inputStream = new ByteArrayInputStream(baos.toByteArray());
+InputStream inputStream2 = new ByteArrayInputStream(baos.toByteArray());
+
+//InputStream inputStream = connection.getInputStream();
+BitmapFactory.Options options = new BitmapFactory.Options();
+options.inJustDecodeBounds = true;
+BitmapFactory.decodeStream(inputStream, null, options);
+options.inSampleSize = calculateInSampleSize(options, ScreenUtils.getScreenWidth(mContext), ScreenUtils.dip2px(mContext, 240));
+options.inPreferredConfig = Bitmap.Config.RGB_565;
+options.inPurgeable = true;
+options.inInputShareable = true;
+options.inJustDecodeBounds = false;
+//使用工厂把网络的输入流生产Bitmap
+Bitmap bitmap = BitmapFactory.decodeStream(inputStream2, null, options);
+//利用Message把图片发给Handler
+Message msg = Message.obtain();
+msg.obj = bitmap;
+msg.what = GET_DATA_SUCCESS;
+handler.sendMessage(msg);
+inputStream.close();
+inputStream2.close();
+
+****************************************************************
+
+工期
+接口：9月7号提供
+开发3天，调接口1天，自测1天，11号提测
+
+****************************************************************
+
+	车市列表页-item车图轮播
+	高级筛选页-增加VR车源条件
+	车辆详情页-顶部VR展示：外观&内饰
+	视频详情页-全面改版
+	图片列表页-全面改版
+	图片详情页-全面改版
+我的页面-优惠券模块
+我的页面-会员特惠商城入口
+
+车辆详情页-顶部tab渐变
+首页-猜你喜欢AB调整
+
+****************************************************************
+
+发现新版本：v9.11.0
+
+车价分析入口拓展，覆盖线上全部车源
+视频看车服务升级，丰富车辆检测项目
+高级筛选体验优化，筛选项目细分直观
+
+灰度总量：3000
+灰度渠道：俊柏、OPPO、华为
+灰度渠道：junbai、oppo、huawei
+
+已发灰度，请安排抽测，谢谢！
+灰度渠道：俊柏、oppo、华为
+
+二手车Android 9.11.0 已发布灰度测试
+灰度总量：3000
+灰度渠道：俊柏、OPPO、华为
+
+
+****************************************************************
+
+http://apis.ceshi.xin.com/car_search/search
+
+列表刷新-44
+_apikey=da3726&___&c_p=0&___&___&___&list_type=1&loc_num=0&___&n_p=0&name=&___&___&offset=0&___&___&p_p=0___&secondname=&serieid=1702_3057&seriename=XC60&series_type=1&st=0&___&tpg_serieid=1702&ts=1535078038228&___&zg_num=0
+
+
+进入高筛-44
+_apikey=100110&___&___&___&___&___&name=&___&___&___&onlycount=1&___&secondname=&serieid=1702_3057&seriename=XC60&series_type=1&___&tpg_serieid=1702&ts=1535078054246&___
+
+筛选大年代款-6
+_apikey=989e88&___&___&___&generation=1&___&___&name=XC60%E7%AC%AC1%E4%BB%A3&___&___&___&onlycount=1&___&secondname=2015-2017%E6%AC%BE&serieid=3057&seriename=XC60&series_type=3&___&ts=1535078098996&___
+
+筛选大年代款-44
+_apikey=8357e2&___&___&___&___&___&name=&___&___&___&onlycount=1&___&secondname=&serieid=1702_3057&seriename=&series_type=&___&ts=1535078124553&___
+
+筛选大年代款-38
+_apikey=5f1160&___&___&___&generation=1&___&___&name=XC60%EF%BC%88%E8%BF%9B%E5%8F%A3%EF%BC%89%E7%AC%AC1%E4%BB%A3&___&___&___&onlycount=1&___&secondname=2009-2015%E6%AC%BE&serieid=1702&seriename=XC60%EF%BC%88%E8%BF%9B%E5%8F%A3%EF%BC%89&series_type=3&___&ts=1535078143233&___
+
+筛选大年代款-44
+_apikey=fdb978&___&___&___&___&___&name=&___&___&___&onlycount=1&___&secondname=&serieid=1702_3057&seriename=&series_type=&___&ts=1535078160731&___
+
+筛选大年代款-6-error-44
+_apikey=a6fb9e&___&___&___&___&___&name=&___&___&___&onlycount=1&___&secondname=&serieid=3057&seriename=&series_type=&___&ts=1535078191829&___
+
+****************************************************************
+
+XJJJJJ
+0728 1800 -25=325 gaosu
+325ok
+
+210
+
+****************************************************************
+
+1、测试环境：新检测报告，carid=50060819，检测报告详情页，点击瑕疵图查看大图时，瑕疵点及描述显示不全
+是因为检测人员拖动瑕疵图坐标点位置的时候，就故意放在那个位置的
+2、有些车的瑕疵点对应视频没有结束时间
+这是老报告  当时是没有视频结束时间 也没有视频大小的
+
+****************************************************************
+
+1、详情页检测模块-可视化模型tab调增为一级；
+2、详情页检测模块-修复项新增修复图；
+3、详情页检测模块-瑕疵图增加视频播放；
+4、检测报告页同步车辆详情页检测模块功能；
+
+1、详情页检测模块-视频边框margin；
+2、详情页检测模块-外观件、内饰件、骨架件左右滑动切换；
+3、检测报告页-配合接口数据优化；
+
+****************************************************************
+
+1、针对“可视化模型同屏展示”需求：
+	那天答疑会时，android同学到达时这部分已经讲完了；1、可以上下滑动的页面，滑到一个位置突然自动置顶到某位置，认为这个操作本身就感觉很奇怪；2、技术上，因为这个页面的所有元素都是根据服务端返回动态添加的，不太好精准的计算到某个位置；3、由于android屏幕多样性，不可能一屏刚好显示全部元素；
+2、针对“瑕疵图、标签等比放大”需求：
+	和同事沟通，那天答疑会上理解有误；1、对于放大功能，当前页面上已经可以左右滑动和上下滑动，再添加双击或双指拖动放大，肯定会造成收拾冲突，无法实现放大功能；2、对于标签和图等比放大，因为标签是代码写在图片上的，放大图片并不会带动标签放大；
+综上，android实现以上两个功能也是存在技术问题的
+
+
+****************************************************************
+
+msg{from:uxin_daikan, to:c_15600610236_7845732 body:txt:"在线信审 https://m.xin.com/download/show_dl_page/"
+
+{"intro":"为您选择更适合的金融产品","type":8,"url":"http:\/\/m.youxinjinrong.com\/s-store\/credit\/to-store-limit?mobile=15600610234&submit_entry=IM&from_mode_id=73614959&operator_id=12335&city_id=201&dealerid=58362"}
+
+{
+    "intro": "为您选择更适合的金融产品",
+    "type": 8,
+    "url": "http://m.youxinjinrong.com/s-store/credit/to-store-limit?mobile=15600610234&submit_entry=IM&from_mode_id=73614959&operator_id=12335&city_id=201&dealerid=58362"
+}
+
+{"carid":"48586647","intro":"为您选择更适合的金融产品","type":8,"url":"http:\/\/m.youxinjinrong.com\/s-store\/credit\/to-store-limit?mobile=15600610289&submit_entry=IM&from_mode_id=48586647&operator_id=12335&city_id=201&dealerid=53784"}
+
+{"carid":"48586647","intro":"为您选择更适合的金融产品","type":8,"url":"http:\/\/m.youxinjinrong.com\/s-store\/credit\/to-store-limit?mobile=15600610278&submit_entry=IM&from_mode_id=48586647&operator_id=12335&city_id=201&dealerid=53784","zg":"2"}
+
+****************************************************************
+
+今日特惠	
+	付一半车市列表
+
+高级筛选
+	付一半车市列表页是否需要改动
+	
+
+****************************************************************
+
+3000
+
+oppo
+vivo
+今日头条
+
+发现新版本:v9.9.0
+
+全新卖车模式，上门验车，当面交易
+在线客服升级，线上服务功能更完善
+列表页多种细节优化，提升体验
+
+已发灰度，请安排抽测！
+
+二手车Android 9.9.0 已发布灰度测试
+总量：3000
+渠道：oppo、vivo、今日头条信息流
+
+****************************************************************
+
+http://api.ceshi.xin.com/test/test_push_to_dev?userid=4494138&type=2&title=ceshi&text=ceshi_text&url=http://m.xin.com
+
+http://api.ceshi.xin.com/test/test_push_to_dev?userid=918836&type=2&title=ceshi&text=ceshi_text&url=http://m.xin.com
+
+#172.16.2.150  apis.xin.com
+#172.16.2.150  api.xin.com
+
+python /Users/xin/Documents/Projects/_gitstats/gitstats -c start_date=4/4/2018 /Users/xin/Documents/Projects/XinUsedCar /Users/xin/Downloads/
+
+
+****************************************************************
+
+{
+    "code": 2,
+    "message": "操作成功",
+    "version": "",
+    "data": {
+        "userid": 918836,
+        "mobile": "18600574121",
+        "createtime": "2017-01-05 10:57:51",
+        "avatar": "http://c1.xinstatic.com/f3/20180719/1524/5b503c9ad1342741918.jpg",
+        "avatar_src": "http://c1.xinstatic.com/f3/20180719/1524/5b503c9ad1342741918_18.jpg",
+        "u": "src%3Dcar_app%26uid%3D918836",
+        "x": "114417b4440430d3b5eecf1295324288",
+        "level": 2,
+        "name": "",
+        "rytoken": "",
+        "is_icon": 0,
+        "is_question_icon": 1,
+        "im_username": "c_18600574121_918836",
+        "im_password": "3cde49a46b4860b69196723eb81ae642"
+    }
+}
+
+****************************************************************
+
+QA
+	登陆按钮圆角处理
+	登陆按钮背景阴影去掉
+
+	进度页面默认头像、圆角处理
+	进度页呼叫按钮点击无效
+	进度页弹窗按钮加大点击区域
+	进度页弹窗文案宽度适配
+	卖车首页卖车的图片红色背景
+	
+	卖车进度页，隐藏打电话按钮
+	卖车进度页，电话号码为空则给文案提示
+	卖车进度页，三等分加线问题
+
+登陆页面光标颜色
+UpdateLib库，需要注掉killProcess一行代码
+APM开关在线配置验证
+
+
+
+同步一下刚才开会确定的上线时间
+22号开始测预上线
+25号上线
+
+立即预约
+Nz3qV8jr6bPx
+2
+
+签约付款
+RaAm7dp17MlG
+1
+
+      if (true) {
+        Intent intent = new Intent(getThis(), NewSellProgressActivity.class);
+        intent.putExtra(Extra.CLUE_ID, "RaAm7dp17MlG");
+        intent.putExtra(Extra.CLUE_TYPE, "1");
+        startActivity(intent);
+        return;
+      }
+
+u2	
+app	
+新增	
+IM会话页	
+C-IM会话页-开始信审点击	
+在IM页面，在线信审卡片，点击开始信审按钮	
+c	
+audit_im	
+carid=value/type=value	
+audit_im#carid=12345678/type=1	
+"carid取值：车辆id
+type取值：
+0 --非直购车；1--直购车"		
+v9.9		
+u2_88	
+否										
+
+
+****************************************************************
+
+u2	app	调整	车市列表页	C-车辆列表页-车辆位置	
+
+"
+车市列表页、车市结果列表页车辆位置的点击
+车辆位置的顺序时列表页展示的车辆顺序（包含全价车、付一半车、直购车）
+备注：车辆位置点击的车辆位置参数（rank）排序加入新车的位置；（新加入车市结果列表页）
+备注：车辆点击位置仅计算二手车和新车的位置（不算气泡）
+"	
+
+c	
+
+carlist_click	
+
+rank=value/AI_num=value/carid=value/type=value/mold=value/word=value/page=value/class=value/result=value/icon=value/label=value/video=value	carlist_click#rank=1/AI_num=0/carid=189767/type=1/mold=1/word=大众/page=5/class=2/result=1/icon=1/label=1/video=1	
+
+"label取值：
+0--无超值标签 ；1--有超值标签
+video取值：
+0--无视频；1--有视频
+icon取值：
+0--无一成购标签；1--有一成购标签
+rank取值：对应点击车辆的位置
+page取值：
+2--买车列表页（全部车辆列表页）
+3--付一半列表页（付一半筛选列表页）
+5--车市结果列表页
+type取值：
+0 --非直购车；1--直购车
+AI_num取值：
+1 --为智能推荐，；0 --为非智能推荐
+mold取值：
+0--本地；1--周边；2--全国
+3--本地（含直购）；4--周边其他（不含直购）
+5--本地相似车辆；6--本地热销车辆
+result取值：
+0--本地无车辆
+1--本地有车辆
+word取值：搜索关键词，非搜索结果页面返回值为none
+筛选关键词，取搜索框内的气泡值，多个值以“,”隔开，如果没有传none
+class取值：
+1--默认列表页
+2--搜索结果列表页
+3--筛选结果列表页（列表页右上角筛选按钮）"	
+
+"v8.0新增
+v8.2调整页面定义
+v8.3修改page分类
+v8.5新增ev参数result和新增mold的取值
+v8.6调整rank加入新车的位置
+v8.9新增icon参数
+v9.3新增label参数和video参数
+v9.6新增page=5参数取值且当有些ev参数没有时，value传none
+v9.9word增加筛选气泡值"	
+
+v8.0	
+
+20170523	
+
+"page=2时，pid=u2_2
+page=5时，pid=u2_91"	
+
+否										
+
+****************************************************************
+
+http://openapix.ceshi.xin.com/c2b_car/sale_car_detail?source=app
+
+_apikey=91da6d&abtest=b&app_source=3&appver=9.9.0.f200badb&cityid=201&clueid=468&imei=866808024485020&imsi=&ip=192.168.82.125&nb=3278cb4ab2bc151582859c1d8965fc9f&net=wifi&os=android&ref=C2BPublicCarListActivity&sysver=22&ts=1531367247222&type=2&u=src%253Dcar_app%2526uid%253D918836&uid=918836&url=NewSellProgressActivity&uuid=b73f46a8-0b2e-41c1-8210-91789fae12da&x=cdcbb6db0e7a89370b2a8a4be124ee39
+
+****************************************************************
+
+    private void toWebViewCashInActivity() {
+        // 因为需求和"汽车售后服务"功能基本一致，所以沿用"汽车售后服务"的WebView
+        Intent intent = new Intent(getThis().getThis(), WebViewCashInActivity.class);
+        String mobile = UserUtils.getUserInfo().getMobile();
+        String cityId = U2AppModuleImpl.getIU2MarketModule().getCityView(Global.mApplicationContext).getCityid();
+        String commit_longitude = String.valueOf(Global.bdLocation.getLongitude());
+        String commit_latitude = String.valueOf(Global.bdLocation.getLatitude());
+        String device = ApiKeyUtils.getNB(); // ApkUtils.getIMEI(Global.mApplicationContext);
+        String url = "http://fe.test.youxinjinrong.com:5007/s-store/credit/limit"
+            + "?mobile=" + mobile
+            + "&submit_entry=IM"
+            + "&city_id=" + cityId
+            + "&from_platform=APP"
+            + "&os_type=android"
+            + "&device=" + device
+            + "&commit_longitude=" + commit_longitude
+            + "&commit_latitude=" + commit_latitude;
+        intent.putExtra(Extra.WEBVIEW_GOTO_URL, url);
+        intent.putExtra(Extra.SHOW_LOADING_WHEN_UPLOAD, true);
+        startActivity(intent);
+    }
+
+    private void toNewSellProgressActivity() {
+        Intent intent = new Intent(getThis(), NewSellProgressActivity.class);
+        intent.putExtra(Extra.CLUE_ID, "1");
+        intent.putExtra(Extra.CLUE_TYPE, "1");
+        startActivity(intent);
+    }
+
+****************************************************************
+
+
+{
+    "error_code": 901,
+    "error_msg": "source为空或非法",
+    "data": []
+}
+
+
+{
+	"code": 2,
+	"message": "\u64cd\u4f5c\u6210\u529f",
+	"version": "",
+	"data": {
+		"cartotal": 2725,
+		"cartext": "\u8f86\u8f66\u4f9b\u60a8\u6311\u9009"
+	}
+}
+
+
+{
+	"code": 2,
+	"message": "\u6210\u529f",
+	"data": {
+		"popup": {
+			"pic": "http:\/\/c4.xinstatic.com\/f3\/20180526\/1709\/5b09245a55d14876153.png",
+			"isnative": 1,
+			"url": "",
+			"type": 3
+		}
+	}
+}
+
+
+****************************************************************
+
+负责人及提测时间
+O计划-首页弹窗	1d 	马腾飞	06号
+O计划-卖车首页	2d 	徐子明	06号
+O计划-预约卖车	4d 	徐子明	10号
+O计划-估价模块	2d 	徐子明	13号
+O计划-卖车进度	6d 	马腾飞	13号	
+O计划-我卖的车	2d 	马腾飞	10号
+17天/1人
+9天/2人
+
+****************************************************************
+
+http://fe.test.youxinjinrong.com:5007/s-store/credit/limit?mobile=XXXX&submit_entry=IM&operator_id=XXXXX&city_id=XXXXX&commit_longitude=XXXX& commit_latitude=XXXXX&os_type=XXXXX
+
+
+ http://fe.test.youxinjinrong.com:5007/s-store/credit/limit?mobile=18600574121&submit_entry=IM&city_id=201&from_platform=APP&os_type=android&device=&commit_longitude=116.480983&commit_latitude=39.996359&xdid=453fbb7a8cb76cd5beb9eb67e7509582&app_id=u2_0&app=9.7.1.a1d0227b&uid=918836&cid=65fb031e620e8e6059e7f017d9b4db30&cityid=201&net=wifi&imei=865305039223356&mac=54:25:ea:02:88:3e&location=116.480983_39.996359_2
+
+
+ msg{from:c_18600574121_918836, to:kefuchannelimid_957704 body:txt:"您好，我在优信二手车看到您发的【宝马5系2013款 2.0T 自动 525Li豪华型】，行驶【7.0万公里】，售价【27.80万】很感兴趣，我想了解一下车的情况。
+http://m.ceshi.xin.com/340d0z8ky9/che35154803.html"
+
+
+
+Error:Failed to open zip file.
+Gradle's dependency cache may be corrupt (this sometimes occurs after a network connection timeout.)
+<a href="syncProject">Re-download dependencies and sync project (requires network)</a>
+<a href="syncProject">Re-download dependencies and sync project (requires network)</a>
+
+
+Error:(6, 0) Gradle DSL method not found: 'google()'
+Possible causes:<ul><li>The project 'XposedHookDemo' may be using a version of the Android Gradle plug-in that does not contain the method (e.g. 'testCompile' was added in 1.1.0).
+<a href="fixGradleElements">Upgrade plugin to version 3.0.1 and sync project</a></li><li>The project 'XposedHookDemo' may be using a version of Gradle that does not contain the method.
+<a href="open.wrapper.file">Open Gradle wrapper file</a></li><li>The build file may be missing a Gradle plugin.
+<a href="apply.gradle.plugin">Apply Gradle plugin</a></li>
+
+
+Error:Execution failed for task ':app:preDebugAndroidTestBuild'.
+> Conflict with dependency 'com.android.support:support-annotations' in project ':app'. Resolved versions for app (26.1.0) and test app (27.1.1) differ. See https://d.android.com/r/tools/test-apk-dependency-conflicts.html for details.
+
+
+msg{from:kefuchannelimid_957704, to:c_14712341234_5425864 body:txt:"信审提交"
+
+{"articles":[{"app_share":{"intro":"为您选择更适合的金融产品","type":8,"url":"http:\/\/fe.test.youxinjinrong.com:5007\/s-store\/credit\/to-store-limit?mobile=14788889999&submit_entry=IM&from_mode_id=34317661&operator_id=7420&city_id=201&dealerid=42636"},"picurl":" ","title":"信审提交","url":" "}]}
+
+{
+    "articles": [
+        {
+            "app_share": {
+                "intro": "为您选择更适合的金融产品",
+                "type": 8,
+                "url": "http://fe.test.youxinjinrong.com:5007/s-store/credit/to-store-limit?mobile=14788889999&submit_entry=IM&from_mode_id=34317661&operator_id=7420&city_id=201&dealerid=42636"
+            },
+            "picurl": " ",
+            "title": "信审提交",
+            "url": " "
+        }
+    ]
+}
+
+http://fe.test.youxinjinrong.com:5007/s-store/credit/to-store-limit?mobile=14788889999&submit_entry=IM&from_mode_id=34317661&operator_id=7420&city_id=201&dealerid=42636
+
+
+url -> http://fe.test.youxinjinrong.com:5007/s-store/credit/to-store-limit?mobile=14788889999&submit_entry=IM&from_mode_id=34317661&operator_id=7420&city_id=201&dealerid=42636
+intro -> 为您选择更适合的金融产品
+params -> from_platform=APP&os_type=android&device=ad3df3b54e0596b56bfc2f59d398dcee&commit_longitude=116.48079&commit_latitude=39.996362
+gotoUrl -> http://fe.test.youxinjinrong.com:5007/s-store/credit/to-store-limit?mobile=14788889999&submit_entry=IM&from_mode_id=34317661&operator_id=7420&city_id=201&dealerid=42636&from_platform=APP&os_type=android&device=ad3df3b54e0596b56bfc2f59d398dcee&commit_longitude=116.48079&commit_latitude=39.996362
+
+
+https://m.xin.com/world_cup_2018.html?channel=ss11aajj&appver=9.7.1.a1d0227b&cityid=201&from=app&nb=ad3df3b54e0596b56bfc2f59d398dcee&cityid=201&xdid=210da22ff98809a9526d42c461c6f156&app_id=u2_0&app=9.7.1.a1d0227b&uid=&cid=ad3df3b54e0596b56bfc2f59d398dcee&cityid=201&net=wifi&imei=866808024485020&mac=38:bc:1a:d2:10:c4&location=116.48081_39.996423_2
+
+
+https://m.xin.com/world_cup_2018.html?channel=ss11aajj&&uid=3176119&appver=9.7.1.1710e35b&cityid=3001&from=app&nb=ad3df3b54e0596b56bfc2f59d398dcee&u=src%3Dcar_app%26uid%3D3176119&x=3d5f697623874b8d27829fea849a76e9
+
+****************************************************************
+
+添加瑕疵图
+提交：
+9f9ca783f21ed15f576892ba21e644cf38833c21 [9f9ca78]
+父级：
+5de88119ab
+作者：
+lifengwei <lifengwei@xin.com>
+日期：
+2018年6月5日 GMT+8 14:29:03
+
+瑕疵图添加查看大图功能
+提交：
+c007d59256c382d7840623c3542da385dca19a1a [c007d59]
+父级：
+9f9ca783f2
+作者：
+lifengwei <lifengwei@xin.com>
+日期：
+2018年6月5日 GMT+8 16:29:19
+
+****************************************************************
+
+IM在线信审		25号联调，29号提测
+金融信审			
+百城留资按钮切换	
+登录界面优化		20号提测
+瑕疵说明二期		21号提供接口，25号提测
+
+#FC9600
+#F85D00
+
+****************************************************************
+
+https://gzcu01.baidupcs.com/file/e11ed9f64a5f3314d0a87a093d559f2e?bkt=p3-1400e11ed9f64a5f3314d0a87a093d559f2e1ec735ad00000006f37f&fid=2013477431-250528-1024688434357055&time=1528429696&sign=FDTAXGERLQBHSK-DCb740ccc5511e5e8fedcff06b081203-G08TrPeUSs4eoL2kG%2F9MJXMJ1vM%3D&to=86&size=455551&sta_dx=455551&sta_cs=0&sta_ft=jpg&sta_ct=5&sta_mt=5&fm2=MH%2CYangquan%2CAnywhere%2C%2Cbeijing%2Ccnc&vuk=2013477431&iv=0&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=1400e11ed9f64a5f3314d0a87a093d559f2e1ec735ad00000006f37f&sl=76480590&expires=8h&rt=pr&r=104169527&mlogid=3675873253903377360&vbdid=1540289455&fin=2018-04-07+095124.jpg&fn=2018-04-07+095124.jpg&rtype=1&dp-logid=3675873253903377360&dp-callid=0.1.1&hps=1&tsl=80&csl=80&csign=2rXCSuljHib2oc%2Fg8nRccWR0oKE%3D&so=0&ut=6&uter=4&serv=0&uc=1107808869&ic=4282956386&ti=78cccb630bb0656e2418a9fe65a0415240469c150dd72863&by=themis
+
+WXMiniProgramObject
+
+http://c4.xinstatic.com/f3/20180316/1200/5aab417b2b568423576_19.png
+http://c4.xinstatic.com/f3/20180316/1200/5aab417b2b568423576_20.png
+http://c4.xinstatic.com/f3/20180316/1200/5aab417b2b568423576_52.png
+
+https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528438678509&di=8f7922348652b6e085b89758bd8243d2&imgtype=0&src=http%3A%2F%2Fimgstore.cdn.sogou.com%2Fapp%2Fa%2F100540002%2F484970.jpg
+
+****************************************************************
+
+http://h5.ceshi.xin.com/app/myactive?from=app&xdid=210da22ff98809a9526d42c461c6f156&app_id=u2_0&app=9.7.0.8c6b6beb&uid=3176119&cid=66166e3929fae815a7a59f6c2c73bae2&cityid=3001&net=wifi&imei=866808024485020&mac=38:bc:1a:d2:10:c4&location=116.481354_39.996574_2
+
+http://h5.ceshi.xin.com/app/myactive?from=app&appver=9.7.0.3d76d57b&cityid=201&nb=66166e3929fae815a7a59f6c2c73bae2&u=src%3Dcar_app%26uid%3D918836&x=81821e9fb0dc264951a8560d304ae77c&xdid=210da22ff98809a9526d42c461c6f156&app_id=u2_0&app=9.7.0.3d76d57b&uid=918836&cid=66166e3929fae815a7a59f6c2c73bae2&cityid=201&net=wifi&imei=866808024485020&mac=38:bc:1a:d2:10:c4&location=116.481087_39.996411_2
+
+http://m.xin.com/landing_worth?cityid=3001&from=app&appver=9.7.0.8c6b6beb&cityid=3001&nb=66166e3929fae815a7a59f6c2c73bae2&u=src%3Dcar_app%26uid%3D3176119&x=edcc7710ec00a987a2febf21ebce857e&xdid=210da22ff98809a9526d42c461c6f156&app_id=u2_0&app=9.7.0.8c6b6beb&uid=3176119&cid=66166e3929fae815a7a59f6c2c73bae2&cityid=3001&net=wifi&imei=866808024485020&mac=38:bc:1a:d2:10:c4&location=116.481354_39.996574_2
+
+http://m.xin.com/landing_worth?cityid=3001&from=app&appver=9.7.0.3d76d57b&cityid=3001&nb=66166e3929fae815a7a59f6c2c73bae2&u=src%3Dcar_app%26uid%3D3176119&x=edcc7710ec00a987a2febf21ebce857e&cityid=3001&xdid=210da22ff98809a9526d42c461c6f156&app_id=u2_0&app=9.7.0.3d76d57b&uid=3176119&cid=66166e3929fae815a7a59f6c2c73bae2&cityid=3001&net=wifi&imei=866808024485020&mac=38:bc:1a:d2:10:c4&location=
+
+****************************************************************
+
+预上线：账号17610786652，点击我的页面-看车日程，会崩溃，必现
+
+https://api.xin.com/car_reservation/plan_list
+
+api.xin.com/223.202.87.200
+
+_apikey=3633fd&abtest=b&app_source=3&appver=9.7.0.ea42b8db&cityid=1707&imei=866808024485020&imsi=&ip=192.168.82.125&nb=66166e3929fae815a7a59f6c2c73bae2&net=wifi&os=android&page=1&ref=UserFragmentNew&search_cityid=1707&sysver=22&ts=1527850244952&u=src%253Dcar_app%2526uid%253D7054605&uid=7054605&url=ReserveActivity&uuid=b4de7595-718c-457e-80ab-9291f3556b3a&x=ef856beba630901074b5aaf6c150a1a3
+
+{
+    "main_clueid": "5381922",
+    "salerid": "4519",
+    "deal_status": "5",
+    "clue_type": "4",
+    "visit_time": "2018年04月14日",
+    "user_pic": "http://c1.xinstatic.com/f2/20171209/1022/5a2b48d8a05d2597008.jpg",
+    "fullname": "高巨帅",
+    "is_ended": 1,
+    "saler_tel": "18514085354"
+},
+
+****************************************************************
+
+dangling metacharacter
+
+shareToWX(int platform, int type, String title, String content, String imgUrl, String targetUrl);
+platform: 	0-微信好友；1-朋友圈
+type: 		0-普通链接分享；1-小程序分享; 2-大图
+
+http://h5.ceshi.xin.com/app/jsbridge_test
+
+微信好友-小程序
+shareToFriend(String title, String content, String imgUrl, String targetUrl)
+朋友圈-大图
+sharedToCircle(String imgUrl1, String imgUrl2)
+
+shareToWX(String json);
+
+{
+	platform:"",
+	type:"",
+	title:"",
+	content:"",
+	imgUrl:"",
+	targetUrl:"",
+	imgUrl1:"",
+	imgUrl2:"",
+}
+
+****************************************************************
+
+检测报告页，
+百城（包括新增百城）按钮为在线客服（IM对话）、我要优惠（IM对话），
+非百城按钮为电话客服（400电话）、我要优惠（弹窗）
+
+****************************************************************
+
+有个问题
+城市切换到长治
+然后进入我的关注列表
+所有车辆的 is_zg_car = null
+
+http://api.ceshi.xin.com/car_view_list/list_car
+
+_apikey=1e1c2d&abtest=b&app_source=3&appver=9.7.0.8fb0185b&cityid=2206&imei=866808024485020&imsi=&ip=192.168.82.125&latitude=39.996391&longitude=116.480837&nb=8d645dce480f9945cc5e346acf7c5403&net=wifi&os=android&page=1&ref=SeeCarListActivity&search_cityid=2206&sysver=22&ts=1527647111262&u=src%253Dcar_app%2526uid%253D5429710&uid=5429710&url=ChatActivity&uuid=df58b37d-13f3-48db-b65c-fc9a77a73850&x=610a325ff2d3fa323d4f8f4186f835a7
+
+****************************************************************
+
+pages/activeFiFaHome/activeFiFaHome?k=
+http://doc.xin.com/pages/viewpage.action?pageId=7738271
+jsbridgeuxinh5://carlist?pricemin=3&pricemax=5&cbkey=1527663401958_0
+
+SettingActivity
+intent.putExtra(Extra.WEBVIEW_GOTO_URL, "http://h5.ceshi.xin.com/app/jsbridge_test");
+
+1917
+515
+
+****************************************************************
+
+接口
+http://api.ceshi.xin.com/car_view_list/list_car
+
+请求
+_apikey=5e8266&abtest=b&app_source=3&appver=9.7.0.081dd22b&cityid=201&imei=866808024485020&imsi=&ip=192.168.82.125&latitude=39.996325&longitude=116.480847&nb=8d645dce480f9945cc5e346acf7c5403&net=wifi&os=android&page=1&ref=UserFragmentNew&search_cityid=201&sysver=22&ts=1527508222592&uid=&url=SeeCarListActivity&uuid=df58b37d-13f3-48db-b65c-fc9a77a73850
+返回正常
+
+请求
+_apikey=f0a2a8&abtest=b&app_source=3&appver=9.7.0.081dd22b&cityid=1710&imei=866808024485020&imsi=&ip=192.168.82.125&latitude=39.996325&longitude=116.480849&nb=8d645dce480f9945cc5e346acf7c5403&net=wifi&os=android&page=1&ref=UserFragmentNew&search_cityid=1710&sysver=22&ts=1527508281912&uid=&url=SeeCarListActivity&uuid=df58b37d-13f3-48db-b65c-fc9a77a73850
+
+返回
+{
+	"code": 2,
+	"message": "\u64cd\u4f5c\u6210\u529f",
+	"data": {
+		"list": [],
+		"time_arr": ["2018\u5e7405\u670828\u65e5 \u5468\u4e00", "2018\u5e7405\u670829\u65e5 \u5468\u4e8c", "2018\u5e7405\u670830\u65e5 \u5468\u4e09", "2018\u5e7405\u670831\u65e5 \u5468\u56db", "2018\u5e7406\u670801\u65e5 \u5468\u4e94", "2018\u5e7406\u670802\u65e5 \u5468\u516d", "2018\u5e7406\u670803\u65e5 \u5468\u65e5"],
+		"page_limit": 20
+	}
+}
+
+****************************************************************
+
+接口
+http://apis.ceshi.xin.com/car_search/search
+
+请求
+_apikey=c0fb46&abtest=b&app_source=3&appver=9.7.0.081dd22b&brandid=68&c_p=0&cityid=705&imei=866808024485020&imsi=&ip=192.168.82.125&latitude=39.996325&list_type=1&loc_num=0&longitude=116.480857&mortgage=0&n_p=0&nb=8d645dce480f9945cc5e346acf7c5403&net=wifi&offset=0&os=android&p_p=0&ref=MarketFragment&search_cityid=705&serieid=2414&series_type=&st=0&sysver=22&ts=1527507943429&uid=&url=BrandFilterActivity&uuid=df58b37d-13f3-48db-b65c-fc9a77a73850&zg_num=0
+
+返回
+{
+	"code": 2,
+	"message": "ok",
+	"data": {
+		"list": [],
+		"wish_list_location": 20,
+		"abtest": "b",
+		"st": 0,
+		"search_recommend": [],
+		"conditions_list": [{
+			"abtest": "b",
+			"app_source": "3",
+			"brandid": "68",
+			"c_p": "0",
+			"cityid": "705",
+			"imei": "866808024485020",
+			"imsi": "",
+			"latitude": "39.996325",
+			"list_type": "1",
+			"loc_num": "0",
+			"longitude": "116.480857",
+			"mortgage": "0",
+			"n_p": "0",
+			"offset": "0",
+			"p_p": "0",
+			"ref": "MarketFragment",
+			"search_cityid": "705",
+			"serieid": "",
+			"series_type": 1,
+			"st": "0",
+			"sysver": "22",
+			"url": "BrandFilterActivity",
+			"uuid": "df58b37d-13f3-48db-b65c-fc9a77a73850",
+			"zg_num": "0",
+			"brandname": "\u963f\u65af\u987f\u00b7\u9a6c\u4e01",
+			"seriename": "",
+			"tpg_serieid": 0
+		}],
+		"total": 0,
+		"cartext": "\u6682\u65e0\u7b26\u5408\u6761\u4ef6\u8f66\u8f86",
+		"local_total": 0,
+		"topcar_total": 0,
+		"nearcar_total": 0,
+		"offset": 0,
+		"p_p": 0,
+		"c_p": 0,
+		"n_p": 0,
+		"zg_city": 0,
+		"zg_num": 0,
+		"loc_num": 0,
+		"newcar_total": 0,
+		"search_recommend_series": [],
+		"recommend_card_data": [],
+		"similar_car_list": []
+	},
+	"version": "2765123bdea529b585baab2fe2c27d74"
+}
+
+****************************************************************
+
+		u2	app	新增	我的关注页	C-我的关注页-贷款按钮点击	我的关注页，点击每辆车下方的贷款时打点	c	
+		loan_collect	carid=value/type=value	
+		loan_collect#carid=12345678/type=1	
+		"carid取值：所属的车辆id
+		type取值：
+		0--非直购车
+		1--直购车"		
+		v9.7		u2_38	是
+
+
+		u2	app	新增	我的关注页	C-我的关注页-在线客服点击	我的关注页，点击每辆车下方的在线客服时打点	c	
+		im_collect	carid=value/type=value	
+		im_collect#carid=12345678/type=1	
+		"carid取值：所属的车辆id
+		type取值：
+		0--非直购车
+		1--直购车"		
+		v9.7		u2_38	否
+
+
+		u2	app	新增	我的关注页	C-我的关注页-在线客服留资	我的关注页，点击每辆车下方的在线客服后，进入会话页打点	c	
+		im_info_collect	carid=value/type=value/tel_num=value	
+		im_info_collect#carid=12345678/type=1/tel_num=12344324432	
+		"carid取值：所属的车辆id
+		type取值：
+		0--非直购车
+		1--直购车
+		tel_num取值：登录用户手机号"		
+		v9.7		u2_38	否
+
+
+		u2	app	新增	我的关注页	C-我的关注页-我要优惠点击	我的关注页，点击每辆车下方的我要优惠时打点	c	
+		bottomprice_collect	carid=value/type=value	
+		bottomprice_collect#carid=12345678/type=1	
+		"carid取值：所属的车辆id
+		type取值：
+		0--非直购车
+		1--直购车"		
+		v9.7		u2_38	否
+
+
+	u2	app	新增	我的关注页	C-我的关注页-我要优惠留资	我的关注页，点击每辆车下方的我要优惠后，进入会话页打点	c	
+	bottomprice_info_collect	carid=value/type=value/tel_num=value	
+	bottomprice_info_collect#carid=12345678/type=1/tel_num=12344324432	
+	"carid取值：所属的车辆id
+	type取值：
+	0--非直购车
+	1--直购车
+	tel_num取值：登录用户手机号"		
+	v9.7		u2_38	否
+
+
+	u2	app	新增	我的关注页	C-我的关注页-点击电话客服	我的关注页，点击每辆车下方的电话客服时打点	c	
+	tel_consulting_collect	carid=value/type=value/400_num=value	
+	tel_consulting_collect#carid=12345678/type=1/400_num=40027839	
+	"carid取值：所属的车辆id
+	type取值：
+	0--非直购车
+	1--直购车
+	400_num取值：调用的400号码"		
+	v9.7		u2_38	否
+
+
+		u2	app	新增	我的关注页	C-我的关注页-点击预约看车	我的关注页，点击每辆车下方的预约看车时打点	c	
+		appoint_collect	carid=value/type=value	
+		appoint_collect#carid=12345678/type=1	
+		"carid取值：所属的车辆id
+		type取值：
+		0--非直购车
+		1--直购车"		
+		v9.7		u2_38	否
+
+****************************************************************
+
+
+马腾飞
+
+设计图周三周四出-17号
+
+列表页 - 拦截车辆列表页				---- 3day??? - 暂定18号提测 - 需求还有疑问，李薇这两天不在，没人拍板
+我的 - 车辆对比-我的关注/车辆历史 		---- 1day - 暂定23号提测 - 依赖车辆对比功能
+我的 - 我的关注优化 					---- 4h - 暂定18号提测 - 依赖接口
+详情页 - 小程序唤起APP 				---- 4h - 18号提测 - 主要工作在前端，属于被动配合
+详情页 - vivo浏览器deeplink
+首页 - 首页猜你喜欢负反馈按钮位置修改 	---- 2h - 18号提测 - 依赖设计图 
+
+****************************************************************
+
+跳转到详情页
+uxin://uxin.app/openVehicleDetailsActivity?from=true&car_id=61906061&channel=webview
+
+跳转到列表页
+uxin://uxin.app/openDirectHalfCarActivity
+uxin://uxin.app/openMarketFragment?from=webview
+
+****************************************************************
+
+卖车-C2B卖车
+车辆对比
+IM优化
+车辆卡片增加车款温度
+车辆卡片增加增加年贷款照片
+
+安卓用户卸载行为
+拦截车辆列表页
+取消强制超值策略
+超值打标逻辑调整
+
+可视化模型
+
+视频优化
+	 视频其他优化点
+	 全屏下增加检测项
+	 视频播放状态的展示调整
+	 若网提示
+
+车辆对比-我的关注/车辆历史
+
+P1优二新车入口优化
+	 首页
+	 热门搜索
+	 列表页推荐入口调整
+	 详情页面推荐入口优化
+
+详情页车图注释
+
+P1头图循环
+
+小程序唤起APP
+
+首页banner增加今日特惠
+
+首页猜你喜欢负反馈按钮位置修改
+
+世界杯活动
+
+UI优化
+	 列表页胶囊切换客服加强视觉
+	 详情页优信认证切换tab处需要明显
+	 详情页参数配置入口增强
+
+
+
+****************************************************************
+
+HI, ALL:
+优信二手车C端9.5.0版（Android），已发布灰度测试！
+灰度渠道：oppo、vivo、应用宝、百度、魅族、三星
+灰度总量：6000
+
+****************************************************************
+
+车辆历史表显里程，百城走IM，非百城走现在
+
+
+u2  app 新增  车辆详情页   S-车辆详情页-相似推荐车辆曝光（可见曝光）  车辆详情页底部的相似推荐车辆列表页的车辆曝光  e   similar_expo    无参数     p#(position_id),c#(car_id),type#(value),label#(value),video#(value);    "label取值：
+0--无超值标签 
+1--有超值标签
+video取值：
+0--无视频
+1--有视频
+position_id取值：车辆位置
+car_id取值：车辆id
+type取值：
+0--非直购车
+1--直购车" "v8.7新增
+v9.3新增label参数和video参数"  v8.7    20170926    u2_4    否
+
+
+u2  app 新增  车辆详情页   S-车辆详情页-相似推荐列表页-10辆车（加载曝光）  车辆详情页底部的相似推荐车辆列表页的车辆曝光  e   similar_detail_expo 无参数 similar_detail_expo p#(position_id),c#(car_id),type#(value),label#(value),video#(value);    "label取值：
+0--无超值标签 
+1--有超值标签
+video取值：
+0--无视频
+1--有视频
+position_id取值：车辆位置
+car_id取值：车辆id
+type取值：
+0--非直购车
+1--直购车" "v7.8新增
+v8.3新增type参数
+v9.3新增label参数和video参数
+v9.3.1更改为新埋点格式" v7.8    20170315    u2_4    否
+
+
+百城
+在线客服、我要优惠 - IM
+非百城
+电话客服、我要优惠 - 弹窗
+
+大理 57
+攀枝花 9
+
+
+ll_bottom_function
+电话客服
+rl_consult_phone
+tv_consult_phone
+询底价
+tv_consult_price
+
+
+http://h5.xin.com/app/carCheckDetail_v87?token=5e3245fa145c5d50f02862a15916f109x_xmaintenance0&carid=58569551&os=wap&appver=9.5.0.520314fb
+
+57 & 9
+显示 检测报告 和 在线客服
+
+
+****************************************************************
+
+
+im_carcondition_detail
+
+MaintenanceReportViewHolder
+
+		  // 当车辆已售，不可点击视频控制按钮
+		  if (SoldCarController.isSoldCar(mCarDetailView)) {
+				flCheckVideo.setOnTouchListener(new View.OnTouchListener() {
+					 @Override public boolean onTouch(View v, MotionEvent event) {
+						  return true;
+					 }
+				});
+		  }
+
+
+car_view_list/list_car
+
+需要加字段
+
+brandname
+serialname
+modename
+im_url
+im_is_ext_queuename
+cityname
+username
+userType
+is_zg_car 现在返回null
+regist_date
+mortgage_price
+
+
+问题
+车辆历史 - 电话客服
+		  咨询详情
+
+****************************************************************
+
+详情页下方按钮
+rlLeft
+	 rlCollect   收藏
+	 rlFocus     关注
+	 rlCenter    我要优惠
+rlLiaoTianVS    在线聊天-旧
+	 rlLiaoTian  在线聊天
+rlDianHua       免费电话-旧
+	 tvDianHua   免费电话
+rlBargin        电话咨询-旧
+	 tvBargin    电话客服
+rlRight         预约看车
+	 tvRight     预约看车
+rlOnlineService     IM入口
+	 tvOnlineService 在线客服
+
+
+57城     大理
+9城      朝阳
+普通  天津
+
+				57城         9城          普通
+我要优惠        IM专家坐席  IM专家坐席  询低价留资入口
+车况咨询        IM专家坐席  IM专家坐席  IM非专家坐席
+服务咨询        IM专家坐席  400普通电话     400普通电话
+在线客服        IM专家坐席  IM专家坐席  IM非专家坐席
+电话客服        -           400普通电话     400普通电话
+我要优惠        -           IM专家坐席  询低价留资入口
+
+我要优惠、车况咨询、服务咨询、在线客服、电话客服、我要优惠
+
+这是葛雪的话 其实 is_show_telephone == 0 就是57城 只不过 is_show_telephone == 0 则 im_is_ext 就一定为1
+57城
+	 is_show_telephone = 0 && im_is_ext = 1
+
+9城
+	 is_show_telephone = 1 && im_is_ext = 1
+
+其他
+	 is_show_telephone = 0 && m_is_ext = 0
+	 or
+	 is_show_telephone = 1 && im_is_ext = 0
+
+
+if (VehicleDetailsController.isBaicheng57C(mCarDetailView)) { // 57城-IM专家坐席
+
+} else if (VehicleDetailsController.isBaicheng9C(mCarDetailView)) { // 9城-IM专家坐席
+
+} else { // 普通-IM非专家坐席
+
+}
+
+9.5问题
+1、已售车辆详情页，“全部车源信息”UI展示需要出图。
+2、我的关注列表，我要优惠功能，和详情页一致？
+3、我的关注列表，申请贷款功能，按钮根据什么条件来判断是否置灰，然后跳转到哪里？
+	 4、我的关注列表，预约看车功能，“点击后进入线上自主预约流程”？
+5、我的关注列表，在线客服功能，需要服务端返回客服im_username，以及自动发送消息的文案？如果和详情页发送消息文案一致，则需要返回更多车辆信息。
+
+is_zg_car
+im_expert_group = 1
+	 
+****************************************************************
+
+9.4开发进度
+IM入口增强                  完成100%
+详情页去掉购车助手           完成100%
+详情页三天无理由UI强化        完成100%
+配置亮点优化              完成100%
+详情页面参数配置            完成60%
+详情页强化优信认证介绍     完成40%
+分享小程序                   完成0%
+百城IM优化                  完成70%
+首页增加视频检测和超值车辆入口 完成80%，剩余与h5联调跳转，等待h5落地页开发完(10号)
+列表页搜索栏气泡优化      完成50%
+价格分析-散点图优化          正在调研技术实现
+
+
+why join navy if you can be a private
+
+9.4
+1、配置亮点优化 
+	 修改UI展示样式
+2、参数配置Native
+	 需要接口，8号下班前提供尽量提前，接口顺利的话9号晚上提测
+总共两天时间OK
+
+3、列表页list气泡遗留问题
+	 不需要接口，传进来一些参数
+4、宝典跳转列表页气泡问题
+	 不需要接口，略麻烦，相当于再做一遍车市列表的气泡功能，可以考虑复用
+	 
+****************************************************************
+
+
+include_vehicle_single      全国直购 - 超值 - 新上架
+超值      chaozhi_iv
+全国直购    ivZhiGouTag
+	 底价      ivNoBargainTag
+新上架 ivNewArrival
+*待安排    ivSeeScheduleSate
+
+include_vehicle_double_1    全国直购 - 超值 - 新上架
+超值      chaozhi_iv
+	 付一半 ivHalfPriceTag
+全国直购    ivZhiGouTag
+	 一成购 ivyichengpayTag
+	 底价      ivNoBargainTag
+新上架 ivNewArrival
+
+
+include_vehicle_double_2
+
+
+****************************************************************
+
+
+卖车进度
+SellProgressActivity
+/customer/c2b_car_new
+
+我卖的车
+UserPublishCarListActivity
+C2BPublicCarListActivity
+
+	 /**
+	  * 计算当前卖车进度
+	  *
+	  * 1234分别代表4个卖车进度
+	  * 当前进度1预约阶段：1234开
+	  * 当前进度2检测阶段：1234开
+	  * 当前进度3报价阶段：234开，1关
+	  * 当前进度4完成阶段：34开，12关
+	  *
+	  * 1预约阶段的Item-在12阶段时打开，其余关闭
+	  * 2检测阶段的Item-在123阶段时打开，其余关闭
+	  * 3报价阶段的Item-在1234阶段时打开
+	  * 4完成阶段的Item-在1234阶段时打开
+	  */
+
+马腾飞 
+u2  app 新增  卖车进度页   C-C2B卖车进度页-再卖一辆 C2B卖车进度页，优信报价模块流程已结束时呈现的【再卖一辆】按钮点击  
+c   sellcar_c2b_progress    无参数 
+sellcar_c2b_progress            
+v9.3.2      u2_79   是
+	 
+u2  app 新增  卖车进度页   C-C2B卖车进度页-挑个二手车    
+C2B卖车进度页，签约模块呈现的【挑个二手好车】按钮点击    
+c   select_car_c2b_progress 无参数 
+select_car_c2b_progress         
+v9.3.2      u2_79   是
+
+****************************************************************
+
+OrderDetailsNewActivity
+DeliveryFilterActivity
+activity_deliveryfilter.xml
+
+ChooseServiceCostActivity
+ArchivesServiceFragment
+
+本地车
+
+抵押服务 - 
+外迁车 - 抵押服务 - 外迁提档服务、落档服务 - 物流服务、居住证服务
+本地车 - 抵押服务 - 过户服务、居住证服务
+
+modified_service_price 修改后
+service_price 修改前
+http://super42.apt.ceshi.xin.com/aftersales/matrix/create-service-detail
+
+http://super42.apt.ceshi.xin.com/aftersales/matrix/get-city-info
+http://super42.apt.ceshi.xin.com/aftersales/matrix/get-service-cost
+
+
+http://super42.apt.ceshi.xin.com/aftersales/user/login?appver=v1.3_debug&device=AtQJlyeMjuuzTHI6PzMCNrl0_fc48M-DRf6Oi3ZsoBw8&nb=56672f2c5632659df1667a5922336f54&os=android&pwd=Dig%3FF*ckDang5&sign=a563b5123bd194e0a3f090e83d1a1325&username=libing
+
+
+http://super42.apt.ceshi.xin.com/aftersales/matrix/get-city-info
+
+http://super42.apt.ceshi.xin.com/aftersales/matrix/get-city-info?appver=v1.3_debug&city_id=201&mode_type=1&nb=56672f2c5632659df1667a5922336f54&os=android&price=15&sign=5240acad88d6cddaca17242c949d9110&type=4
+
+
+http://apis.ceshi.xin.com/cardetail/view?_apikey=5e09c1&abtest=b&app_source=3&appver=9.3.1.3346ddd4b&carid=30169139&cityid=901&imei=866808024485020&imsi=&ip=192.168.91.171&nb=161c4bd20f9d1cd5d3f6fede730470ac&net=wifi&os=android&ref=SeeCarListActivity&search_cityid=901&sysver=22&ts=1521514902394&uid=&url=VehicleDetailsActivity&uuid=ba110bcb-dff6-4c28-a423-96630139a049
+
+http://super42.apt.ceshi.xin.com/aftersales/matrix/get-city-info?appver=v1.3_debug&delivery_city_id=201&from_city_id=201&nb=56672f2c5632659df1667a5922336f54&os=android&price=7.87&sign=abd173eb02acfb663b6dda3f7a017f74&to_city_id=2401&type=3&use_city_id=201&wo_id=790
+
+http://super42.apt.ceshi.xin.com/aftersales/matrix/get-city-info?appver=v1.3_debug&delivery_city_id=201&from_city_id=201&nb=56672f2c5632659df1667a5922336f54&os=android&price=7.87&sign=78d9c14147b77660df4bdf908c002eba&to_city_id=2401&type=4&use_city_id=201&wo_id=790
+
+http://super42.apt.ceshi.xin.com/aftersales/user/login?appver=v1.3_debug&device=AtQJlyeMjuuzTHI6PzMCNrl0_fc48M-DRf6Oi3ZsoBw8&nb=56672f2c5632659df1667a5922336f54&os=android&pwd=Dig%3FF*ckDang5&sign=a563b5123bd194e0a3f090e83d1a1325&username=libing
+
+
+appverv1.3_debugdelivery_city_id201from_city_id201nb56672f2c5632659df1667a5922336f54osandroidprice7.87to_city_id2401type3use_city_id201wo_id790
+
+appverv1.3_debugdelivery_city_id201from_city_id201nb56672f2c5632659df1667a5922336f54osandroidprice7.87sign78d9c14147b77660df4bdf908c002ebato_city_id2401type3use_city_id201wo_id790
+
+
+appverv1.3_debugdelivery_city_id201from_city_id201nb56672f2c5632659df1667a5922336f54osandroidprice7.87to_city_id2401type4use_city_id201wo_id790
+
+****************************************************************
+
+cardetail/view
+mFlawImgview
+key_flaws
+
+SUV 8
+MPV 7
+三厢轿车 13 - 2
+两厢轿车 12 - 1
+
+setHomeRecommendParams
+isFromHomeRecommend
+initRequestParams
+
+http://c931.apis.ceshi.xin.com/home/brand_price
+http://c931.apis.ceshi.xin.com/car_search/search
+
+http://img.youxinpai.com//che/20180306/1055/5a9e030e5f004465966.jpg
+
+有个问题
+/home/brand_price这个接口新增的车型筛选项model_list
+怎么里面的param既有category还有structure
+这边看了下category是正确的，structure是什么意思？
+
+首页的品牌推荐快速入口 接口只返回了8个，应该返回10个品牌，见附件
+
+刚才联系王晓霞她说在家让我找你
+这个接口/home/brand_price新增的model_list
+其中返回的三厢和两厢轿车对应的structure有点问题
+
+****************************************************************
+
+
+http://apis.ceshi.xin.com/car_search/search
+brandid
+serieid
+
+1-第一次进入
+_apikey=5033f0&abtest=a&agemax=0&agemin=0&app_source=3&appver=9.3.31aa8833b&brandid=0&c_p=0&category=0&cityid=201&color=0&country=0&country_type=0&displacementmax=0&displacementmin=0&emission_standard=0&fueltype=0&gearbox=0&imei=866808024485020&imsi=&ip=192.168.91.171&latitude=39.99631&list_type=1&loc_num=0&longitude=116.481084&mileagemax=0&mileagemin=0&n_p=0&nb=e16b014a7865b4023606677515c51d58&net=wifi&offset=0&only_local=0&os=android&p_p=0&pricemax=0&pricemin=0&ref=AboutUxinActivity&search_cityid=201&seatnum=0&serieid=&seriename=&series_type=1&st=0&sysver=22&today_newcar=0&ts=1521018688883&uid=&url=ChangeUrlActivity&uuid=1f7a90c1-43d9-44de-b046-2779a1d2e4d1&zg_num=0
+
+2-选择宝马
+_apikey=2b0d65&abtest=a&agemax=0&agemin=0&app_source=3&appver=9.3.31aa8833b&brandid=38&c_p=0&category=0&cityid=201&color=0&country=0&country_type=0&displacementmax=0&displacementmin=0&emission_standard=0&fueltype=0&gearbox=0&imei=866808024485020&imsi=&ip=192.168.91.171&latitude=39.99631&list_type=1&loc_num=0&longitude=116.481084&mileagemax=0&mileagemin=0&n_p=0&nb=e16b014a7865b4023606677515c51d58&net=wifi&offset=0&only_local=0&os=android&p_p=0&pricemax=0&pricemin=0&ref=MarketFragment&search_cityid=201&seatnum=0&serieid=0&seriename=%E4%B8%8D%E9%99%90%E8%BD%A6%E7%B3%BB&series_type=&st=0&sysver=22&today_newcar=0&ts=1521018817096&uid=&url=BrandFilterActivity&uuid=1f7a90c1-43d9-44de-b046-2779a1d2e4d1&zg_num=0
+
+3-选择推荐卡片5系
+_apikey=15509b&abtest=a&agemax=0&agemin=0&app_source=3&appver=9.3.31aa8833b&brandid=38&c_p=0&category=0&cityid=201&color=0&country=0&country_type=0&displacementmax=0&displacementmin=0&emission_standard=0&fueltype=0&gearbox=0&imei=866808024485020&imsi=&ip=192.168.91.171&latitude=39.99631&list_type=1&loc_num=0&longitude=116.481084&mileagemax=0&mileagemin=0&n_p=0&nb=e16b014a7865b4023606677515c51d58&net=wifi&offset=0&only_local=0&os=android&p_p=0&pricemax=0&pricemin=0&ref=MarketFragment&search_cityid=201&seatnum=0&serieid=425&seriename=%E5%AE%9D%E9%A9%AC5%E7%B3%BB&series_type=1&st=0&sysver=22&today_newcar=0&ts=1521018844691&uid=&url=BrandFilterActivity&uuid=1f7a90c1-43d9-44de-b046-2779a1d2e4d1&zg_num=0
+
+4-下一页
+_apikey=1b6ad2&abtest=a&app_source=3&appver=9.3.31aa8833b&c_p=0&cityid=201&imei=866808024485020&imsi=&ip=192.168.91.171&latitude=39.99631&list_type=1&loc_num=448&longitude=116.481084&n_p=0&nb=e16b014a7865b4023606677515c51d58&net=wifi&offset=20&os=android&p_p=0&ref=MarketFragment&search_cityid=201&st=0&sysver=22&ts=1521018881754&uid=&url=BrandFilterActivity&uuid=1f7a90c1-43d9-44de-b046-2779a1d2e4d1&zg_num=7
+
+5-下一页
+_apikey=c27320&abtest=a&app_source=3&appver=9.3.31aa8833b&c_p=0&cityid=201&imei=866808024485020&imsi=&ip=192.168.91.171&latitude=39.99631&list_type=1&loc_num=448&longitude=116.481084&n_p=0&nb=e16b014a7865b4023606677515c51d58&net=wifi&offset=40&os=android&p_p=0&ref=MarketFragment&search_cityid=201&st=0&sysver=22&ts=1521018896086&uid=&url=BrandFilterActivity&uuid=1f7a90c1-43d9-44de-b046-2779a1d2e4d1&zg_num=7
+
+6-下拉刷新
+_apikey=2963fd&abtest=a&agemax=0&agemin=0&app_source=3&appver=9.3.31aa8833b&brandid=38&c_p=0&category=0&cityid=201&color=0&country=0&country_type=0&displacementmax=0&displacementmin=0&emission_standard=0&fueltype=0&gearbox=0&imei=866808024485020&imsi=&ip=192.168.91.171&latitude=39.99631&list_type=1&loc_num=0&longitude=116.481084&mileagemax=0&mileagemin=0&n_p=0&nb=e16b014a7865b4023606677515c51d58&net=wifi&offset=0&only_local=0&os=android&p_p=0&pricemax=0&pricemin=0&ref=MarketFragment&search_cityid=201&seatnum=0&serieid=425&seriename=5%E7%B3%BB&series_type=1&st=0&sysver=22&today_newcar=0&ts=1521018916471&uid=&url=BrandFilterActivity&uuid=1f7a90c1-43d9-44de-b046-2779a1d2e4d1&zg_num=0
+
+****************************************************************
+
+发现新版本:v9.3
+
+卖车足不出户，检测师上门检测
+筛选全面升级，全新卡片引导
+新增瑕疵说明，展现更直观
+
+oppo 360 总量3000
+
+Hi All:
+二手车Android端 9.3 已发布灰测
+渠道：360、oppo
+总量：3000
+
+****************************************************************
+****************************************************************
+****************************************************************
+
+https://m.youxinjinrong.com/uxin/repay/inquire?os=android&appver=9.3&cityid=416&from=app&nb=4b35a920d4fa74897d7329abe2af212a&xdid=210da22ff98809a9526d42c461c6f156&app_id=u2_0&app=9.3&uid=3176119&cid=4b35a920d4fa74897d7329abe2af212a&source=&cityid=416&net=wifi&imei=866808024485020&mac=38:bc:1a:d2:10:c4&location=116.481117_39.996328_2
+
+http://api.fin.youxinjinrong.com/usedpostloan/captcha?data=%5B%5D&_client=uxin_h5&_sn=09c7e36b96c0daceba7778d24eb3c3c8&time=1520964642900
+
+rsbLiCheng
+
+scroll_title
+
+refreshLeftRedPoint
+getLichengCheckedIndex
+
+bg_vehicle_price_selector
+
+bg_ask_service
+bg_ask_service_selector
+
+https://s1.xinstatic.com//m//img//im-logo.png
+
+
+http://m.ceshi.xin.com/halfprice/?from=app&os=android&xdid=210da22ff98809a9526d42c461c6f156&app_id=u2_0&app=9.3.f927145b&uid=1379&cid=8e336d3969feb399cb50442786bb0eda&source=&cityid=201&net=wifi&imei=866808024485020&mac=38:bc:1a:d2:10:c4&location=116.481116_39.996321_2
+
+http://fe.test.youxinjinrong.com:5009/terminal/terminal/prevent-copy-info?
+
+http://fe.test.youxinjinrong.com:5009/terminal/terminal/prevent-copy-info?_product_client=client_c&appver=9.3.f927145b&nb=8e336d3969feb399cb50442786bb0eda&os=android&cityid=201&latitude=39.996321&longitude=116.481116&imei=866808024485020&from=app&u=src%253Dcar_app%2526uid%253D1379&x=64ca9d2c7f9741e2936023f98877457c&view=18612765603&m=18612765603&token=243062&xdid=210da22ff98809a9526d42c461c6f156
+
+http://fe.test.youxinjinrong.com:5009/s-store/credit/result?u=src%3Dcar_app%26uid%3D1379&x=64ca9d2c7f9741e2936023f98877457c&submit_entry=undefined&carid=&cityid=201
+
+
+"map_static": 
+"https://api.map.baidu.com/staticimage?markers=117.366893,39.162953&markerStyles=l",
+"map_web": 
+"https://api.map.baidu.com/marker?location=39.162953,117.366893&title=%E5%A4%A9%E6%B4%A5%E8%BD%A6%E7%8E%8B%E4%BA%8C%E6%89%8B%E8%BD%A6%E8%B6%85%E5%B8%82%E3%80%90%E8%BD%A6%E7%8E%8B%E3%80%91&content=%E5%A4%A9%E6%B4%A5%E5%B8%82%E7%A9%BA%E6%B8%AF%E7%BB%8F%E6%B5%8E%E5%8C%BA%E7%8E%AF%E6%B2%B3%E8%A5%BF%E8%B7%AF8%E5%8F%B7&output=html&src=app_xin"
+
+https://api.map.baidu.com/marker?location=39.162953,117.366893&title=%E5%A4%A9%E6%B4%A5%E8%BD%A6%E7%8E%8B%E4%BA%8C%E6%89%8B%E8%BD%A6%E8%B6%85%E5%B8%82%E3%80%90%E8%BD%A6%E7%8E%8B%E3%80%91&content=%E5%A4%A9%E6%B4%A5%E5%B8%82%E7%A9%BA%E6%B8%AF%E7%BB%8F%E6%B5%8E%E5%8C%BA%E7%8E%AF%E6%B2%B3%E8%A5%BF%E8%B7%AF8%E5%8F%B7&output=html&src=app_xin&xdid=210da22ff98809a9526d42c461c6f156&app_id=u2_0&app=9.3.f927145b&uid=&cid=8e336d3969feb399cb50442786bb0eda&source=&cityid=2601&net=wifi&imei=866808024485020&mac=38:bc:1a:d2:10:c4&location=116.481115_39.996328_2
+
+https://api.map.baidu.com/marker?location=39.162953,117.366893&title=%E5%A4%A9%E6%B4%A5%E8%BD%A6%E7%8E%8B%E4%BA%8C%E6%89%8B%E8%BD%A6%E8%B6%85%E5%B8%82%E3%80%90%E8%BD%A6%E7%8E%8B%E3%80%91&content=%E5%A4%A9%E6%B4%A5%E5%B8%82%E7%A9%BA%E6%B8%AF%E7%BB%8F%E6%B5%8E%E5%8C%BA%E7%8E%AF%E6%B2%B3%E8%A5%BF%E8%B7%AF8%E5%8F%B7&output=html&src=app_xin
+
+****************************************************************
+
+http://img.youxinpai.com//che/20180118/1517/5a6049f36f09c955002.jpg
+http://img.youxinpai.com//che/20180118/1517/5a6049f53a862497492.jpg
+http://c4.xinstatic.com/f2/20171108/1052/5a027171599f8317656_19.jpg
+
+https://apis.xin.com/cardetail/view
+cardetail-view.txt
+北汽威旺 威旺205 2013款 1.0 手动 乐业型
+斯柯达 速派 2016款 2.0T 自动 380遵行版
+http://img.youxinpai.com//che/20180302/1436/5a98f1078a973239739.jpg
+
+大众 CC 2010款 2.0T 自动 风尚版
+_apikey=4229a4&abtest=a&app_source=3&appver=9.3.52fe9729b&carid=21730546&cityid=201&imei=866808024485020&imsi=&ip=192.168.91.171&nb=7e0b6f5840ff7d5be886fb4800483d4d&net=wifi&os=android&ref=MarketFragment&search_cityid=201&sysver=22&ts=1520494625202&uid=&url=ChooseCityActivity&uuid=823867bc-ff55-4fc3-9c30-786268776c05
+
+****************************************************************
+
+
+WM-360
+
+import com.uxin.usedcar.utils.SPUtils;
+import com.xin.u2market.utils.SPUtils;
+
+import com.xin.commonmodules.utils.SPUtils;
+
+
+import com.uxin.usedcar.global.SP;
+import com.xin.commonmodules.global.SP;
+
+****************************************************************
+
+http://qnm.hunliji.com/FkRCcAakLxXxXIunZiWTj4K9DBq4
+
+UncaughtException detected: android.view.WindowManager$BadTokenException: 
+Unable to add window -- token null is not valid; is your activity running?
+
+http://c93.api.ceshi.xin.com/home/guess_your_like
+
+****************************************************************
+
+u2  
+app 
+新增  
+首页  
+C-首页-猜你喜欢车辆关闭   
+首页，猜你喜欢模块车辆关闭（叉号删除）按钮点击 
+c   
+car_close_click_guess   
+rank=value/carid=value  
+car_close_click_guess#rank=1/carid=12345678 
+"rank取值：删除车辆在页面对应的位置顺序（从1开始）
+carid取值：删除车辆id"     
+v9.3        
+u2_1    
+否
+
+u2  
+app 
+新增  
+首页  
+C-首页-猜你喜欢车辆负反馈  
+首页，猜你喜欢模块车辆关闭，且点击反馈确定时触发埋点  
+c   
+car_close_guess 
+rank=value/carid=value/operation=value1，value2……    
+car_close_guess#rank=1/carid=12345678/operation=1,2 
+"rank取值：删除车辆对应的位置顺序（从1开始）
+carid取值：删除车辆id
+operation取值：1,2,3….按照选择理由顺序取值，
+0--不感兴趣"        
+v9.3        
+u2_1    
+否   
+马腾飞
+
+http://ab.test.xin.com/collect.gif?&abversion=65_a.67_d&app=9.2.1.0b&cid=a143919256c3b3d78e5578b03a585130&cityid=201&device_type=m1%20note&ev=car_close_guess%23rank%3D12%2Fcarid%3D66266193%2Foperation%3D1%2C2&from=android&imei=866808024485020&mac=38:bc:1a:d2:10:c4&net=wifi&os=5.1&ref=HomeFragment&sc=1080*1920&source=&ts=1519614476758&type=c&url=HomeFragment&uuid=63d738ca-06cc-4794-a681-d7bb7f38ca47
+
+****************************************************************
+
+CarCollectionDetailActivity
+
+****************************************************************
+
+import Splash from './Splash';
+
+AppRegistry.registerComponent('HelloReactNative', () => Splash);
+
+****************************************************************
+
+
+435g    35.9y
+580g    19.9y
+
+XinMarketingSystem_45_v3.2.1_release.apk
+
+45
+v3.2.1
+版本更新
+修复部分已知问题
+
+Users/treason/Library/Containers/com.tencent.xinWeChat/Data
+
+****************************************************************
+
+XinMarketingSystem_43_v3.2_release-5.apk
+3.2
+43
+版本更新
+
+1、采集、异地检测增加全国直购附加信息
+2、增加马赛克功能
+3、CC线索下发带上客户关键信息
+
+****************************************************************
+
+com.xin.sales.base.view.
+DividerGridItemDecoration
+LoadMoreRecyclerView
+RecycleViewDivider
+WrapContentLinearLayoutManager
+
+/Users/treason/Library/Containers/com.tencent.qq/Data
+
+****************************************************************
