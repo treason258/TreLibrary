@@ -575,7 +575,6 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(int code, List<BookBean.BookServerInfo> bookServerInfoList) {
                 showLoading(false);
                 for (int i = bookServerInfoList.size() - 1; i >= 0; i--) {
-                    BookBean bookBean = new BookBean();
                     BookBean.BookServerInfo bookServerInfo = bookServerInfoList.get(i);
                     if (Boolean.valueOf(bookServerInfo.getIsDel())) { // 删除的书
                         if (mMapBookAll.containsKey(bookServerInfo.getBookId())) {
@@ -584,33 +583,8 @@ public class HomeFragment extends BaseFragment {
                         if (mMapBookShow.containsKey(bookServerInfo.getBookId())) {
                             mMapBookShow.remove(bookServerInfo.getBookId());
                         }
-                    } else {
-                        String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
-                        String bookFileName = Utils.getBookName(DBHelper.getUserBean(), bookServerInfo);
-                        File bookFile = new File(bookFileDir, bookFileName);
-                        if (bookFile.exists()) {
-                            String filePath = bookFile.getAbsolutePath();
-
-                            FileNameService fileNameService = new FileNameService();
-                            String fileName = fileNameService.getFileName(filePath);
-                            String fileSuffix = fileNameService.getFileExtendName(filePath);
-
-                            BookInfoService bookInfoService = new BookInfoService();
-                            bookInfoService.init(filePath);
-                            Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
-                            String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath);
-                            bookInfoService.clear();
-
-                            bookBean.getBookLocalInfo().setFileName(fileName);
-                            bookBean.getBookLocalInfo().setFileSuffix(fileSuffix);
-                            bookBean.getBookLocalInfo().setLocalBookPath(filePath);
-                            bookBean.getBookLocalInfo().setLocalCoverPath(localCoverPath);
-                            bookBean.getBookLocalInfo().setBook(book);
-                            bookBean.setBookServerInfo(bookServerInfo);
-                        }
-
-                        // 如果当前用户已有此书，则更新数据；否则添加此书
-                        if (mMapBookAll.containsKey(bookServerInfo.getBookId())) {
+                    } else { // 更新电子书或新增电子书
+                        if (mMapBookAll.containsKey(bookServerInfo.getBookId())) { // 如果当前用户已有此书，则更新电子书
                             BookBean bookBeanOld = mMapBookAll.get(bookServerInfo.getBookId());
                             bookBeanOld.setBookServerInfo(bookServerInfo);
                             mMapBookAll.put(bookServerInfo.getBookId(), bookBeanOld);
@@ -618,7 +592,34 @@ public class HomeFragment extends BaseFragment {
                             if (mMapBookShow.containsKey(bookServerInfo.getBookId())) {
                                 mMapBookShow.put(bookServerInfo.getBookId(), bookBeanOld);
                             }
-                        } else {
+                        } else { // 否则没有，则新增的电子书
+                            BookBean bookBean = new BookBean();
+                            // 设如果本地已有文件，则设置电子书本地存储信息
+                            String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
+                            String bookFileName = Utils.getBookName(DBHelper.getUserBean(), bookServerInfo);
+                            File bookFile = new File(bookFileDir, bookFileName);
+                            if (bookFile.exists()) {
+                                String filePath = bookFile.getAbsolutePath();
+
+                                FileNameService fileNameService = new FileNameService();
+                                String fileName = fileNameService.getFileName(filePath);
+                                String fileSuffix = fileNameService.getFileExtendName(filePath);
+
+                                BookInfoService bookInfoService = new BookInfoService();
+                                bookInfoService.init(filePath);
+                                Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
+                                String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath);
+                                bookInfoService.clear();
+
+                                bookBean.getBookLocalInfo().setFileName(fileName);
+                                bookBean.getBookLocalInfo().setFileSuffix(fileSuffix);
+                                bookBean.getBookLocalInfo().setLocalBookPath(filePath);
+                                bookBean.getBookLocalInfo().setLocalCoverPath(localCoverPath);
+                                bookBean.getBookLocalInfo().setBook(book);
+                            }
+                            // 设置服务端信息
+                            bookBean.setBookServerInfo(bookServerInfo);
+
                             mMapBookAll.put(bookServerInfo.getBookId(), bookBean);
                             mMapBookShow.put(bookServerInfo.getBookId(), bookBean);
                         }
