@@ -258,12 +258,21 @@ public class HomeFragment extends BaseFragment {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+                    ToastUtils.show("请先选中所属分类");
+                    return;
+                }
                 startActivityForResult(new Intent(mContext, FileActivity.class), REQUEST_CODE_ADD_BOOK);
             }
         });
         ivAdd.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                if (Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+                    ToastUtils.show("请先选中所属分类");
+                    return false;
+                }
+
 //                startActivity(new Intent(mContext, com.haoyang.lovelyreader.ui.MainActivity.class));
                 ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(ivAdd, "translationY", 0, ivAdd.getHeight() * 2).setDuration(200L);
                 objectAnimator.setInterpolator(new AccelerateInterpolator());
