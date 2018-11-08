@@ -1,27 +1,28 @@
 import React, {Component} from 'react';
 import Header from './Header.js';
+import Clock from "./Clock";
 
 class All extends Component {
     constructor() {
         super()
         this.state = {
-            isShowHeader: true
+            isShow: true
         }
     }
 
     handleShowOrHide () {
         this.setState({
-            isShowHeader: !this.state.isShowHeader
+            isShow: !this.state.isShow
         })
     }
 
     render() {
         return (
             <div>
-                {this.state.isShowHeader ? <Header /> : null}
                 <button onClick={this.handleShowOrHide.bind(this)}>
                     显示或者隐藏标题
                 </button>
+                {this.state.isShow ? <Clock /> : null}
             </div>
         )
     }

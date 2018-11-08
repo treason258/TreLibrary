@@ -17,5 +17,7 @@ import ReactDOM from 'react-dom';
 import CommentApp from './comment/CommentApp.js';
 import Header from './test/Header.js';
 import All from './test/All.js';
+import Clock from './test/Clock.js';
+import AutoFocusInput from "./test/AutoFocusInput";
 
-ReactDOM.render(<All/>, document.getElementById('root'));
+ReactDOM.render(<AutoFocusInput/>, document.getElementById('root'));
