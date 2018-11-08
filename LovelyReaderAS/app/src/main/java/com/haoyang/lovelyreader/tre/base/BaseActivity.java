@@ -52,9 +52,13 @@ public class BaseActivity extends AppCompatActivity {
 
     public void showLoading(boolean show) {
         if (show) {
-            mLoadingDialog.show();
+            if (!mLoadingDialog.isShowing()) {
+                mLoadingDialog.show();
+            }
         } else {
-            mLoadingDialog.hide();
+            if (mLoadingDialog.isShowing()) {
+                mLoadingDialog.hide();
+            }
         }
     }
 }
