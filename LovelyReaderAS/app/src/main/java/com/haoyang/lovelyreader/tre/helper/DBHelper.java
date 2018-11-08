@@ -167,7 +167,7 @@ public class DBHelper {
         if (bookBeanMap == null) {
             bookBeanMap = new LinkedHashMap<>();
         }
-        bookBeanMap.put(bookBean.getBookId(), bookBean);
+        bookBeanMap.put(bookBean.getBookServerInfo().getBookId(), bookBean);
         setBookBeanList(uid, bookBeanMap);
     }
 
@@ -187,8 +187,8 @@ public class DBHelper {
      */
     public static void modifyBookBean(String uid, BookBean bookBean) {
         LinkedHashMap<String, BookBean> bookBeanMap = getBookBeanList(uid);
-        if (bookBeanMap.containsKey(bookBean.getBookId())) {
-            bookBeanMap.put(bookBean.getBookId(), bookBean);
+        if (bookBeanMap.containsKey(bookBean.getBookServerInfo().getBookId())) {
+            bookBeanMap.put(bookBean.getBookServerInfo().getBookId(), bookBean);
         }
         setBookBeanList(uid, bookBeanMap);
     }
@@ -198,7 +198,7 @@ public class DBHelper {
      */
     public static boolean containsBookBean(String uid, BookBean bookBean) {
         LinkedHashMap<String, BookBean> bookBeanMap = getBookBeanList(uid);
-        if (bookBeanMap.containsKey(bookBean.getBookId())) {
+        if (bookBeanMap.containsKey(bookBean.getBookServerInfo().getBookId())) {
             return true;
         }
         return false;
@@ -215,8 +215,8 @@ public class DBHelper {
             LinkedHashMap<String, BookBean> bookBeanMap = getBookBeanList(uid);
             for (Map.Entry<String, BookBean> entry : bookBeanMap.entrySet()) {
                 BookBean bookBean = entry.getValue();
-                if (bookBean != null && bookBean.getBookName() != null && bookBean.getBookName().contains(key)) {
-                    searchResult.put(bookBean.getBookId(), bookBean);
+                if (bookBean != null && bookBean.getBookServerInfo() != null && bookBean.getBookServerInfo().getBookName() != null && bookBean.getBookServerInfo().getBookName().contains(key)) {
+                    searchResult.put(bookBean.getBookServerInfo().getBookId(), bookBean);
                 }
             }
         }

@@ -121,19 +121,19 @@ public class HomeAdapter extends TCAdapter {
         protected void initView(BookBean bookBean, int position) {
             if (bookBean != null) {
                 // ivBook
-                if (!TextUtils.isEmpty(bookBean.getLocalCoverPath())) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(bookBean.getLocalCoverPath());
+                if (!TextUtils.isEmpty(bookBean.getBookLocalInfo().getLocalCoverPath())) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(bookBean.getBookLocalInfo().getLocalCoverPath());
                     if (bitmap != null) {
                         ivBook.setImageBitmap(bitmap);
                     }
-                } else if (!TextUtils.isEmpty(bookBean.getCoverPath())) {
-                    ImageLoader.get().load(ivBook, bookBean.getCoverPath());
+                } else if (!TextUtils.isEmpty(bookBean.getBookServerInfo().getCoverPath())) {
+                    ImageLoader.get().load(ivBook, bookBean.getBookServerInfo().getCoverPath());
                 } else {
                     ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_main_book_default));
                 }
                 // tvBook
-                if (!TextUtils.isEmpty(bookBean.getBookName())) {
-                    tvBook.setText(bookBean.getBookName());
+                if (!TextUtils.isEmpty(bookBean.getBookServerInfo().getBookName())) {
+                    tvBook.setText(bookBean.getBookServerInfo().getBookName());
                 }
                 // tvSync-分四种情况
                 // 1-服务器有文件，本地有文件，则隐藏按钮
@@ -145,8 +145,8 @@ public class HomeAdapter extends TCAdapter {
                 final int SYNC_TYPE_UPLOAD = 3;
                 final int SYNC_TYPE_ERROR = 4;
                 int syncType = SYNC_TYPE_HIDE;
-                String bookUrl = bookBean.getBookPath();
-                String bookPath = bookBean.getLocalBookPath();
+                String bookUrl = bookBean.getBookServerInfo().getBookPath();
+                String bookPath = bookBean.getBookLocalInfo().getLocalBookPath();
                 if (!TextUtils.isEmpty(bookUrl)) {
                     if (!TextUtils.isEmpty(bookPath)) {
                         syncType = SYNC_TYPE_HIDE;
@@ -206,7 +206,7 @@ public class HomeAdapter extends TCAdapter {
      */
     private void uploadBook(BookBean bookBean, int position) {
         UploadBookParam uploadBookParam = new UploadBookParam();
-        uploadBookParam.setBookId(bookBean.getBookId());
+        uploadBookParam.setBookId(bookBean.getBookServerInfo().getBookId());
         uploadBookParam.setUuid(EncodeHelper.getRandomChar());
         String content = ApiRequest.getContent(uploadBookParam);
 
@@ -215,9 +215,9 @@ public class HomeAdapter extends TCAdapter {
         requestEntity.addHeader("sign", EncodeHelper.getSign(content));
         requestEntity.addHeader("token", UserUtils.getToken());
         requestEntity.addParam("data", content);
-        requestEntity.addFile("bookFile", new File(bookBean.getLocalBookPath()));
-        if (!TextUtils.isEmpty(bookBean.getLocalCoverPath())) {
-            requestEntity.addFile("imgFile", new File(bookBean.getLocalCoverPath()));
+        requestEntity.addFile("bookFile", new File(bookBean.getBookLocalInfo().getLocalBookPath()));
+        if (!TextUtils.isEmpty(bookBean.getBookLocalInfo().getLocalCoverPath())) {
+            requestEntity.addFile("imgFile", new File(bookBean.getBookLocalInfo().getLocalCoverPath()));
         }
         RequestSender.get().send(requestEntity, new RequestCallback<UploadBean>() {
             @Override
@@ -237,10 +237,10 @@ public class HomeAdapter extends TCAdapter {
                     ToastUtils.show("上传成功");
                     LogUtils.i("上传成功 -> " + uploadBean.getBookPath());
 
-                    bookBean.setBookDocId(uploadBean.getBookDocId());
-                    bookBean.setBookPath(uploadBean.getBookPath());
-                    bookBean.setCoverDocId(uploadBean.getCoverDocId());
-                    bookBean.setCoverPath(uploadBean.getCoverPath());
+                    bookBean.getBookServerInfo().setBookDocId(uploadBean.getBookDocId());
+                    bookBean.getBookServerInfo().setBookPath(uploadBean.getBookPath());
+                    bookBean.getBookServerInfo().setCoverDocId(uploadBean.getCoverDocId());
+                    bookBean.getBookServerInfo().setCoverPath(uploadBean.getCoverPath());
 
                     mList.set(position, bookBean);
                     notifyDataSetChanged();
@@ -258,9 +258,9 @@ public class HomeAdapter extends TCAdapter {
      * 下载电子书文件
      */
     private void downloadBook(BookBean bookBean, int position) {
-        String fileUrl = bookBean.getBookPath();
+        String fileUrl = bookBean.getBookServerInfo().getBookPath();
         String fileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
-        String fileName = Utils.getBookName(DBHelper.getUserBean(), bookBean);
+        String fileName = Utils.getBookName(DBHelper.getUserBean(), bookBean.getBookServerInfo());
         RequestSender.get().downloadFile(fileUrl, new FileCallBack(fileDir, fileName) {
 
             @Override
@@ -277,19 +277,22 @@ public class HomeAdapter extends TCAdapter {
                     LogUtils.i("下载成功 -> " + file.getAbsolutePath());
 
                     String filePath = file.getAbsolutePath();
+
                     FileNameService fileNameService = new FileNameService();
                     String fileName = fileNameService.getFileName(filePath);
                     String fileSuffix = fileNameService.getFileExtendName(filePath);
-                    bookBean.setFileName(fileName);
-                    bookBean.setFileSuffix(fileSuffix);
-                    bookBean.setLocalBookPath(filePath);
+
                     BookInfoService bookInfoService = new BookInfoService();
-                    bookInfoService.init(bookBean.getLocalBookPath());
-                    Book book = BookInfoUtils.getBookInfo(bookInfoService, bookBean.getLocalBookPath());
-                    String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, bookBean.getLocalBookPath());
+                    bookInfoService.init(filePath);
+                    Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
+                    String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath);
                     bookInfoService.clear();
-                    bookBean.setBook(book);
-                    bookBean.setLocalCoverPath(localCoverPath);
+
+                    bookBean.getBookLocalInfo().setFileName(fileName);
+                    bookBean.getBookLocalInfo().setFileSuffix(fileSuffix);
+                    bookBean.getBookLocalInfo().setLocalBookPath(filePath);
+                    bookBean.getBookLocalInfo().setLocalCoverPath(localCoverPath);
+                    bookBean.getBookLocalInfo().setBook(book);
 
                     mList.set(position, bookBean);
                     notifyDataSetChanged();

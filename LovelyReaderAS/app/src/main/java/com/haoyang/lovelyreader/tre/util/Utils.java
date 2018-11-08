@@ -86,8 +86,8 @@ public class Utils {
         return stringBuilder.toString();
     }
 
-    public static String getBookName(UserBean userBean, BookBean bookBean) {
-        return userBean.getUid() + "-" + bookBean.getAuthor() + "-" + bookBean.getBookName() + ".epub";
+    public static String getBookName(UserBean userBean, BookBean.BookServerInfo bookServerInfo) {
+        return userBean.getUid() + "-" + bookServerInfo.getAuthor() + "-" + bookServerInfo.getBookName() + ".epub";
     }
 
 }
