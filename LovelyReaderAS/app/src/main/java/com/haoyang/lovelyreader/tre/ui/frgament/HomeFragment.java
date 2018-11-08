@@ -252,7 +252,7 @@ public class HomeFragment extends BaseFragment {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
                     ToastUtils.show("请先选中所属分类");
                     return;
                 }
@@ -262,7 +262,7 @@ public class HomeFragment extends BaseFragment {
         ivAdd.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
                     ToastUtils.show("请先选中所属分类");
                     return false;
                 }
@@ -395,7 +395,7 @@ public class HomeFragment extends BaseFragment {
         bookBean.getBookLocalInfo().setLocalBookPath(fileBean.getPath());
         bookBean.getBookLocalInfo().setLocalCoverPath(localCoverPath); // 读取封面图片
         bookBean.getBookLocalInfo().setBook(book);
-        bookBean.getBookServerInfo().setBookId(BookBean.NO_UPLOAD_BOOK_ID);
+        bookBean.getBookServerInfo().setBookId(BookBean.NO_UPLOAD_BOOK_ID + System.currentTimeMillis());
         bookBean.getBookServerInfo().setAuthor(book.authors);
         bookBean.getBookServerInfo().setBookName(book.bookName);
         bookBean.getBookServerInfo().setBookCategory("");

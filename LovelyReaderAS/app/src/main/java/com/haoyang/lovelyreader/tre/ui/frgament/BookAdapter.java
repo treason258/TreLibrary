@@ -18,8 +18,10 @@ import com.haoyang.lovelyreader.tre.bean.api.UploadBookParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
+import com.haoyang.lovelyreader.tre.helper.Global;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
+import com.haoyang.lovelyreader.tre.util.LoginUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;
 import com.haoyang.reader.sdk.Book;
 import com.haoyang.reader.service.bookservice.BookInfoService;
@@ -175,6 +177,9 @@ public class BookAdapter extends TCAdapter {
                         tvSync.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                if (LoginUtils.checkNotLoginAndToast()) {
+                                    return;
+                                }
                                 downloadBook(bookBean, position);
                             }
                         });
@@ -185,6 +190,9 @@ public class BookAdapter extends TCAdapter {
                         tvSync.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                if (LoginUtils.checkNotLoginAndToast()) {
+                                    return;
+                                }
                                 uploadBook(bookBean, position);
                             }
                         });
@@ -245,6 +253,8 @@ public class BookAdapter extends TCAdapter {
                     bookBean.getBookServerInfo().setCoverDocId(uploadBean.getCoverDocId());
                     bookBean.getBookServerInfo().setCoverPath(uploadBean.getCoverPath());
 
+                    DBHelper.modifyBookBean(Global.mCurrentUser.getUid(), bookBean);
+
                     mList.set(position, bookBean);
                     notifyDataSetChanged();
                 }
@@ -296,6 +306,8 @@ public class BookAdapter extends TCAdapter {
                     bookBean.getBookLocalInfo().setLocalBookPath(filePath);
                     bookBean.getBookLocalInfo().setLocalCoverPath(localCoverPath);
                     bookBean.getBookLocalInfo().setBook(book);
+
+                    DBHelper.modifyBookBean(Global.mCurrentUser.getUid(), bookBean);
 
                     mList.set(position, bookBean);
                     notifyDataSetChanged();

@@ -34,6 +34,7 @@ import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.ui.dialog.UpdateDialog;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
+import com.haoyang.lovelyreader.tre.util.LoginUtils;
 import com.haoyang.lovelyreader.tre.util.UpdateUtils;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
@@ -42,6 +43,7 @@ import com.mjiayou.trecorelib.http.callback.RequestCallback;
 import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +152,9 @@ public class MainActivity extends BaseActivity {
         tvSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (LoginUtils.checkNotLoginAndToast()) {
+                    return;
+                }
                 syncServerData();
             }
         });
@@ -213,6 +218,9 @@ public class MainActivity extends BaseActivity {
         tvAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (LoginUtils.checkNotLoginAndToast()) {
+                    return;
+                }
                 if (Global.mCurrentCategory == null) {
                     ToastUtils.show("未选中所属分类");
                     return;
@@ -236,6 +244,9 @@ public class MainActivity extends BaseActivity {
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (LoginUtils.checkNotLoginAndToast()) {
+                    return;
+                }
                 String categoryName = etCategoryName.getText().toString();
                 if (TextUtils.isEmpty(categoryName)) {
                     ToastUtils.show("请输入分类名称");
