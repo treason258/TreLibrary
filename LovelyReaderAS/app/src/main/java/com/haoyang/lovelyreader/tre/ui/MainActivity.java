@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity {
     private HomeFragment mHomeFragment;
     private MineFragment mMineFragment;
 
-    private MainAdapter mMainAdapter;
+    private FragmentAdapter mFragmentAdapter;
     private List<Fragment> mFragmentList;
 
     // 分类面板
@@ -277,8 +277,8 @@ public class MainActivity extends BaseActivity {
         mFragmentList.add(mHomeFragment);
         mFragmentList.add(mMineFragment);
 
-        mMainAdapter = new MainAdapter(getSupportFragmentManager(), mFragmentList);
-        viewPager.setAdapter(mMainAdapter);
+        mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragmentList);
+        viewPager.setAdapter(mFragmentAdapter);
         viewPager.addOnPageChangeListener(mOnPageChangeListener);
         viewPager.setCurrentItem(FRAGMENT_HOME);
         switchFragment(FRAGMENT_HOME);
@@ -353,11 +353,11 @@ public class MainActivity extends BaseActivity {
     /**
      * Fragment适配器
      */
-    public class MainAdapter extends FragmentPagerAdapter {
+    public class FragmentAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList = new ArrayList<>();
 
-        public MainAdapter(FragmentManager fragmentManager, List<Fragment> fragmentList) {
+        public FragmentAdapter(FragmentManager fragmentManager, List<Fragment> fragmentList) {
             super(fragmentManager);
             this.fragmentList = fragmentList;
         }
