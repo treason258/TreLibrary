@@ -47,7 +47,6 @@ import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
 import com.haoyang.lovelyreader.tre.wifi.WebService;
 import com.haoyang.reader.sdk.Book;
 import com.haoyang.reader.service.bookservice.BookInfoService;
-import com.hwangjr.rxbus.RxBus;
 import com.java.common.service.file.FileNameService;
 import com.mjiayou.trecorelib.bean.entity.TCMenu;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
@@ -83,10 +82,7 @@ public class HomeFragment extends BaseFragment {
     private ListView lvSearch;
     private ImageView ivAdd;
 
-    private HomeAdapter mHomeAdapter;
-//    private List<BookBean> mListBook = new ArrayList<>();
-//    private List<BookBean> mListBookAll = new ArrayList<>();
-
+    private BookAdapter mBookAdapter;
     private LinkedHashMap<String, BookBean> mMapBookShow = new LinkedHashMap<>();
     private LinkedHashMap<String, BookBean> mMapBookAll = new LinkedHashMap<>();
 
@@ -100,7 +96,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-        RxBus.get().register(this);
         View view = inflater.inflate(R.layout.fragment_home, null);
 
         // findViewById
@@ -122,7 +117,6 @@ public class HomeFragment extends BaseFragment {
         super.onDestroy();
         WebService.stop(mContext);
         EventBus.getDefault().unregister(this);
-        RxBus.get().unregister(this);
     }
 
     @Override
@@ -160,7 +154,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        // etSearch
+        // etSearch-搜索框
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -182,13 +176,13 @@ public class HomeFragment extends BaseFragment {
                     mMapBookShow.clear();
                     mMapBookShow.putAll(DBHelper.getBookBeanListByKey(Global.mCurrentUser.getUid(), key));
                 }
-                if (mHomeAdapter != null) {
-                    mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
+                if (mBookAdapter != null) {
+                    mBookAdapter.setList(convertBookBeanList(mMapBookShow));
                 }
             }
         });
 
-        // ivDelete
+        // ivDelete-清除搜索框
         ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,7 +191,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        // tvTemp1
+        // tvTemp1-测试用
         tvTemp1.setText("showTestDialog");
         tvTemp1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,8 +201,8 @@ public class HomeFragment extends BaseFragment {
         });
 
         // gvBook
-        mHomeAdapter = new HomeAdapter(mContext, convertBookBeanList(mMapBookShow));
-        gvBook.setAdapter(mHomeAdapter);
+        mBookAdapter = new BookAdapter(mContext, convertBookBeanList(mMapBookShow));
+        gvBook.setAdapter(mBookAdapter);
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -242,7 +236,7 @@ public class HomeFragment extends BaseFragment {
                             new TCAlertDialog.OnTCActionListener() {
                                 @Override
                                 public void onOkAction() {
-                                    deleteBookFromServer(bookBean);
+                                    deleteBook(bookBean);
                                 }
 
                                 @Override
@@ -307,37 +301,8 @@ public class HomeFragment extends BaseFragment {
         syncServerData();
     }
 
-//    @Subscribe(tags = {@Tag(Constants.RxBusEventType.POPUP_MENU_DIALOG_SHOW_DISMISS)})
-//    public void onPopupMenuDialogDismiss(Integer type) {
-//        WebService.stop(mContext);
-//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(ivAdd, "translationY", ivAdd.getHeight() * 2, 0).setDuration(200L);
-//        objectAnimator.setInterpolator(new AccelerateInterpolator());
-//        objectAnimator.start();
-//    }
-
-//    @Subscribe(thread = EventThread.IO, tags = {@Tag(Constants.RxBusEventType.LOAD_BOOK_LIST)})
-//    public void loadBookList(Integer type) {
-//        Timber.d("loadBookList:" + Thread.currentThread().getName());
-//        List<String> books = new ArrayList<>();
-//        File dir = new File(Configs.DIR_SDCARD_PROJECT_BOOK);
-//        if (dir.exists() && dir.isDirectory()) {
-//            String[] fileNames = dir.list();
-//            if (fileNames != null) {
-//                for (String fileName : fileNames) {
-//                    books.add(fileName);
-//                }
-//            }
-//        }
-//        mActivity.runOnUiThread(() -> {
-//            LogUtils.d(TAG, ConvertUtils.parseString(books, "\n"));
-////            mBooks.clear();
-////            mBooks.addAll(books);
-////            mHomeAdapter.setList(mListBook);
-//        });
-//    }
-
     /**
-     * onEvent
+     * onEvent-登陆
      */
     public void onEvent(UserLoginStatusEvent event) {
         LogUtils.d(TAG, "onEvent() called with: event = [" + event + "]");
@@ -346,7 +311,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * onEvent
+     * onEvent-添加电子书
      */
     public void onEvent(OnBookAddEvent event) {
         LogUtils.d(TAG, "onEvent() called with: event = [" + event + "]");
@@ -362,7 +327,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * onEvent
+     * onEvent-隐藏wifi传输弹窗
      */
     public void onEvent(OnWifiDialogDismissEvent onWifiDialogDismissEvent) {
         if (onWifiDialogDismissEvent != null && onWifiDialogDismissEvent.isDismiss()) {
@@ -393,12 +358,12 @@ public class HomeFragment extends BaseFragment {
     public void syncServerData() {
         // 如果用户已登录，则同步电子书
         if (UserUtils.checkLoginStatus()) {
-            syncBookListFromServer();
+            syncBookList();
         }
     }
 
     /**
-     * onAddBook
+     * 添加电子书
      */
     public void onAddBook(FileBean fileBean) {
         if (fileBean == null) {
@@ -446,19 +411,18 @@ public class HomeFragment extends BaseFragment {
 
         // 如果已登录，则添加到服务端；如果未登录，则只添加到本地
         if (UserUtils.checkLoginStatus()) {
-            addBookToServer(bookBean);
+            addBook(bookBean);
         } else {
             mMapBookAll.put(bookBean.getBookServerInfo().getBookId(), bookBean);
             DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
 
             mMapBookShow.put(bookBean.getBookServerInfo().getBookId(), bookBean);
-            mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
+            mBookAdapter.setList(convertBookBeanList(mMapBookShow));
         }
     }
 
-
     /**
-     * syncGuestBook
+     * 同步游客添加的电子书
      */
     private void syncGuestBook() {
         // 游客用户
@@ -466,12 +430,16 @@ public class HomeFragment extends BaseFragment {
         // 游客用户添加的书
         LinkedHashMap<String, BookBean> bookBeanListDefault = DBHelper.getBookBeanList(userBeanDefault.getUid());
 
+        if (bookBeanListDefault.size() == 0) {
+            return;
+        }
+
         // 当前用户
         UserBean userBean = DBHelper.getUserBean();
         // 当前用户添加的书
         LinkedHashMap<String, BookBean> bookBeanList = DBHelper.getBookBeanList(userBean.getUid());
 
-        // 待上传的书
+        // 待上传的书列表
         List<BookBean> bookBeanListUnAdd = new ArrayList<>();
 
         // 合并
@@ -492,8 +460,9 @@ public class HomeFragment extends BaseFragment {
             }
         }
 
+        // 添加电子书
         for (int i = 0; i < bookBeanListUnAdd.size(); i++) {
-            addBookToServer(bookBeanListUnAdd.get(i));
+            addBook(bookBeanListUnAdd.get(i));
         }
 
         // 清空游客数据
@@ -503,7 +472,7 @@ public class HomeFragment extends BaseFragment {
     /**
      * 新增电子书
      */
-    public void addBookToServer(BookBean bookBean) {
+    public void addBook(BookBean bookBean) {
         BookAddParam bookAddParam = new BookAddParam();
         bookAddParam.setAuthor(bookBean.getBookServerInfo().getAuthor()); // 作者
         bookAddParam.setBookCategory(bookBean.getBookServerInfo().getBookCategory()); // 图书目录
@@ -531,7 +500,7 @@ public class HomeFragment extends BaseFragment {
                     DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
 
                     mMapBookShow.put(bookBean.getBookServerInfo().getBookId(), bookBean);
-                    mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
+                    mBookAdapter.setList(convertBookBeanList(mMapBookShow));
                 }
             }
 
@@ -546,7 +515,7 @@ public class HomeFragment extends BaseFragment {
     /**
      * 删除电子书
      */
-    public void deleteBookFromServer(BookBean bookBean) {
+    public void deleteBook(BookBean bookBean) {
         CommonParam commonParam = new CommonParam();
         commonParam.setData(bookBean.getBookServerInfo().getBookId());
 
@@ -568,7 +537,7 @@ public class HomeFragment extends BaseFragment {
                     DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
 
                     mMapBookShow.remove(bookBean.getBookServerInfo().getBookId());
-                    mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
+                    mBookAdapter.setList(convertBookBeanList(mMapBookShow));
                 }
             }
 
@@ -583,7 +552,7 @@ public class HomeFragment extends BaseFragment {
     /**
      * 同步电子书
      */
-    public void syncBookListFromServer() {
+    public void syncBookList() {
         BookSyncParam bookSyncParam = new BookSyncParam();
         long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
         if (timestamp == 0) {
@@ -658,7 +627,7 @@ public class HomeFragment extends BaseFragment {
                 DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
                 DBHelper.setLastSyncDate(Global.mCurrentUser.getUid(), System.currentTimeMillis());
 
-                mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
+                mBookAdapter.setList(convertBookBeanList(mMapBookShow));
 
                 // 如果来自刚登录的初始化，还需要同步游客数据
                 if (mIsFromLogin) {
@@ -686,7 +655,7 @@ public class HomeFragment extends BaseFragment {
         tcMenus.add(new TCMenu("同步电子书以及分类", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                syncBookListFromServer();
+                syncBookList();
             }
         }));
         DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();
@@ -711,13 +680,13 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         }
-        if (mHomeAdapter != null) {
-            mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
+        if (mBookAdapter != null) {
+            mBookAdapter.setList(convertBookBeanList(mMapBookShow));
         }
     }
 
     /**
-     * MainActivity-getCategoryList
+     * MainActivity-获取用户的所有分类
      */
     private void getCategoryList() {
         if (mActivity != null && mActivity instanceof MainActivity) {
@@ -726,7 +695,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * MainActivity-updateCategoryList
+     * MainActivity-更新分类列表
      */
     private void updateCategoryList(List<CategoryBean> categoryBeanList) {
         if (mActivity != null && mActivity instanceof MainActivity) {
@@ -735,7 +704,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * MainActivity-toggleCategoryView
+     * MainActivity-开关分类面板
      */
     private void toggleDrawer() {
         if (mActivity != null && mActivity instanceof MainActivity) {
@@ -744,7 +713,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * MainActivity-showLoading
+     * MainActivity-正在加载
      */
     private void showLoading(boolean show) {
         if (mActivity != null && mActivity instanceof MainActivity) {
@@ -753,7 +722,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * convertBookBeanList
+     * BookBeanMap转BookBeanList
      */
     private List<BookBean> convertBookBeanList(LinkedHashMap<String, BookBean> bookBeanMap) {
         List<BookBean> bookBeanList = new ArrayList<>();
