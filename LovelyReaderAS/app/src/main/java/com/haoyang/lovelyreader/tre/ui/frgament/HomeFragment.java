@@ -696,18 +696,24 @@ public class HomeFragment extends BaseFragment {
      * updateBookList
      */
     public void updateBookList(CategoryBean categoryBean) {
+        if (categoryBean == null) {
+            return;
+        }
+
         mMapBookShow.clear();
         if (categoryBean.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
             mMapBookShow.putAll(mMapBookAll);
         } else {
             for (Map.Entry<String, BookBean> entry : mMapBookAll.entrySet()) {
                 BookBean bookBean = entry.getValue();
-                if (bookBean != null && bookBean.getBookServerInfo().getCategoryId().equals(categoryBean.getCategoryId())) {
+                if (bookBean != null && bookBean.getBookServerInfo() != null && bookBean.getBookServerInfo().getCategoryId().equals(categoryBean.getCategoryId())) {
                     mMapBookShow.put(bookBean.getBookServerInfo().getBookId(), bookBean);
                 }
             }
         }
-        mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
+        if (mHomeAdapter != null) {
+            mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
+        }
     }
 
     /**
