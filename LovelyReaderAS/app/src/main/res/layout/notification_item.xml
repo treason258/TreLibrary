@@ -2,44 +2,52 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#b7b7b7">
+    android:background="@color/tc_gray"
+    android:paddingBottom="5dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="5dp">
 
     <ImageView
-        android:id="@+id/notificationImage"
+        android:id="@+id/ivIcon"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:paddingLeft="16dp"
-        android:scaleType="centerInside"
-        android:src="@android:drawable/stat_sys_download" />
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher" />
 
     <TextView
-        android:id="@+id/notificationTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/notificationImage"
-        android:paddingLeft="26dp"
+        android:layout_alignBottom="@+id/ivIcon"
+        android:layout_alignTop="@+id/ivIcon"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/ivIcon"
+        android:gravity="center_vertical"
+        android:text="正在下载"
         android:textColor="@color/white" />
-    
+
     <TextView
-        android:id="@+id/notificationPercent"
+        android:id="@+id/tvPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/notificationImage"
-        android:paddingLeft="16dp"
+        android:layout_alignLeft="@+id/ivIcon"
+        android:layout_alignRight="@+id/ivIcon"
+        android:layout_below="@id/ivIcon"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
+        android:text="0%"
         android:textColor="@color/white" />
 
     <ProgressBar
-        android:id="@+id/notificationProgress"
+        android:id="@+id/pbProgress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/notificationTitle"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/notificationPercent"
-        android:layout_below="@id/notificationTitle"
-        android:paddingLeft="26dp"
-        android:paddingRight="3dp"
-        android:paddingTop="2dp" />
+        android:layout_alignBottom="@+id/tvPercent"
+        android:layout_alignLeft="@id/tvTitle"
+        android:layout_alignRight="@+id/tvTitle"
+        android:layout_alignTop="@id/tvPercent" />
 
 </RelativeLayout>

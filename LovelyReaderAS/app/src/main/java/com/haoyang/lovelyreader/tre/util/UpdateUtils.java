@@ -158,10 +158,10 @@ public class UpdateUtils {
         mNotification.flags = Notification.FLAG_AUTO_CANCEL;
 
         mNotificationView = new RemoteViews(activity.getPackageName(), R.layout.notification_item);
-        mNotificationView.setImageViewBitmap(R.id.notificationImage, Utils.getAppIcon(activity, activity.getPackageName()));
-        mNotificationView.setTextViewText(R.id.notificationTitle, "正在下载");
-        mNotificationView.setTextViewText(R.id.notificationPercent, "0%");
-        mNotificationView.setProgressBar(R.id.notificationProgress, 100, 0, false);
+        mNotificationView.setImageViewBitmap(R.id.ivIcon, Utils.getAppIcon(activity, activity.getPackageName()));
+        mNotificationView.setTextViewText(R.id.tvTitle, "正在下载");
+        mNotificationView.setTextViewText(R.id.tvPercent, "0%");
+        mNotificationView.setProgressBar(R.id.pbProgress, 100, 0, false);
 
         if (android.os.Build.VERSION.SDK_INT >= 16) {
             mNotification.bigContentView = mNotificationView;
@@ -180,10 +180,13 @@ public class UpdateUtils {
         LogUtils.d(TAG, "setNotificationProgress() called with: total = [" + total + "], current = [" + current + "]");
 
         int progress = (int) (current * 100 / total);
-        if (progress == mPreProgress) return;
+        if (progress == mPreProgress) {
+            return;
+        }
         mPreProgress = progress;
-        mNotificationView.setTextViewText(R.id.notificationPercent, progress + "%");
-        mNotificationView.setProgressBar(R.id.notificationProgress, 100, progress, false);
+        mNotificationView.setTextViewText(R.id.tvTitle, "正在下载");
+        mNotificationView.setTextViewText(R.id.tvPercent, progress + "%");
+        mNotificationView.setProgressBar(R.id.pbProgress, 100, progress, false);
         mNotification.contentView = mNotificationView;
         mNotificationManager.notify(R.layout.notification_item, mNotification);
     }
@@ -196,9 +199,9 @@ public class UpdateUtils {
     private void refreshNotificationState(Activity activity, File apkFile, boolean isSuccess) {
         LogUtils.d(TAG, "refreshNotificationState() called with: apkFile = [" + apkFile + "], isSuccess = [" + isSuccess + "]");
 
-        mNotificationView.setTextViewText(R.id.notificationTitle, isSuccess ? "下载完成，点击安装" : "下载失败，请重试");
-        mNotificationView.setTextViewText(R.id.notificationPercent, "100%");
-        mNotificationView.setProgressBar(R.id.notificationProgress, 100, 100, false);
+        mNotificationView.setTextViewText(R.id.tvTitle, isSuccess ? "下载完成，点击安装" : "下载失败，请重试");
+        mNotificationView.setTextViewText(R.id.tvPercent, "100%");
+        mNotificationView.setProgressBar(R.id.pbProgress, 100, 100, false);
         mNotification.contentView = mNotificationView;
         if (isSuccess) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
