@@ -61,7 +61,9 @@ import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -82,8 +84,11 @@ public class HomeFragment extends BaseFragment {
     private ImageView ivAdd;
 
     private HomeAdapter mHomeAdapter;
-    private List<BookBean> mListBook = new ArrayList<>();
-    private List<BookBean> mListBookAll = new ArrayList<>();
+//    private List<BookBean> mListBook = new ArrayList<>();
+//    private List<BookBean> mListBookAll = new ArrayList<>();
+
+    private LinkedHashMap<String, BookBean> mMapBookShow = new LinkedHashMap<>();
+    private LinkedHashMap<String, BookBean> mMapBookAll = new LinkedHashMap<>();
 
     private boolean mIsFromLogin = false;
 
@@ -171,14 +176,14 @@ public class HomeFragment extends BaseFragment {
             public void afterTextChanged(Editable s) {
                 String key = s.toString();
                 if (TextUtils.isEmpty(key)) {
-                    mListBook.clear();
-                    mListBook.addAll(DBHelper.getBookBeanList(Global.mCurrentUser.getUid()));
+                    mMapBookShow.clear();
+                    mMapBookShow.putAll(DBHelper.getBookBeanList(Global.mCurrentUser.getUid()));
                 } else {
-                    mListBook.clear();
-                    mListBook.addAll(DBHelper.getBookBeanListByKey(Global.mCurrentUser.getUid(), key));
+                    mMapBookShow.clear();
+                    mMapBookShow.putAll(DBHelper.getBookBeanListByKey(Global.mCurrentUser.getUid(), key));
                 }
                 if (mHomeAdapter != null) {
-                    mHomeAdapter.setList(mListBook);
+                    mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
                 }
             }
         });
@@ -202,14 +207,14 @@ public class HomeFragment extends BaseFragment {
         });
 
         // gvBook
-        mHomeAdapter = new HomeAdapter(mContext, mListBook);
+        mHomeAdapter = new HomeAdapter(mContext, convertBookBeanList(mMapBookShow));
         gvBook.setAdapter(mHomeAdapter);
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 LogUtils.d(TAG, "onItemClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + position + "], id = [" + id + "]");
 
-                BookBean bookBean = mListBook.get(position);
+                BookBean bookBean = convertBookBeanList(mMapBookShow).get(position);
                 if (bookBean == null
                         || TextUtils.isEmpty(bookBean.getLocalBookPath())
                         || TextUtils.isEmpty(bookBean.getLocalCoverPath())
@@ -230,7 +235,7 @@ public class HomeFragment extends BaseFragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 LogUtils.d(TAG, "onItemLongClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + position + "], id = [" + id + "]");
 
-                BookBean bookBean = mListBook.get(position);
+                BookBean bookBean = convertBookBeanList(mMapBookShow).get(position);
                 if (bookBean != null) {
                     DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除？", "确定", "取消", true,
                             new TCAlertDialog.OnTCActionListener() {
@@ -363,9 +368,9 @@ public class HomeFragment extends BaseFragment {
      */
     private void showLocalData() {
         // 本地数据-电子书
-        List<BookBean> bookBeanList = DBHelper.getBookBeanList(Global.mCurrentUser.getUid());
-        mListBookAll.clear();
-        mListBookAll.addAll(bookBeanList);
+        LinkedHashMap<String, BookBean> bookBeanMap = DBHelper.getBookBeanList(Global.mCurrentUser.getUid());
+        mMapBookAll.clear();
+        mMapBookAll.putAll(bookBeanMap);
 
         // 本地数据-分类
         List<CategoryBean> categoryBeanList = DBHelper.getCategoryBeanList(Global.mCurrentUser.getUid());
@@ -396,9 +401,10 @@ public class HomeFragment extends BaseFragment {
         bookBean.setLocalBookPath(fileBean.getPath());
 
         // 查询该书是否已添加
-        for (int i = 0; i < mListBook.size(); i++) {
-            if (!TextUtils.isEmpty(mListBook.get(i).getLocalBookPath())
-                    && mListBook.get(i).getLocalBookPath().equals(bookBean.getLocalBookPath())) {
+        List<BookBean> bookBeanList = convertBookBeanList(mMapBookAll);
+        for (int i = 0; i < bookBeanList.size(); i++) {
+            if (!TextUtils.isEmpty(bookBeanList.get(i).getLocalBookPath())
+                    && bookBeanList.get(i).getLocalBookPath().equals(bookBean.getLocalBookPath())) {
                 ToastUtils.show(bookBean.getFileName() + bookBean.getFileSuffix() + "-这本书已经添加过了");
                 return;
             }
@@ -430,9 +436,13 @@ public class HomeFragment extends BaseFragment {
         if (UserUtils.checkLoginStatus()) {
             addBookToServer(bookBean);
         } else {
-            mListBook.add(0, bookBean);
-            mHomeAdapter.setList(mListBook);
-            DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mListBook);
+            bookBean.setBookId(BookBean.NO_UPLOAD_BOOK_ID);
+
+            mMapBookAll.put(bookBean.getBookId(), bookBean);
+            DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
+
+            mMapBookShow.put(bookBean.getBookId(), bookBean);
+            mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
         }
     }
 
@@ -444,22 +454,22 @@ public class HomeFragment extends BaseFragment {
         // 游客用户
         UserBean userBeanDefault = UserBean.getDefault();
         // 游客用户添加的书
-        List<BookBean> bookBeanListDefault = DBHelper.getBookBeanList(userBeanDefault.getUid());
+        LinkedHashMap<String, BookBean> bookBeanListDefault = DBHelper.getBookBeanList(userBeanDefault.getUid());
 
         // 当前用户
         UserBean userBean = DBHelper.getUserBean();
         // 当前用户添加的书
-        List<BookBean> bookBeanList = DBHelper.getBookBeanList(userBean.getUid());
+        LinkedHashMap<String, BookBean> bookBeanList = DBHelper.getBookBeanList(userBean.getUid());
 
         // 待上传的书
         List<BookBean> bookBeanListUnAdd = new ArrayList<>();
 
         // 合并
-        for (int i = 0; i < bookBeanListDefault.size(); i++) {
-            BookBean bookBeanDefault = bookBeanListDefault.get(i);
+        for (Map.Entry<String, BookBean> entryDefault : bookBeanListDefault.entrySet()) {
+            BookBean bookBeanDefault = entryDefault.getValue();
             boolean hasThisBook = false;
-            for (int j = 0; j < bookBeanList.size(); j++) {
-                BookBean bookBean = bookBeanList.get(j);
+            for (Map.Entry<String, BookBean> entry : bookBeanList.entrySet()) {
+                BookBean bookBean = entry.getValue();
                 if (!TextUtils.isEmpty(bookBeanDefault.getLocalBookPath())
                         && !TextUtils.isEmpty(bookBean.getLocalBookPath())
                         && bookBeanDefault.getLocalBookPath().equals(bookBean.getLocalBookPath())) {
@@ -477,7 +487,7 @@ public class HomeFragment extends BaseFragment {
         }
 
         // 清空游客数据
-        DBHelper.setBookBeanList(userBeanDefault.getUid(), new ArrayList<>());
+        DBHelper.setBookBeanList(userBeanDefault.getUid(), new LinkedHashMap<>());
     }
 
     /**
@@ -506,11 +516,12 @@ public class HomeFragment extends BaseFragment {
                     ToastUtils.show("新增电子书成功 | " + bookSyncBean.getBookId() + " - " + bookSyncBean.getBookName());
 
                     bookBean.setBookId(bookSyncBean.getBookId());
-                    mListBook.add(0, bookBean);
-                    mHomeAdapter.setList(mListBook);
 
-                    mListBookAll.add(0, bookBean);
-                    DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mListBookAll);
+                    mMapBookAll.put(bookBean.getBookId(), bookBean);
+                    DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
+
+                    mMapBookShow.put(bookBean.getBookId(), bookBean);
+                    mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
                 }
             }
 
@@ -541,9 +552,13 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(int code, Object object) {
                 showLoading(false);
                 if (object != null) {
-                    mListBook.remove(bookBean);
-                    mHomeAdapter.setList(mListBook);
-                    DBHelper.delBookBean(Global.mCurrentUser.getUid(), bookBean.getBookId());
+                    ToastUtils.show("删除电子书成功 | " + bookBean.getBookId() + " - " + bookBean.getBookName());
+
+                    mMapBookAll.remove(bookBean.getBookId());
+                    DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
+
+                    mMapBookShow.remove(bookBean.getBookId());
+                    mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
                 }
             }
 
@@ -583,7 +598,12 @@ public class HomeFragment extends BaseFragment {
                 for (int i = bookBeanList.size() - 1; i >= 0; i--) {
                     BookBean bookBean = bookBeanList.get(i);
                     if (Boolean.valueOf(bookBean.getIsDel())) { // 删除的书
-                        // TODO
+                        if (mMapBookAll.containsKey(bookBean.getBookId())) {
+                            mMapBookAll.remove(bookBean.getBookId());
+                        }
+                        if (mMapBookShow.containsKey(bookBean.getBookId())) {
+                            mMapBookShow.remove(bookBean.getBookId());
+                        }
                     } else {
                         String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
                         String bookFileName = Utils.getBookName(DBHelper.getUserBean(), bookBean);
@@ -604,11 +624,34 @@ public class HomeFragment extends BaseFragment {
                             bookBean.setBook(book);
                             bookBean.setLocalCoverPath(localCoverPath);
                         }
-                        mListBookAll.add(0, bookBean);
+                        // 如果当前用户已有此书，则更新数据；否则添加此书
+                        if (mMapBookAll.containsKey(bookBean.getBookId())) {
+                            BookBean bookBeanOld = mMapBookAll.get(bookBean.getBookId());
+                            bookBeanOld.setAuthor(bookBean.getAuthor());
+                            bookBeanOld.setBookCategory(bookBean.getBookCategory());
+                            bookBeanOld.setBookDesc(bookBean.getBookDesc());
+                            bookBeanOld.setBookDocId(bookBean.getBookDocId());
+                            bookBeanOld.setBookId(bookBean.getBookId());
+                            bookBeanOld.setBookName(bookBean.getBookName());
+                            bookBeanOld.setBookPath(bookBean.getBookPath());
+                            bookBeanOld.setCategoryId(bookBean.getCategoryId());
+                            bookBeanOld.setCoverDocId(bookBean.getCoverDocId());
+                            bookBeanOld.setCoverPath(bookBean.getCoverPath());
+                            bookBeanOld.setCreateDate(bookBean.getCreateDate());
+                            mMapBookAll.put(bookBean.getBookId(), bookBeanOld);
+                            if (mMapBookShow.containsKey(bookBean.getBookId())) {
+                                mMapBookShow.put(bookBean.getBookId(), bookBeanOld);
+                            }
+                        } else {
+                            mMapBookAll.put(bookBean.getBookId(), bookBean);
+                            mMapBookShow.put(bookBean.getBookId(), bookBean);
+                        }
                     }
                 }
-                DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mListBookAll);
+                DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
                 DBHelper.setLastSyncDate(Global.mCurrentUser.getUid(), System.currentTimeMillis());
+
+                mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
 
                 // 如果来自刚登录的初始化，还需要同步游客数据
                 if (mIsFromLogin) {
@@ -646,18 +689,18 @@ public class HomeFragment extends BaseFragment {
      * updateBookList
      */
     public void updateBookList(CategoryBean categoryBean) {
-        mListBook.clear();
+        mMapBookShow.clear();
         if (categoryBean.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
-            mListBook.addAll(mListBookAll);
+            mMapBookShow.putAll(mMapBookAll);
         } else {
-            for (int i = 0; i < mListBookAll.size(); i++) {
-                BookBean bookBean = mListBookAll.get(i);
+            for (Map.Entry<String, BookBean> entry : mMapBookAll.entrySet()) {
+                BookBean bookBean = entry.getValue();
                 if (bookBean != null && bookBean.getCategoryId().equals(categoryBean.getCategoryId())) {
-                    mListBook.add(bookBean);
+                    mMapBookShow.put(bookBean.getBookId(), bookBean);
                 }
             }
         }
-        mHomeAdapter.setList(mListBook);
+        mHomeAdapter.setList(convertBookBeanList(mMapBookShow));
     }
 
     /**
@@ -694,5 +737,14 @@ public class HomeFragment extends BaseFragment {
         if (mActivity != null && mActivity instanceof MainActivity) {
             ((MainActivity) mActivity).showLoading(show);
         }
+    }
+
+    /**
+     * convertBookBeanList
+     */
+    private List<BookBean> convertBookBeanList(LinkedHashMap<String, BookBean> bookBeanMap) {
+        List<BookBean> bookBeanList = new ArrayList<>();
+        bookBeanList.addAll(bookBeanMap.values());
+        return bookBeanList;
     }
 }

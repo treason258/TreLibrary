@@ -13,7 +13,9 @@ import com.mjiayou.trecorelib.util.SharedUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xin on 18/9/26.
@@ -107,15 +109,15 @@ public class DBHelper {
     /**
      * setBookBeanList
      */
-    public static void setBookBeanList(String uid, List<BookBean> bookBeanList) {
+    public static void setBookBeanList(String uid, LinkedHashMap<String, BookBean> bookBeanMap) {
         BookStore bookStore = getBookStore();
         if (bookStore == null) {
             bookStore = new BookStore();
-            HashMap<String, List<BookBean>> data = new HashMap<>();
-            data.put(uid, bookBeanList);
+            HashMap<String, LinkedHashMap<String, BookBean>> data = new HashMap<>();
+            data.put(uid, bookBeanMap);
             bookStore.setData(data);
         } else {
-            HashMap<String, List<BookBean>> data = bookStore.getData();
+            HashMap<String, LinkedHashMap<String, BookBean>> data = bookStore.getData();
             if (data == null) {
                 data = new HashMap<>();
             } else {
@@ -123,7 +125,7 @@ public class DBHelper {
                     data.remove(uid);
                 }
             }
-            data.put(uid, bookBeanList);
+            data.put(uid, bookBeanMap);
             bookStore.setData(data);
         }
         setBookStore(bookStore);
@@ -132,20 +134,20 @@ public class DBHelper {
     /**
      * getBookBeanList
      */
-    public static List<BookBean> getBookBeanList(String uid) {
+    public static LinkedHashMap<String, BookBean> getBookBeanList(String uid) {
         BookStore bookStore = getBookStore();
         if (bookStore != null && bookStore.getData() != null) {
             if (bookStore.getData().containsKey(uid)) {
                 return bookStore.getData().get(uid);
             }
         }
-        return new ArrayList<>();
+        return new LinkedHashMap<>();
     }
 
     /**
      * containUidInBookStore
      */
-    public static boolean containUidInBookStore(String uid) {
+    public static boolean containsUid(String uid) {
         BookStore bookStore = getBookStore();
         if (bookStore != null && bookStore.getData() != null) {
             if (bookStore.getData().containsKey(uid)) {
@@ -161,46 +163,44 @@ public class DBHelper {
      * addBookBean
      */
     public static void addBookBean(String uid, BookBean bookBean) {
-        List<BookBean> bookBeanList = getBookBeanList(uid);
-        if (bookBeanList == null) {
-            bookBeanList = new ArrayList<>();
+        LinkedHashMap<String, BookBean> bookBeanMap = getBookBeanList(uid);
+        if (bookBeanMap == null) {
+            bookBeanMap = new LinkedHashMap<>();
         }
-        bookBeanList.add(bookBean);
-        setBookBeanList(uid, bookBeanList);
+        bookBeanMap.put(bookBean.getBookId(), bookBean);
+        setBookBeanList(uid, bookBeanMap);
     }
 
     /**
      * delBookBean
      */
     public static void delBookBean(String uid, String bookId) {
-        List<BookBean> bookBeanList = getBookBeanList(uid);
-        for (int i = 0; i < bookBeanList.size(); i++) {
-            if (!TextUtils.isEmpty(bookBeanList.get(i).getBookId()) && bookBeanList.get(i).getBookId().equals(bookId)) {
-                bookBeanList.remove(i);
-                break;
-            }
+        LinkedHashMap<String, BookBean> bookBeanMap = getBookBeanList(uid);
+        if (bookBeanMap.containsKey(bookId)) {
+            bookBeanMap.remove(bookId);
         }
-        setBookBeanList(uid, bookBeanList);
+        setBookBeanList(uid, bookBeanMap);
     }
 
     /**
      * modifyBookBean
      */
-    public static void modifyBookBean(String uid, BookBean bookBeanNew) {
-        List<BookBean> bookBeanList = getBookBeanList(uid);
-        for (int i = 0; i < bookBeanList.size(); i++) {
-            if (!TextUtils.isEmpty(bookBeanList.get(i).getBookId()) && bookBeanList.get(i).getBookId().equals(bookBeanNew.getBookId())) {
-                bookBeanList.set(i, bookBeanNew);
-                break;
-            }
+    public static void modifyBookBean(String uid, BookBean bookBean) {
+        LinkedHashMap<String, BookBean> bookBeanMap = getBookBeanList(uid);
+        if (bookBeanMap.containsKey(bookBean.getBookId())) {
+            bookBeanMap.put(bookBean.getBookId(), bookBean);
         }
-        setBookBeanList(uid, bookBeanList);
+        setBookBeanList(uid, bookBeanMap);
     }
 
     /**
      * containBookBean
      */
-    public static boolean containBookBeanInBookStore(String uid, BookBean bookBean) {
+    public static boolean containsBookBean(String uid, BookBean bookBean) {
+        LinkedHashMap<String, BookBean> bookBeanMap = getBookBeanList(uid);
+        if (bookBeanMap.containsKey(bookBean.getBookId())) {
+            return true;
+        }
         return false;
     }
 
@@ -209,14 +209,14 @@ public class DBHelper {
     /**
      * 搜索书
      */
-    public static List<BookBean> getBookBeanListByKey(String uid, String key) {
-        List<BookBean> searchResult = new ArrayList<>();
+    public static LinkedHashMap<String, BookBean> getBookBeanListByKey(String uid, String key) {
+        LinkedHashMap<String, BookBean> searchResult = new LinkedHashMap<>();
         if (!TextUtils.isEmpty(key)) {
-            List<BookBean> bookBeanList = getBookBeanList(uid);
-            for (int i = 0; i < bookBeanList.size(); i++) {
-                BookBean bookBean = bookBeanList.get(i);
+            LinkedHashMap<String, BookBean> bookBeanMap = getBookBeanList(uid);
+            for (Map.Entry<String, BookBean> entry : bookBeanMap.entrySet()) {
+                BookBean bookBean = entry.getValue();
                 if (bookBean != null && bookBean.getBookName() != null && bookBean.getBookName().contains(key)) {
-                    searchResult.add(bookBean);
+                    searchResult.put(bookBean.getBookId(), bookBean);
                 }
             }
         }
@@ -225,41 +225,41 @@ public class DBHelper {
 
     // ******************************** syncGuestBook ********************************
 
-    /**
-     * 对登录用户同步本设备游客添加的书籍
-     */
-    public static void syncGuestBook() {
-
-        // 游客用户
-        UserBean userBeanDefault = UserBean.getDefault();
-        // 游客用户添加的书
-        List<BookBean> bookBeanListDefault = getBookBeanList(userBeanDefault.getUid());
-
-        // 当前用户
-        UserBean userBean = getUserBean();
-        // 当前用户添加的书
-        List<BookBean> bookBeanList = getBookBeanList(userBean.getUid());
-
-        // 合并
-        for (int i = 0; i < bookBeanListDefault.size(); i++) {
-            BookBean bookBeanDefault = bookBeanListDefault.get(i);
-            boolean hasThisBook = false;
-            for (int j = 0; j < bookBeanList.size(); j++) {
-                if (bookBeanDefault.getLocalBookPath().equals(bookBeanList.get(j).getLocalBookPath())) {
-                    hasThisBook = true;
-                    break;
-                }
-            }
-            if (!hasThisBook) {
-                bookBeanList.add(bookBeanDefault);
-            }
-        }
-
-        // 清空游客数据
-        DBHelper.setBookBeanList(userBeanDefault.getUid(), new ArrayList<>());
-        // 同步当前用户数据
-        DBHelper.setBookBeanList(userBean.getUid(), bookBeanList);
-    }
+//    /**
+//     * 对登录用户同步本设备游客添加的书籍
+//     */
+//    public static void syncGuestBook() {
+//
+//        // 游客用户
+//        UserBean userBeanDefault = UserBean.getDefault();
+//        // 游客用户添加的书
+//        List<BookBean> bookBeanListDefault = getBookBeanList(userBeanDefault.getUid());
+//
+//        // 当前用户
+//        UserBean userBean = getUserBean();
+//        // 当前用户添加的书
+//        List<BookBean> bookBeanList = getBookBeanList(userBean.getUid());
+//
+//        // 合并
+//        for (int i = 0; i < bookBeanListDefault.size(); i++) {
+//            BookBean bookBeanDefault = bookBeanListDefault.get(i);
+//            boolean hasThisBook = false;
+//            for (int j = 0; j < bookBeanList.size(); j++) {
+//                if (bookBeanDefault.getLocalBookPath().equals(bookBeanList.get(j).getLocalBookPath())) {
+//                    hasThisBook = true;
+//                    break;
+//                }
+//            }
+//            if (!hasThisBook) {
+//                bookBeanList.add(bookBeanDefault);
+//            }
+//        }
+//
+//        // 清空游客数据
+//        DBHelper.setBookBeanList(userBeanDefault.getUid(), new ArrayList<>());
+//        // 同步当前用户数据
+//        DBHelper.setBookBeanList(userBean.getUid(), bookBeanList);
+//    }
 
     // ******************************** setLastSyncDate ********************************
 

@@ -10,6 +10,8 @@ import java.io.Serializable;
 
 public class BookBean implements Serializable {
 
+    public static final String NO_UPLOAD_BOOK_ID = "-1";
+
     private String fileName; // 名字
     private String fileSuffix; // 后缀
     private String localBookPath; // 书的本地路径
