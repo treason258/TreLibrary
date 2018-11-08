@@ -11,6 +11,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 import com.haoyang.lovelyreader.R;
@@ -18,6 +19,7 @@ import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.net.MyFileCallback;
 import com.mjiayou.trecorelib.util.LogUtils;
+import com.mjiayou.trecorelib.util.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
@@ -37,14 +39,15 @@ public class UpdateUtils {
 
     private static UpdateUtils mInstance;
 
-    private UpdateBean mUpdateBean;
-    private String mPkgPath;
-    private String mPkgName;
     private RemoteViews mNotificationView;
     private Notification mNotification;
     private NotificationManager mNotificationManager;
-    private int mPreProgress = -1; //记录上次进度值，用于采样
 
+    private int mPreProgress = -1; // 记录上次进度值，用于采样
+
+    /**
+     * get
+     */
     public static UpdateUtils get() {
         if (mInstance == null) {
             mInstance = new UpdateUtils();
@@ -56,35 +59,36 @@ public class UpdateUtils {
      * 点击升级后执行下载安装方法
      */
     public void downloadInstallApk(Activity activity, UpdateBean updateBean) {
-        LogUtils.d(TAG, "downloadInstallApk() called with: updateBean = [" + updateBean + "]");
+        LogUtils.d(TAG, "downloadInstallApk() called with: activity = [" + activity + "], updateBean = [" + updateBean + "]");
 
-        if (updateBean == null) {
+        if (updateBean == null || TextUtils.isEmpty(updateBean.getAppUrl())) {
+            ToastUtils.show("安装包下载地址为空");
             return;
         }
-        mUpdateBean = updateBean;
-        mPkgPath = Configs.DIR_SDCARD_PROJECT_UPDATE;
-        mPkgName = activity.getPackageName();
-        File pkg = new File(mPkgPath, mPkgName + ".apk");
-        if (pkg.exists()) {
-            installNewApk(activity, pkg);
+
+        String packageName = activity.getPackageName();
+        String apkUrl = updateBean.getAppUrl();
+        String apkFileDir = Configs.DIR_SDCARD_PROJECT_UPDATE; // apk本地存储路径
+        String apkFileName = packageName + ".apk"; // apk本地存储文件名
+
+        File apkFile = new File(apkFileDir, apkFileName);
+        if (apkFile.exists()) {
+            installApk(activity, apkFile);
         } else {
-            downloadApk(activity);
+            downloadApk(activity, apkUrl, apkFileDir, apkFileName);
         }
     }
 
     /**
      * 下载apk
      */
-    private void downloadApk(Activity activity) {
-        LogUtils.d(TAG, "downloadApk() called");
+    private void downloadApk(Activity activity, String apkUrl, String apkFileDir, String apkFileName) {
+        LogUtils.d(TAG, "downloadApk() called with: activity = [" + activity + "], apkUrl = [" + apkUrl + "], apkFileDir = [" + apkFileDir + "], apkFileName = [" + apkFileName + "]");
 
-        if (mUpdateBean == null) {
-            return;
-        }
         OkHttpUtils.get()
-                .url(mUpdateBean.getAppUrl())
+                .url(apkUrl)
                 .build()
-                .execute(new MyFileCallback(mPkgPath, mPkgName) {
+                .execute(new MyFileCallback(apkFileDir, apkFileName) {
                     @Override
                     public void onBefore(Request request, int id) {
                         super.onBefore(request, id);
@@ -105,19 +109,47 @@ public class UpdateUtils {
 
                     @Override
                     public void onResponse(Object response, int id) {
-                        File pkg = new File(mPkgPath, mPkgName + ".apk");
-                        File f = (File) response;
-                        f.renameTo(pkg); // 改名以标记下载完成
-                        refreshNotificationState(activity, pkg, true);
-                        installNewApk(activity, pkg);
+                        File apkFile = new File(apkFileDir, apkFileName);
+                        File downloadFile = (File) response;
+                        downloadFile.renameTo(apkFile); // 改名以标记下载完成
+                        refreshNotificationState(activity, apkFile, true);
+                        installApk(activity, apkFile);
                     }
                 });
     }
 
     /**
+     * 安装APK
+     */
+    private void installApk(Activity activity, File apkFile) {
+        LogUtils.d(TAG, "installApk() called with: activity = [" + activity + "], apkFile = [" + apkFile + "]");
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri data;
+        if (Build.VERSION.SDK_INT >= 24) {
+            data = FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileprovider", apkFile);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            data = Uri.fromFile(apkFile);
+        }
+        intent.setDataAndType(data, "application/vnd.android.package-archive");
+
+        // handle target application have the uri permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            List<ResolveInfo> resInfoList = activity.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                activity.grantUriPermission(packageName, data, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+        }
+
+        activity.startActivity(intent);
+    }
+
+    /**
      * 开始下载，非强制更新，在通知栏显示下载进度
      */
-    protected void createNotification(Activity activity) {
+    private void createNotification(Activity activity) {
         LogUtils.d(TAG, "createNotification() called");
 
         mNotification = new Notification();
@@ -126,11 +158,11 @@ public class UpdateUtils {
         mNotification.flags = Notification.FLAG_AUTO_CANCEL;
 
         mNotificationView = new RemoteViews(activity.getPackageName(), R.layout.notification_item);
-        mNotificationView.setImageViewBitmap(R.id.notificationImage, Utils.getAppIcon(activity, mPkgName));
-
+        mNotificationView.setImageViewBitmap(R.id.notificationImage, Utils.getAppIcon(activity, activity.getPackageName()));
         mNotificationView.setTextViewText(R.id.notificationTitle, "正在下载");
         mNotificationView.setTextViewText(R.id.notificationPercent, "0%");
         mNotificationView.setProgressBar(R.id.notificationProgress, 100, 0, false);
+
         if (android.os.Build.VERSION.SDK_INT >= 16) {
             mNotification.bigContentView = mNotificationView;
             mNotification.contentView = mNotificationView;
@@ -146,6 +178,7 @@ public class UpdateUtils {
      */
     private void setNotificationProgress(long total, long current) {
         LogUtils.d(TAG, "setNotificationProgress() called with: total = [" + total + "], current = [" + current + "]");
+
         int progress = (int) (current * 100 / total);
         if (progress == mPreProgress) return;
         mPreProgress = progress;
@@ -160,50 +193,42 @@ public class UpdateUtils {
      *
      * @param isSuccess 是否下载成功
      */
-    protected void refreshNotificationState(Activity activity, File pkg, boolean isSuccess) {
-        LogUtils.d(TAG, "refreshNotificationState() called with: pkg = [" + pkg + "], isSuccess = [" + isSuccess + "]");
+    private void refreshNotificationState(Activity activity, File apkFile, boolean isSuccess) {
+        LogUtils.d(TAG, "refreshNotificationState() called with: apkFile = [" + apkFile + "], isSuccess = [" + isSuccess + "]");
+
         mNotificationView.setTextViewText(R.id.notificationTitle, isSuccess ? "下载完成，点击安装" : "下载失败，请重试");
         mNotificationView.setTextViewText(R.id.notificationPercent, "100%");
         mNotificationView.setProgressBar(R.id.notificationProgress, 100, 100, false);
         mNotification.contentView = mNotificationView;
         if (isSuccess) {
-            Intent updateIntent = new Intent(Intent.ACTION_VIEW);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
             Uri data;
             if (Build.VERSION.SDK_INT >= 24) {
-                data = FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileprovider", pkg);
-                updateIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                data = FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileprovider", apkFile);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             } else {
-                data = Uri.fromFile(pkg);
+                data = Uri.fromFile(apkFile);
             }
-            updateIntent.setDataAndType(data, "application/vnd.android.package-archive");
-            PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, updateIntent, 0);
-            mNotification.contentIntent = pendingIntent;
+            intent.setDataAndType(data, "application/vnd.android.package-archive");
+
+            mNotification.contentIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         }
         mNotificationManager.notify(R.layout.notification_item, mNotification);
     }
 
-    private void installNewApk(Activity activity, File file) {
-        LogUtils.d(TAG, "installNewApk() called with: context = [" + activity + "], file = [" + file + "]");
+    /**
+     * 安装apk的intent
+     */
+    private Intent getInstallIntent(Activity activity, File apkFile) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri data;
         if (Build.VERSION.SDK_INT >= 24) {
-            data =
-                    FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileprovider", file);
+            data = FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileprovider", apkFile);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
-            data = Uri.fromFile(file);
+            data = Uri.fromFile(apkFile);
         }
         intent.setDataAndType(data, "application/vnd.android.package-archive");
-
-        //handle target application have the uri permission
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            List<ResolveInfo> resInfoList = activity.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-            for (ResolveInfo resolveInfo : resInfoList) {
-                String packageName = resolveInfo.activityInfo.packageName;
-                activity.grantUriPermission(packageName, data, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            }
-        }
-
-        activity.startActivity(intent);
+        return intent;
     }
 }
