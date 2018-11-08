@@ -693,7 +693,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * updateBookList
+     * 更新电子书列表
      */
     public void updateBookList(CategoryBean categoryBean) {
         if (categoryBean == null) {
@@ -735,11 +735,11 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * MainActivity-toggleDrawer
+     * MainActivity-toggleCategoryView
      */
     private void toggleDrawer() {
         if (mActivity != null && mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).toggleDrawer();
+            ((MainActivity) mActivity).toggleCategoryView();
         }
     }
 

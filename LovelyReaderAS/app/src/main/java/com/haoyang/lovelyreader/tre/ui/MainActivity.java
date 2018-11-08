@@ -133,17 +133,6 @@ public class MainActivity extends BaseActivity {
         // llMine-我的
         llMine.setOnClickListener(mOnClickListener);
 
-        // dlMain
-        dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
-        // tvSync-同步数据
-        tvSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                syncServerData();
-            }
-        });
-
         initCategoryView();
         initViewPager();
     }
@@ -153,6 +142,17 @@ public class MainActivity extends BaseActivity {
      */
     private void initCategoryView() {
         LogUtils.d(TAG, "initCategoryView() called");
+
+        // dlMain-分类面板属性，不可侧滑打开
+        dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        // tvSync-同步数据
+        tvSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                syncServerData();
+            }
+        });
 
         // lvCategory-分类列表
         mListCategory = new ArrayList<>();
@@ -198,10 +198,10 @@ public class MainActivity extends BaseActivity {
         lvCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Global.mCurrentCategory = mListCategory.get(position);
                 for (int i = 0; i < mListCategory.size(); i++) {
                     mListCategory.get(i).setSelected(i == position);
                 }
-                Global.mCurrentCategory = mListCategory.get(position);
                 mCategoryAdapter.notifyDataSetChanged();
 
                 // 同时更新首页书籍展示
@@ -285,7 +285,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * switchFragment
+     * Fragment切换更新起步导航状态
      */
     private void switchFragment(int position) {
         LogUtils.d(TAG, "switchFragment() called with: position = [" + position + "]");
@@ -310,7 +310,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * mOnClickListener
+     * 底部导航点击监听
      */
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -329,7 +329,7 @@ public class MainActivity extends BaseActivity {
     };
 
     /**
-     * mOnPageChangeListener
+     * ViewPager切换监听
      */
     private ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -351,25 +351,25 @@ public class MainActivity extends BaseActivity {
     };
 
     /**
-     * MainAdapter
+     * Fragment适配器
      */
     public class MainAdapter extends FragmentPagerAdapter {
 
-        private List<Fragment> mList = new ArrayList<>();
+        private List<Fragment> fragmentList = new ArrayList<>();
 
-        public MainAdapter(FragmentManager fragmentManager, List<Fragment> list) {
+        public MainAdapter(FragmentManager fragmentManager, List<Fragment> fragmentList) {
             super(fragmentManager);
-            this.mList = list;
+            this.fragmentList = fragmentList;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return mList.get(position);
+            return fragmentList.get(position);
         }
 
         @Override
         public int getCount() {
-            return mList != null ? mList.size() : 0;
+            return fragmentList != null ? fragmentList.size() : 0;
         }
     }
 
@@ -429,7 +429,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * 更新分类面板
+     * 更新分类列表
      */
     public void updateCategoryList(List<CategoryBean> categoryBeanList) {
         mListCategory.clear();
@@ -449,7 +449,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 开关分类面板
      */
-    public void toggleDrawer() {
+    public void toggleCategoryView() {
         if (dlMain.isDrawerOpen(rlCategory)) {
             dlMain.closeDrawer(rlCategory);
         } else {
@@ -521,6 +521,42 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
+     * 删除分类
+     */
+    private void deleteCategory(CategoryBean categoryBean, int position) {
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(categoryBean.getCategoryId());
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryDel);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
+            @Override
+            public void onStart() {
+                showLoading(true);
+            }
+
+            @Override
+            public void onSuccess(int code, Object object) {
+                showLoading(false);
+                if (object != null) {
+                    mListCategory.remove(position);
+                    mCategoryAdapter.notifyDataSetChanged();
+
+                    ToastUtils.show("删除分类成功 | " + categoryBean.getCategoryId());
+                } else {
+                    ToastUtils.show("删除分类失败");
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                showLoading(false);
+                ToastUtils.show(msg);
+            }
+        });
+    }
+
+    /**
      * 修改分类
      */
     private void modifyCategory(String categoryName, CategoryBean selectedCategory) {
@@ -550,42 +586,6 @@ public class MainActivity extends BaseActivity {
                     hideCategoryAddView();
                 } else {
                     ToastUtils.show("修改分类失败");
-                }
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                showLoading(false);
-                ToastUtils.show(msg);
-            }
-        });
-    }
-
-    /**
-     * 删除分类
-     */
-    private void deleteCategory(CategoryBean categoryBean, int position) {
-        CommonParam commonParam = new CommonParam();
-        commonParam.setData(categoryBean.getCategoryId());
-
-        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategoryDel);
-        myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
-            @Override
-            public void onStart() {
-                showLoading(true);
-            }
-
-            @Override
-            public void onSuccess(int code, Object object) {
-                showLoading(false);
-                if (object != null) {
-                    mListCategory.remove(position);
-                    mCategoryAdapter.notifyDataSetChanged();
-
-                    ToastUtils.show("删除分类成功 | " + categoryBean.getCategoryId());
-                } else {
-                    ToastUtils.show("删除分类失败");
                 }
             }
 
@@ -630,7 +630,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * HomeFragment-updateBookList
+     * HomeFragment-更新电子书列表
      */
     public void updateBookList(CategoryBean categoryBean) {
         if (mHomeFragment != null) {
@@ -639,7 +639,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * HomeFragment-syncServerData
+     * HomeFragment-同步服务端数据
      */
     public void syncServerData() {
         if (mHomeFragment != null) {
