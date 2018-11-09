@@ -32,6 +32,7 @@ import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
+import com.mjiayou.trecorelib.http.callback.FileCallback;
 import com.mjiayou.trecorelib.image.ImageLoader;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
@@ -274,17 +275,21 @@ public class BookAdapter extends TCAdapter {
         String fileUrl = bookBean.getBookServerInfo().getBookPath();
         String fileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
         String fileName = Utils.getBookName(DBHelper.getUserBean(), bookBean.getBookServerInfo());
-        RequestSender.get().downloadFile(fileUrl, new FileCallBack(fileDir, fileName) {
+        RequestSender.get().downloadFile(fileUrl, fileDir, fileName, new FileCallback() {
+            @Override
+            public void onStart() {
+
+            }
 
             @Override
-            public void inProgress(float progress, long total, int id) {
-                super.inProgress(progress, total, id);
+            public void onProgress(float progress, long total) {
+                super.onProgress(progress, total);
                 int percent = (int) (progress * 100.0f);
                 ToastUtils.show("正在下载：" + percent + "%");
             }
 
             @Override
-            public void onResponse(File file, int id) {
+            public void onSuccess(int code, File file) {
                 if (file != null) {
                     ToastUtils.show("下载成功");
                     LogUtils.i("下载成功 -> " + file.getAbsolutePath());
@@ -315,8 +320,8 @@ public class BookAdapter extends TCAdapter {
             }
 
             @Override
-            public void onError(Call call, Exception e, int id) {
-                ToastUtils.show(e.toString());
+            public void onFailure(int code, String msg) {
+                ToastUtils.show(msg);
             }
         });
     }
