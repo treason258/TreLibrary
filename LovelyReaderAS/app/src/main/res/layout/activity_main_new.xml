@@ -9,6 +9,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/tc_white"
         android:orientation="vertical">
 
         <!-- Fragment -->
@@ -24,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_above="@+id/llBottom"
-            android:background="#888888" />
+            android:background="@color/color_f5f5f5" />
 
         <!-- 底部导航 -->
         <LinearLayout
@@ -32,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:layout_alignParentBottom="true"
+            android:background="@color/color_f5f5f5"
             android:orientation="horizontal"
             android:paddingBottom="5dp"
             android:paddingTop="10dp">
@@ -48,16 +50,16 @@
 
                 <ImageView
                     android:id="@+id/ivHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_main_home_normal" />
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_main_home_selected_new" />
 
                 <TextView
                     android:id="@+id/tvHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="书架"
+                    android:text="书  架"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -73,16 +75,16 @@
 
                 <ImageView
                     android:id="@+id/ivMine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_main_mine_normal" />
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_main_mine_selected_new" />
 
                 <TextView
                     android:id="@+id/tvMine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="我的"
+                    android:text="我  的"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -94,7 +96,7 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/tc_white"
+        android:background="@drawable/ic_main_category_bg"
         android:orientation="vertical">
 
         <!-- 显示数据 -->
@@ -109,12 +111,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:text="同步数据"
-                android:textColor="@color/tc_black"
+                android:textColor="@color/color_888888"
                 android:textSize="16sp" />
 
             <!-- 分类列表 -->
@@ -127,6 +130,21 @@
                 android:dividerHeight="0dp" />
 
             <!-- 新增分类 -->
+            <RelativeLayout
+                android:id="@+id/rlAddCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_84b18b"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_main_category_add" />
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/tvAddCategory"
                 android:layout_width="match_parent"
@@ -136,12 +154,13 @@
                 android:padding="10dp"
                 android:text="新增分类"
                 android:textColor="@color/tc_white"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <!-- 新增或编辑浮层 -->
         <RelativeLayout
-            android:id="@+id/rlAddCategory"
+            android:id="@+id/rlCategoryView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#bb000000"

@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
-import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.mjiayou.trecorelib.base.TCAdapter;
 import com.mjiayou.trecorelib.base.TCViewHolder;
@@ -110,13 +109,13 @@ public class CategoryAdapter extends TCAdapter {
                 default:
                 case CategoryBean.LEVEL_0:
                     ivIcon.setVisibility(View.VISIBLE);
-                    ivIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher));
+                    ivIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_main_category_item_all));
                     tvCategoryL1.setText(categoryBean.getCategoryName());
                     tvCategoryL1.setVisibility(View.VISIBLE);
                     break;
                 case CategoryBean.LEVEL_1:
                     ivIcon.setVisibility(View.VISIBLE);
-                    ivIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.tc_launcher));
+                    ivIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_main_category_item_level));
                     tvCategoryL1.setText(categoryBean.getCategoryName());
                     tvCategoryL1.setVisibility(View.VISIBLE);
                     break;
@@ -154,7 +153,7 @@ public class CategoryAdapter extends TCAdapter {
 
             // 选中状态
             if (categoryBean.isSelected()) {
-                llBackground.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.tc_shape_rect_stroke_gray_corners));
+                llBackground.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.ic_main_category_item_bg));
                 ivModify.setVisibility(View.VISIBLE);
                 ivDelete.setVisibility(View.VISIBLE);
             } else {

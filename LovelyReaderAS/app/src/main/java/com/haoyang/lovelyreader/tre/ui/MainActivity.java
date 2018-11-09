@@ -43,7 +43,6 @@ import com.mjiayou.trecorelib.http.callback.RequestCallback;
 import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
-import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +79,8 @@ public class MainActivity extends BaseActivity {
     private RelativeLayout rlCategory;
     private TextView tvSync;
     private ListView lvCategory;
-    private TextView tvAddCategory;
     private RelativeLayout rlAddCategory;
+    private RelativeLayout rlCategoryView;
     private EditText etCategoryName;
     private TextView tvSubmit;
     private TextView tvCancel;
@@ -107,8 +106,8 @@ public class MainActivity extends BaseActivity {
         rlCategory = (RelativeLayout) findViewById(R.id.rlCategory);
         tvSync = (TextView) findViewById(R.id.tvSync);
         lvCategory = (ListView) findViewById(R.id.lvCategory);
-        tvAddCategory = (TextView) findViewById(R.id.tvAddCategory);
         rlAddCategory = (RelativeLayout) findViewById(R.id.rlAddCategory);
+        rlCategoryView = (RelativeLayout) findViewById(R.id.rlCategoryView);
         etCategoryName = (EditText) findViewById(R.id.etCategoryName);
         tvSubmit = (TextView) findViewById(R.id.tvSubmit);
         tvCancel = (TextView) findViewById(R.id.tvCancel);
@@ -173,7 +172,7 @@ public class MainActivity extends BaseActivity {
                     ToastUtils.show("默认目录不可修改");
                     return;
                 }
-                showCategoryAddView(CATEGORY_OPTION_MODIFY);
+                showCategoryView(CATEGORY_OPTION_MODIFY);
             }
 
             @Override
@@ -214,8 +213,8 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        // tvAddCategory-新增分类
-        tvAddCategory.setOnClickListener(new View.OnClickListener() {
+        // rlAddCategory-新增分类
+        rlAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (LoginUtils.checkNotLoginAndToast()) {
@@ -229,12 +228,12 @@ public class MainActivity extends BaseActivity {
                     ToastUtils.show("三级分类下不可再创建子分类");
                     return;
                 }
-                showCategoryAddView(CATEGORY_OPTION_ADD);
+                showCategoryView(CATEGORY_OPTION_ADD);
             }
         });
 
-        // rlAddCategory-新增分类背景面板
-        rlAddCategory.setOnClickListener(new View.OnClickListener() {
+        // rlCategoryView-新增分类背景面板
+        rlCategoryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             }
@@ -270,7 +269,7 @@ public class MainActivity extends BaseActivity {
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideCategoryAddView();
+                hideCategoryView();
             }
         });
     }
@@ -301,19 +300,19 @@ public class MainActivity extends BaseActivity {
     private void switchFragment(int position) {
         LogUtils.d(TAG, "switchFragment() called with: position = [" + position + "]");
 
-        int colorSelected = getResources().getColor(R.color.app_theme);
-        int colorNormal = getResources().getColor(R.color.color_333333);
+        int colorSelected = getResources().getColor(R.color.color_797979);
+        int colorNormal = getResources().getColor(R.color.color_c4c4c4);
 
         switch (position) {
             case FRAGMENT_HOME:
-                ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_home_selected));
-                ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_normal));
+                ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_home_selected_new));
+                ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_normal_new));
                 tvHome.setTextColor(colorSelected);
                 tvMine.setTextColor(colorNormal);
                 break;
             case FRAGMENT_MINE:
-                ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_home_normal));
-                ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_selected));
+                ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_home_normal_new));
+                ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_selected_new));
                 tvHome.setTextColor(colorNormal);
                 tvMine.setTextColor(colorSelected);
                 break;
@@ -471,10 +470,10 @@ public class MainActivity extends BaseActivity {
     /**
      * 显示新增编辑分类浮层
      */
-    private void showCategoryAddView(int categoryOption) {
+    private void showCategoryView(int categoryOption) {
         mCategoryOption = categoryOption;
 
-        rlAddCategory.setVisibility(View.VISIBLE);
+        rlCategoryView.setVisibility(View.VISIBLE);
         if (mCategoryOption == CATEGORY_OPTION_MODIFY && Global.mCurrentCategory != null) {
             etCategoryName.setText(Global.mCurrentCategory.getCategoryName());
         }
@@ -483,10 +482,10 @@ public class MainActivity extends BaseActivity {
     /**
      * 隐藏新增编辑分类浮层
      */
-    private void hideCategoryAddView() {
+    private void hideCategoryView() {
         mCategoryOption = CATEGORY_OPTION_NONE;
 
-        rlAddCategory.setVisibility(View.GONE);
+        rlCategoryView.setVisibility(View.GONE);
         etCategoryName.setText("");
     }
 
@@ -517,7 +516,7 @@ public class MainActivity extends BaseActivity {
                     mCategoryAdapter.notifyDataSetChanged();
 
                     ToastUtils.show("新增分类成功 | " + categoryBean.getCategoryId() + " | " + categoryBean.getCategoryName());
-                    hideCategoryAddView();
+                    hideCategoryView();
                 } else {
                     ToastUtils.show("新增分类失败");
                 }
@@ -594,7 +593,7 @@ public class MainActivity extends BaseActivity {
                     mCategoryAdapter.notifyDataSetChanged();
 
                     ToastUtils.show("修改分类成功 | " + categoryBean.getCategoryId() + " | " + categoryBean.getCategoryName());
-                    hideCategoryAddView();
+                    hideCategoryView();
                 } else {
                     ToastUtils.show("修改分类失败");
                 }

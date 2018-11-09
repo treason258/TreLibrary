@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseFragment;
@@ -77,7 +76,6 @@ public class HomeFragment extends BaseFragment {
     private ImageView ivSearch;
     private EditText etSearch;
     private ImageView ivDelete;
-    private TextView tvTemp1;
     private GridView gvBook;
     private ListView lvSearch;
     private ImageView ivAdd;
@@ -103,7 +101,6 @@ public class HomeFragment extends BaseFragment {
         ivSearch = (ImageView) view.findViewById(R.id.ivSearch);
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
-        tvTemp1 = (TextView) view.findViewById(R.id.tvTemp1);
         gvBook = (GridView) view.findViewById(R.id.gvBook);
         lvSearch = (ListView) view.findViewById(R.id.lvSearch);
         ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
@@ -188,15 +185,6 @@ public class HomeFragment extends BaseFragment {
             public void onClick(View v) {
                 etSearch.setText("");
                 etSearch.clearFocus();
-            }
-        });
-
-        // tvTemp1-测试用
-        tvTemp1.setText("showTestDialog");
-        tvTemp1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showTestDialog();
             }
         });
 
