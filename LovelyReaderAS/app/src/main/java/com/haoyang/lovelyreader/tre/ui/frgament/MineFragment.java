@@ -25,7 +25,7 @@ import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.mjiayou.trecorelib.http.callback.RequestCallback;
+import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
 

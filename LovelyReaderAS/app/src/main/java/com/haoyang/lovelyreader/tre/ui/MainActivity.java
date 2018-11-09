@@ -40,7 +40,7 @@ import com.haoyang.lovelyreader.tre.util.UpdateUtils;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.mjiayou.trecorelib.http.callback.RequestCallback;
+import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;

@@ -31,7 +31,7 @@ import com.mjiayou.trecorelib.base.TCViewHolder;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.mjiayou.trecorelib.http.callback.RequestCallback;
+import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.mjiayou.trecorelib.image.ImageLoader;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
