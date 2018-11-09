@@ -17,7 +17,7 @@ import android.widget.RemoteViews;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.helper.Configs;
-import com.haoyang.lovelyreader.tre.net.MyFileCallback;
+import com.haoyang.lovelyreader.tre.http.MyFileCallback;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;

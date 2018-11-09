@@ -93,7 +93,7 @@
     <!--分类面板 -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rlCategory"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@drawable/ic_main_category_bg"
@@ -165,7 +165,7 @@
             android:layout_height="match_parent"
             android:background="#bb000000"
             android:gravity="center"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <!-- 输入框 -->
             <EditText

@@ -31,6 +31,7 @@ import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.Global;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
+import com.haoyang.lovelyreader.tre.ui.adapter.CategoryAdapter;
 import com.haoyang.lovelyreader.tre.ui.dialog.UpdateDialog;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;

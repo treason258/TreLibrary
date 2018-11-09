@@ -39,6 +39,7 @@ import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.ui.FileActivity;
 import com.haoyang.lovelyreader.tre.ui.MainActivity;
+import com.haoyang.lovelyreader.tre.ui.adapter.BookAdapter;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.util.FileUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;

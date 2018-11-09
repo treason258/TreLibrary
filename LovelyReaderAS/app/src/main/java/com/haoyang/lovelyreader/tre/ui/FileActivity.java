@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
+import com.haoyang.lovelyreader.tre.ui.adapter.FileAdapter;
 import com.java.common.service.file.FileNameService;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
