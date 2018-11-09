@@ -21,20 +21,29 @@ public class UpdateBean {
 //        "msg": null
 //    }
 
-    private String hasNewApp;
+    private boolean hasNewApp;
     private String terminal;
     private String version;
+    private int upgradeNum;
     private String appUrl;
     private String upgradeType;
     private String appName;
     private String desc;
 
-    public String getHasNewApp() {
+    public boolean isHasNewApp() {
         return hasNewApp;
     }
 
-    public void setHasNewApp(String hasNewApp) {
+    public void setHasNewApp(boolean hasNewApp) {
         this.hasNewApp = hasNewApp;
+    }
+
+    public int getUpgradeNum() {
+        return upgradeNum;
+    }
+
+    public void setUpgradeNum(int upgradeNum) {
+        this.upgradeNum = upgradeNum;
     }
 
     public String getTerminal() {
