@@ -402,6 +402,10 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSuccess(int code, UpdateBean updateBean) {
                 if (updateBean != null) {
+//                    if (true) {
+//                        updateBean.setHasNewApp(true);
+//                        updateBean.setAppUrl("http://172.16.70.25:8080/download/c_release_A/builds/148/archive/uxinUsedCar/build/outputs/apk/UxinUsedcar_release_148.apk");
+//                    }
                     if (updateBean.isHasNewApp()) {
                         showUpdateDialog(updateBean);
                     }
@@ -428,8 +432,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onOkAction() {
                 ToastUtils.show("开始下载...");
-//                String testUrl = "http://172.16.70.25:8080/download/c_release_A/builds/148/archive/uxinUsedCar/build/outputs/apk/UxinUsedcar_release_148.apk";
-//                updateBean.setAppUrl(testUrl);
                 UpdateUtils.get().downloadInstallApk(mActivity, updateBean);
             }
 

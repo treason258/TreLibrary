@@ -1,6 +1,7 @@
 package com.haoyang.lovelyreader.tre.http;
 
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,7 +13,7 @@ import okhttp3.Response;
 /**
  * Created by nzc
  */
-public abstract class MyFileCallback extends MyCallback<File> {
+public abstract class MyFileCallback extends Callback<File> {
     /**
      * 目标文件存储的文件夹路径
      */

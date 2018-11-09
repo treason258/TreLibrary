@@ -97,22 +97,22 @@ public class UpdateUtils {
                     }
 
                     @Override
-                    public void inProgress(long progress, long total, int id) {
+                    public void inProgress(float progress, long total, int id) {
                         super.inProgress(progress, total, id);
-                        setNotificationProgress(total, progress);
+                        updateNotificationProgress(total, progress);
                     }
 
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        refreshNotificationState(activity, null, false);
+                        updateNotificationState(activity, null, false);
                     }
 
                     @Override
-                    public void onResponse(Object response, int id) {
+                    public void onResponse(File downloadFile, int id) {
                         File apkFile = new File(apkFileDir, apkFileName);
-                        File downloadFile = (File) response;
                         downloadFile.renameTo(apkFile); // 改名以标记下载完成
-                        refreshNotificationState(activity, apkFile, true);
+                        updateNotificationState(activity, apkFile, true);
+
                         installApk(activity, apkFile);
                     }
                 });
@@ -158,7 +158,6 @@ public class UpdateUtils {
         mNotification.flags = Notification.FLAG_AUTO_CANCEL;
 
         mNotificationView = new RemoteViews(activity.getPackageName(), R.layout.notification_item);
-        mNotificationView.setImageViewBitmap(R.id.ivIcon, Utils.getAppIcon(activity, activity.getPackageName()));
         mNotificationView.setTextViewText(R.id.tvTitle, "正在下载");
         mNotificationView.setTextViewText(R.id.tvPercent, "0%");
         mNotificationView.setProgressBar(R.id.pbProgress, 100, 0, false);
@@ -176,8 +175,8 @@ public class UpdateUtils {
     /**
      * 正在下载，更新通知栏进度条
      */
-    private void setNotificationProgress(long total, long current) {
-        LogUtils.d(TAG, "setNotificationProgress() called with: total = [" + total + "], current = [" + current + "]");
+    private void updateNotificationProgress(long total, float current) {
+        LogUtils.d(TAG, "updateNotificationProgress() called with: total = [" + total + "], current = [" + current + "]");
 
         int progress = (int) (current * 100 / total);
         if (progress == mPreProgress) {
@@ -193,11 +192,9 @@ public class UpdateUtils {
 
     /**
      * 下载成功，通知栏可点击／失败提示
-     *
-     * @param isSuccess 是否下载成功
      */
-    private void refreshNotificationState(Activity activity, File apkFile, boolean isSuccess) {
-        LogUtils.d(TAG, "refreshNotificationState() called with: apkFile = [" + apkFile + "], isSuccess = [" + isSuccess + "]");
+    private void updateNotificationState(Activity activity, File apkFile, boolean isSuccess) {
+        LogUtils.d(TAG, "updateNotificationState() called with: apkFile = [" + apkFile + "], isSuccess = [" + isSuccess + "]");
 
         mNotificationView.setTextViewText(R.id.tvTitle, isSuccess ? "下载完成，点击安装" : "下载失败，请重试");
         mNotificationView.setTextViewText(R.id.tvPercent, "100%");
