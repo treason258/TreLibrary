@@ -24,6 +24,7 @@ import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
+import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.BookAddParam;
@@ -53,7 +54,13 @@ import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.ResponseBean;
+import com.mjiayou.trecorelib.http.callback.BaseCallback;
+import com.mjiayou.trecorelib.http.callback.ObjectCallback;
 import com.mjiayou.trecorelib.http.callback.RequestCallback;
+import com.mjiayou.trecorelib.http.callback.StringCallback;
+import com.mjiayou.trecorelib.json.JsonParser;
+import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -149,6 +156,13 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 toggleDrawer();
+            }
+        });
+        ivCategory.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showTestDialog();
+                return true;
             }
         });
 
@@ -638,20 +652,6 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * showTestDialog
-     */
-    public void showTestDialog() {
-        List<TCMenu> tcMenus = new ArrayList<>();
-        tcMenus.add(new TCMenu("同步电子书以及分类", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                syncBookList();
-            }
-        }));
-        DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();
-    }
-
-    /**
      * 更新电子书列表
      */
     public void updateBookList(CategoryBean categoryBean) {
@@ -718,5 +718,110 @@ public class HomeFragment extends BaseFragment {
         List<BookBean> bookBeanList = new ArrayList<>();
         bookBeanList.addAll(bookBeanMap.values());
         return bookBeanList;
+    }
+
+    /**
+     * showTestDialog
+     */
+    public void showTestDialog() {
+        List<TCMenu> tcMenus = new ArrayList<>();
+        tcMenus.add(new TCMenu("同步数据", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                syncBookList();
+            }
+        }));
+
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(String.valueOf(AppUtils.getVersionCode(mContext)));
+        MyRequestEntity requestEntity = new MyRequestEntity(UrlConfig.apiAppUpgrade);
+        requestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
+
+        tcMenus.add(new TCMenu("RequestCallback", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestSender.get().send(requestEntity, new RequestCallback<UpdateBean>() {
+                    @Override
+                    public void onStart() {
+                    }
+
+                    @Override
+                    public void onSuccess(int code, UpdateBean object) {
+                        if (object != null) {
+                            ToastUtils.show(JsonParser.get().toJson(object));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        ToastUtils.show(msg);
+                    }
+                });
+            }
+        }));
+        tcMenus.add(new TCMenu("ObjectCallback", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestSender.get().send(requestEntity, new ObjectCallback<ResponseBean<UpdateBean>>() {
+                    @Override
+                    public void onStart() {
+                    }
+
+                    @Override
+                    public void onSuccess(int code, ResponseBean<UpdateBean> object) {
+                        if (object != null) {
+                            ToastUtils.show(JsonParser.get().toJson(object));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        ToastUtils.show(msg);
+                    }
+                });
+            }
+        }));
+        tcMenus.add(new TCMenu("StringCallback", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestSender.get().send(requestEntity, new StringCallback() {
+                    @Override
+                    public void onStart() {
+                    }
+
+                    @Override
+                    public void onSuccess(int code, String object) {
+                        if (object != null) {
+                            ToastUtils.show(object);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        ToastUtils.show(msg);
+                    }
+                });
+            }
+        }));
+        tcMenus.add(new TCMenu("", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestSender.get().send(requestEntity, new RequestCallback<UpdateBean>() {
+                    @Override
+                    public void onStart() {
+                    }
+
+                    @Override
+                    public void onSuccess(int code, UpdateBean updateBean) {
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        ToastUtils.show(msg);
+                    }
+                });
+            }
+        }));
+        DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();
     }
 }
