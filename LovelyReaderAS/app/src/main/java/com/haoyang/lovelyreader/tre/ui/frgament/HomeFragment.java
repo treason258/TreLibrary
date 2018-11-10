@@ -633,10 +633,10 @@ public class HomeFragment extends BaseFragment {
                 mBookAdapter.setList(convertBookBeanList(mMapBookShow));
 
                 // 如果来自刚登录的初始化，还需要同步游客数据
-                if (mIsFromLogin) {
-                    syncGuestBook();
-                    mIsFromLogin = false;
-                }
+//                if (mIsFromLogin) {
+//                    syncGuestBook();
+//                    mIsFromLogin = false;
+//                }
 
                 // 同步分类
                 getCategoryList();
