@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
@@ -20,6 +21,7 @@ import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.Global;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.util.LoginUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;
@@ -31,18 +33,14 @@ import com.mjiayou.trecorelib.base.TCViewHolder;
 import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.mjiayou.trecorelib.http.callback.FileCallback;
 import com.mjiayou.trecorelib.image.ImageLoader;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
-import com.zhy.http.okhttp.callback.FileCallBack;
 
 import java.io.File;
 import java.util.List;
-
-import okhttp3.Call;
 
 /**
  * Created by xin on 18/9/22.
@@ -79,7 +77,7 @@ public class BookAdapter extends TCAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.item_home, null);
+            convertView = mLayoutInflater.inflate(R.layout.item_book, null);
             viewHolder = new ViewHolder();
             viewHolder.findView(convertView);
             convertView.setTag(viewHolder);
@@ -114,13 +112,17 @@ public class BookAdapter extends TCAdapter {
     private class ViewHolder extends TCViewHolder<BookBean> {
         private ImageView ivBook;
         private TextView tvBook;
+        private LinearLayout llSync;
         private TextView tvSync;
+        private ImageView ivSync;
 
         @Override
         protected void findView(View view) {
             ivBook = (ImageView) view.findViewById(R.id.ivBook);
             tvBook = (TextView) view.findViewById(R.id.tvBook);
+            llSync = (LinearLayout) view.findViewById(R.id.llSync);
             tvSync = (TextView) view.findViewById(R.id.tvSync);
+            ivSync = (ImageView) view.findViewById(R.id.ivSync);
         }
 
         @Override
@@ -135,7 +137,7 @@ public class BookAdapter extends TCAdapter {
                 } else if (!TextUtils.isEmpty(bookBean.getBookServerInfo().getCoverPath())) {
                     ImageLoader.get().load(ivBook, bookBean.getBookServerInfo().getCoverPath());
                 } else {
-                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_main_book_default));
+                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default));
                 }
                 // tvBook
                 if (!TextUtils.isEmpty(bookBean.getBookServerInfo().getBookName())) {
@@ -169,39 +171,42 @@ public class BookAdapter extends TCAdapter {
                 switch (syncType) {
                     default:
                     case SYNC_TYPE_HIDE:
-                        tvSync.setText("隐藏");
-                        tvSync.setVisibility(View.GONE);
+                        llSync.setVisibility(View.GONE);
                         break;
                     case SYNC_TYPE_DOWNLOAD:
                         tvSync.setText("下载");
-                        tvSync.setVisibility(View.VISIBLE);
-                        tvSync.setOnClickListener(new View.OnClickListener() {
+                        ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_1));
+                        llSync.setVisibility(View.VISIBLE);
+                        llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_1));
+                        llSync.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if (LoginUtils.checkNotLoginAndToast()) {
                                     return;
                                 }
-                                downloadBook(bookBean, position);
+                                downloadBook(bookBean, position, llSync, tvSync, ivSync);
                             }
                         });
                         break;
                     case SYNC_TYPE_UPLOAD:
                         tvSync.setText("上传");
-                        tvSync.setVisibility(View.VISIBLE);
-                        tvSync.setOnClickListener(new View.OnClickListener() {
+                        ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_1));
+                        llSync.setVisibility(View.VISIBLE);
+                        llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_1));
+                        llSync.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if (LoginUtils.checkNotLoginAndToast()) {
                                     return;
                                 }
-                                uploadBook(bookBean, position);
+                                uploadBook(bookBean, position, llSync, tvSync, ivSync);
                             }
                         });
                         break;
                     case SYNC_TYPE_ERROR:
                         tvSync.setText("异常");
-                        tvSync.setVisibility(View.VISIBLE);
-                        tvSync.setOnClickListener(new View.OnClickListener() {
+                        llSync.setVisibility(View.VISIBLE);
+                        llSync.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 ToastUtils.show("服务端和本地均没有书文件");
@@ -216,7 +221,7 @@ public class BookAdapter extends TCAdapter {
     /**
      * 上传电子书文件
      */
-    private void uploadBook(BookBean bookBean, int position) {
+    private void uploadBook(BookBean bookBean, int position, LinearLayout llSync, TextView tvSync, ImageView ivSync) {
         UploadBookParam uploadBookParam = new UploadBookParam();
         uploadBookParam.setBookId(bookBean.getBookServerInfo().getBookId());
         uploadBookParam.setUuid(EncodeHelper.getRandomChar());
@@ -239,8 +244,12 @@ public class BookAdapter extends TCAdapter {
             @Override
             public void onProgress(float progress, long total) {
                 super.onProgress(progress, total);
-                int percent = (int) (progress * 100.0f);
-                ToastUtils.show("正在上传：" + percent + "%");
+                String percent = ((int) (progress * 100.0f)) + "%";
+
+                LogUtils.i("正在上传：" + percent);
+                tvSync.setText(percent);
+                ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_2));
+                llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_2));
             }
 
             @Override
@@ -271,7 +280,7 @@ public class BookAdapter extends TCAdapter {
     /**
      * 下载电子书文件
      */
-    private void downloadBook(BookBean bookBean, int position) {
+    private void downloadBook(BookBean bookBean, int position, LinearLayout llSync, TextView tvSync, ImageView ivSync) {
         String fileUrl = bookBean.getBookServerInfo().getBookPath();
         String fileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
         String fileName = Utils.getBookName(DBHelper.getUserBean(), bookBean.getBookServerInfo());
@@ -284,8 +293,12 @@ public class BookAdapter extends TCAdapter {
             @Override
             public void onProgress(float progress, long total) {
                 super.onProgress(progress, total);
-                int percent = (int) (progress * 100.0f);
-                ToastUtils.show("正在下载：" + percent + "%");
+                String percent = ((int) (progress * 100.0f)) + "%";
+
+                LogUtils.i("正在下载：" + percent);
+                tvSync.setText(percent);
+                ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_2));
+                llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_2));
             }
 
             @Override

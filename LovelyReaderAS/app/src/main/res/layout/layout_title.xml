@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rlTitle"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="@dimen/com_title_height"
     android:background="@color/app_theme">
 
     <!-- 返回 -->
@@ -22,5 +22,5 @@
         android:layout_centerInParent="true"
         android:text="文案"
         android:textColor="@color/tc_white"
-        android:textSize="22sp" />
+        android:textSize="20sp" />
 </RelativeLayout>

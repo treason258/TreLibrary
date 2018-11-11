@@ -16,7 +16,7 @@
         <!-- title -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/com_title_height"
             android:background="@color/tc_transparent">
 
             <!-- 标题 -->
@@ -103,14 +103,14 @@
         android:paddingTop="16dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/main_mine_icon_width_height"
+            android:layout_height="@dimen/main_mine_icon_width_height"
             android:src="@drawable/ic_mine_menu_member" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
             android:text="升级成会员"
             android:textColor="@color/color_888888"
             android:textSize="18sp" />
@@ -131,14 +131,14 @@
         android:paddingTop="16dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/main_mine_icon_width_height"
+            android:layout_height="@dimen/main_mine_icon_width_height"
             android:src="@drawable/ic_mine_menu_feedback" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
             android:text="意见反馈"
             android:textColor="@color/color_888888"
             android:textSize="18sp" />
@@ -159,14 +159,14 @@
         android:paddingTop="16dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/main_mine_icon_width_height"
+            android:layout_height="@dimen/main_mine_icon_width_height"
             android:src="@drawable/ic_mine_menu_about" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
             android:text="关于我们"
             android:textColor="@color/color_888888"
             android:textSize="18sp" />
@@ -187,15 +187,15 @@
         android:paddingTop="16dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/main_mine_icon_width_height"
+            android:layout_height="@dimen/main_mine_icon_width_height"
             android:src="@drawable/ic_mine_menu_about" />
 
         <TextView
             android:id="@+id/tvLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
             android:text="退出"
             android:textColor="@color/color_888888"
             android:textSize="18sp" />

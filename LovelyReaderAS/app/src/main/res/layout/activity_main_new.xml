@@ -6,7 +6,7 @@
     android:background="@android:color/transparent">
 
     <!-- 主界面 -->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/tc_white"
@@ -31,18 +31,16 @@
         <LinearLayout
             android:id="@+id/llBottom"
             android:layout_width="match_parent"
-            android:layout_height="57dp"
+            android:layout_height="@dimen/main_tab_height"
             android:layout_alignParentBottom="true"
             android:background="@color/color_f5f5f5"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp"
-            android:paddingTop="10dp">
+            android:orientation="horizontal">
 
             <!-- 书架 -->
             <LinearLayout
                 android:id="@+id/llHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -50,8 +48,8 @@
 
                 <ImageView
                     android:id="@+id/ivHome"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/main_tab_item_width_height"
+                    android:layout_height="@dimen/main_tab_item_width_height"
                     android:src="@drawable/ic_main_home_selected_new" />
 
                 <TextView
@@ -66,8 +64,8 @@
             <!-- 我的 -->
             <LinearLayout
                 android:id="@+id/llMine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -75,8 +73,8 @@
 
                 <ImageView
                     android:id="@+id/ivMine"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/main_tab_item_width_height"
+                    android:layout_height="@dimen/main_tab_item_width_height"
                     android:src="@drawable/ic_main_mine_selected_new" />
 
                 <TextView
@@ -91,7 +89,7 @@
     </RelativeLayout>
 
     <!--分类面板 -->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/rlCategory"
         android:layout_width="300dp"
         android:layout_height="match_parent"
@@ -111,14 +109,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="10dp"
+                android:padding="16dp"
                 android:text="同步数据"
                 android:textColor="@color/color_888888"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <!-- 分类列表 -->
             <ListView
@@ -133,10 +127,8 @@
             <RelativeLayout
                 android:id="@+id/rlAddCategory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/app_theme"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
+                android:layout_height="@dimen/main_tab_height"
+                android:background="@color/app_theme">
 
                 <ImageView
                     android:layout_width="35dp"
@@ -163,24 +155,27 @@
             android:id="@+id/rlCategoryView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#bb000000"
+            android:background="@color/color_bb000000"
             android:gravity="center"
+            android:paddingBottom="100dp"
             android:visibility="gone">
 
             <!-- 输入框 -->
             <EditText
                 android:id="@+id/etCategoryName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/tc_white"
                 android:hint="请输入分类名称"
-                android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="5dp" />
+                android:textColor="@color/color_444444"
+                android:textColorHint="@color/color_444444"
+                android:textSize="16sp" />
 
+            <!-- 提交、取消 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -191,28 +186,22 @@
                 <!-- 提交 -->
                 <TextView
                     android:id="@+id/tvSubmit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="35dp"
                     android:background="@color/app_theme"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="5dp"
-                    android:text="提 交"
+                    android:gravity="center"
+                    android:text="提  交"
                     android:textColor="@color/white" />
 
                 <!-- 取消 -->
                 <TextView
                     android:id="@+id/tvCancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
+                    android:layout_width="80dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="20dp"
                     android:background="@color/app_theme"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="5dp"
-                    android:text="取 消"
+                    android:gravity="center"
+                    android:text="取  消"
                     android:textColor="@color/white" />
             </LinearLayout>
         </RelativeLayout>
