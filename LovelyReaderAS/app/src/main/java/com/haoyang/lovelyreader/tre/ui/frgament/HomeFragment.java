@@ -24,6 +24,7 @@ import com.haoyang.lovelyreader.tre.base.BaseFragment;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
+import com.haoyang.lovelyreader.tre.bean.ResponseBean;
 import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
@@ -38,6 +39,7 @@ import com.haoyang.lovelyreader.tre.helper.OnBookAddEvent;
 import com.haoyang.lovelyreader.tre.helper.ReaderHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
+import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.ui.FileActivity;
 import com.haoyang.lovelyreader.tre.ui.MainActivity;
 import com.haoyang.lovelyreader.tre.ui.adapter.BookAdapter;
@@ -54,9 +56,7 @@ import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.haoyang.lovelyreader.tre.bean.ResponseBean;
 import com.mjiayou.trecorelib.http.callback.ObjectCallback;
-import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.mjiayou.trecorelib.http.callback.StringCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.AppUtils;
@@ -92,6 +92,7 @@ public class HomeFragment extends BaseFragment {
     private LinkedHashMap<String, BookBean> mMapBookAll = new LinkedHashMap<>();
 
     private boolean mIsFromLogin = false;
+    private boolean mIsFromSyncBook = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -360,6 +361,7 @@ public class HomeFragment extends BaseFragment {
     public void syncServerData() {
         // 如果用户已登录，则同步电子书
         if (UserUtils.checkLoginStatus()) {
+            mIsFromSyncBook = true;
             syncBookList();
         }
     }
@@ -458,6 +460,8 @@ public class HomeFragment extends BaseFragment {
                 }
             }
             if (!hasThisBook) {
+                // 更改分类id
+                bookBeanDefault.getBookServerInfo().setCategoryId(Global.mCurrentCategory.getCategoryId());
                 bookBeanListUnAdd.add(bookBeanDefault);
             }
         }
@@ -632,12 +636,6 @@ public class HomeFragment extends BaseFragment {
 
                 mBookAdapter.setList(convertBookBeanList(mMapBookShow));
 
-                // 如果来自刚登录的初始化，还需要同步游客数据
-//                if (mIsFromLogin) {
-//                    syncGuestBook();
-//                    mIsFromLogin = false;
-//                }
-
                 // 同步分类
                 getCategoryList();
             }
@@ -671,6 +669,13 @@ public class HomeFragment extends BaseFragment {
         }
         if (mBookAdapter != null) {
             mBookAdapter.setList(convertBookBeanList(mMapBookShow));
+        }
+
+        // 如果来自刚登录的初始化，还需要同步游客数据
+        if (mIsFromLogin && mIsFromSyncBook) {
+            syncGuestBook();
+            mIsFromLogin = false;
+            mIsFromSyncBook = false;
         }
     }
 

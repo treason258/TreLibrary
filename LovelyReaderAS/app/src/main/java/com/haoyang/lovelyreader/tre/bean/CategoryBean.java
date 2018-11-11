@@ -13,6 +13,9 @@ public class CategoryBean {
     public static final String CATEGORY_ROOT_ID = "-1";
     public static final String CATEGORY_ROOT_NAME = "所有电子书";
 
+    // 默认分类
+    public static final String CATEGORY_DEFAULT_NAME = "默认分类";
+
     public static final int LEVEL_0 = 10; // 所有电子书
     public static final int LEVEL_1 = 11; // 一级分类
     public static final int LEVEL_2 = 12; // 二级分类

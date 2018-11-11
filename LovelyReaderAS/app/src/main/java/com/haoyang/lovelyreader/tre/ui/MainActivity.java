@@ -451,10 +451,20 @@ public class MainActivity extends BaseActivity {
         mListCategory.addAll(CategoryBean.convertToShow(categoryBeanList));
 
         // 默认选中所有电子书分类
-        Global.mCurrentCategory = mListCategory.get(0);
         for (int i = 0; i < mListCategory.size(); i++) {
-            mListCategory.get(i).setSelected(i == 0);
+            mListCategory.get(i).setSelected(false);
+            if (mListCategory.get(i).getCategoryName().equals(CategoryBean.CATEGORY_DEFAULT_NAME)) {
+                Global.mCurrentCategory = mListCategory.get(i);
+                mListCategory.get(i).setSelected(true);
+            }
         }
+
+        // 如果没有默认分类，则默认选中"所有电子书"分类
+        if (Global.mCurrentCategory == null) {
+            Global.mCurrentCategory = mListCategory.get(0);
+            mListCategory.get(0).setSelected(true);
+        }
+
         mCategoryAdapter.setList(mListCategory);
 
         // 同时更新首页书籍展示
