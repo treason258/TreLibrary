@@ -134,7 +134,7 @@
                 android:id="@+id/rlAddCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_84b18b"
+                android:background="@color/app_theme"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp">
 
@@ -193,7 +193,7 @@
                     android:id="@+id/tvSubmit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_84b18b"
+                    android:background="@color/app_theme"
                     android:paddingBottom="5dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:background="@color/color_84b18b"
+                    android:background="@color/app_theme"
                     android:paddingBottom="5dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"

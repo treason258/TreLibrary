@@ -1,174 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/tc_white">
 
-    <!-- header -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:background="@color/login_header">
-        <!-- 返回 -->
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:src="@drawable/ic_com_back_white" />
-    </RelativeLayout>
-
-    <!-- logo -->
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="-40dp"
-        android:background="@drawable/tc_shape_oval_solid_white"
-        android:padding="10dp"
-        android:src="@drawable/ic_com_logo_3" />
-
-    <!-- 昵称 -->
-    <EditText
-        android:id="@+id/etNickname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="5dp"
-        android:hint="昵称"
-        android:textColor="@color/color_333333"
-        android:textColorHint="@color/color_d1d0d0"
-        android:textSize="18sp"
-        android:theme="@style/LoginEditTextTheme"
-        android:visibility="visible" />
-
-    <!-- 手机号码 -->
-    <EditText
-        android:id="@+id/etPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="5dp"
-        android:hint="手机号码"
-        android:inputType="phone"
-        android:textColor="@color/color_333333"
-        android:textColorHint="@color/color_d1d0d0"
-        android:textSize="18sp"
-        android:theme="@style/LoginEditTextTheme" />
-
-    <!-- 验证码 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:textColor="@color/color_333333"
-        android:textColorHint="@color/color_d1d0d0"
-        android:textSize="18sp"
-        android:theme="@style/LoginEditTextTheme">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etCode"
+        <!-- title -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_f5f5f5">
+
+            <!-- 返回 -->
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:src="@drawable/ic_com_back_black" />
+
+            <!-- 标题 -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="注册"
+                android:textColor="@color/tc_black"
+                android:textSize="22sp" />
+        </RelativeLayout>
+
+        <!-- 手机号码 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="验证码"
-            android:inputType="number"
-            android:textColor="@color/color_333333"
-            android:textColorHint="@color/color_d1d0d0"
-            android:theme="@style/LoginEditTextTheme" />
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvCode"
-            android:layout_width="100dp"
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_register_input_phone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="手机号码"
+                android:textColor="@color/color_b0b0b0"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入手机号码"
+                android:inputType="number"
+                android:textColor="@color/color_b0b0b0"
+                android:textColorHint="@color/color_b0b0b0"
+                android:textSize="18sp"
+                android:theme="@style/LoginEditTextTheme" />
+        </LinearLayout>
+
+        <!-- 分割线 -->
+        <include layout="@layout/tc_layout_line_horizontal" />
+
+        <!-- 验证码 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-5dp"
-            android:background="@drawable/shape_register_code_button_bg"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_register_input_code" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="验证码"
+                android:textColor="@color/color_b0b0b0"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:textColor="@color/color_b0b0b0"
+                android:textColorHint="@color/color_b0b0b0"
+                android:textSize="18sp"
+                android:theme="@style/LoginEditTextTheme" />
+
+            <TextView
+                android:id="@+id/tvCode"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:background="@color/color_f5f5f5"
+                android:gravity="center"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp"
+                android:text="获取验证码"
+                android:textColor="@color/color_b0b0b0"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- 分割线 -->
+        <include layout="@layout/tc_layout_line_horizontal" />
+
+        <!-- 昵称 -->
+        <LinearLayout
+            android:id="@+id/llNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_register_input_username" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="昵称"
+                android:textColor="@color/color_b0b0b0"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etNickname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入昵称"
+                android:textColor="@color/color_b0b0b0"
+                android:textColorHint="@color/color_b0b0b0"
+                android:textSize="18sp"
+                android:theme="@style/LoginEditTextTheme"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <!-- 分割线 -->
+        <include layout="@layout/tc_layout_line_horizontal" />
+
+        <!-- 密码 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_register_input_password" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="密码"
+                android:textColor="@color/color_b0b0b0"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:textColor="@color/color_b0b0b0"
+                android:textColorHint="@color/color_b0b0b0"
+                android:textSize="18sp"
+                android:theme="@style/LoginEditTextTheme" />
+        </LinearLayout>
+
+        <!-- 分割线 -->
+        <include layout="@layout/tc_layout_line_horizontal" />
+
+        <!-- 确认密码 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_register_input_password" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="确认密码"
+                android:textColor="@color/color_b0b0b0"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etPasswordConfirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入确认密码"
+                android:inputType="textPassword"
+                android:textColor="@color/color_b0b0b0"
+                android:textColorHint="@color/color_b0b0b0"
+                android:textSize="18sp"
+                android:theme="@style/LoginEditTextTheme" />
+        </LinearLayout>
+
+
+        <!-- 分割线 -->
+        <include layout="@layout/tc_layout_line_horizontal" />
+
+        <!-- 渠道码 -->
+        <LinearLayout
+            android:id="@+id/llChannel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_register_input_code" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="渠道码"
+                android:textColor="@color/color_b0b0b0"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etChannel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入渠道码"
+                android:textColor="@color/color_b0b0b0"
+                android:textColorHint="@color/color_b0b0b0"
+                android:textSize="18sp"
+                android:theme="@style/LoginEditTextTheme"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <!-- 分割线 -->
+        <include layout="@layout/tc_layout_line_horizontal" />
+
+        <!-- 注册 -->
+        <TextView
+            android:id="@+id/tvSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/app_theme"
             android:gravity="center"
-            android:paddingBottom="7dp"
-            android:paddingTop="7dp"
-            android:text="获取验证码"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- 协议 -->
+        <TextView
+            android:id="@+id/tvProtocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="注册表示您已同意《用户服务协议》"
             android:textColor="@color/color_333333"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="visible" />
     </LinearLayout>
-
-    <!-- 密码 -->
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="5dp"
-        android:hint="密码"
-        android:inputType="textPassword"
-        android:textColor="@color/color_333333"
-        android:textColorHint="@color/color_d1d0d0"
-        android:textSize="18sp"
-        android:theme="@style/LoginEditTextTheme" />
-
-    <!-- 确认密码 -->
-    <EditText
-        android:id="@+id/etPasswordConfirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="5dp"
-        android:hint="确认密码"
-        android:inputType="textPassword"
-        android:textColor="@color/color_333333"
-        android:textColorHint="@color/color_d1d0d0"
-        android:textSize="18sp"
-        android:theme="@style/LoginEditTextTheme" />
-
-    <!-- 渠道码 -->
-    <EditText
-        android:id="@+id/etChannel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="5dp"
-        android:hint="渠道码"
-        android:inputType="textPassword"
-        android:textColor="@color/color_333333"
-        android:textColorHint="@color/color_d1d0d0"
-        android:textSize="18sp"
-        android:theme="@style/LoginEditTextTheme" />
-
-    <!-- 注册 -->
-    <TextView
-        android:id="@+id/tvSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/shape_login_button_bg"
-        android:gravity="center"
-        android:text="注册"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <!-- 协议 -->
-    <TextView
-        android:id="@+id/tvProtocol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center_vertical"
-        android:text="注册表示您已同意 用户服务协议"
-        android:textColor="@color/color_333333"
-        android:textSize="14sp"
-        android:visibility="visible" />
-</LinearLayout>
+</ScrollView>

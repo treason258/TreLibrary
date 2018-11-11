@@ -1,116 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/tc_white">
 
-    <!-- header -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:background="@color/login_header">
-        <!-- 返回 -->
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:src="@drawable/ic_com_back_white" />
-        <!-- 注册 -->
-        <TextView
-            android:id="@+id/tvRegister"
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <!-- title -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_f5f5f5">
+
+            <!-- 返回 -->
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:src="@drawable/ic_com_back_black" />
+
+            <!-- 标题 -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="登录"
+                android:textColor="@color/tc_black"
+                android:textSize="22sp" />
+
+            <!-- 注册 -->
+            <TextView
+                android:id="@+id/tvRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:text="注册"
+                android:textColor="@color/tc_black"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <!-- 手机号码 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:text="注册"
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_register_input_username" />
+
+            <EditText
+                android:id="@+id/etPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="left"
+                android:hint="请输入账号"
+                android:inputType="number"
+                android:textColor="@color/color_b0b0b0"
+                android:textColorHint="@color/color_b0b0b0"
+                android:textSize="18sp"
+                android:theme="@style/LoginEditTextTheme" />
+        </LinearLayout>
+
+        <!-- 分割线 -->
+        <include layout="@layout/tc_layout_line_horizontal" />
+
+        <!-- 密码 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_register_input_password" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="left"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:textColor="@color/color_b0b0b0"
+                android:textColorHint="@color/color_b0b0b0"
+                android:textSize="18sp"
+                android:theme="@style/LoginEditTextTheme" />
+        </LinearLayout>
+
+        <!-- 分割线 -->
+        <include layout="@layout/tc_layout_line_horizontal" />
+
+        <!-- 登录 -->
+        <TextView
+            android:id="@+id/tvLogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/app_theme"
+            android:gravity="center"
+            android:text="登录"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
-    </RelativeLayout>
 
-    <!-- logo -->
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="-40dp"
-        android:background="@drawable/tc_shape_oval_solid_white"
-        android:padding="10dp"
-        android:src="@drawable/ic_com_logo_3" />
-
-    <!-- 手机号码 -->
-    <EditText
-        android:id="@+id/etPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp"
-        android:hint="手机号码"
-        android:inputType="phone"
-        android:textColor="@color/color_333333"
-        android:textColorHint="@color/color_d1d0d0"
-        android:textSize="18sp"
-        android:theme="@style/LoginEditTextTheme" />
-
-    <!-- 密码 -->
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="5dp"
-        android:hint="密码"
-        android:inputType="textPassword"
-        android:textColor="@color/color_333333"
-        android:textColorHint="@color/color_d1d0d0"
-        android:textSize="18sp"
-        android:theme="@style/LoginEditTextTheme" />
-
-    <!-- 登录 -->
-    <TextView
-        android:id="@+id/tvLogin"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/shape_login_button_bg"
-        android:gravity="center"
-        android:text="登录"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <!-- 找回密码 -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_login_find_pwd" />
+        <!-- 找回密码 -->
 
         <TextView
             android:id="@+id/tvFindPwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
+            android:padding="16dp"
             android:text="找回密码"
             android:textColor="@color/color_333333"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

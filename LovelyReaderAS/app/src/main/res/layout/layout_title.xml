@@ -3,8 +3,18 @@
     android:id="@+id/rlTitle"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/login_header">
+    android:background="@color/app_theme">
 
+    <!-- 返回 -->
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:src="@drawable/ic_com_back_white" />
+
+    <!-- 标题 -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -12,13 +22,5 @@
         android:layout_centerInParent="true"
         android:text="文案"
         android:textColor="@color/tc_white"
-        android:textSize="18sp" />
-
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:src="@drawable/ic_com_back_white" />
+        android:textSize="22sp" />
 </RelativeLayout>

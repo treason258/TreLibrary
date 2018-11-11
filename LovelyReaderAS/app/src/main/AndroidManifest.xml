@@ -41,13 +41,27 @@
             android:name=".tre.ui.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
-            android:theme="@style/MyTheme"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".tre.ui.LoginActivity" />
-        <activity android:name=".tre.ui.RegisterActivity" />
-        <activity android:name=".tre.ui.FileActivity" />
-        <activity android:name=".tre.ui.MemberActivity" />
-        <activity android:name=".tre.ui.FeedbackActivity" />
+        <activity
+            android:name=".tre.ui.LoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".tre.ui.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".tre.ui.FileActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".tre.ui.MemberActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".tre.ui.FeedbackActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <!-- reader sdk -->
         <activity
@@ -64,6 +78,7 @@
             android:name="com.haoyang.lovelyreader.ui.FileBrowseActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
 
+        <!-- provider -->
         <provider
             android:name=".tre.util.MyProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -74,6 +89,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <!-- service -->
         <service
             android:name=".tre.wifi.WebService"
             android:enabled="true"

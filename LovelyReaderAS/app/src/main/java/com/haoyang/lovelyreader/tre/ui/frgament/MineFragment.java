@@ -19,13 +19,14 @@ import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
+import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.ui.FeedbackActivity;
 import com.haoyang.lovelyreader.tre.ui.LoginActivity;
+import com.haoyang.lovelyreader.tre.ui.RegisterActivity;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
 
@@ -37,10 +38,13 @@ import de.greenrobot.event.EventBus;
 public class MineFragment extends BaseFragment {
 
     private ImageView ivAvatar;
+    private TextView tvLogin;
+    private TextView tvRegister;
     private TextView tvNickname;
     private LinearLayout llMember;
     private LinearLayout llFeedback;
-    private TextView tvLogout;
+    private LinearLayout llAbout;
+    private LinearLayout llLogout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,10 +58,13 @@ public class MineFragment extends BaseFragment {
 
         // findViewById
         ivAvatar = (ImageView) view.findViewById(R.id.ivAvatar);
+        tvLogin = (TextView) view.findViewById(R.id.tvLogin);
+        tvRegister = (TextView) view.findViewById(R.id.tvRegister);
         tvNickname = (TextView) view.findViewById(R.id.tvNickname);
         llMember = (LinearLayout) view.findViewById(R.id.llMember);
         llFeedback = (LinearLayout) view.findViewById(R.id.llFeedback);
-        tvLogout = (TextView) view.findViewById(R.id.tvLogout);
+        llAbout = (LinearLayout) view.findViewById(R.id.llAbout);
+        llLogout = (LinearLayout) view.findViewById(R.id.llLogout);
 
         initView();
         return view;
@@ -66,18 +73,24 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initView() {
         if (UserUtils.checkLoginStatus()) { // 已登录状态
-            // 昵称
+            // 登录
+            tvLogin.setVisibility(View.GONE);
+
+            // 注册
+            tvRegister.setVisibility(View.GONE);
+
+            // 用户昵称
+            tvNickname.setVisibility(View.VISIBLE);
             String nickname = "null";
             UserBean userBean = DBHelper.getUserBean();
             if (userBean != null && !TextUtils.isEmpty(userBean.getNickName())) {
                 nickname = userBean.getNickName();
             }
             tvNickname.setText(nickname);
-            tvNickname.setOnClickListener(null);
 
-            // 切换账号
-            tvLogout.setVisibility(View.VISIBLE);
-            tvLogout.setOnClickListener(new View.OnClickListener() {
+            // 退出
+            llLogout.setVisibility(View.VISIBLE);
+            llLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     DialogHelper.createTCAlertDialog(mContext, "", "确认退出登录？", "确定", "取消", false
@@ -122,25 +135,36 @@ public class MineFragment extends BaseFragment {
                 }
             });
         } else { // 未登录状态
-            // 昵称
-            tvNickname.setText("点击登录");
-            tvNickname.setOnClickListener(new View.OnClickListener() {
+            // 登陆
+            tvLogin.setVisibility(View.VISIBLE);
+            tvLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(mContext, LoginActivity.class));
                 }
             });
 
-            // 切换账号
-            tvLogout.setVisibility(View.GONE);
-            tvLogout.setOnClickListener(null);
+            // 注册
+            tvRegister.setVisibility(View.VISIBLE);
+            tvRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(mContext, RegisterActivity.class));
+                }
+            });
+
+            // 用户昵称
+            tvNickname.setVisibility(View.GONE);
+
+            // 退出
+            llLogout.setVisibility(View.GONE);
         }
 
         // 头像
         ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show("头像");
+//                ToastUtils.show("功能暂未开放");
             }
         });
 
@@ -148,7 +172,7 @@ public class MineFragment extends BaseFragment {
         llMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show("功能暂未开放");
+//                ToastUtils.show("功能暂未开放");
 //                startActivity(new Intent(mContext, MemberActivity.class));
             }
         });
@@ -158,6 +182,14 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mContext, FeedbackActivity.class));
+            }
+        });
+
+        // llAbout
+        llAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                ToastUtils.show("功能暂未开放");
             }
         });
     }

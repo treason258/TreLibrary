@@ -5,63 +5,119 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <!-- header -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="20dp">
+        android:layout_height="243dp"
+        android:background="@drawable/ic_mine_user_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
+        <!-- title -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/tc_transparent">
+
+            <!-- 标题 -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我的"
+                android:textColor="@color/tc_white"
+                android:textSize="22sp" />
+        </RelativeLayout>
+
+        <!-- 头像 -->
         <ImageView
             android:id="@+id/ivAvatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_default_avatar" />
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_mine_user_avatar_default" />
 
-        <TextView
-            android:id="@+id/tvNickname"
-            android:layout_width="wrap_content"
+        <!-- 登录、注册、用户昵称 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
-            android:text="点击登录"
-            android:textColor="@color/color_333333"
-            android:textSize="14sp" />
-    </LinearLayout>
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal">
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:background="@color/mine_line" />
+            <TextView
+                android:id="@+id/tvLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_4cffffff"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingTop="5dp"
+                android:text="登录"
+                android:textColor="@color/color_63c9ff"
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@color/color_4cffffff"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingTop="5dp"
+                android:text="注册"
+                android:textColor="@color/color_9797ff"
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvNickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/tc_transparent"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingTop="5dp"
+                android:text="用户名"
+                android:textColor="@color/color_63c9ff"
+                android:textSize="20dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
 
     <!-- 升级成会员 -->
     <LinearLayout
         android:id="@+id/llMember"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
-        android:padding="18dp">
+        android:paddingBottom="16dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="16dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_member" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_mine_menu_member" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="16dp"
             android:text="升级成会员"
-            android:textColor="@color/color_333333"
-            android:textSize="16sp" />
+            android:textColor="@color/color_888888"
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="@color/mine_line" />
+    <!-- 分割线 -->
+    <include layout="@layout/tc_layout_line_horizontal" />
 
     <!-- 意见反馈 -->
     <LinearLayout
@@ -69,40 +125,83 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="18dp">
+        android:paddingBottom="16dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="16dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_feedback" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_mine_menu_feedback" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="16dp"
             android:text="意见反馈"
-            android:textColor="@color/color_333333"
-            android:textSize="16sp" />
+            android:textColor="@color/color_888888"
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:background="@color/mine_line" />
+    <!-- 分割线 -->
+    <include layout="@layout/tc_layout_line_horizontal" />
 
-    <!-- 切换账号 -->
-    <TextView
-        android:id="@+id/tvLogout"
+    <!-- 关于我们 -->
+    <LinearLayout
+        android:id="@+id/llAbout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="18dp"
-        android:text="切换账号"
-        android:textColor="@color/color_333333"
-        android:textSize="16sp" />
+        android:gravity="center_vertical"
+        android:paddingBottom="16dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="16dp">
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:background="@color/mine_line" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_mine_menu_about" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="关于我们"
+            android:textColor="@color/color_888888"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- 分割线 -->
+    <include layout="@layout/tc_layout_line_horizontal" />
+
+    <!-- 退出 -->
+    <LinearLayout
+        android:id="@+id/llLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingBottom="16dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="16dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_mine_menu_about" />
+
+        <TextView
+            android:id="@+id/tvLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="退出"
+            android:textColor="@color/color_888888"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- 分割线 -->
+    <include layout="@layout/tc_layout_line_horizontal" />
+
 </LinearLayout>

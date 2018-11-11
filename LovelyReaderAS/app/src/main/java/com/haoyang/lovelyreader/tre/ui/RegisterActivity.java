@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
@@ -19,9 +20,9 @@ import com.haoyang.lovelyreader.tre.bean.api.UserRegisterParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
+import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.util.TokenUtils;
 import com.mjiayou.trecorelib.http.RequestSender;
-import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -39,12 +40,15 @@ public class RegisterActivity extends BaseActivity {
     private int mPageType = PAGE_TYPE_REGISTER;
 
     private ImageView ivBack;
-    private EditText etNickname;
+    private TextView tvTitle;
     private EditText etPhone;
     private EditText etCode;
     private TextView tvCode;
+    private LinearLayout llNickname;
+    private EditText etNickname;
     private EditText etPassword;
     private EditText etPasswordConfirm;
+    private LinearLayout llChannel;
     private EditText etChannel;
     private TextView tvSubmit;
     private TextView tvProtocol;
@@ -58,12 +62,15 @@ public class RegisterActivity extends BaseActivity {
 
         // findViewById
         ivBack = (ImageView) findViewById(R.id.ivBack);
-        etNickname = (EditText) findViewById(R.id.etNickname);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etCode = (EditText) findViewById(R.id.etCode);
         tvCode = (TextView) findViewById(R.id.tvCode);
+        llNickname = (LinearLayout) findViewById(R.id.llNickname);
+        etNickname = (EditText) findViewById(R.id.etNickname);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
+        llChannel = (LinearLayout) findViewById(R.id.llChannel);
         etChannel = (EditText) findViewById(R.id.etChannel);
         tvSubmit = (TextView) findViewById(R.id.tvSubmit);
         tvProtocol = (TextView) findViewById(R.id.tvProtocol);
@@ -82,21 +89,23 @@ public class RegisterActivity extends BaseActivity {
 
         switch (mPageType) {
             case PAGE_TYPE_REGISTER: // 注册
+                tvTitle.setText("注册");
                 tvSubmit.setText("注册");
-                etNickname.setVisibility(View.VISIBLE);
-                etChannel.setVisibility(View.VISIBLE);
-                tvProtocol.setVisibility(View.VISIBLE);
+                llNickname.setVisibility(View.VISIBLE);
+                llChannel.setVisibility(View.VISIBLE);
+                tvProtocol.setVisibility(View.GONE);
                 tvProtocol.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ToastUtils.show("协议");
+//                        ToastUtils.show("注册协议");
                     }
                 });
                 break;
             case PAGE_TYPE_FIND_PWD: // 找回密码
+                tvTitle.setText("找回密码");
                 tvSubmit.setText("确定");
-                etNickname.setVisibility(View.GONE);
-                etChannel.setVisibility(View.GONE);
+                llNickname.setVisibility(View.GONE);
+                llChannel.setVisibility(View.GONE);
                 tvProtocol.setVisibility(View.GONE);
                 break;
         }
@@ -162,19 +171,14 @@ public class RegisterActivity extends BaseActivity {
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nickname = etNickname.getText().toString();
                 String phone = etPhone.getText().toString();
                 String code = etCode.getText().toString();
+                String nickname = etNickname.getText().toString();
                 String password = etPassword.getText().toString();
                 String passwordConfirm = etPasswordConfirm.getText().toString();
                 String channel = etChannel.getText().toString();
 
-                if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入昵称
-                    if (TextUtils.isEmpty(nickname)) {
-                        ToastUtils.show("请输入昵称");
-                        return;
-                    }
-                }
+
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtils.show("请输入手机号码");
                     return;
@@ -182,6 +186,12 @@ public class RegisterActivity extends BaseActivity {
                 if (TextUtils.isEmpty(code)) {
                     ToastUtils.show("请输入验证码");
                     return;
+                }
+                if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入昵称
+                    if (TextUtils.isEmpty(nickname)) {
+                        ToastUtils.show("请输入昵称");
+                        return;
+                    }
                 }
                 if (TextUtils.isEmpty(password)) {
                     ToastUtils.show("请输入密码");
