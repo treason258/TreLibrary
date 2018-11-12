@@ -1,4 +1,4 @@
-package com.mjiayou.helloworld;
+package com.mjiayou.routerdemo;
 
 import org.junit.Test;
 
