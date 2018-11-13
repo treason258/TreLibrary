@@ -128,22 +128,28 @@ public class BookAdapter extends TCAdapter {
         @Override
         protected void initView(BookBean bookBean, int position) {
             if (bookBean != null) {
+                // tvBook
+                if (!TextUtils.isEmpty(bookBean.getBookServerInfo().getBookName())) {
+                    tvBook.setText(bookBean.getBookServerInfo().getBookName());
+                    tvBook.setVisibility(View.GONE);
+                }
                 // ivBook
+                boolean showDefault = false;
                 if (!TextUtils.isEmpty(bookBean.getBookLocalInfo().getLocalCoverPath())) {
                     Bitmap bitmap = BitmapFactory.decodeFile(bookBean.getBookLocalInfo().getLocalCoverPath());
                     if (bitmap != null) {
                         ivBook.setImageBitmap(bitmap);
                     } else {
-                        ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default));
+                        showDefault = true;
                     }
                 } else if (!TextUtils.isEmpty(bookBean.getBookServerInfo().getCoverPath())) {
                     ImageLoader.get().load(ivBook, bookBean.getBookServerInfo().getCoverPath());
                 } else {
-                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default));
+                    showDefault = true;
                 }
-                // tvBook
-                if (!TextUtils.isEmpty(bookBean.getBookServerInfo().getBookName())) {
-                    tvBook.setText(bookBean.getBookServerInfo().getBookName());
+                if (showDefault) {
+                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default));
+                    tvBook.setVisibility(View.VISIBLE);
                 }
                 // tvSync-分四种情况
                 // 1-服务器有文件，本地有文件，则隐藏按钮
