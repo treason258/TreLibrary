@@ -1,20 +1,68 @@
-import React, {Component} from 'react';
+import React from 'react';
+import BaseComponent from './BaseComponent.js'
 import PropTypes from 'prop-types'
 
-class CommentItem extends Component {
+class CommentItem extends BaseComponent {
 
     static propTypes = {
         comment: PropTypes.object
     }
 
+    componentWillMount() {
+        this._updateTimeString()
+    }
+
+    componentWillMount() {
+        this._updateTimeString()
+        this._timer = setInterval(
+            this._updateTimeString.bind(this),
+            5000
+        )
+    }
+
+    componentWillUnmount() {
+        clearInterval(this._timer)
+    }
+
+    _updateTimeString() {
+        const comment = this.props.comment
+        const duration = (+Date.now() - comment.createdTime) / 1000
+        this.setState({
+            timeString: duration > 60
+                ? `${Math.round(duration / 60)} 分钟前`
+                : `${Math.round(Math.max(duration, 1))} 秒前`
+        })
+    }
+
+    handleDeleteComment() {
+        if (this.props.onDeleteComment) {
+            this.props.onDeleteComment(this.props.index)
+        }
+    }
+
     render() {
-        const { comment333 } = this.props
+        const {comment} = this.props
         return (
             <div className='comment'>
-                <div className='comment-user'>
-                    <span>{comment333.username}</span> ：
-                </div>
-                <p>{comment333.content}</p>
+                <span
+                    className='comment-username'>
+                    {comment.username}
+                </span>
+                <span>
+                    ：
+                </span>
+                <span>
+                    {comment.content}
+                </span>
+                <span
+                    className='comment-createdtime'>
+                    {this.state.timeString}
+                </span>
+                <span
+                    onClick={this.handleDeleteComment.bind(this)}
+                    className='comment-delete'>
+                    删除
+                </span>
             </div>
         )
     }

@@ -1,22 +1,29 @@
-import React, {Component} from 'react';
+import React from 'react';
+import BaseComponent from './BaseComponent.js'
 import CommentItem from "./CommentItem";
 
-class CommentList extends Component {
+class CommentList extends BaseComponent {
 
     static defaultProps = {
-        comments111: []
+        comments: []
+    }
+
+    handleDeleteComment(index) {
+        if (this.props.onDeleteComment) {
+            this.props.onDeleteComment(index)
+        }
     }
 
     render() {
         return (
             <div>
-                {this.props.comments111.map((comment222, index) => {
-                    return (
-                        <div key={index}>
-                            <CommentItem comment333={comment222}/>
-                        </div>
-                    )
-                })}
+                {this.props.comments.map((comment, i) =>
+                    <CommentItem
+                        comment={comment}
+                        key={i}
+                        index={i}
+                        onDeleteComment={this.handleDeleteComment.bind(this)}/>
+                )}
             </div>
         )
     }
