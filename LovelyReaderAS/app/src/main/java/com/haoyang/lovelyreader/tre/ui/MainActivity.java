@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.util.AppUtils;
+import com.mjiayou.trecorelib.util.KeyBoardUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 
@@ -145,8 +147,25 @@ public class MainActivity extends BaseActivity {
     private void initCategoryView() {
         LogUtils.d(TAG, "initCategoryView() called");
 
-        // dlMain-分类面板属性，不可侧滑打开
-        dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        // dlMain-分类面板属性
+        dlMain.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                hideCategoryView();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
 
         // tvSync-同步数据
         tvSync.setOnClickListener(new View.OnClickListener() {
@@ -310,12 +329,14 @@ public class MainActivity extends BaseActivity {
                 ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_normal_new));
                 tvHome.setTextColor(colorSelected);
                 tvMine.setTextColor(colorNormal);
+                dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 break;
             case FRAGMENT_MINE:
                 ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_home_normal_new));
                 ivMine.setImageDrawable(getResources().getDrawable(R.drawable.ic_main_mine_selected_new));
                 tvHome.setTextColor(colorNormal);
                 tvMine.setTextColor(colorSelected);
+                dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
         }
     }
@@ -492,6 +513,9 @@ public class MainActivity extends BaseActivity {
         if (mCategoryOption == CATEGORY_OPTION_MODIFY && Global.mCurrentCategory != null) {
             etCategoryName.setText(Global.mCurrentCategory.getCategoryName());
         }
+        etCategoryName.requestFocus();
+        etCategoryName.setSelection(etCategoryName.getText().toString().length());
+        KeyBoardUtils.show(mContext, etCategoryName);
     }
 
     /**
@@ -502,6 +526,8 @@ public class MainActivity extends BaseActivity {
 
         rlCategoryView.setVisibility(View.GONE);
         etCategoryName.setText("");
+        etCategoryName.clearFocus();
+        KeyBoardUtils.hide(mContext, etCategoryName);
     }
 
     /**
