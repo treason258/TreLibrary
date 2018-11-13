@@ -3,6 +3,34 @@
 ****************************************************************
 ****************************************************************
 ****************************************************************
+****************************************************************
+****************************************************************
+
+10.3需求
+
+首页开发（原生&RN）
+金融需求
+
+整理非金融URL
+首页dialog背景
+
+****************************************************************
+
+待整理
+    WebviewJumpHelper.gotoWebView()
+    BasePagerView.gotoWebView()
+    VehicleToolsFragment.gotoWebView
+    U2AppModuleImpl.toWebViewActivity
+    U2AppModuleImpl.toWebViewActivityResult
+    U2AppModuleImpl.toProWebViewActivity
+
+
+mRoot = http://m.ceshi.xin.com
+mRoot = https://m.xin.com
+
+Global.huiyuanshangcheng
+
+****************************************************************
 
 首页
 
