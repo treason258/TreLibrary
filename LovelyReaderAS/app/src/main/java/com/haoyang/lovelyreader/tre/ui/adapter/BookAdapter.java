@@ -230,6 +230,10 @@ public class BookAdapter extends TCAdapter {
      * 上传电子书文件
      */
     private void uploadBook(BookBean bookBean, int position, LinearLayout llSync, TextView tvSync, ImageView ivSync) {
+        if (Global.mIsUploading) {
+            ToastUtils.show("有其他电子书正在上传，请稍后操作");
+            return;
+        }
         UploadBookParam uploadBookParam = new UploadBookParam();
         uploadBookParam.setBookId(bookBean.getBookServerInfo().getBookId());
         uploadBookParam.setUuid(EncodeHelper.getRandomChar());
@@ -247,6 +251,7 @@ public class BookAdapter extends TCAdapter {
         RequestSender.get().send(requestEntity, new RequestCallback<UploadBean>() {
             @Override
             public void onStart() {
+                Global.mIsUploading = true;
             }
 
             @Override
@@ -262,6 +267,7 @@ public class BookAdapter extends TCAdapter {
 
             @Override
             public void onSuccess(int code, UploadBean uploadBean) {
+                Global.mIsUploading = false;
                 if (uploadBean != null) {
                     ToastUtils.show("上传成功");
                     LogUtils.i("上传成功 -> " + uploadBean.getBookPath());
@@ -280,6 +286,7 @@ public class BookAdapter extends TCAdapter {
 
             @Override
             public void onFailure(int code, String msg) {
+                Global.mIsUploading = false;
                 ToastUtils.show(msg);
             }
         });
@@ -289,13 +296,17 @@ public class BookAdapter extends TCAdapter {
      * 下载电子书文件
      */
     private void downloadBook(BookBean bookBean, int position, LinearLayout llSync, TextView tvSync, ImageView ivSync) {
+        if (Global.mIsDownloading) {
+            ToastUtils.show("有其他电子书正在下载，请稍后操作");
+            return;
+        }
         String fileUrl = bookBean.getBookServerInfo().getBookPath();
         String fileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
         String fileName = Utils.getBookName(DBHelper.getUserBean(), bookBean.getBookServerInfo());
         RequestSender.get().downloadFile(fileUrl, fileDir, fileName, new FileCallback() {
             @Override
             public void onStart() {
-
+                Global.mIsDownloading = false;
             }
 
             @Override
@@ -311,6 +322,7 @@ public class BookAdapter extends TCAdapter {
 
             @Override
             public void onSuccess(int code, File file) {
+                Global.mIsDownloading = true;
                 if (file != null) {
                     ToastUtils.show("下载成功");
                     LogUtils.i("下载成功 -> " + file.getAbsolutePath());
@@ -342,6 +354,7 @@ public class BookAdapter extends TCAdapter {
 
             @Override
             public void onFailure(int code, String msg) {
+                Global.mIsDownloading = true;
                 ToastUtils.show(msg);
             }
         });
