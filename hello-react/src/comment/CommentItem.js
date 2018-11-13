@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
 
 class CommentItem extends Component {
 
+    static propTypes = {
+        comment: PropTypes.object
+    }
+
     render() {
+        const { comment333 } = this.props
         return (
             <div className='comment'>
                 <div className='comment-user'>
-                    <span>{this.props.comment333.username}</span> ：
+                    <span>{comment333.username}</span> ：
                 </div>
-                <p>{this.props.comment333.content}</p>
+                <p>{comment333.content}</p>
             </div>
         )
     }

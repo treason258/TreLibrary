@@ -20,4 +20,4 @@ import All from './test/All.js';
 import Clock from './test/Clock.js';
 import AutoFocusInput from "./test/AutoFocusInput";
 
-ReactDOM.render(<AutoFocusInput/>, document.getElementById('root'));
+ReactDOM.render(<CommentApp/>, document.getElementById('root'));
