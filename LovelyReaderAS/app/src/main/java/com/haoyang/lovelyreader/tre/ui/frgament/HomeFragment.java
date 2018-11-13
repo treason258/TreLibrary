@@ -214,15 +214,13 @@ public class HomeFragment extends BaseFragment {
                 BookBean bookBean = convertBookBeanList(mMapBookShow).get(position);
                 if (bookBean == null
                         || bookBean.getBookLocalInfo() == null
-                        || TextUtils.isEmpty(bookBean.getBookLocalInfo().getLocalBookPath())
-                        || TextUtils.isEmpty(bookBean.getBookLocalInfo().getLocalCoverPath())
-                        || bookBean.getBookLocalInfo().getBook() == null) {
-                    ToastUtils.show("书文件不存在，请下载");
+                        || bookBean.getBookLocalInfo().getBook() == null
+                        || TextUtils.isEmpty(bookBean.getBookLocalInfo().getLocalBookPath())) {
+                    ToastUtils.show("电子书文件不存在");
                     return;
                 }
 
                 Book book = bookBean.getBookLocalInfo().getBook();
-                book.bookCover = bookBean.getBookLocalInfo().getLocalCoverPath();
 
                 ToastUtils.show("正在打开书籍...");
                 ReaderHelper.startReader(mActivity, book, Global.mCurrentUser);

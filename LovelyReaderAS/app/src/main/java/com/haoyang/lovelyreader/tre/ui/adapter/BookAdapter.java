@@ -133,6 +133,8 @@ public class BookAdapter extends TCAdapter {
                     Bitmap bitmap = BitmapFactory.decodeFile(bookBean.getBookLocalInfo().getLocalCoverPath());
                     if (bitmap != null) {
                         ivBook.setImageBitmap(bitmap);
+                    } else {
+                        ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default));
                     }
                 } else if (!TextUtils.isEmpty(bookBean.getBookServerInfo().getCoverPath())) {
                     ImageLoader.get().load(ivBook, bookBean.getBookServerInfo().getCoverPath());
