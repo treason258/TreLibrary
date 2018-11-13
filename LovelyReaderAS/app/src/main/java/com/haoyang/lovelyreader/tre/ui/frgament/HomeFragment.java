@@ -2,6 +2,7 @@ package com.haoyang.lovelyreader.tre.ui.frgament;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -60,6 +62,7 @@ import com.mjiayou.trecorelib.http.callback.ObjectCallback;
 import com.mjiayou.trecorelib.http.callback.StringCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.AppUtils;
+import com.mjiayou.trecorelib.util.KeyBoardUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -246,6 +249,16 @@ public class HomeFragment extends BaseFragment {
                             }).show();
                 }
                 return true;
+            }
+        });
+        gvBook.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (etSearch.hasFocus()) {
+                    etSearch.clearFocus();
+                    KeyBoardUtils.hide(mContext, etSearch);
+                }
+                return false;
             }
         });
 
