@@ -3,36 +3,37 @@ import BaseComponent from './BaseComponent.js'
 import CommentInput from './CommentInput.js'
 import CommentList from './CommentList.js'
 import './Comment.css';
+import wrapWithLocalStorage from './LocalStorageActions'
 
 class CommentApp extends BaseComponent {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            comments: []
+            comments: props.data
         }
     }
 
-    componentWillMount() {
-        super.componentWillMount()
-        this._loadComments()
-    }
+    // componentWillMount() {
+    //     super.componentWillMount()
+    //     this._loadComments()
+    // }
 
-    _saveComments(comments) {
-        let commentsString = JSON.stringify(comments)
-        console.log('_saveComments - ' + commentsString)
-        localStorage.setItem('comments', commentsString)
-    }
+    // _saveComments(comments) {
+    //     let commentsString = JSON.stringify(comments)
+    //     console.log('_saveComments - ' + commentsString)
+    //     localStorage.setItem('comments', commentsString)
+    // }
 
-    _loadComments() {
-        console.log('_loadComments - ' + localStorage.getItem('comments'))
-        let commentString = localStorage.getItem('comments')
-        if (commentString) {
-            let comments = JSON.parse(commentString)
-            console.log('_loadComments222 - ' + comments)
-            this.setState({comments})
-        }
-    }
+    // _loadComments() {
+    //     console.log('_loadComments - ' + localStorage.getItem('comments'))
+    //     let commentString = localStorage.getItem('comments')
+    //     if (commentString) {
+    //         let comments = JSON.parse(commentString)
+    //         console.log('_loadComments222 - ' + comments)
+    //         this.setState({comments})
+    //     }
+    // }
 
     handleSubmitComment(comment) {
         console.log('handleSubmitComment | ' + JSON.stringify(comment))
@@ -42,7 +43,8 @@ class CommentApp extends BaseComponent {
         const comments = this.state.comments
         comments.push(comment)
         this.setState({comments})
-        this._saveComments(comments)
+        // this._saveComments(comments)
+        this.props.saveData(comments)
     }
 
     handleDeleteComment(index) {
@@ -50,7 +52,8 @@ class CommentApp extends BaseComponent {
         const comments = this.state.comments
         comments.splice(index, 1)
         this.setState({comments})
-        this._saveComments(comments)
+        // this._saveComments(comments)
+        this.props.saveData(comments)
     }
 
     render() {
@@ -69,4 +72,5 @@ class CommentApp extends BaseComponent {
     }
 }
 
+CommentApp = wrapWithLocalStorage(CommentApp, 'comments')
 export default CommentApp;
