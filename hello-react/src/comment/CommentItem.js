@@ -34,6 +34,16 @@ class CommentItem extends BaseComponent {
         })
     }
 
+    _getProcessedContent(content) {
+        return content
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;")
+            .replace(/`([\S\s]+?)`/g, '<code>$1</code>')
+    }
+
     handleDeleteComment() {
         if (this.props.onDeleteComment) {
             this.props.onDeleteComment(this.props.index)
@@ -51,9 +61,12 @@ class CommentItem extends BaseComponent {
                 <span>
                     ：
                 </span>
-                <span>
-                    {comment.content}
-                </span>
+                {/*<span>*/}
+                    {/*{comment.content}*/}
+                {/*</span>*/}
+                <p dangerouslySetInnerHTML={{
+                    __html: this._getProcessedContent(comment.content)
+                }} />
                 <span
                     className='comment-createdtime'>
                     {this.state.timeString}
