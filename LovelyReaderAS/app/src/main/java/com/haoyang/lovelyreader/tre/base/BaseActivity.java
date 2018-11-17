@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.mjiayou.trecorelib.dialog.TCLoadingDialog;
+import com.mjiayou.trecorelib.util.ToastUtils;
 
 /**
  * Created by xin on 18/9/22.
@@ -51,14 +52,19 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showLoading(boolean show) {
+//        if (show) {
+//            if (!mLoadingDialog.isShowing()) {
+//                mLoadingDialog.show();
+//            }
+//        } else {
+//            if (mLoadingDialog.isShowing()) {
+//                mLoadingDialog.hide();
+//            }
+//        }
         if (show) {
-            if (!mLoadingDialog.isShowing()) {
-                mLoadingDialog.show();
-            }
+            ToastUtils.show("loading start");
         } else {
-            if (mLoadingDialog.isShowing()) {
-                mLoadingDialog.hide();
-            }
+            ToastUtils.show("loading stop");
         }
     }
 }
