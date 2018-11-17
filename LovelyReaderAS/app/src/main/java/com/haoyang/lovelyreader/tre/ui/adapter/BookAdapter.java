@@ -306,7 +306,7 @@ public class BookAdapter extends TCAdapter {
         RequestSender.get().downloadFile(fileUrl, fileDir, fileName, new FileCallback() {
             @Override
             public void onStart() {
-                Global.mIsDownloading = false;
+                Global.mIsDownloading = true;
             }
 
             @Override
@@ -322,7 +322,7 @@ public class BookAdapter extends TCAdapter {
 
             @Override
             public void onSuccess(int code, File file) {
-                Global.mIsDownloading = true;
+                Global.mIsDownloading = false;
                 if (file != null) {
                     ToastUtils.show("下载成功");
                     LogUtils.i("下载成功 -> " + file.getAbsolutePath());
@@ -354,7 +354,7 @@ public class BookAdapter extends TCAdapter {
 
             @Override
             public void onFailure(int code, String msg) {
-                Global.mIsDownloading = true;
+                Global.mIsDownloading = false;
                 ToastUtils.show(msg);
             }
         });
