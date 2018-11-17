@@ -34,6 +34,7 @@ import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.BookAddParam;
 import com.haoyang.lovelyreader.tre.bean.api.BookSyncParam;
+import com.haoyang.lovelyreader.tre.bean.api.CategorySyncParam;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.event.OnWifiDialogDismissEvent;
 import com.haoyang.lovelyreader.tre.helper.Configs;
@@ -598,10 +599,10 @@ public class HomeFragment extends BaseFragment {
         BookSyncParam bookSyncParam = new BookSyncParam();
         long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
         if (timestamp == 0) {
-            bookSyncParam.setSyncType("1");
-            bookSyncParam.setLastSyncDate("0");
+            bookSyncParam.setSyncType(BookSyncParam.SYNC_TYPE_ALL);
+            bookSyncParam.setLastSyncDate(String.valueOf(timestamp));
         } else {
-            bookSyncParam.setSyncType("2");
+            bookSyncParam.setSyncType(BookSyncParam.SYNC_TYPE_TIME);
             bookSyncParam.setLastSyncDate(String.valueOf(timestamp));
         }
 
@@ -674,6 +675,41 @@ public class HomeFragment extends BaseFragment {
 
                 // 同步分类
                 getCategoryList();
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                showLoading(false);
+                ToastUtils.show(msg);
+            }
+        });
+    }
+
+    /**
+     * 同步分类
+     */
+    public void syncCategoryList(long timestamp) {
+        CategorySyncParam categorySyncParam = new CategorySyncParam();
+//        long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
+        if (timestamp == 0) {
+            categorySyncParam.setSyncType(CategorySyncParam.SYNC_TYPE_ALL);
+            categorySyncParam.setLastSyncDate(String.valueOf(timestamp));
+        } else {
+            categorySyncParam.setSyncType(CategorySyncParam.SYNC_TYPE_TIME);
+            categorySyncParam.setLastSyncDate(String.valueOf(timestamp));
+        }
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategorySync);
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(categorySyncParam));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<List<CategoryBean>>() {
+            @Override
+            public void onStart() {
+                showLoading(true);
+            }
+
+            @Override
+            public void onSuccess(int code, List<CategoryBean> categoryBeanList) {
+                showLoading(false);
             }
 
             @Override
@@ -843,23 +879,17 @@ public class HomeFragment extends BaseFragment {
                 });
             }
         }));
-        tcMenus.add(new TCMenu("", new View.OnClickListener() {
+        tcMenus.add(new TCMenu("同步分类-全部", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestSender.get().send(requestEntity, new RequestCallback<UpdateBean>() {
-                    @Override
-                    public void onStart() {
-                    }
-
-                    @Override
-                    public void onSuccess(int code, UpdateBean updateBean) {
-                    }
-
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        ToastUtils.show(msg);
-                    }
-                });
+                syncCategoryList(0);
+            }
+        }));
+        tcMenus.add(new TCMenu("同步分类-时间", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
+                syncCategoryList(timestamp);
             }
         }));
         DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();

@@ -4,7 +4,7 @@ package com.haoyang.lovelyreader.tre.bean.api;
  * Created by xin on 18/10/24.
  */
 
-public class BookSyncParam extends BaseParam {
+public class CategorySyncParam extends BaseParam {
 
     public static final String SYNC_TYPE_ALL = "1";
     public static final String SYNC_TYPE_TIME = "2";
