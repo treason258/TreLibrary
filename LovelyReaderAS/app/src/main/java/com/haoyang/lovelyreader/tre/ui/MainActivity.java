@@ -189,7 +189,7 @@ public class MainActivity extends BaseActivity {
                     return;
                 }
                 if (Global.mCurrentCategory.getLevel() == CategoryBean.LEVEL_0) {
-                    ToastUtils.show("默认目录不可修改");
+                    ToastUtils.show("该分类不可修改");
                     return;
                 }
                 showCategoryView(CATEGORY_OPTION_MODIFY);
@@ -202,7 +202,7 @@ public class MainActivity extends BaseActivity {
                     return;
                 }
                 if (Global.mCurrentCategory.getLevel() == CategoryBean.LEVEL_0) {
-                    ToastUtils.show("默认目录不可删除");
+                    ToastUtils.show("该分类不可删除");
                     return;
                 }
                 DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除分类 " + Global.mCurrentCategory.getCategoryName() + "？", "确定", "取消", true,
@@ -471,16 +471,17 @@ public class MainActivity extends BaseActivity {
         mListCategory.clear();
         mListCategory.addAll(CategoryBean.convertToShow(categoryBeanList));
 
-        // 默认选中所有电子书分类
+        // 默认选中"默认分类"
         for (int i = 0; i < mListCategory.size(); i++) {
             mListCategory.get(i).setSelected(false);
             if (mListCategory.get(i).getCategoryName().equals(CategoryBean.CATEGORY_DEFAULT_NAME)) {
+                CategoryBean.CATEGORY_DEFAULT_ID = mListCategory.get(i).getCategoryId();
                 Global.mCurrentCategory = mListCategory.get(i);
                 mListCategory.get(i).setSelected(true);
             }
         }
 
-        // 如果没有默认分类，则默认选中"所有电子书"分类
+        // 如果没有"默认分类"，则默认选中"所有电子书"
         if (Global.mCurrentCategory == null) {
             Global.mCurrentCategory = mListCategory.get(0);
             mListCategory.get(0).setSelected(true);

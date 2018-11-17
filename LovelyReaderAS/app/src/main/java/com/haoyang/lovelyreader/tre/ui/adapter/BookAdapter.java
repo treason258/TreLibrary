@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
+import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.haoyang.lovelyreader.tre.bean.UploadBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.UploadBookParam;
@@ -359,4 +360,19 @@ public class BookAdapter extends TCAdapter {
             }
         });
     }
+
+//    /**
+//     * OnOptionListener
+//     */
+//    public interface OnOptionListener {
+//        void onItemClick(BookBean bookBean, int position);
+//
+//        void onItemLongClick(BookBean bookBean, int position);
+//    }
+//
+//    private CategoryAdapter.OnOptionListener mOnOptionListener;
+//
+//    public void setOnOptionListener(CategoryAdapter.OnOptionListener onOptionListener) {
+//        mOnOptionListener = onOptionListener;
+//    }
 }

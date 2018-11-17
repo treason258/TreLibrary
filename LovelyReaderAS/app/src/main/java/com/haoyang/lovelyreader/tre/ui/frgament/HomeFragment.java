@@ -229,9 +229,10 @@ public class HomeFragment extends BaseFragment {
         gvBook.setAdapter(mBookAdapter);
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LogUtils.d(TAG, "onItemClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + position + "], id = [" + id + "]");
+            public void onItemClick(AdapterView<?> parent, View view, int positionFake, long id) {
+                LogUtils.d(TAG, "onItemClick() called with: parent = [" + parent + "], view = [" + view + "], positionFake = [" + positionFake + "], id = [" + id + "]");
 
+                int position = positionFake - gvBook.getHeaderViewCount() * gvBook.getNumColumns();
                 BookBean bookBean = convertBookBeanList(mMapBookShow).get(position);
                 if (bookBean == null
                         || bookBean.getBookLocalInfo() == null
@@ -243,15 +244,16 @@ public class HomeFragment extends BaseFragment {
 
                 Book book = bookBean.getBookLocalInfo().getBook();
 
-                ToastUtils.show("正在打开书籍...");
+                ToastUtils.show("正在打开电子书...");
                 ReaderHelper.startReader(mActivity, book, Global.mCurrentUser);
             }
         });
         gvBook.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                LogUtils.d(TAG, "onItemLongClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + position + "], id = [" + id + "]");
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int positionFake, long id) {
+                LogUtils.d(TAG, "onItemLongClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + positionFake + "], id = [" + id + "]");
 
+                int position = positionFake - gvBook.getHeaderViewCount() * gvBook.getNumColumns();
                 BookBean bookBean = convertBookBeanList(mMapBookShow).get(position);
                 if (bookBean != null) {
                     DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除？", "确定", "取消", true,
@@ -284,20 +286,20 @@ public class HomeFragment extends BaseFragment {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
-                    ToastUtils.show("请先选中所属分类");
-                    return;
-                }
+//                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+//                    ToastUtils.show("请先选中所属分类");
+//                    return;
+//                }
                 startActivityForResult(new Intent(mContext, FileActivity.class), REQUEST_CODE_ADD_BOOK);
             }
         });
         ivAdd.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
-                    ToastUtils.show("请先选中所属分类");
-                    return false;
-                }
+//                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+//                    ToastUtils.show("请先选中所属分类");
+//                    return false;
+//                }
 
 //                startActivity(new Intent(mContext, com.haoyang.lovelyreader.ui.MainActivity.class));
                 ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(ivAdd, "translationY", 0, ivAdd.getHeight() * 2).setDuration(200L);
@@ -433,7 +435,12 @@ public class HomeFragment extends BaseFragment {
         bookBean.getBookServerInfo().setBookName(book.bookName);
         bookBean.getBookServerInfo().setBookCategory("");
         bookBean.getBookServerInfo().setBookDesc("");
-        bookBean.getBookServerInfo().setCategoryId(Global.mCurrentCategory.getCategoryId());
+        String categoryId = Global.mCurrentCategory.getCategoryId();
+        // 如果是登录用户，切当前分类是选择了"所有电子书"，则自动切换到"默认分类"中
+        if (UserUtils.checkLoginStatus() && categoryId.equals(CategoryBean.CATEGORY_ROOT_ID)) {
+            categoryId = CategoryBean.CATEGORY_DEFAULT_ID;
+        }
+        bookBean.getBookServerInfo().setCategoryId(categoryId);
 
         // 移动到book文件夹下，并且以文件的md5命名
         String md5 = Utils.getFileMD5(new File(fileBean.getPath()));
