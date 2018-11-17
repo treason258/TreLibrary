@@ -22,10 +22,13 @@ import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.CategoryBean;
+import com.haoyang.lovelyreader.tre.bean.ConfigBean;
 import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
+import com.haoyang.lovelyreader.tre.bean.api.BookSyncParam;
 import com.haoyang.lovelyreader.tre.bean.api.CategoryAddParam;
 import com.haoyang.lovelyreader.tre.bean.api.CategoryEditParam;
+import com.haoyang.lovelyreader.tre.bean.api.CategorySyncParam;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
@@ -38,10 +41,13 @@ import com.haoyang.lovelyreader.tre.ui.dialog.UpdateDialog;
 import com.haoyang.lovelyreader.tre.ui.frgament.HomeFragment;
 import com.haoyang.lovelyreader.tre.ui.frgament.MineFragment;
 import com.haoyang.lovelyreader.tre.util.LoginUtils;
+import com.haoyang.lovelyreader.tre.util.TokenUtils;
 import com.haoyang.lovelyreader.tre.util.UpdateUtils;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.callback.ObjectCallback;
+import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.KeyBoardUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
@@ -117,6 +123,7 @@ public class MainActivity extends BaseActivity {
 
         initView();
         checkUpdate();
+        updateConfig();
     }
 
     @Override
@@ -436,6 +443,40 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onFailure(int code, String msg) {
                 ToastUtils.show(msg);
+            }
+        });
+    }
+
+    /**
+     * 更新配置参数
+     */
+    private void updateConfig() {
+        TokenUtils.getTempToken(new TokenUtils.OnGetTempTokenListener() {
+            @Override
+            public void onGetTempToken(String tempToken) {
+                CommonParam commonParam = new CommonParam();
+                commonParam.setData(EncodeHelper.getRandomChar());
+
+                MyRequestEntity requestEntity = new MyRequestEntity(UrlConfig.apiClientconfigAll);
+                requestEntity.setContentWithHeader(ApiRequest.getContent(commonParam), tempToken);
+                RequestSender.get().send(requestEntity, new RequestCallback<ConfigBean>() {
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onSuccess(int code, ConfigBean configBean) {
+                        if (configBean != null) {
+                            Global.maxFileSize = configBean.getMaxFileSize();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        ToastUtils.show(msg);
+                    }
+                });
             }
         });
     }

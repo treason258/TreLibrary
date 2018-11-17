@@ -32,23 +32,30 @@ public class UrlConfig {
     public static String apiSmsSendloginsms = mHostRoot + mPathApi + "/sms/v1/sendloginsms"; // 发送登陆短信验证码,需要临时token
     public static String apiSmsSendrigstersms = mHostRoot + mPathApi + "/sms/v1/sendrigstersms"; // 发送注册短信验证码,需要临时token
 
+    // 用户分类Api接口
+    public static String apiCategoryAdd = mHostRoot + mPathApi + "/category/v1/add"; // 新增分类
+    public static String apiCategoryDel = mHostRoot + mPathApi + "/category/v1/del"; // 删除分类
+    public static String apiCategoryEdit = mHostRoot + mPathApi + "/category/v1/edit"; // 修改分类
+    public static String apiCategoryAll = mHostRoot + mPathApi + "/category/v1/all"; // 获取用户的所有分类
+    public static String apiCategorySync = mHostRoot + mPathApi + "/category/v1/sync"; // 同步分类
+    public static String apiCategoryChild = mHostRoot + mPathApi + "/category/v1/child"; // 获取单个分类下所有子分类
+    public static String apiCategoryDetail = mHostRoot + mPathApi + "/category/v1/detail"; // 获取单个分类详情
+
+    // 用户电子书Api接口
+    public static String apiBookAdd = mHostRoot + mPathApi + "/book/v1/add"; // 新增电子书
+    public static String apiBookDel = mHostRoot + mPathApi + "/book/v1/del"; // 删除电子书
+    public static String apiBookSync = mHostRoot + mPathApi + "/book/v1/sync"; // 同步电子书
+    public static String apiBookConfigPath = mHostRoot + mPathApi + "/book/v1/configPath"; // configBookPath
+    public static String apiBookDetail = mHostRoot + mPathApi + "/book/v1/detail"; // 查看电子书详情
+
+
+    // 客户端配置参数 Api接口
+    public static String apiClientconfigAll = mHostRoot + mPathApi + "/clientconfig/v1/all"; // 获取所有客户端配置参数值,参数随意一个字符串,需要临时token
+    public static String apiClientconfigOne = mHostRoot + mPathApi + "/clientconfig/v1/one"; // 获取单个客户端配置参数值,需要临时token
+
+
     // 文件上传Api接口
     public static String apiUploadBook = mHostRoot + mPathDoc + "/upload/book"; // 电子书上传
     public static String apiUploadDel = mHostRoot + mPathDoc + "/upload/del"; // 文档删除
     public static String apiUploadPath = mHostRoot + mPathDoc + "/upload/path"; // 文档访问地址,需要申请临时token
-
-    // 用户分类Api接口
-    public static String apiCategoryAdd = mHostRoot + mPathApi + "/category/v1/add"; // 新增分类
-    public static String apiCategoryAll = mHostRoot + mPathApi + "/category/v1/all"; // 获取用户的所有分类
-    public static String apiCategoryChild = mHostRoot + mPathApi + "/category/v1/child"; // 获取单个分类下所有子分类
-    public static String apiCategoryDel = mHostRoot + mPathApi + "/category/v1/del"; // 删除分类
-    public static String apiCategoryDetail = mHostRoot + mPathApi + "/category/v1/detail"; // 获取单个分类详情
-    public static String apiCategoryEdit = mHostRoot + mPathApi + "/category/v1/edit"; // 修改分类
-
-    // 用户电子书Api接口
-    public static String apiBookAdd = mHostRoot + mPathApi + "/book/v1/add"; // 新增电子书
-    public static String apiBookConfigPath = mHostRoot + mPathApi + "/book/v1/configPath"; // configBookPath
-    public static String apiBookDel = mHostRoot + mPathApi + "/book/v1/del"; // 删除电子书
-    public static String apiBookDetail = mHostRoot + mPathApi + "/book/v1/detail"; // 查看电子书详情
-    public static String apiBookSync = mHostRoot + mPathApi + "/book/v1/sync"; // 同步电子书
 }

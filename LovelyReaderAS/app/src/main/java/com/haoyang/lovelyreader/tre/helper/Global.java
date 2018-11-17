@@ -9,25 +9,11 @@ import com.haoyang.lovelyreader.tre.bean.UserBean;
 
 public class Global {
 
-    public static UserBean mCurrentUser;
-    public static CategoryBean mCurrentCategory;
+    public static UserBean mCurrentUser; // 当前登录用户
+    public static CategoryBean mCurrentCategory; // 当前选择分类
 
-    public static boolean mIsUploading = false;
-    public static boolean mIsDownloading = false;
-//
-//    public synchronized static boolean isIsUploading() {
-//        return mIsUploading;
-//    }
-//
-//    public synchronized static void setIsUploading(boolean mIsUploading) {
-//        Global.mIsUploading = mIsUploading;
-//    }
-//
-//    public synchronized static boolean isDownloading() {
-//        return mIsDownloading;
-//    }
-//
-//    public synchronized static void setIsDownloading(boolean mIsDownloading) {
-//        Global.mIsDownloading = mIsDownloading;
-//    }
+    public static boolean mIsUploading = false; // 正在上传标记位
+    public static boolean mIsDownloading = false; // 正在下载标记位
+
+    public static String maxFileSize; // 可以上传的文件大小最大值
 }
