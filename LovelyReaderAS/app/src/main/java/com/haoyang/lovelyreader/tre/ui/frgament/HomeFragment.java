@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ import com.haoyang.lovelyreader.tre.ui.adapter.BookAdapter;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.util.FileUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;
+import com.haoyang.lovelyreader.tre.widget.HeaderGridView;
 import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
 import com.haoyang.lovelyreader.tre.wifi.WebService;
 import com.haoyang.reader.sdk.Book;
@@ -83,14 +85,16 @@ public class HomeFragment extends BaseFragment {
 
     private final int REQUEST_CODE_ADD_BOOK = 102;
 
+    private HeaderGridView gvBook;
+    private ListView lvSearch;
+    private ImageView ivAdd;
+
+    private View mViewHeader;
     private ImageView ivCategory;
     private TextView tvSync;
     private ImageView ivSearch;
     private EditText etSearch;
     private ImageView ivDelete;
-    private GridView gvBook;
-    private ListView lvSearch;
-    private ImageView ivAdd;
 
     private BookAdapter mBookAdapter;
     private LinkedHashMap<String, BookBean> mMapBookShow = new LinkedHashMap<>();
@@ -110,14 +114,16 @@ public class HomeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_home, null);
 
         // findViewById
-        ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
-        tvSync = (TextView) view.findViewById(R.id.tvSync);
-        ivSearch = (ImageView) view.findViewById(R.id.ivSearch);
-        etSearch = (EditText) view.findViewById(R.id.etSearch);
-        ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
-        gvBook = (GridView) view.findViewById(R.id.gvBook);
+        gvBook = (HeaderGridView) view.findViewById(R.id.gvBook);
         lvSearch = (ListView) view.findViewById(R.id.lvSearch);
         ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
+
+        mViewHeader = LayoutInflater.from(mContext).inflate(R.layout.view_home_header, null);
+        ivCategory = (ImageView) mViewHeader.findViewById(R.id.ivCategory);
+        tvSync = (TextView) mViewHeader.findViewById(R.id.tvSync);
+        ivSearch = (ImageView) mViewHeader.findViewById(R.id.ivSearch);
+        etSearch = (EditText) mViewHeader.findViewById(R.id.etSearch);
+        ivDelete = (ImageView) mViewHeader.findViewById(R.id.ivDelete);
 
         initView();
         return view;
@@ -219,6 +225,7 @@ public class HomeFragment extends BaseFragment {
 
         // gvBook
         mBookAdapter = new BookAdapter(mContext, convertBookBeanList(mMapBookShow));
+        gvBook.addHeaderView(mViewHeader);
         gvBook.setAdapter(mBookAdapter);
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
