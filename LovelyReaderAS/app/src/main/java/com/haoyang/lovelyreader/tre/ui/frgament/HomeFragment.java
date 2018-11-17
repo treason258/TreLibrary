@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseFragment;
@@ -83,6 +84,7 @@ public class HomeFragment extends BaseFragment {
     private final int REQUEST_CODE_ADD_BOOK = 102;
 
     private ImageView ivCategory;
+    private TextView tvSync;
     private ImageView ivSearch;
     private EditText etSearch;
     private ImageView ivDelete;
@@ -109,6 +111,7 @@ public class HomeFragment extends BaseFragment {
 
         // findViewById
         ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
+        tvSync = (TextView) view.findViewById(R.id.tvSync);
         ivSearch = (ImageView) view.findViewById(R.id.ivSearch);
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         ivDelete = (ImageView) view.findViewById(R.id.ivDelete);
@@ -166,6 +169,14 @@ public class HomeFragment extends BaseFragment {
             public boolean onLongClick(View v) {
                 showTestDialog();
                 return true;
+            }
+        });
+
+        // tvSync
+        tvSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                syncServerData();
             }
         });
 

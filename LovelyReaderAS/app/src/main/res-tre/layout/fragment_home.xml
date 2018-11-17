@@ -27,6 +27,17 @@
             android:text="Reader"
             android:textColor="@color/tc_black"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvSync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="16dp"
+            android:src="@drawable/ic_home_show_category"
+            android:text="同步"
+            android:textColor="@color/tc_black" />
     </RelativeLayout>
 
     <!-- 搜索框 -->
