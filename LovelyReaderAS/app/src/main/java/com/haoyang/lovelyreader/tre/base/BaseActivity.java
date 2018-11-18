@@ -61,10 +61,10 @@ public class BaseActivity extends AppCompatActivity {
 //                mLoadingDialog.hide();
 //            }
 //        }
-        if (show) {
-            ToastUtils.show("loading start");
-        } else {
-            ToastUtils.show("loading stop");
-        }
+//        if (show) {
+//            ToastUtils.show("loading start");
+//        } else {
+//            ToastUtils.show("loading stop");
+//        }
     }
 }
