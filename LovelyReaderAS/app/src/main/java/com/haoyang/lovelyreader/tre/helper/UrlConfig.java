@@ -7,7 +7,7 @@ package com.haoyang.lovelyreader.tre.helper;
 public class UrlConfig {
 
     // 接口地址
-    private static String mHostRoot = "http://112.126.80.1:9003";
+    private static String mHostRoot = "http://47.94.109.157";
     private static String mPathApi = "/api";
     private static String mPathDoc = "/doc";
 
