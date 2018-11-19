@@ -103,7 +103,7 @@ import PropTypes from 'prop-types'
 import './index.css';
 import Header from "./theme/Header";
 import Content from "./theme/Content";
-import {Provider} from './theme/react-redux'
+import {Provider} from 'react-redux'
 
 class Index extends Component {
 
