@@ -101,7 +101,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'
 import './index.css';
-import Header from "./theme/Header";
+import Header from "./theme/containers/Header";
 import Content from "./theme/Content";
 import {Provider} from 'react-redux'
 
