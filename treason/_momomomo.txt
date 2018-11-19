@@ -525,7 +525,7 @@ ZS
 1115 1430 +220=12381.11----
 1115 1504 -1700=10681.11----
 1115 1835 -10600=81.11------
-81o
+81ok
 
 JS
 0917 1843 -88=194 shasha,hongbao----
@@ -560,15 +560,15 @@ JS
 1023 0811 -4500=155 zhuan,zhifubao
 1025 2224 +30000-30000=155 wangshangdai
 1102 2106 +132=287 zaozhuangxueyuan
-1106 1158 +6752.8=+6800-xxx=7040.79 zhuan,zhaohang
-1108 1937 +3374.9=+3400-xxx=10415.69 zhuan,zhaohang
+1106 1158 +6752.8=+6800-xxx=7040.79 zhuan,zhaohang----
+1108 1937 +3374.9=+3400-xxx=10415.69 zhuan,zhaohang----
 1109 1517 -10000=415 zhuan,yuebao
 1113 0909 +450=865 zhuan,yuebao
 1113 0912 -666=199 hongbao,mama
 1113 1912 -66=133 hongbao,meimei
 1114 0834 +2400=2533 zhuan,weixin
-1114 1038 -2000=533 huan,xinyongka,jiaohang
-1114 1926 +9733.3=+9800-xxx=10266.99 zhuan,jiaohang
+1114 1038 -2000=533 huan,xinyongka,jiaohang----
+1114 1926 +9733.3=+9800-xxx=10266.99 zhuan,jiaohang----
 1114 1941 -10000=266 zhuan,yuebao
 1114 2139 -22=244 wancan,tiebanshao
 1115 1101 -30=214 hongbao,shasha
@@ -580,7 +580,7 @@ BJ
 0930 0428 +552=2009 yibao
 2009ok
 1102 0000 +552=2561 yibao
-2561o
+2561ok
 
 				NY
 				0317 0000 -10=70 nianfei
@@ -590,7 +590,7 @@ BJ
 				0611 0339 -12=1 yinxintongshoufei
 				1ok
 				1115 0923 +101872.25=101873.68 gongjijin
-				101873.68o
+				101873.68ok
 
 				GS
 				0409 1132 -10=17 zhuan,zhifubao
@@ -751,8 +751,8 @@ ZSXYK
 1105 1045 -49.99= huafei
 1105 1432 -20= naicha
 1105 2340 -0.99= zhifubao,zhifuma
-1106 1158 -6800= tixian
-1108 1937 -3400= tixian
+1106 1158 -6800= tixian----
+1108 1937 -3400= tixian----
 1109 1955 -74= huiyuan,yinxiangbiji
 1110 1118 -45.1= waimai
 1110 1311 -11.8= taobao,wanju,3dmigong
@@ -769,7 +769,7 @@ ZSXYK
 1112 1302 -28.8= taobao,yashuajia
 1112 1311 -20= taobao,fajiao
 1113 1950 -2= youbao
-1114 1945 +5930=-21298.4 huan (+51000=29701.6)
+1114 1942 +5930=-21298.4 huan---- (+51000=29701.6)
 -21298.4o
 
 JTXYK
@@ -871,13 +871,13 @@ JTXYK
 1113 2014 -1.5= lingshi,youbao
 1114 0952 -5= zaocan
 1114 1432 -19= wucan
-1114 1926 -9800= tixian
+1114 1926 -9800= tixian----
 1114 2010 -3.5= lingshi,youbao
 1115 0950 -5= zaocan
 1116 0932 -5= zaocan
 1116 1405 -16= wucan
-1112 0000 +13794= huan
-1114 0000 +2000=-10109.62 huan (+20000=9890.38)
+1112 1323 +13794= huan----
+1114 1038 +2000=-10109.62 huan---- (+20000=9890.38)
 -10109.62o
 
 				MYHB
