@@ -103,16 +103,17 @@ import PropTypes from 'prop-types'
 import './index.css';
 import Header from "./theme/Header";
 import Content from "./theme/Content";
+import {Provider} from './theme/react-redux'
 
 class Index extends Component {
 
-    static childContextTypes = {
-        store: PropTypes.object
-    }
-
-    getChildContext() {
-        return {store}
-    }
+    // static childContextTypes = {
+    //     store: PropTypes.object
+    // }
+    //
+    // getChildContext() {
+    //     return {store}
+    // }
 
     render() {
         return (
@@ -151,4 +152,8 @@ const themeReducer = (state, action) => {
 
 const store = createStore(themeReducer)
 
-ReactDOM.render(<Index/>, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <Index/>
+    </Provider>,
+    document.getElementById('root'));
