@@ -30,6 +30,7 @@ import com.haoyang.lovelyreader.tre.bean.api.CategoryAddParam;
 import com.haoyang.lovelyreader.tre.bean.api.CategoryEditParam;
 import com.haoyang.lovelyreader.tre.bean.api.CategorySyncParam;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
+import com.haoyang.lovelyreader.tre.event.OnTokenExpiredEvent;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.Global;
@@ -45,16 +46,22 @@ import com.haoyang.lovelyreader.tre.util.TokenUtils;
 import com.haoyang.lovelyreader.tre.util.UpdateUtils;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
+import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.ObjectCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
+import com.mjiayou.trecorelib.manager.ActivityManager;
 import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.KeyBoardUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
+import com.mjiayou.trecorelib.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by xin on 18/9/22.
@@ -98,9 +105,13 @@ public class MainActivity extends BaseActivity {
     private List<CategoryBean> mListCategory;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_new);
+    protected int getLayoutId() {
+        return R.layout.activity_main_new;
+    }
+
+    @Override
+    protected void afterOnCreate(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
 
         // findViewById
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -135,7 +146,7 @@ public class MainActivity extends BaseActivity {
      * initView
      */
     @Override
-    protected void initView() {
+    public void initView() {
         LogUtils.d(TAG, "initView() called");
 
         // llHome-首页
@@ -146,6 +157,22 @@ public class MainActivity extends BaseActivity {
 
         initCategoryView();
         initViewPager();
+    }
+
+    /**
+     * onEvent-token过期
+     */
+    public void onEvent(OnTokenExpiredEvent event) {
+        LogUtils.d(TAG, "onEvent() called with: event = [" + event + "]");
+
+        // 移除MainActivity之外的其他Activity
+        ActivityManager.get().removeActivityExcept(MainActivity.class);
+        // 清除用户信息
+        DBHelper.setUserBean(null);
+        // 通知注销成功
+        UserUtils.doLogout();
+        // 页面跳转
+        startActivity(new Intent(mContext, LoginActivity.class));
     }
 
     /**

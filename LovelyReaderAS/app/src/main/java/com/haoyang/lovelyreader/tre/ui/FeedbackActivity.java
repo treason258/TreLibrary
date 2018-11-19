@@ -38,10 +38,12 @@ public class FeedbackActivity extends BaseActivity {
     private TextView tvSubmit;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feedback);
+    protected int getLayoutId() {
+        return R.layout.activity_feedback;
+    }
 
+    @Override
+    protected void afterOnCreate(Bundle savedInstanceState) {
         // findViewById
         rlTitle = (RelativeLayout) findViewById(R.id.rlTitle);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -54,7 +56,7 @@ public class FeedbackActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
         super.initView();
         // tvTitle
         tvTitle.setText("意见反馈");

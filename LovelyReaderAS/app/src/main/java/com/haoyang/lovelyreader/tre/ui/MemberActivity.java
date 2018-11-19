@@ -21,10 +21,12 @@ public class MemberActivity extends BaseActivity {
     private ImageView ivBack;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_member);
+    protected int getLayoutId() {
+        return R.layout.activity_member;
+    }
 
+    @Override
+    protected void afterOnCreate(Bundle savedInstanceState) {
         // findViewById
         rlTitle = (RelativeLayout) findViewById(R.id.rlTitle);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -34,7 +36,7 @@ public class MemberActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
         super.initView();
         tvTitle.setText("升级会员");
         ivBack.setOnClickListener(new View.OnClickListener() {

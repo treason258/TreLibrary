@@ -93,6 +93,7 @@ public class HomeFragment extends BaseFragment {
     private View mViewHeader;
     private ImageView ivCategory;
     private TextView tvSync;
+    private ImageView ivSync;
     private ImageView ivSearch;
     private EditText etSearch;
     private ImageView ivDelete;
@@ -122,6 +123,7 @@ public class HomeFragment extends BaseFragment {
         mViewHeader = LayoutInflater.from(mContext).inflate(R.layout.view_home_header, null);
         ivCategory = (ImageView) mViewHeader.findViewById(R.id.ivCategory);
         tvSync = (TextView) mViewHeader.findViewById(R.id.tvSync);
+        ivSync = (ImageView) mViewHeader.findViewById(R.id.ivSync);
         ivSearch = (ImageView) mViewHeader.findViewById(R.id.ivSearch);
         etSearch = (EditText) mViewHeader.findViewById(R.id.etSearch);
         ivDelete = (ImageView) mViewHeader.findViewById(R.id.ivDelete);

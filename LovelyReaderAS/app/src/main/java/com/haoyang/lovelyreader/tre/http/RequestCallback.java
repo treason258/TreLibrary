@@ -1,13 +1,22 @@
 package com.haoyang.lovelyreader.tre.http;
 
+import android.content.Intent;
+
 import com.google.gson.reflect.TypeToken;
 import com.haoyang.lovelyreader.tre.bean.ResponseBean;
+import com.haoyang.lovelyreader.tre.event.OnTokenExpiredEvent;
+import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.ui.LoginActivity;
 import com.mjiayou.trecorelib.http.callback.BaseCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.LogUtils;
+import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 网络请求回调类
@@ -83,6 +92,9 @@ public abstract class RequestCallback<T> extends BaseCallback<T> {
                     }
                     onFailure(responseBean.getStatusCode(), responseBean.getMsg());
                     break;
+            }
+            if (responseBean != null && responseBean.getStatusCode() == CODE_FAILURE_TOKEN) {
+                EventBus.getDefault().post(new OnTokenExpiredEvent());
             }
         }
     }

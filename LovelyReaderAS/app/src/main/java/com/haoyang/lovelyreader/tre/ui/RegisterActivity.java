@@ -56,10 +56,12 @@ public class RegisterActivity extends BaseActivity {
     private boolean isCountting;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+    protected int getLayoutId() {
+        return R.layout.activity_register;
+    }
 
+    @Override
+    protected void afterOnCreate(Bundle savedInstanceState) {
         // findViewById
         ivBack = (ImageView) findViewById(R.id.ivBack);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -84,7 +86,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
         super.initView();
 
         switch (mPageType) {

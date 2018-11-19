@@ -37,10 +37,12 @@ public class LoginActivity extends BaseActivity {
     private TextView tvRegister;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    protected int getLayoutId() {
+        return R.layout.activity_login;
+    }
 
+    @Override
+    protected void afterOnCreate(Bundle savedInstanceState) {
         // findViewById
         ivBack = (ImageView) findViewById(R.id.ivBack);
         etPhone = (EditText) findViewById(R.id.etPhone);
@@ -53,7 +55,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
         super.initView();
 
         // 如果保存登录信息，则自动填充

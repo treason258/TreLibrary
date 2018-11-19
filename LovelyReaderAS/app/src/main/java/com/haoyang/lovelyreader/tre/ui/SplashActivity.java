@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
+import com.mjiayou.trecorelib.util.HandlerUtils;
 
 /**
  * Created by xin on 18/9/22.
@@ -16,19 +17,20 @@ public class SplashActivity extends BaseActivity {
     private Handler mHandler;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+    protected int getLayoutId() {
+        return R.layout.activity_splash;
+    }
 
+    @Override
+    protected void afterOnCreate(Bundle savedInstanceState) {
         initView();
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
         super.initView();
 
-        mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
+        HandlerUtils.postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(mContext, MainActivity.class));

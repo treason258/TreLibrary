@@ -55,10 +55,26 @@ public class FileActivity extends BaseActivity {
     private FileNameService mFileNameService;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_file);
+    public void onBackPressed() {
+        if (mFileStack.size() == 1) { // 说明只剩下根目录，再返回则直接退出页面
+            super.onBackPressed();
+        } else {
+            mFileStack.pop();
+            File file = mFileStack.peek();
+            mList = getFileList(file);
+            mFileAdapter.setList(mList);
+            mSelectedFileBeanList.clear();
+            tvCount.setText("已选择了" + mSelectedFileBeanList.size() + "个文件");
+        }
+    }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_file;
+    }
+
+    @Override
+    protected void afterOnCreate(Bundle savedInstanceState) {
         // findViewById
         rlTitle = (RelativeLayout) findViewById(R.id.rlTitle);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -74,21 +90,7 @@ public class FileActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if (mFileStack.size() == 1) { // 说明只剩下根目录，再返回则直接退出页面
-            super.onBackPressed();
-        } else {
-            mFileStack.pop();
-            File file = mFileStack.peek();
-            mList = getFileList(file);
-            mFileAdapter.setList(mList);
-            mSelectedFileBeanList.clear();
-            tvCount.setText("已选择了" + mSelectedFileBeanList.size() + "个文件");
-        }
-    }
-
-    @Override
-    protected void initView() {
+    public void initView() {
         super.initView();
 
         // tvTitle
