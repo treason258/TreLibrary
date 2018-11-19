@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from './BaseComponent.js'
-import CommentInput from './CommentInput.js'
-import CommentList from './CommentList.js'
+import CommentInput from './components/CommentInput.js'
+import CommentList from './components/CommentList.js'
 import './Comment.css';
 import wrapWithLocalStorage from './LocalStorageActions'
 

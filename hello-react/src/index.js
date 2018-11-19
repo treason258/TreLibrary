@@ -21,4 +21,4 @@ import Clock from './test/Clock.js';
 import AutoFocusInput from "./test/AutoFocusInput";
 import Context from "./test/Context";
 
-ReactDOM.render(<Context/>, document.getElementById('root'));
+ReactDOM.render(<CommentApp/>, document.getElementById('root'));
