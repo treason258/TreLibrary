@@ -14,11 +14,17 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CommentApp from './comment/CommentApp.js';
-import Header from './test/Header.js';
-import All from './test/All.js';
-import Clock from './test/Clock.js';
-import AutoFocusInput from "./test/AutoFocusInput";
-import Context from "./test/Context";
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
+import './index.css';
+import CommentApp from './comment/containers/CommentApp';
+import commentsReducer from './comment/reducers/comments'
 
-ReactDOM.render(<CommentApp/>, document.getElementById('root'));
+const store = createStore(commentsReducer)
+
+ReactDOM.render(
+    <Provider store={store}>
+        <CommentApp/>
+    </Provider>,
+    document.getElementById('root')
+);

@@ -8,6 +8,11 @@ class CommentItem extends BaseComponent {
         comment: PropTypes.object
     }
 
+    constructor() {
+        super()
+        this.state = {timeString: ''}
+    }
+
     componentWillMount() {
         this._updateTimeString()
     }
@@ -61,12 +66,9 @@ class CommentItem extends BaseComponent {
                 <span>
                     ：
                 </span>
-                {/*<span>*/}
-                    {/*{comment.content}*/}
-                {/*</span>*/}
                 <p dangerouslySetInnerHTML={{
                     __html: this._getProcessedContent(comment.content)
-                }} />
+                }}/>
                 <span
                     className='comment-createdtime'>
                     {this.state.timeString}

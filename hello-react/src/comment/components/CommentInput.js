@@ -1,39 +1,46 @@
 import React from 'react';
 import BaseComponent from '../BaseComponent.js'
 import PropTypes from 'prop-types'
+import '../Comment.css';
 
 class CommentInput extends BaseComponent {
 
     static propTypes = {
-        onSubmit: PropTypes.func
+        username: PropTypes.any,
+        onSubmit: PropTypes.func,
+        onUserNameInputBlur: PropTypes.func
     }
 
-    constructor() {
-        super()
+    static defaultProps = {
+        username: ''
+    }
+
+    constructor(props) {
+        super(props)
         this.state = {
-            username: '',
+            username: props.username, // 从 props 上取 username 字段
             content: ''
         }
     }
 
     componentWillMount() {
-        this._loadUsername()
+        // this._loadUsername()
     }
 
     componentDidMount() {
         this.textarea.focus()
     }
 
-    _saveUsername(username) {
-        localStorage.setItem('username', username)
-    }
+    // _saveUsername(username) {
+    //     localStorage.setItem('username', username)
+    // }
 
-    _loadUsername() {
-        const username = localStorage.getItem('username')
-        if (username) {
-            this.setState({username})
-        }
-    }
+    // _loadUsername() {
+    //     const username = localStorage.getItem('username')
+    //     if (username) {
+    //         this.setState({username})
+    //     }
+    // }
 
     handleUsernameChange(event) {
         this.setState({
@@ -48,7 +55,10 @@ class CommentInput extends BaseComponent {
     }
 
     handleUsernameBlur(event) {
-        this._saveUsername(event.target.value)
+        // this._saveUsername(event.target.value)
+        if (this.props.onUserNameInputBlur) {
+            this.props.onUserNameInputBlur(event.target.value)
+        }
     }
 
     handleSubmit() {
