@@ -729,12 +729,11 @@ public class MainActivity extends BaseActivity {
         RequestSender.get().send(myRequestEntity, new RequestCallback<List<CategoryBean>>() {
             @Override
             public void onStart() {
-                showLoading(true);
             }
 
             @Override
             public void onSuccess(int code, List<CategoryBean> categoryBeanList) {
-                showLoading(false);
+                startSyncAnim(false);
                 if (categoryBeanList != null) {
                     DBHelper.setCategoryBeanList(Global.mCurrentUser.getUid(), categoryBeanList);
                     updateCategoryList(categoryBeanList);
@@ -743,7 +742,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailure(int code, String msg) {
-                showLoading(false);
+                startSyncAnim(false);
                 ToastUtils.show(msg);
             }
         });
@@ -764,6 +763,15 @@ public class MainActivity extends BaseActivity {
     public void syncServerData() {
         if (mHomeFragment != null) {
             mHomeFragment.syncServerData();
+        }
+    }
+
+    /**
+     * HomeFragment-开始同步动画
+     */
+    public void startSyncAnim(boolean start) {
+        if (mHomeFragment != null) {
+            mHomeFragment.startSyncAnim(start);
         }
     }
 }

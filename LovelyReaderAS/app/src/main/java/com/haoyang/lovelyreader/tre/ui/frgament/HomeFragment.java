@@ -16,6 +16,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -66,6 +69,7 @@ import com.mjiayou.trecorelib.http.callback.ObjectCallback;
 import com.mjiayou.trecorelib.http.callback.StringCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.AppUtils;
+import com.mjiayou.trecorelib.util.HandlerUtils;
 import com.mjiayou.trecorelib.util.KeyBoardUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
@@ -613,12 +617,11 @@ public class HomeFragment extends BaseFragment {
         RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookBean.BookServerInfo>>() {
             @Override
             public void onStart() {
-                showLoading(true);
+                startSyncAnim(true);
             }
 
             @Override
             public void onSuccess(int code, List<BookBean.BookServerInfo> bookServerInfoList) {
-                showLoading(false);
                 for (int i = bookServerInfoList.size() - 1; i >= 0; i--) {
                     BookBean.BookServerInfo bookServerInfo = bookServerInfoList.get(i);
                     if (Boolean.valueOf(bookServerInfo.getIsDel())) { // 删除的书
@@ -681,7 +684,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onFailure(int code, String msg) {
-                showLoading(false);
+                startSyncAnim(false);
                 ToastUtils.show(msg);
             }
         });
@@ -798,6 +801,42 @@ public class HomeFragment extends BaseFragment {
         return bookBeanList;
     }
 
+    private ObjectAnimator objectAnimator;
+
+    /**
+     * 开始同步动画
+     */
+    public void startSyncAnim(boolean start) {
+        if (objectAnimator == null) {
+            objectAnimator = ObjectAnimator.ofFloat(ivSync, "rotation", 0f, 359f); // 添加旋转动画，旋转中心默认为控件中点
+            objectAnimator.setDuration(800); // 设置动画时间
+            objectAnimator.setInterpolator(new LinearInterpolator()); // 动画时间线性渐变
+            objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+            objectAnimator.setRepeatMode(ObjectAnimator.RESTART);
+        }
+
+        if (start) { // 开始动画
+            tvSync.setVisibility(View.GONE);
+            ivSync.setVisibility(View.VISIBLE);
+
+            if (objectAnimator != null) {
+                objectAnimator.start();
+            }
+        } else { // 停止动画
+            HandlerUtils.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (objectAnimator != null) {
+                        objectAnimator.end();
+                    }
+
+                    tvSync.setVisibility(View.VISIBLE);
+                    ivSync.setVisibility(View.GONE);
+                }
+            }, 1000);
+        }
+    }
+
     /**
      * showTestDialog
      */
@@ -806,7 +845,7 @@ public class HomeFragment extends BaseFragment {
         tcMenus.add(new TCMenu("同步数据", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                syncBookList();
+                syncServerData();
             }
         }));
 
