@@ -98,16 +98,19 @@ public class FeedbackActivity extends BaseActivity {
                 RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
                     @Override
                     public void onStart() {
+                        showLoading(true);
                     }
 
                     @Override
                     public void onSuccess(int code, Object object) {
+                        showLoading(false);
                         ToastUtils.show("提交成功");
                         finish();
                     }
 
                     @Override
                     public void onFailure(int code, String msg) {
+                        showLoading(false);
                         ToastUtils.show(msg);
                     }
                 });

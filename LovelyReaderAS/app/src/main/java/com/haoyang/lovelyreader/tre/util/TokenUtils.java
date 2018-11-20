@@ -24,7 +24,6 @@ public class TokenUtils {
         RequestSender.get().send(myRequestEntity, new RequestCallback<String>() {
             @Override
             public void onStart() {
-
             }
 
             @Override

@@ -22,6 +22,7 @@ import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.ui.FeedbackActivity;
 import com.haoyang.lovelyreader.tre.ui.LoginActivity;
+import com.haoyang.lovelyreader.tre.ui.MainActivity;
 import com.haoyang.lovelyreader.tre.ui.RegisterActivity;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
@@ -106,16 +107,18 @@ public class MineFragment extends BaseFragment {
                                     RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
                                         @Override
                                         public void onStart() {
-
+                                            showLoading(true);
                                         }
 
                                         @Override
                                         public void onSuccess(int code, Object object) {
+                                            showLoading(false);
                                             ToastUtils.show("已退出登录");
                                         }
 
                                         @Override
                                         public void onFailure(int code, String msg) {
+                                            showLoading(false);
                                             ToastUtils.show(msg);
                                         }
                                     });
@@ -199,5 +202,14 @@ public class MineFragment extends BaseFragment {
      */
     public void onEvent(UserLoginStatusEvent event) {
         initView();
+    }
+
+    /**
+     * MainActivity-正在加载
+     */
+    private void showLoading(boolean show) {
+        if (mActivity != null && mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).showLoading(show);
+        }
     }
 }

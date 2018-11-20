@@ -146,7 +146,6 @@ public class RegisterActivity extends BaseActivity {
                         RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
                             @Override
                             public void onStart() {
-
                             }
 
                             @Override
@@ -228,11 +227,12 @@ public class RegisterActivity extends BaseActivity {
                         RequestSender.get().send(myRequestEntity, new RequestCallback<UserBean>() {
                             @Override
                             public void onStart() {
-
+                                showLoading(true);
                             }
 
                             @Override
                             public void onSuccess(int code, UserBean bean) {
+                                showLoading(false);
                                 if (bean != null) {
                                     ToastUtils.show("注册成功");
 
@@ -252,6 +252,7 @@ public class RegisterActivity extends BaseActivity {
 
                             @Override
                             public void onFailure(int code, String msg) {
+                                showLoading(false);
                                 ToastUtils.show(msg);
                             }
                         });
@@ -266,17 +267,19 @@ public class RegisterActivity extends BaseActivity {
                                 RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
                                     @Override
                                     public void onStart() {
-
+                                        showLoading(true);
                                     }
 
                                     @Override
                                     public void onSuccess(int code, Object bean) {
+                                        showLoading(false);
                                         ToastUtils.show("找回密码成功");
                                         finish();
                                     }
 
                                     @Override
                                     public void onFailure(int code, String msg) {
+                                        showLoading(false);
                                         ToastUtils.show(msg);
                                     }
                                 });

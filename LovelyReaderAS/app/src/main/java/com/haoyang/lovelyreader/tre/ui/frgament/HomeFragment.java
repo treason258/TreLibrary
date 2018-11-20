@@ -860,10 +860,12 @@ public class HomeFragment extends BaseFragment {
                 RequestSender.get().send(requestEntity, new RequestCallback<UpdateBean>() {
                     @Override
                     public void onStart() {
+                        showLoading(true);
                     }
 
                     @Override
                     public void onSuccess(int code, UpdateBean object) {
+                        showLoading(false);
                         if (object != null) {
                             ToastUtils.show(JsonParser.get().toJson(object));
                         }
@@ -871,6 +873,7 @@ public class HomeFragment extends BaseFragment {
 
                     @Override
                     public void onFailure(int code, String msg) {
+                        showLoading(false);
                         ToastUtils.show(msg);
                     }
                 });
@@ -882,10 +885,12 @@ public class HomeFragment extends BaseFragment {
                 RequestSender.get().send(requestEntity, new ObjectCallback<ResponseBean<UpdateBean>>() {
                     @Override
                     public void onStart() {
+                        showLoading(true);
                     }
 
                     @Override
                     public void onSuccess(int code, ResponseBean<UpdateBean> object) {
+                        showLoading(false);
                         if (object != null) {
                             ToastUtils.show(JsonParser.get().toJson(object));
                         }
@@ -893,6 +898,7 @@ public class HomeFragment extends BaseFragment {
 
                     @Override
                     public void onFailure(int code, String msg) {
+                        showLoading(false);
                         ToastUtils.show(msg);
                     }
                 });
@@ -904,10 +910,12 @@ public class HomeFragment extends BaseFragment {
                 RequestSender.get().send(requestEntity, new StringCallback() {
                     @Override
                     public void onStart() {
+                        showLoading(true);
                     }
 
                     @Override
                     public void onSuccess(int code, String object) {
+                        showLoading(false);
                         if (object != null) {
                             ToastUtils.show(object);
                         }
@@ -915,6 +923,7 @@ public class HomeFragment extends BaseFragment {
 
                     @Override
                     public void onFailure(int code, String msg) {
+                        showLoading(false);
                         ToastUtils.show(msg);
                     }
                 });

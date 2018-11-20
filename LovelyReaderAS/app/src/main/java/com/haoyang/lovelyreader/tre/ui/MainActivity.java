@@ -451,7 +451,6 @@ public class MainActivity extends BaseActivity {
         RequestSender.get().send(requestEntity, new RequestCallback<UpdateBean>() {
             @Override
             public void onStart() {
-
             }
 
             @Override
@@ -489,7 +488,6 @@ public class MainActivity extends BaseActivity {
                 RequestSender.get().send(requestEntity, new RequestCallback<ConfigBean>() {
                     @Override
                     public void onStart() {
-
                     }
 
                     @Override
