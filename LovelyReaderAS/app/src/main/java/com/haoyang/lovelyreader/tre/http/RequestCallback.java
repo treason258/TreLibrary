@@ -1,17 +1,13 @@
 package com.haoyang.lovelyreader.tre.http;
 
-import android.content.Intent;
-
 import com.google.gson.reflect.TypeToken;
+import com.haoyang.lovelyreader.BuildConfig;
 import com.haoyang.lovelyreader.tre.bean.ResponseBean;
 import com.haoyang.lovelyreader.tre.event.OnTokenExpiredEvent;
-import com.haoyang.lovelyreader.tre.helper.DBHelper;
-import com.haoyang.lovelyreader.tre.ui.LoginActivity;
+import com.haoyang.lovelyreader.tre.helper.Global;
 import com.mjiayou.trecorelib.http.callback.BaseCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.LogUtils;
-import com.mjiayou.trecorelib.util.ToastUtils;
-import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -38,12 +34,6 @@ public abstract class RequestCallback<T> extends BaseCallback<T> {
     private final int CODE_FAILURE_HTTP = 904; // HTTP请求方法异常
     private final int CODE_FAILURE_TOKEN = 905; // TOKEN过期
 
-    private final String MSG_FAILURE_SERVICE = "服务异常"; // 服务异常
-    private final String MSG_FAILURE_PARAM = "参数异常"; // 参数异常
-    private final String MSG_FAILURE_404 = "404异常"; // 404异常
-    private final String MSG_FAILURE_HTTP = "HTTP请求方法异常"; // HTTP请求方法异常
-    private final String MSG_FAILURE_TOKEN = "TOKEN过期"; // TOKEN过期
-
     /**
      * 请求返回
      *
@@ -62,6 +52,10 @@ public abstract class RequestCallback<T> extends BaseCallback<T> {
         if (responseBean == null) {
             onFailure(TC_CODE_FAILURE_JSON, TC_MSG_FAILURE_JSON); // 解析失败
         } else {
+            if (BuildConfig.DEBUG && Global.debugTokenExpired) {
+                responseBean.setStatusCode(CODE_FAILURE_TOKEN);
+                responseBean.setMsg("TOKEN过期");
+            }
             switch (responseBean.getStatusCode()) {
                 case CODE_SUCCESS:
                     if (getObjectType() == String.class) {
@@ -93,6 +87,7 @@ public abstract class RequestCallback<T> extends BaseCallback<T> {
                     onFailure(responseBean.getStatusCode(), responseBean.getMsg());
                     break;
             }
+            // token过期发送event
             if (responseBean != null && responseBean.getStatusCode() == CODE_FAILURE_TOKEN) {
                 EventBus.getDefault().post(new OnTokenExpiredEvent());
             }

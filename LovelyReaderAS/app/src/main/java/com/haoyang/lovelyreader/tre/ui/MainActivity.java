@@ -537,6 +537,7 @@ public class MainActivity extends BaseActivity {
      * 同步分类列表
      */
     public void syncCategoryList(List<CategoryBean> categoryBeanList) {
+        // 由于服务器是最近修改放在最前，最老的数据放在最后。倒序遍历，可确保老数据在最上显示，新数据插入到下方
         for (int i = categoryBeanList.size() - 1; i >= 0; i--) {
             CategoryBean categoryBean = categoryBeanList.get(i);
             if (categoryBean.isDel()) { // 删除的分类

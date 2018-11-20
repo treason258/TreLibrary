@@ -2,13 +2,11 @@ package com.haoyang.lovelyreader.tre.ui.frgament;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -16,12 +14,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,8 +31,6 @@ import com.haoyang.lovelyreader.tre.bean.UpdateBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.BookAddParam;
-import com.haoyang.lovelyreader.tre.bean.api.BookSyncParam;
-import com.haoyang.lovelyreader.tre.bean.api.CategorySyncParam;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.event.OnWifiDialogDismissEvent;
 import com.haoyang.lovelyreader.tre.helper.Configs;
@@ -54,6 +47,7 @@ import com.haoyang.lovelyreader.tre.ui.MainActivity;
 import com.haoyang.lovelyreader.tre.ui.adapter.BookAdapter;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.util.FileUtils;
+import com.haoyang.lovelyreader.tre.util.LoginUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;
 import com.haoyang.lovelyreader.tre.widget.HeaderGridView;
 import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
@@ -168,9 +162,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        // mUserBean
-        Global.mCurrentUser = DBHelper.getUserBean();
-
         // ivCategory-打开分类
         ivCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +181,9 @@ public class HomeFragment extends BaseFragment {
         tvSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (LoginUtils.checkNotLoginAndToast()) {
+                    return;
+                }
                 syncServerData();
             }
         });
@@ -336,6 +330,16 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
+        initData();
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        // mUserBean
+        Global.mCurrentUser = DBHelper.getUserBean();
+
         // 展示本地数据
         showLocalData();
 
@@ -349,7 +353,7 @@ public class HomeFragment extends BaseFragment {
     public void onEvent(UserLoginStatusEvent event) {
         LogUtils.d(TAG, "onEvent() called with: event = [" + event + "]");
         mIsFromLogin = true;
-        initView();
+        initData();
     }
 
     /**
@@ -418,6 +422,7 @@ public class HomeFragment extends BaseFragment {
                         return;
                     }
 
+                    // 由于服务器是最近修改放在最前，最老的数据放在最后。倒序遍历，可确保老数据在最上显示，新数据插入到下方
                     for (int i = bookServerInfoList.size() - 1; i >= 0; i--) {
                         BookBean.BookServerInfo bookServerInfo = bookServerInfoList.get(i);
                         if (Boolean.valueOf(bookServerInfo.getIsDel())) { // 删除的书
@@ -947,6 +952,9 @@ public class HomeFragment extends BaseFragment {
         tcMenus.add(new TCMenu("同步数据", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (LoginUtils.checkNotLoginAndToast()) {
+                    return;
+                }
                 syncServerData();
             }
         }));
@@ -1048,6 +1056,19 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 showLoading(true);
+            }
+        }));
+        tcMenus.add(new TCMenu("showLoading", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLoading(true);
+            }
+        }));
+        tcMenus.add(new TCMenu("debugTokenExpired toggle", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Global.debugTokenExpired = !Global.debugTokenExpired;
+                ToastUtils.show("debugTokenExpired = " + Global.debugTokenExpired);
             }
         }));
         DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();
