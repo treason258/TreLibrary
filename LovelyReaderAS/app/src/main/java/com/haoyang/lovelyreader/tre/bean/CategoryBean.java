@@ -1,6 +1,7 @@
 package com.haoyang.lovelyreader.tre.bean;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,6 +34,43 @@ public class CategoryBean {
 
     private int level; // 层级：1、2、3
     private boolean selected; // 选中状态
+
+    private String parentId;
+    private long createDate;
+    private long updateDate;
+    private boolean isDel;
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public long getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(long createDate) {
+        this.createDate = createDate;
+    }
+
+    public long getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(long updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public boolean isDel() {
+        return isDel;
+    }
+
+    public void setDel(boolean del) {
+        isDel = del;
+    }
 
     public boolean isSelected() {
         return selected;
@@ -109,6 +147,46 @@ public class CategoryBean {
                     }
                 }
             }
+        }
+        return result;
+    }
+
+    /**
+     * 分类数据转换
+     */
+    public static List<CategoryBean> convertToShow222(List<CategoryBean> categoryBeanAllList) {
+        List<CategoryBean> result = new ArrayList<>();
+
+        if(categoryBeanAllList != null) {
+          CategoryBean categoryBeanL0 = new CategoryBean();
+          categoryBeanL0.setCategoryId(CategoryBean.CATEGORY_ROOT_ID);
+          categoryBeanL0.setCategoryName(CategoryBean.CATEGORY_ROOT_NAME);
+          categoryBeanL0.setLevel(CategoryBean.LEVEL_0);
+          result.add(categoryBeanL0);
+
+          for (int i = 0; i < categoryBeanAllList.size(); i++) {
+            CategoryBean categoryBeanAll = categoryBeanAllList.get(i);
+            if (categoryBeanAll != null && categoryBeanAll.getParentId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+              categoryBeanAll.setLevel(CategoryBean.LEVEL_1);
+              result.add(categoryBeanAll);
+
+              for (int j = 0; j < categoryBeanAllList.size(); j++) {
+                CategoryBean categoryBeanAll2 = categoryBeanAllList.get(j);
+                if (categoryBeanAll2 != null && categoryBeanAll2.getParentId().equals(categoryBeanAll.getCategoryId())) {
+                  categoryBeanAll2.setLevel(CategoryBean.LEVEL_2);
+                  result.add(categoryBeanAll2);
+
+                  for (int k = 0; k < categoryBeanAllList.size(); k++) {
+                    CategoryBean categoryBeanAll3 = categoryBeanAllList.get(k);
+                    if (categoryBeanAll3 != null && categoryBeanAll3.getParentId().equals(categoryBeanAll2.getCategoryId())) {
+                      categoryBeanAll3.setLevel(CategoryBean.LEVEL_2);
+                      result.add(categoryBeanAll3);
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
         return result;
     }

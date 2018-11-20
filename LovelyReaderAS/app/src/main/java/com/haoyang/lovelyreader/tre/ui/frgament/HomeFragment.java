@@ -45,6 +45,7 @@ import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.Global;
 import com.haoyang.lovelyreader.tre.helper.OnBookAddEvent;
 import com.haoyang.lovelyreader.tre.helper.ReaderHelper;
+import com.haoyang.lovelyreader.tre.helper.SyncHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
@@ -293,22 +294,22 @@ public class HomeFragment extends BaseFragment {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
-//                    ToastUtils.show("请先选中所属分类");
-//                    return;
-//                }
+                //                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+                //                    ToastUtils.show("请先选中所属分类");
+                //                    return;
+                //                }
                 startActivityForResult(new Intent(mContext, FileActivity.class), REQUEST_CODE_ADD_BOOK);
             }
         });
         ivAdd.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-//                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
-//                    ToastUtils.show("请先选中所属分类");
-//                    return false;
-//                }
+                //                if (UserUtils.checkLoginStatus() && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_ROOT_ID)) {
+                //                    ToastUtils.show("请先选中所属分类");
+                //                    return false;
+                //                }
 
-//                startActivity(new Intent(mContext, com.haoyang.lovelyreader.ui.MainActivity.class));
+                //                startActivity(new Intent(mContext, com.haoyang.lovelyreader.ui.MainActivity.class));
                 ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(ivAdd, "translationY", 0, ivAdd.getHeight() * 2).setDuration(200L);
                 objectAnimator.setInterpolator(new AccelerateInterpolator());
                 objectAnimator.addListener(new Animator.AnimatorListener() {
@@ -389,8 +390,10 @@ public class HomeFragment extends BaseFragment {
         mMapBookAll.putAll(bookBeanMap);
 
         // 本地数据-分类
-        List<CategoryBean> categoryBeanList = DBHelper.getCategoryBeanList(Global.mCurrentUser.getUid());
-        updateCategoryList(categoryBeanList);
+        initCategoryList();
+
+        // 更新分类列表
+        updateCategoryList();
     }
 
     /**
@@ -400,7 +403,88 @@ public class HomeFragment extends BaseFragment {
         // 如果用户已登录，则同步电子书
         if (UserUtils.checkLoginStatus()) {
             mIsFromSyncBook = true;
-            syncBookList();
+            //syncBookList();
+            SyncHelper.syncServerData(new SyncHelper.OnSyncDataListener() {
+                @Override
+                public void onSyncStart() {
+                    startSyncAnim(true);
+                }
+
+                @Override
+                public void onSyncSuccess(List<BookBean.BookServerInfo> bookServerInfoList, List<CategoryBean> categoryBeanList) {
+                    startSyncAnim(false);
+
+                    if (bookServerInfoList == null || categoryBeanList == null) {
+                        return;
+                    }
+
+                    for (int i = bookServerInfoList.size() - 1; i >= 0; i--) {
+                        BookBean.BookServerInfo bookServerInfo = bookServerInfoList.get(i);
+                        if (Boolean.valueOf(bookServerInfo.getIsDel())) { // 删除的书
+                            if (mMapBookAll.containsKey(bookServerInfo.getBookId())) {
+                                mMapBookAll.remove(bookServerInfo.getBookId());
+                            }
+                            //if (mMapBookShow.containsKey(bookServerInfo.getBookId())) {
+                            //    mMapBookShow.remove(bookServerInfo.getBookId());
+                            //}
+                        } else { // 更新电子书或新增电子书
+                            if (mMapBookAll.containsKey(bookServerInfo.getBookId())) { // 如果当前用户已有此书，则更新电子书
+                                BookBean bookBeanOld = mMapBookAll.get(bookServerInfo.getBookId());
+                                bookBeanOld.setBookServerInfo(bookServerInfo);
+                                mMapBookAll.put(bookServerInfo.getBookId(), bookBeanOld);
+
+                                //if (mMapBookShow.containsKey(bookServerInfo.getBookId())) {
+                                //    mMapBookShow.put(bookServerInfo.getBookId(), bookBeanOld);
+                                //}
+                            } else { // 否则没有，则新增的电子书
+                                BookBean bookBean = new BookBean();
+                                // 设如果本地已有文件，则设置电子书本地存储信息
+                                String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
+                                String bookFileName = Utils.getBookName(DBHelper.getUserBean(), bookServerInfo);
+                                File bookFile = new File(bookFileDir, bookFileName);
+                                if (bookFile.exists()) {
+                                    String filePath = bookFile.getAbsolutePath();
+
+                                    FileNameService fileNameService = new FileNameService();
+                                    String fileName = fileNameService.getFileName(filePath);
+                                    String fileSuffix = fileNameService.getFileExtendName(filePath);
+
+                                    BookInfoService bookInfoService = new BookInfoService();
+                                    bookInfoService.init(filePath);
+                                    Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
+                                    String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath);
+                                    bookInfoService.clear();
+
+                                    bookBean.getBookLocalInfo().setFileName(fileName);
+                                    bookBean.getBookLocalInfo().setFileSuffix(fileSuffix);
+                                    bookBean.getBookLocalInfo().setLocalBookPath(filePath);
+                                    bookBean.getBookLocalInfo().setLocalCoverPath(localCoverPath);
+                                    bookBean.getBookLocalInfo().setBook(book);
+                                }
+                                // 设置服务端信息
+                                bookBean.setBookServerInfo(bookServerInfo);
+
+                                mMapBookAll.put(bookServerInfo.getBookId(), bookBean);
+                                //mMapBookShow.put(bookServerInfo.getBookId(), bookBean);
+                            }
+                        }
+                    }
+                    DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
+                    //DBHelper.setLastSyncDate(Global.mCurrentUser.getUid(), System.currentTimeMillis());
+
+                    //mBookAdapter.setList(convertBookBeanList(mMapBookShow));
+
+                    //if (categoryBeanList != null) {
+                    syncCategoryList(categoryBeanList);
+                    //}
+                }
+
+                @Override
+                public void onSyncFailure(String msg) {
+                    startSyncAnim(false);
+                    ToastUtils.show(msg);
+                }
+            });
         }
     }
 
@@ -598,132 +682,132 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    /**
-     * 同步电子书
-     */
-    public void syncBookList() {
-        BookSyncParam bookSyncParam = new BookSyncParam();
-        long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
-        if (timestamp == 0) {
-            bookSyncParam.setSyncType(BookSyncParam.SYNC_TYPE_ALL);
-            bookSyncParam.setLastSyncDate(String.valueOf(timestamp));
-        } else {
-            bookSyncParam.setSyncType(BookSyncParam.SYNC_TYPE_TIME);
-            bookSyncParam.setLastSyncDate(String.valueOf(timestamp));
-        }
+    ///**
+    // * 同步电子书
+    // */
+    //public void syncBookList() {
+    //    BookSyncParam bookSyncParam = new BookSyncParam();
+    //    long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
+    //    if (timestamp == 0) {
+    //        bookSyncParam.setSyncType(BookSyncParam.SYNC_TYPE_ALL);
+    //        bookSyncParam.setLastSyncDate(String.valueOf(timestamp));
+    //    } else {
+    //        bookSyncParam.setSyncType(BookSyncParam.SYNC_TYPE_TIME);
+    //        bookSyncParam.setLastSyncDate(String.valueOf(timestamp));
+    //    }
+    //
+    //    MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookSync);
+    //    myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookSyncParam));
+    //    RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookBean.BookServerInfo>>() {
+    //        @Override
+    //        public void onStart() {
+    //            startSyncAnim(true);
+    //        }
+    //
+    //        @Override
+    //        public void onSuccess(int code, List<BookBean.BookServerInfo> bookServerInfoList) {
+    //            for (int i = bookServerInfoList.size() - 1; i >= 0; i--) {
+    //                BookBean.BookServerInfo bookServerInfo = bookServerInfoList.get(i);
+    //                if (Boolean.valueOf(bookServerInfo.getIsDel())) { // 删除的书
+    //                    if (mMapBookAll.containsKey(bookServerInfo.getBookId())) {
+    //                        mMapBookAll.remove(bookServerInfo.getBookId());
+    //                    }
+    //                    if (mMapBookShow.containsKey(bookServerInfo.getBookId())) {
+    //                        mMapBookShow.remove(bookServerInfo.getBookId());
+    //                    }
+    //                } else { // 更新电子书或新增电子书
+    //                    if (mMapBookAll.containsKey(bookServerInfo.getBookId())) { // 如果当前用户已有此书，则更新电子书
+    //                        BookBean bookBeanOld = mMapBookAll.get(bookServerInfo.getBookId());
+    //                        bookBeanOld.setBookServerInfo(bookServerInfo);
+    //                        mMapBookAll.put(bookServerInfo.getBookId(), bookBeanOld);
+    //
+    //                        if (mMapBookShow.containsKey(bookServerInfo.getBookId())) {
+    //                            mMapBookShow.put(bookServerInfo.getBookId(), bookBeanOld);
+    //                        }
+    //                    } else { // 否则没有，则新增的电子书
+    //                        BookBean bookBean = new BookBean();
+    //                        // 设如果本地已有文件，则设置电子书本地存储信息
+    //                        String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
+    //                        String bookFileName = Utils.getBookName(DBHelper.getUserBean(), bookServerInfo);
+    //                        File bookFile = new File(bookFileDir, bookFileName);
+    //                        if (bookFile.exists()) {
+    //                            String filePath = bookFile.getAbsolutePath();
+    //
+    //                            FileNameService fileNameService = new FileNameService();
+    //                            String fileName = fileNameService.getFileName(filePath);
+    //                            String fileSuffix = fileNameService.getFileExtendName(filePath);
+    //
+    //                            BookInfoService bookInfoService = new BookInfoService();
+    //                            bookInfoService.init(filePath);
+    //                            Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
+    //                            String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath);
+    //                            bookInfoService.clear();
+    //
+    //                            bookBean.getBookLocalInfo().setFileName(fileName);
+    //                            bookBean.getBookLocalInfo().setFileSuffix(fileSuffix);
+    //                            bookBean.getBookLocalInfo().setLocalBookPath(filePath);
+    //                            bookBean.getBookLocalInfo().setLocalCoverPath(localCoverPath);
+    //                            bookBean.getBookLocalInfo().setBook(book);
+    //                        }
+    //                        // 设置服务端信息
+    //                        bookBean.setBookServerInfo(bookServerInfo);
+    //
+    //                        mMapBookAll.put(bookServerInfo.getBookId(), bookBean);
+    //                        mMapBookShow.put(bookServerInfo.getBookId(), bookBean);
+    //                    }
+    //                }
+    //            }
+    //            DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
+    //            DBHelper.setLastSyncDate(Global.mCurrentUser.getUid(), System.currentTimeMillis());
+    //
+    //            mBookAdapter.setList(convertBookBeanList(mMapBookShow));
+    //
+    //            // 同步分类
+    //            getCategoryList();
+    //        }
+    //
+    //        @Override
+    //        public void onFailure(int code, String msg) {
+    //            startSyncAnim(false);
+    //            ToastUtils.show(msg);
+    //        }
+    //    });
+    //}
 
-        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookSync);
-        myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookSyncParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookBean.BookServerInfo>>() {
-            @Override
-            public void onStart() {
-                startSyncAnim(true);
-            }
-
-            @Override
-            public void onSuccess(int code, List<BookBean.BookServerInfo> bookServerInfoList) {
-                for (int i = bookServerInfoList.size() - 1; i >= 0; i--) {
-                    BookBean.BookServerInfo bookServerInfo = bookServerInfoList.get(i);
-                    if (Boolean.valueOf(bookServerInfo.getIsDel())) { // 删除的书
-                        if (mMapBookAll.containsKey(bookServerInfo.getBookId())) {
-                            mMapBookAll.remove(bookServerInfo.getBookId());
-                        }
-                        if (mMapBookShow.containsKey(bookServerInfo.getBookId())) {
-                            mMapBookShow.remove(bookServerInfo.getBookId());
-                        }
-                    } else { // 更新电子书或新增电子书
-                        if (mMapBookAll.containsKey(bookServerInfo.getBookId())) { // 如果当前用户已有此书，则更新电子书
-                            BookBean bookBeanOld = mMapBookAll.get(bookServerInfo.getBookId());
-                            bookBeanOld.setBookServerInfo(bookServerInfo);
-                            mMapBookAll.put(bookServerInfo.getBookId(), bookBeanOld);
-
-                            if (mMapBookShow.containsKey(bookServerInfo.getBookId())) {
-                                mMapBookShow.put(bookServerInfo.getBookId(), bookBeanOld);
-                            }
-                        } else { // 否则没有，则新增的电子书
-                            BookBean bookBean = new BookBean();
-                            // 设如果本地已有文件，则设置电子书本地存储信息
-                            String bookFileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
-                            String bookFileName = Utils.getBookName(DBHelper.getUserBean(), bookServerInfo);
-                            File bookFile = new File(bookFileDir, bookFileName);
-                            if (bookFile.exists()) {
-                                String filePath = bookFile.getAbsolutePath();
-
-                                FileNameService fileNameService = new FileNameService();
-                                String fileName = fileNameService.getFileName(filePath);
-                                String fileSuffix = fileNameService.getFileExtendName(filePath);
-
-                                BookInfoService bookInfoService = new BookInfoService();
-                                bookInfoService.init(filePath);
-                                Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
-                                String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath);
-                                bookInfoService.clear();
-
-                                bookBean.getBookLocalInfo().setFileName(fileName);
-                                bookBean.getBookLocalInfo().setFileSuffix(fileSuffix);
-                                bookBean.getBookLocalInfo().setLocalBookPath(filePath);
-                                bookBean.getBookLocalInfo().setLocalCoverPath(localCoverPath);
-                                bookBean.getBookLocalInfo().setBook(book);
-                            }
-                            // 设置服务端信息
-                            bookBean.setBookServerInfo(bookServerInfo);
-
-                            mMapBookAll.put(bookServerInfo.getBookId(), bookBean);
-                            mMapBookShow.put(bookServerInfo.getBookId(), bookBean);
-                        }
-                    }
-                }
-                DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
-                DBHelper.setLastSyncDate(Global.mCurrentUser.getUid(), System.currentTimeMillis());
-
-                mBookAdapter.setList(convertBookBeanList(mMapBookShow));
-
-                // 同步分类
-                getCategoryList();
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                startSyncAnim(false);
-                ToastUtils.show(msg);
-            }
-        });
-    }
-
-    /**
-     * 同步分类
-     */
-    public void syncCategoryList(long timestamp) {
-        CategorySyncParam categorySyncParam = new CategorySyncParam();
-//        long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
-        if (timestamp == 0) {
-            categorySyncParam.setSyncType(CategorySyncParam.SYNC_TYPE_ALL);
-            categorySyncParam.setLastSyncDate(String.valueOf(timestamp));
-        } else {
-            categorySyncParam.setSyncType(CategorySyncParam.SYNC_TYPE_TIME);
-            categorySyncParam.setLastSyncDate(String.valueOf(timestamp));
-        }
-
-        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategorySync);
-        myRequestEntity.setContentWithHeader(ApiRequest.getContent(categorySyncParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<List<CategoryBean>>() {
-            @Override
-            public void onStart() {
-                showLoading(true);
-            }
-
-            @Override
-            public void onSuccess(int code, List<CategoryBean> categoryBeanList) {
-                showLoading(false);
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                showLoading(false);
-                ToastUtils.show(msg);
-            }
-        });
-    }
+    //    /**
+    //     * 同步分类
+    //     */
+    //    public void syncCategoryList(long timestamp) {
+    //        CategorySyncParam categorySyncParam = new CategorySyncParam();
+    ////        long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
+    //        if (timestamp == 0) {
+    //            categorySyncParam.setSyncType(CategorySyncParam.SYNC_TYPE_ALL);
+    //            categorySyncParam.setLastSyncDate(String.valueOf(timestamp));
+    //        } else {
+    //            categorySyncParam.setSyncType(CategorySyncParam.SYNC_TYPE_TIME);
+    //            categorySyncParam.setLastSyncDate(String.valueOf(timestamp));
+    //        }
+    //
+    //        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiCategorySync);
+    //        myRequestEntity.setContentWithHeader(ApiRequest.getContent(categorySyncParam));
+    //        RequestSender.get().send(myRequestEntity, new RequestCallback<List<CategoryBean>>() {
+    //            @Override
+    //            public void onStart() {
+    //                showLoading(true);
+    //            }
+    //
+    //            @Override
+    //            public void onSuccess(int code, List<CategoryBean> categoryBeanList) {
+    //                showLoading(false);
+    //            }
+    //
+    //            @Override
+    //            public void onFailure(int code, String msg) {
+    //                showLoading(false);
+    //                ToastUtils.show(msg);
+    //            }
+    //        });
+    //    }
 
     /**
      * 更新电子书列表
@@ -756,21 +840,39 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
+    ///**
+    // * MainActivity-获取用户的所有分类
+    // */
+    //private void getCategoryList() {
+    //    if (mActivity != null && mActivity instanceof MainActivity) {
+    //        ((MainActivity) mActivity).getCategoryList();
+    //    }
+    //}
+
     /**
-     * MainActivity-获取用户的所有分类
+     * MainActivity-更新分类列表
      */
-    private void getCategoryList() {
+    private void initCategoryList() {
         if (mActivity != null && mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).getCategoryList();
+            ((MainActivity) mActivity).initCategoryList();
         }
     }
 
     /**
      * MainActivity-更新分类列表
      */
-    private void updateCategoryList(List<CategoryBean> categoryBeanList) {
+    private void syncCategoryList(List<CategoryBean> categoryBeanList) {
         if (mActivity != null && mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).updateCategoryList(categoryBeanList);
+            ((MainActivity) mActivity).syncCategoryList(categoryBeanList);
+        }
+    }
+
+    /**
+     * MainActivity-更新分类列表
+     */
+    private void updateCategoryList() {
+        if (mActivity != null && mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).updateCategoryList();
         }
     }
 
@@ -929,17 +1031,23 @@ public class HomeFragment extends BaseFragment {
                 });
             }
         }));
-        tcMenus.add(new TCMenu("同步分类-全部", new View.OnClickListener() {
+        //tcMenus.add(new TCMenu("同步分类-全部", new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        syncCategoryList(0);
+        //    }
+        //}));
+        //tcMenus.add(new TCMenu("同步分类-时间", new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
+        //        syncCategoryList(timestamp);
+        //    }
+        //}));
+        tcMenus.add(new TCMenu("showLoading", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                syncCategoryList(0);
-            }
-        }));
-        tcMenus.add(new TCMenu("同步分类-时间", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                long timestamp = DBHelper.getLastSyncDate(Global.mCurrentUser.getUid());
-                syncCategoryList(timestamp);
+                showLoading(true);
             }
         }));
         DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();
