@@ -1,7 +1,6 @@
 package com.haoyang.lovelyreader.tre.bean;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public class CategoryBean {
     public static final String CATEGORY_ROOT_NAME = "所有电子书";
 
     // 默认分类
-    public static String CATEGORY_DEFAULT_ID = "-1";
+    public static String CATEGORY_DEFAULT_ID = CATEGORY_ROOT_ID;
     public static final String CATEGORY_DEFAULT_NAME = "默认分类";
 
     public static final int LEVEL_0 = 10; // 所有电子书

@@ -208,6 +208,11 @@ public class MainActivity extends BaseActivity {
                     ToastUtils.show("该分类不可修改");
                     return;
                 }
+                if (!CategoryBean.CATEGORY_DEFAULT_ID.equals(CategoryBean.CATEGORY_ROOT_ID)
+                        && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_DEFAULT_ID)) {
+                    ToastUtils.show("默认分类不可修改");
+                    return;
+                }
                 showCategoryView(CATEGORY_OPTION_MODIFY);
             }
 
@@ -219,6 +224,11 @@ public class MainActivity extends BaseActivity {
                 }
                 if (Global.mCurrentCategory.getLevel() == CategoryBean.LEVEL_0) {
                     ToastUtils.show("该分类不可删除");
+                    return;
+                }
+                if (!CategoryBean.CATEGORY_DEFAULT_ID.equals(CategoryBean.CATEGORY_ROOT_ID)
+                        && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_DEFAULT_ID)) {
+                    ToastUtils.show("默认分类不可删除");
                     return;
                 }
                 DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除分类 " + Global.mCurrentCategory.getCategoryName() + "？", "确定", "取消", true,
@@ -262,6 +272,11 @@ public class MainActivity extends BaseActivity {
                 }
                 if (Global.mCurrentCategory.getLevel() == CategoryBean.LEVEL_3) {
                     ToastUtils.show("三级分类下不可再创建子分类");
+                    return;
+                }
+                if (!CategoryBean.CATEGORY_DEFAULT_ID.equals(CategoryBean.CATEGORY_ROOT_ID)
+                        && Global.mCurrentCategory.getCategoryId().equals(CategoryBean.CATEGORY_DEFAULT_ID)) {
+                    ToastUtils.show("默认分类下不可创建子分类");
                     return;
                 }
                 showCategoryView(CATEGORY_OPTION_ADD);
