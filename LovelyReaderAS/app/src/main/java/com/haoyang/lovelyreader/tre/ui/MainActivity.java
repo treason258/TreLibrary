@@ -86,7 +86,6 @@ public class MainActivity extends BaseActivity {
     // 分类面板
     private DrawerLayout dlMain;
     private RelativeLayout rlCategory;
-    private TextView tvSync;
     private ListView lvCategory;
     private RelativeLayout rlAddCategory;
     private RelativeLayout rlCategoryView;
@@ -119,7 +118,6 @@ public class MainActivity extends BaseActivity {
         // 分类面板
         dlMain = (DrawerLayout) findViewById(R.id.dlMain);
         rlCategory = (RelativeLayout) findViewById(R.id.rlCategory);
-        tvSync = (TextView) findViewById(R.id.tvSync);
         lvCategory = (ListView) findViewById(R.id.lvCategory);
         rlAddCategory = (RelativeLayout) findViewById(R.id.rlAddCategory);
         rlCategoryView = (RelativeLayout) findViewById(R.id.rlCategoryView);
@@ -193,17 +191,6 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onDrawerStateChanged(int newState) {
-            }
-        });
-
-        // tvSync-同步数据
-        tvSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (LoginUtils.checkNotLoginAndToast()) {
-                    return;
-                }
-                syncServerData();
             }
         });
         DrawerLayoutHepler.setDrawerLeftEdgeSize(mActivity, dlMain, 0.6f);
@@ -807,15 +794,6 @@ public class MainActivity extends BaseActivity {
     public void updateBookList(CategoryBean categoryBean) {
         if (mHomeFragment != null) {
             mHomeFragment.updateBookList(categoryBean);
-        }
-    }
-
-    /**
-     * HomeFragment-同步服务端数据
-     */
-    public void syncServerData() {
-        if (mHomeFragment != null) {
-            mHomeFragment.syncServerData();
         }
     }
 }
