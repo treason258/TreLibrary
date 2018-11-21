@@ -28,6 +28,7 @@ import com.haoyang.lovelyreader.tre.bean.api.CategoryEditParam;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.event.OnTokenExpiredEvent;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
+import com.haoyang.lovelyreader.tre.helper.DrawerLayoutHepler;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.Global;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
@@ -205,6 +206,7 @@ public class MainActivity extends BaseActivity {
                 syncServerData();
             }
         });
+        DrawerLayoutHepler.setDrawerLeftEdgeSize(mActivity, dlMain, 0.6f);
 
         // lvCategory-分类列表
         mCategoryAdapter = new CategoryAdapter(mContext, mListCategoryShow);
