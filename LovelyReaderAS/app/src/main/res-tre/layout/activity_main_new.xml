@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="书  架"
+                    android:text="书 架"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="我  的"
+                    android:text="我 的"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
