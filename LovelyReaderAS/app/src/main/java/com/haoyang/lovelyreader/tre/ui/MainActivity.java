@@ -193,7 +193,7 @@ public class MainActivity extends BaseActivity {
             public void onDrawerStateChanged(int newState) {
             }
         });
-        DrawerLayoutHepler.setDrawerLeftEdgeSize(mActivity, dlMain, 0.6f);
+        DrawerLayoutHepler.setDrawerLeftEdgeSize(mActivity, dlMain, 0.3f);
 
         // lvCategory-分类列表
         mCategoryAdapter = new CategoryAdapter(mContext, mListCategoryShow);
