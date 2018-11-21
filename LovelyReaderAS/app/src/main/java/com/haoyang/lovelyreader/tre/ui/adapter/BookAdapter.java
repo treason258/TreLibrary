@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
-import com.haoyang.lovelyreader.tre.bean.CategoryBean;
 import com.haoyang.lovelyreader.tre.bean.UploadBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.UploadBookParam;
@@ -214,7 +213,9 @@ public class BookAdapter extends TCAdapter {
                         break;
                     case SYNC_TYPE_ERROR:
                         tvSync.setText("异常");
+                        ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_1));
                         llSync.setVisibility(View.VISIBLE);
+                        llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_1));
                         llSync.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -258,6 +259,9 @@ public class BookAdapter extends TCAdapter {
             @Override
             public void onProgress(float progress, long total) {
                 super.onProgress(progress, total);
+                if (progress == 1) {
+                    progress = 0.99f;
+                }
                 String percent = ((int) (progress * 100.0f)) + "%";
 
                 LogUtils.i("正在上传：" + percent);
@@ -289,6 +293,7 @@ public class BookAdapter extends TCAdapter {
             public void onFailure(int code, String msg) {
                 Global.mIsUploading = false;
                 ToastUtils.show(msg);
+                notifyDataSetChanged();
             }
         });
     }
@@ -313,6 +318,9 @@ public class BookAdapter extends TCAdapter {
             @Override
             public void onProgress(float progress, long total) {
                 super.onProgress(progress, total);
+                if (progress == 1) {
+                    progress = 0.99f;
+                }
                 String percent = ((int) (progress * 100.0f)) + "%";
 
                 LogUtils.i("正在下载：" + percent);
@@ -357,6 +365,7 @@ public class BookAdapter extends TCAdapter {
             public void onFailure(int code, String msg) {
                 Global.mIsDownloading = false;
                 ToastUtils.show(msg);
+                notifyDataSetChanged();
             }
         });
     }
