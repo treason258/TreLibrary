@@ -4,6 +4,38 @@
 ****************************************************************
 ****************************************************************
 ****************************************************************
+
+370402199006237316
+140224199406041229
+
+https://cdn.yinxiang.com/mac-smd/public/YinxiangBiji_RELEASE_8.3.1_457435.dmg
+
+glide
+4.7.1
+Error:SSL peer shut down incorrectly
+
+gradle插件版本和gradle版本对应关系
+
+https://developer.android.com/studio/releases/gradle-plugin#updating-gradle
+
+Error:In <declare-styleable> FontFamilyFont, unable to find attribute android:font
+
+146 5156 8669
+
+10.1.0
+
+http://m.ceshi.xin.com/halfprice/?from=app&os=android&xdid=0a3efdc683c1b2874fe460836ff4c9a6&app_id=u2_0&app=10.1.0.187b2e2b&uid=1590222152&cid=fa8dfeffcdd9c04f3db2cde1e62f628e&cityid=201&net=wifi&imei=868053033619677&mac=null&location=
+
+http://new_source.api.ceshi.youxinjinrong.com/wap/my_newdebt/
+
+http://fe.test.youxinjinrong.com:5013/loan-post/repay/carArrears?orderid=1234680900&uid=1590222152
+
+10.3.0
+
+http://m.ceshi.xin.com/halfprice/?from=app&os=android&xdid=0a3efdc683c1b2874fe460836ff4c9a6&app_id=u2_0&app=10.3.0.b3ccc61f5b&uid=1590222152&cid=adbdc7abf2922ced779f12950d75753b&cityid=201&net=wifi&imei=868053033619677&mac=null&location=116.480737_39.996432_2
+
+http://api.ceshi.youxinjinrong.com/wap/my_newdebt/
+
 ****************************************************************
 
 10.3需求
