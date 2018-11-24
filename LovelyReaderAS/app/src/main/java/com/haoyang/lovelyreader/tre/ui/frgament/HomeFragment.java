@@ -43,6 +43,7 @@ import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.ui.FileActivity;
+import com.haoyang.lovelyreader.tre.ui.FileFilterActivity;
 import com.haoyang.lovelyreader.tre.ui.MainActivity;
 import com.haoyang.lovelyreader.tre.ui.adapter.BookAdapter;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
@@ -144,7 +145,7 @@ public class HomeFragment extends BaseFragment {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_ADD_BOOK:
-                    ArrayList<FileBean> fileBeanArrayList = data.getParcelableArrayListExtra(FileActivity.EXTRA_FILE_LIST);
+                    ArrayList<FileBean> fileBeanArrayList = data.getParcelableArrayListExtra(FileFilterActivity.EXTRA_FILE_LIST);
                     if (fileBeanArrayList == null) {
                         return;
                     }
@@ -292,7 +293,7 @@ public class HomeFragment extends BaseFragment {
                 //                    ToastUtils.show("请先选中所属分类");
                 //                    return;
                 //                }
-                startActivityForResult(new Intent(mContext, FileActivity.class), REQUEST_CODE_ADD_BOOK);
+                startActivityForResult(new Intent(mContext, FileFilterActivity.class), REQUEST_CODE_ADD_BOOK);
             }
         });
         ivAdd.setOnLongClickListener(new View.OnLongClickListener() {

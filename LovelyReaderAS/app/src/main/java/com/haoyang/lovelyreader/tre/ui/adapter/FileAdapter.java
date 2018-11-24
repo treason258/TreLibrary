@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
+import com.haoyang.lovelyreader.tre.helper.Global;
 import com.java.common.service.file.FileNameService;
 import com.mjiayou.trecorelib.base.TCViewHolder;
 
@@ -71,12 +72,14 @@ public class FileAdapter extends BaseAdapter {
         private ImageView ivFile;
         private ImageView ivSelect;
         private TextView tvFile;
+        private TextView tvFilePath;
 
         @Override
         protected void findView(View view) {
             ivFile = (ImageView) view.findViewById(R.id.ivFile);
             ivSelect = (ImageView) view.findViewById(R.id.ivSelect);
             tvFile = (TextView) view.findViewById(R.id.tvFile);
+            tvFilePath = (TextView) view.findViewById(R.id.tvFilePath);
         }
 
         @Override
@@ -97,6 +100,12 @@ public class FileAdapter extends BaseAdapter {
             // tvFile
             if (!TextUtils.isEmpty(bean.getPath())) {
                 tvFile.setText(mFileNameService.getFileNameFromAddress(bean.getPath()));
+                tvFilePath.setText(bean.getPath());
+            }
+            if (Global.showEpubFilePath) {
+                tvFilePath.setVisibility(View.VISIBLE);
+            } else {
+                tvFilePath.setVisibility(View.GONE);
             }
         }
     }

@@ -62,6 +62,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
+            android:name=".tre.ui.FileFilterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
             android:name=".tre.ui.MemberActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"

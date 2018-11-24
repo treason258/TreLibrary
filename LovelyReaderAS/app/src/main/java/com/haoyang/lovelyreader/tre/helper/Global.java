@@ -18,4 +18,6 @@ public class Global {
     public static String maxFileSize; // 可以上传的文件大小最大值
 
     public static boolean debugTokenExpired = false;
+
+    public static boolean showEpubFilePath = false;
 }
