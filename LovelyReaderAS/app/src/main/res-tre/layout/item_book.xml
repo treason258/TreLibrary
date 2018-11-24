@@ -16,24 +16,40 @@
             android:id="@+id/ivBook"
             android:layout_width="100dp"
             android:layout_height="136dp"
-            android:src="@drawable/ic_home_book_item_default" />
+            android:src="@drawable/ic_home_book_item_default_2" />
 
         <TextView
             android:id="@+id/tvBook"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/ivBook"
             android:layout_alignRight="@+id/ivBook"
             android:layout_alignTop="@+id/ivBook"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:ellipsize="end"
-            android:ems="1"
-            android:maxLines="7"
+            android:maxLines="5"
             android:text="文案"
             android:textColor="@color/color_333333"
             android:textSize="13sp" />
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBottom="@+id/ivBook"-->
+            <!--android:layout_alignRight="@+id/ivBook"-->
+            <!--android:layout_alignTop="@+id/ivBook"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:ellipsize="end"-->
+            <!--android:ems="1"-->
+            <!--android:maxLines="7"-->
+            <!--android:text="文案"-->
+            <!--android:textColor="@color/color_333333"-->
+            <!--android:textSize="13sp" />-->
 
         <LinearLayout
             android:id="@+id/llSync"

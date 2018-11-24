@@ -148,7 +148,7 @@ public class BookAdapter extends TCAdapter {
                     showDefault = true;
                 }
                 if (showDefault) {
-                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default));
+                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default_2));
                     tvBook.setVisibility(View.VISIBLE);
                 }
                 // tvSync-分四种情况
