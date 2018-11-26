@@ -1,8 +1,50 @@
 
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+
+ + "/collectid=" + mDataId
 
 ****************************************************************
+
+allowFontScaling={false}
+includeFontPadding: 'false'
+
 ****************************************************************
+
+产品：阎晴
+评价：A
+描述：遇到问题积极配合，有需求变更会及时同步，认真负责
+
 ****************************************************************
+
+IReactABTest
+
+    fun getHomeABTest(): String
+
+
+UsedCarReactRouter
+
+  /**
+   * 猜你喜欢AB
+   * _abTest_gussYouLike = await NativeModules.UCRouter.getGussYouLikeAB()
+   */
+  @ReactMethod
+  fun getGussYouLikeAB(promise: Promise) {
+    val reactabtest = Router.getServiceClass(IReactABTest::class.java, "main")
+    if (reactabtest != null) {
+      val obj = reactabtest.newInstance()
+      promise.resolve(obj.getHomeABTest())
+
+    } else {
+      promise.reject(AssertionException("null"))
+    }
+  }
+
+
 ****************************************************************
 
 370402199006237316
