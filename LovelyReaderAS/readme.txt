@@ -1,6 +1,7 @@
 
 // ******************************** SVN ********************************
 
+matengfei=matengfei321
 svn://123.56.194.104/repo0/projects/Reader/android/LovelyReader
 svn://123.56.194.104/repo0/projects/common/AppBase
 svn://123.56.194.104/repo0/projects/common/JavaCommon
