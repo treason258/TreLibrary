@@ -1,4 +1,12 @@
 
+// ******************************** SVN ********************************
+
+svn://123.56.194.104/repo0/projects/Reader/android/LovelyReader
+svn://123.56.194.104/repo0/projects/common/AppBase
+svn://123.56.194.104/repo0/projects/common/JavaCommon
+LovelyReader依赖AppBase
+JavaCommon是一些通用的功能，里面有build.xml文件，用ant生成jar包，拷到lover的lib唧可
+
 // ******************************** 接口 ********************************
 
 http://112.126.80.1:9001/swagger-ui.html#/APP%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%20Api%E6%8E%A5%E5%8F%A3/checkUsingPOST
