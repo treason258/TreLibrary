@@ -115,6 +115,7 @@ public class BookAdapter extends TCAdapter {
         private LinearLayout llSync;
         private TextView tvSync;
         private ImageView ivSync;
+        private TextView tvSource;
 
         @Override
         protected void findView(View view) {
@@ -123,6 +124,7 @@ public class BookAdapter extends TCAdapter {
             llSync = (LinearLayout) view.findViewById(R.id.llSync);
             tvSync = (TextView) view.findViewById(R.id.tvSync);
             ivSync = (ImageView) view.findViewById(R.id.ivSync);
+            tvSource = (TextView) view.findViewById(R.id.tvSource);
         }
 
         @Override
@@ -148,7 +150,7 @@ public class BookAdapter extends TCAdapter {
                     showDefault = true;
                 }
                 if (showDefault) {
-                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default_2));
+                    ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default_3));
                     tvBook.setVisibility(View.VISIBLE);
                 }
                 // tvSync-分四种情况
@@ -224,6 +226,38 @@ public class BookAdapter extends TCAdapter {
                         });
                         break;
                 }
+
+                // tvSource
+                String source;
+                if (bookBean.getBookServerInfo() != null && !TextUtils.isEmpty(bookBean.getBookServerInfo().getSource())) {
+                    source = bookBean.getBookServerInfo().getSource();
+                    switch (source) {
+                        case "ANDROID_PHONE":
+                            source = "Android";
+                            break;
+                        case "ANDROID_PAD":
+                            source = "Android";
+                            break;
+                        case "IOS_PHONE":
+                            source = "iPhone";
+                            break;
+                        case "IOS_PAD":
+                            source = "iPad";
+                            break;
+                        case "WINDOWS":
+                            source = "Windows";
+                            break;
+                        case "MAC":
+                            source = "Mac";
+                            break;
+                        default:
+                            source = "未知";
+                            break;
+                    }
+                } else {
+                    source = "未知";
+                }
+                tvSource.setText("来源：" + source);
             }
         }
     }

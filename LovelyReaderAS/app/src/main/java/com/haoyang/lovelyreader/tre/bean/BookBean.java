@@ -109,6 +109,24 @@ public class BookBean implements Serializable {
         private String coverPath; // 图书封面路径
         private String createDate; // 创建时间
         private String isDel; // 是否是删除的
+        private String isUpload;
+        private String source;
+
+        public String getIsUpload() {
+            return isUpload;
+        }
+
+        public void setIsUpload(String isUpload) {
+            this.isUpload = isUpload;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
+        }
 
         public String getAuthor() {
             return author;

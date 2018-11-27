@@ -61,3 +61,13 @@ str = "111MgwboM111"
 
 
 111randomChar=123111
+
+
+@马腾飞-Android
+WEB("WEB", "网站"),
+ANDROID_PHONE("ANDROID_PHONE", "安卓手机"),
+ANDROID_PAD("ANDROID_PAD", "安卓pad"),
+IOS_PHONE("IOS_PHONE", "苹果手机"),
+IOS_PAD("IOS_PAD", "苹果pad"),
+WINDOWS("WINDOWS", "windows"),
+MAC("MAC", "mac");

@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
+import com.haoyang.lovelyreader.tre.bean.store.LocalFileStore;
+import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.Global;
 import com.haoyang.lovelyreader.tre.ui.adapter.FileAdapter;
 import com.java.common.service.file.FileNameService;
@@ -37,6 +39,7 @@ public class FileFilterActivity extends BaseActivity {
     private RelativeLayout rlTitle;
     private TextView tvTitle;
     private ImageView ivBack;
+    private TextView tvMenu;
 
     private ListView lvFile;
     private TextView tvCount;
@@ -64,6 +67,7 @@ public class FileFilterActivity extends BaseActivity {
         rlTitle = (RelativeLayout) findViewById(R.id.rlTitle);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         ivBack = (ImageView) findViewById(R.id.ivBack);
+        tvMenu = (TextView) findViewById(R.id.tvMenu);
         lvFile = (ListView) findViewById(R.id.lvFile);
         tvCount = (TextView) findViewById(R.id.tvCount);
         tvSubmit = (TextView) findViewById(R.id.tvSubmit);
@@ -73,26 +77,15 @@ public class FileFilterActivity extends BaseActivity {
 
         initView();
 
-        // 正在搜索电子书
-        showLoading(true);
-        ToastUtils.show("正在搜索电子书...");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                File rootFile = Environment.getExternalStorageDirectory();
-                mList = getEpubFileList(rootFile);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        showLoading(false);
-                        ToastUtils.show("搜索完成");
-                        mFileAdapter.setList(mList);
-                    }
-                });
-
-            }
-        }).start();
+        LocalFileStore localFileStore = DBHelper.getLocalFileStore();
+        if (localFileStore != null && localFileStore.getData() != null) {
+            List<FileBean> fileBeanList = localFileStore.getData();
+            mList.clear();
+            mList.addAll(fileBeanList);
+            mFileAdapter.setList(mList);
+        } else {
+            searchLocalFile();
+        }
     }
 
     @Override
@@ -114,6 +107,15 @@ public class FileFilterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        // tvMenu
+        tvMenu.setVisibility(View.VISIBLE);
+        tvMenu.setText("刷新");
+        tvMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchLocalFile();
             }
         });
 
@@ -195,8 +197,41 @@ public class FileFilterActivity extends BaseActivity {
                 fileBean.setFolder(false);
                 epubFileList.add(fileBean);
                 LogUtils.i(TAG, "file add");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mList.add(fileBean);
+                        mFileAdapter.setList(mList);
+                    }
+                });
             }
         }
         return epubFileList;
+    }
+
+    private void searchLocalFile() {
+        // 正在搜索电子书
+        showLoading(true);
+        ToastUtils.show("电子书搜索需要几分钟完成，请耐心等待");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                File rootFile = Environment.getExternalStorageDirectory();
+                mList = getEpubFileList(rootFile);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showLoading(false);
+                        ToastUtils.show("搜索完成");
+                        mFileAdapter.setList(mList);
+                        LocalFileStore localFileStore = new LocalFileStore();
+                        localFileStore.setData(mList);
+                        DBHelper.setLocalFileStore(localFileStore);
+                    }
+                });
+
+            }
+        }).start();
     }
 }

@@ -418,6 +418,7 @@ public class HomeFragment extends BaseFragment {
                 @Override
                 public void onSyncSuccess(List<BookBean.BookServerInfo> bookServerInfoList, List<CategoryBean> categoryBeanList) {
                     startSyncAnim(false);
+                    ToastUtils.show("同步完成");
 
                     if (bookServerInfoList == null || categoryBeanList == null) {
                         return;

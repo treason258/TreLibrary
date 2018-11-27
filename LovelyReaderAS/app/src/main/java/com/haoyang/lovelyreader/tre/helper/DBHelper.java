@@ -8,6 +8,7 @@ import com.haoyang.lovelyreader.tre.bean.store.BookStore;
 import com.haoyang.lovelyreader.tre.bean.store.LastSyncDateStore;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
 import com.haoyang.lovelyreader.tre.bean.store.CategoryStore;
+import com.haoyang.lovelyreader.tre.bean.store.LocalFileStore;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.SharedUtils;
 
@@ -27,6 +28,7 @@ public class DBHelper {
     private static final String KEY_BOOK_STORE = "key_book_store";
     private static final String KEY_CATEGORY_STORE = "key_category_store";
     private static final String KEY_LAST_SYNC_DATE_STORE = "key_last_sync_date_store";
+    private static final String KEY_LOCAL_FILE_STORE = "key_local_file_store";
 
     // ******************************** KEY_USER_BEAN ********************************
 
@@ -99,6 +101,25 @@ public class DBHelper {
         String data = SharedUtils.get().getCommon(KEY_LAST_SYNC_DATE_STORE);
         if (!TextUtils.isEmpty(data)) {
             return JsonParser.get().toObject(data, LastSyncDateStore.class);
+        } else {
+            return null;
+        }
+    }
+
+    // ******************************** KEY_LOCAL_FILE_STORE ********************************
+
+    public static void setLocalFileStore(LocalFileStore localFileStore) {
+        String data = "";
+        if (localFileStore != null) {
+            data = JsonParser.get().toJson(localFileStore);
+        }
+        SharedUtils.get().setCommon(KEY_LOCAL_FILE_STORE, data);
+    }
+
+    public static LocalFileStore getLocalFileStore() {
+        String data = SharedUtils.get().getCommon(KEY_LOCAL_FILE_STORE);
+        if (!TextUtils.isEmpty(data)) {
+            return JsonParser.get().toObject(data, LocalFileStore.class);
         } else {
             return null;
         }
