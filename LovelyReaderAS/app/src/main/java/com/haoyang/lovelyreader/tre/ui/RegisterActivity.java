@@ -22,6 +22,7 @@ import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.util.TokenUtils;
+import com.haoyang.lovelyreader.tre.util.Utils;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
@@ -48,8 +49,8 @@ public class RegisterActivity extends BaseActivity {
     private EditText etNickname;
     private EditText etPassword;
     private EditText etPasswordConfirm;
-    private LinearLayout llChannel;
-    private EditText etChannel;
+//    private LinearLayout llChannel;
+//    private EditText etChannel;
     private TextView tvSubmit;
     private TextView tvProtocol;
 
@@ -72,8 +73,8 @@ public class RegisterActivity extends BaseActivity {
         etNickname = (EditText) findViewById(R.id.etNickname);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
-        llChannel = (LinearLayout) findViewById(R.id.llChannel);
-        etChannel = (EditText) findViewById(R.id.etChannel);
+//        llChannel = (LinearLayout) findViewById(R.id.llChannel);
+//        etChannel = (EditText) findViewById(R.id.etChannel);
         tvSubmit = (TextView) findViewById(R.id.tvSubmit);
         tvProtocol = (TextView) findViewById(R.id.tvProtocol);
 
@@ -94,7 +95,7 @@ public class RegisterActivity extends BaseActivity {
                 tvTitle.setText("注册");
                 tvSubmit.setText("注册");
                 llNickname.setVisibility(View.VISIBLE);
-                llChannel.setVisibility(View.VISIBLE);
+//                llChannel.setVisibility(View.VISIBLE);
                 tvProtocol.setVisibility(View.GONE);
                 tvProtocol.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -107,7 +108,7 @@ public class RegisterActivity extends BaseActivity {
                 tvTitle.setText("找回密码");
                 tvSubmit.setText("确定");
                 llNickname.setVisibility(View.GONE);
-                llChannel.setVisibility(View.GONE);
+//                llChannel.setVisibility(View.GONE);
                 tvProtocol.setVisibility(View.GONE);
                 break;
         }
@@ -128,6 +129,10 @@ public class RegisterActivity extends BaseActivity {
 
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtils.show("请输入手机号码");
+                    return;
+                }
+                if (!Utils.isMobileNO(phone)) {
+                    ToastUtils.show("请输入正确的手机号码");
                     return;
                 }
 
@@ -177,11 +182,15 @@ public class RegisterActivity extends BaseActivity {
                 String nickname = etNickname.getText().toString();
                 String password = etPassword.getText().toString();
                 String passwordConfirm = etPasswordConfirm.getText().toString();
-                String channel = etChannel.getText().toString();
+//                String channel = etChannel.getText().toString();
 
 
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtils.show("请输入手机号码");
+                    return;
+                }
+                if (!Utils.isMobileNO(phone)) {
+                    ToastUtils.show("请输入正确的手机号码");
                     return;
                 }
                 if (TextUtils.isEmpty(code)) {
@@ -202,17 +211,17 @@ public class RegisterActivity extends BaseActivity {
                     ToastUtils.show("请输入确认密码");
                     return;
                 }
-                if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入渠道码
-                    if (TextUtils.isEmpty(channel)) {
-                        ToastUtils.show("请输入渠道码");
-                        return;
-                    }
-                }
+//                if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入渠道码
+//                    if (TextUtils.isEmpty(channel)) {
+//                        ToastUtils.show("请输入渠道码");
+//                        return;
+//                    }
+//                }
 
                 UserRegisterParam userRegisterParam = new UserRegisterParam();
                 if (mPageType == PAGE_TYPE_REGISTER) { // 注册才需要输入昵称、注册才需要输入渠道码
                     userRegisterParam.setNickName(nickname);
-                    userRegisterParam.setChannel(channel);
+//                    userRegisterParam.setChannel(channel);
                 }
                 userRegisterParam.setPhone(phone);
                 userRegisterParam.setSmsCode(code);

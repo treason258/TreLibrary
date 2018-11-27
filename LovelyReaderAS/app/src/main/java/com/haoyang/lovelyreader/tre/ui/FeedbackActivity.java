@@ -1,7 +1,6 @@
 package com.haoyang.lovelyreader.tre.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -17,9 +16,11 @@ import com.haoyang.lovelyreader.tre.bean.api.FeedbackAddParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
-import com.mjiayou.trecorelib.http.RequestSender;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
+import com.haoyang.lovelyreader.tre.util.Utils;
+import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.util.ToastUtils;
+import com.mjiayou.trecorelib.util.UserUtils;
 
 import java.util.ArrayList;
 
@@ -68,6 +69,14 @@ public class FeedbackActivity extends BaseActivity {
             }
         });
 
+        // etPhone
+        if (UserUtils.checkLoginStatus()) {
+            UserBean userBean = DBHelper.getUserBean();
+            if (userBean != null && !TextUtils.isEmpty(userBean.getPhone())) {
+                etPhone.setText(userBean.getPhone());
+            }
+        }
+
         // tvSubmit
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +90,10 @@ public class FeedbackActivity extends BaseActivity {
                 }
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtils.show("请输入手机号码");
+                    return;
+                }
+                if (!Utils.isMobileNO(phone)) {
+                    ToastUtils.show("请输入正确的手机号码");
                     return;
                 }
 

@@ -42,7 +42,6 @@ import com.haoyang.lovelyreader.tre.helper.SyncHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
-import com.haoyang.lovelyreader.tre.ui.FileActivity;
 import com.haoyang.lovelyreader.tre.ui.FileFilterActivity;
 import com.haoyang.lovelyreader.tre.ui.MainActivity;
 import com.haoyang.lovelyreader.tre.ui.adapter.BookAdapter;
@@ -355,6 +354,9 @@ public class HomeFragment extends BaseFragment {
         LogUtils.d(TAG, "onEvent() called with: event = [" + event + "]");
         mIsFromLogin = true;
         initData();
+        if (event.isLogin()) {
+            switchFragmentToHome();
+        }
     }
 
     /**
@@ -898,6 +900,15 @@ public class HomeFragment extends BaseFragment {
     private void showLoading(boolean show) {
         if (mActivity != null && mActivity instanceof MainActivity) {
             ((MainActivity) mActivity).showLoading(show);
+        }
+    }
+
+    /**
+     * MainActivity-正在加载
+     */
+    private void switchFragmentToHome() {
+        if (mActivity != null && mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).switchFragmentToHome();
         }
     }
 

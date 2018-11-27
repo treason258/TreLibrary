@@ -90,6 +90,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="文案"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/color_888888"
+        android:textSize="12sp"
         android:visibility="visible" />
 </LinearLayout>

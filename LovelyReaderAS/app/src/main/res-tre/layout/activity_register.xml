@@ -248,45 +248,45 @@
         <!-- 分割线 -->
         <include layout="@layout/tc_layout_line_horizontal" />
 
-        <!-- 渠道码 -->
-        <LinearLayout
-            android:id="@+id/llChannel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="16dp">
+        <!--&lt;!&ndash; 渠道码 &ndash;&gt;-->
+        <!--<LinearLayout-->
+            <!--android:id="@+id/llChannel"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:padding="16dp">-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_register_input_code" />
+            <!--<ImageView-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:src="@drawable/ic_register_input_code" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="渠道码"
-                android:textColor="@color/color_b0b0b0"
-                android:textSize="18sp" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:text="渠道码"-->
+                <!--android:textColor="@color/color_b0b0b0"-->
+                <!--android:textSize="18sp" />-->
 
-            <EditText
-                android:id="@+id/etChannel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right"
-                android:hint="请输入渠道码"
-                android:textColor="@color/color_b0b0b0"
-                android:textColorHint="@color/color_b0b0b0"
-                android:textSize="18sp"
-                android:theme="@style/LoginEditTextTheme"
-                android:visibility="visible" />
-        </LinearLayout>
+            <!--<EditText-->
+                <!--android:id="@+id/etChannel"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@null"-->
+                <!--android:gravity="right"-->
+                <!--android:hint="请输入渠道码"-->
+                <!--android:textColor="@color/color_b0b0b0"-->
+                <!--android:textColorHint="@color/color_b0b0b0"-->
+                <!--android:textSize="18sp"-->
+                <!--android:theme="@style/LoginEditTextTheme"-->
+                <!--android:visibility="visible" />-->
+        <!--</LinearLayout>-->
 
-        <!-- 分割线 -->
-        <include layout="@layout/tc_layout_line_horizontal" />
+        <!--&lt;!&ndash; 分割线 &ndash;&gt;-->
+        <!--<include layout="@layout/tc_layout_line_horizontal" />-->
 
         <!-- 注册 -->
         <TextView

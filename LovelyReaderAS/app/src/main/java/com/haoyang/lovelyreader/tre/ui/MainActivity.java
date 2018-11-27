@@ -193,7 +193,7 @@ public class MainActivity extends BaseActivity {
             public void onDrawerStateChanged(int newState) {
             }
         });
-        DrawerLayoutHepler.setDrawerLeftEdgeSize(mActivity, dlMain, 0.3f);
+        DrawerLayoutHepler.setDrawerLeftEdgeSize(mActivity, dlMain, 0.1f);
 
         // lvCategory-分类列表
         mCategoryAdapter = new CategoryAdapter(mContext, mListCategoryShow);
@@ -810,6 +810,14 @@ public class MainActivity extends BaseActivity {
         if (mHomeFragment != null) {
             mHomeFragment.updateBookList(categoryBean);
         }
+    }
+
+    /**
+     * 切换到首页
+     */
+    public void switchFragmentToHome() {
+        viewPager.setCurrentItem(FRAGMENT_HOME);
+        switchFragment(FRAGMENT_HOME);
     }
 }
 

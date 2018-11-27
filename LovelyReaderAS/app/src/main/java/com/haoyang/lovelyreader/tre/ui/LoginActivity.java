@@ -2,7 +2,6 @@ package com.haoyang.lovelyreader.tre.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -17,8 +16,9 @@ import com.haoyang.lovelyreader.tre.bean.api.UserLoginParam;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
-import com.mjiayou.trecorelib.http.RequestSender;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
+import com.haoyang.lovelyreader.tre.util.Utils;
+import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.util.SharedUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
@@ -85,6 +85,10 @@ public class LoginActivity extends BaseActivity {
 
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtils.show("请输入手机号码");
+                    return;
+                }
+                if (!Utils.isMobileNO(phone)) {
+                    ToastUtils.show("请输入正确的手机号码");
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
