@@ -2,7 +2,13 @@
 ****************************************************************
 ****************************************************************
 ****************************************************************
+
+// 修复BUG：http://tlc.xin.com/browse/NCCESHIZU-23892
+
 ****************************************************************
+
+project = NCCESHIZU AND status in (Open, "In Progress", Reopened) AND 修复版本号 = 10.3 AND 系统 = Android AND 项目类别 = "1. C端" AND assignee in (pengqiming, chenliang, guozhiwei, lifengwei, shifangyu, matengfei, xuziming, congdongye, maweihua, lijian16) ORDER BY assignee ASC, issuetype DESC, key ASC, priority ASC, summary ASC
+
 ****************************************************************
 
 可以用这个订单看下，手机号 14652862182
@@ -40,6 +46,8 @@ urlsf
 http://fe.test.youxinjinrong.com:5013/valetpay/valet/uxin/valet/wx_pay?payInfo=undefined&successUrl=/valetpay/valet/result?trade_no=296044913174468&business_type=9&filerUrl=/valetpay/valet/result?trade_no=296044913174468&business_type=9
 
 ****************
+
+http://fe.test.youxinjinrong.com:5013/valetpay/valet/uxin/valet/wx_pay?payInfo={%22package%22:%22Sign=WXPay%22,%22appid%22:%22wx272e252af4ac7924%22,%22sign%22:%22E51C9CB20A13451A007403078CA38302%22,%22partnerid%22:%221273609101%22,%22prepayid%22:%22wx27132939799134a2567251ab0679513966%22,%22noncestr%22:%22hGdcnmCiSTEB4w6t%22,%22timestamp%22:%221543296579%22}&successUrl=/valetpay/valet/result?trade_no=296044913174468&business_type=9&filerUrl=/valetpay/valet/result?trade_no=296044913174468&business_type=9
 
 http://fe.test.youxinjinrong.com:5013/valetpay/valet/uxin/valet/wx_pay?payInfo={%22package%22:%22Sign=WXPay%22,%22appid%22:%22wx272e252af4ac7924%22,%22sign%22:%22E51C9CB20A13451A007403078CA38302%22,%22partnerid%22:%221273609101%22,%22prepayid%22:%22wx27132939799134a2567251ab0679513966%22,%22noncestr%22:%22hGdcnmCiSTEB4w6t%22,%22timestamp%22:%221543296579%22}&successUrl=/valetpay/valet/result?trade_no=296044913174468&business_type=9&filerUrl=/valetpay/valet/result?trade_no=296044913174468&business_type=9
 
