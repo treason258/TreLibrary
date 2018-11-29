@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mjiayou.trebundle">
+
+    <!-- ******************************** TreCore-Start ******************************** -->
+    <!-- 权限声明 -->
+    <!-- 设备信息 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 访问网络状态 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 外置存储存取权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 多媒体相关 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 打电话 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <uses-sdk tools:overrideLibrary="com.mjiayou.trecore.lib" />
+
+    <!-- ******************************** TreCore-End ******************************** -->
+    <application
+        android:name="com.mjiayou.trecore.base.TCApp"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/tc_launcher"
+        android:label="@string/gradle_app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/TCAppTheme"
+        tools:replace="icon,label,theme">
+        <meta-data
+            android:name="TC_KEY"
+            android:value="${gradle_tc_key}" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="${gradle_umeng_appkey}" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${gradle_channel_name}" />
+
+        <service android:name="com.mjiayou.trecore.service.WindowService" />
+
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".debug.DebugActivity" />
+        <activity android:name=".debug.TestActivity" />
+        <activity android:name=".debug.TestWeiboActivity" />
+        <activity android:name=".debug.TestTipsActivity" />
+        <activity android:name=".debug.TestCanvasActivity" />
+
+    </application>
+
+</manifest>

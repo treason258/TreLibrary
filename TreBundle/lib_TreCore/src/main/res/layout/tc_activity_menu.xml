@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tc_background"
+    android:scrollbarSize="@dimen/tc_margin_mini"
+    android:scrollbarStyle="insideOverlay"
+    android:scrollbarThumbVertical="@drawable/tc_shape_rect_solid_theme_size"
+    android:scrollbars="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- menu -->
+        <include layout="@layout/tc_layout_menu_container" />
+
+        <!-- info -->
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/tc_margin_normal"
+            android:text="tv_info" />
+
+    </LinearLayout>
+</ScrollView>

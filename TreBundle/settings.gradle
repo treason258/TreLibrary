@@ -1,0 +1,2 @@
+include ':app'
+include ':lib_TreKernel', ':lib_TreCore', ':lib_TreView', ':lib_Umeng'

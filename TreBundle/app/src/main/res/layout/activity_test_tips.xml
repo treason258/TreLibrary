@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/tc_margin_normal">
+
+        <EditText
+            android:id="@+id/et_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:hint="默认样式" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tc_margin_small"
+            android:backgroundTint="@color/tc_theme"
+            android:hint="修改后样式"
+            android:textColorHighlight="@color/tc_theme_alpha"
+            android:textCursorDrawable="@drawable/tc_shape_rect_solid_theme_size"
+            android:textSelectHandle="@drawable/tc_shape_oval_solid_theme_size"
+            android:textSelectHandleLeft="@drawable/tc_shape_oval_solid_theme_size"
+            android:textSelectHandleRight="@drawable/tc_shape_oval_solid_theme_size" />
+
+        <!-- clipChildren属性的使用 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/tc_gray_light"
+            android:clipChildren="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/tc_gray_dark"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/tc_launcher" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tc_margin_small"
+            android:autoLink="all"
+            android:text="text" />
+
+    </LinearLayout>
+</ScrollView>

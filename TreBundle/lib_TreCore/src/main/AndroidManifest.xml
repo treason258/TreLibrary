@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mjiayou.trecore">
+
+    <application>
+        <activity android:name=".base.TCMenuActivity" />
+        <activity android:name=".base.TCInfoActivity" />
+        <activity android:name=".base.TCListActivity" />
+    </application>
+
+</manifest>

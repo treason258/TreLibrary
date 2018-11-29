@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/tc_transparent">
+
+    <!-- dialog -->
+    <LinearLayout
+        android:id="@+id/layout_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/tc_white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/tc_margin_normal">
+
+        <!-- 头像 -->
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tc_launcher" />
+
+        <!-- 昵称 -->
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tc_margin_normal"
+            android:text="tv_name"
+            android:textColor="@color/tc_text_black" />
+
+        <!-- ok -->
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tc_margin_normal"
+            android:background="@drawable/tc_selector_rect_solid_gray_light_to_dark_corners"
+            android:gravity="center"
+            android:padding="@dimen/tc_margin_small"
+            android:text="tv_ok"
+            android:textColor="@color/tc_text_black" />
+    </LinearLayout>
+</ScrollView>

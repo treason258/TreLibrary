@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- tc-color -->
+    <color name="tc_transparent">#00000000</color>
+    <color name="tc_red">#ff0000</color>
+    <color name="tc_red_alpha">#88ff0000</color>
+    <color name="tc_green">#00ff00</color>
+    <color name="tc_green_alpha">#8800ff00</color>
+    <color name="tc_yellow">#ffff00</color>
+    <color name="tc_yellow_alpha">#88ffff00</color>
+    <color name="tc_blue">#0000ff</color>
+    <color name="tc_blue_alpha">#880000ff</color>
+    <color name="tc_black">#000000</color>
+    <color name="tc_black_alpha">#88000000</color>
+    <color name="tc_white">#ffffff</color>
+    <color name="tc_white_alpha">#88ffffff</color>
+    <color name="tc_white_alpha_light">#ddffffff</color>
+    <color name="tc_white_alpha_dark">#ddffffff</color>
+    <color name="tc_gray">#888888</color>
+    <color name="tc_gray_alpha">#88888888</color>
+    <color name="tc_gray_dark">#aaaaaa</color>
+    <color name="tc_gray_light">#dddddd</color>
+
+    <!-- tc-color-text -->
+    <color name="tc_text_black">#333333</color>
+    <color name="tc_text_gray">#6e6e6e</color>
+    <color name="tc_text_linked">#526D9B</color>
+
+    <!-- tc-theme -->
+    <color name="tc_theme">#ff5a37</color>
+    <color name="tc_theme_alpha">#88ff5a37</color>
+    <color name="tc_theme_second">#8bc7e0</color>
+    <color name="tc_background">#e8e8e8</color>
+
+    <!-- tc-theme-gradient -->
+    <color name="tc_theme_center">#FF6D4D</color>
+    <color name="tc_theme_end">#ff5a37</color>
+    <color name="tc_theme_start">#FFAC99</color>
+
+    <!-- **************** project **************** -->
+
+</resources>
