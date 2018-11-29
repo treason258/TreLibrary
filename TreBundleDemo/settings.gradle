@@ -1,0 +1,10 @@
+include ':app'
+
+include ':lib_TreKernel', ':lib_TreCore', ':lib_TreView', ':lib_Umeng'
+project(':lib_TreKernel').projectDir = new File('/Users/treason/Documents/AndroidStudio/TreBundle/lib_TreKernel')
+project(':lib_TreCore').projectDir = new File('/Users/treason/Documents/AndroidStudio/TreBundle/lib_TreCore')
+project(':lib_TreView').projectDir = new File('/Users/treason/Documents/AndroidStudio/TreBundle/lib_TreView')
+project(':lib_Umeng').projectDir = new File('/Users/treason/Documents/AndroidStudio/TreBundle/lib_Umeng')
+
+include ':TreBundle'
+project(':TreBundle').projectDir = new File('/Users/treason/Documents/AndroidStudio/TreBundle/app')
