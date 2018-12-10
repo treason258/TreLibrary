@@ -75,3 +75,7 @@ MAC("MAC", "mac");
 
 http://123.56.194.104:9005/swagger-ui.html
 http://123.56.194.104:9005/swagger-ui.html
+
+
+http://47.94.109.157:8080/swagger-ui.html#
+http://123.56.194.104:9005/swagger-ui.html

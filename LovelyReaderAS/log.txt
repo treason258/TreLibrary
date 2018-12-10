@@ -127,3 +127,77 @@
 12-11 00:28:52.975 I/LogUtils-BaseCallback: info -> {"duration":334.0,"host":"upload-z1.qiniu.com","id":"1544459332499839","ip":"/110.242.48.23:80","path":"/","port":80,"reqId":"D40AALKpeZWUBW8V","response":{"nameValuePairs":{"key":"a86b7a8deae462e9ae32ceb1c37b0ae0","hash":"FjhPs6VXGG2I9Ie5DVaYrexOSpeU","fsize":183640}},"sent":0,"statusCode":200,"timeStamp":1544459332,"xlog":"body;0s.ph;0s.put.in;0s.put.disk:1;1s.put.in;1s.put.disk:2;1s.ph;PFDS:3;0s.put.out:1;PFDS:4;body;rs13_shard.sel:3/not found;rs12_9.sel:2/not found;rdb.g/no such key;DBD/404;v4.get/Document not found;rs13_shard.ins:4;rwro.ins:10;RS:11;rs.put:11;rs-upload.putFile:16;UP:111","xvia":""}
 12-11 00:28:52.975 I/LogUtils-BaseCallback: res -> {"nameValuePairs":{"key":"a86b7a8deae462e9ae32ceb1c37b0ae0","hash":"FjhPs6VXGG2I9Ie5DVaYrexOSpeU","fsize":183640}}
 12-11 00:28:52.975 I/LogUtils-BaseCallback: Upload Success
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+12-11 00:58:37.651 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:58:37.658 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:58:37.658 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/exists
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=73160c86cf41f5a67abf097a12c028be, token=21754f0330f544d687726df3b933843a}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544461117658"},"param":{"data":"a86b7a8deae462e9ae32ceb1c37b0ae0"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:58:38.211 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/exists
+                                             response_data -> {"statusCode":900,"data":{"hasExistFile":false,"fileVo":{"sevenFileName":"a86b7a8deae462e9ae32ceb1c37b0ae0","sevenHash":"FjhPs6VXGG2I9Ie5DVaYrexOSpeU","sevenFileSize":183640}},"timestamp":1544461118301,"msg":null}
+12-11 00:58:38.213 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:58:38.213 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/token
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=5359bf567640f58a03aa765573f464ea, token=21754f0330f544d687726df3b933843a}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544461118213"},"param":{"data":"4woP62"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:58:38.235 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/token
+                                             response_data -> {"statusCode":900,"data":"m8AzRuHoXbhXtql06Hy8XTNWvDCtaNvS0_R2Y_io:ywMUuZVm8WlaLpjDHgfBoxL2DXM=:eyJzY29wZSI6InJlYWRlci1ib29rLXRlc3QiLCJyZXR1cm5Cb2R5Ijoie1wia2V5XCI6XCIkKGtleSlcIixcImhhc2hcIjpcIiQoZXRhZylcIixcImZzaXplXCI6JChmc2l6ZSl9IiwiZGVhZGxpbmUiOjE1NDQ0ODcwMjh9","timestamp":1544461118339,"msg":null}
+12-11 00:58:38.375 I/LogUtils-BaseCallback: key -> a86b7a8deae462e9ae32ceb1c37b0ae0
+12-11 00:58:38.383 I/LogUtils-BaseCallback: responseInfo -> {"duration":102.0,"host":"upload-z1.qiniu.com","id":"1544461118245474","ip":"/110.242.48.29:80","path":"/","port":80,"reqId":"IGcAAACIM080B28V","response":{"nameValuePairs":{"key":"a86b7a8deae462e9ae32ceb1c37b0ae0","hash":"FjhPs6VXGG2I9Ie5DVaYrexOSpeU","fsize":183640}},"sent":0,"statusCode":200,"timeStamp":1544461118,"xlog":"body;0s.ph;0s.put.in;0s.put.disk:2;1s.put.in;1s.put.disk:4;1s.ph;PFDS:4;0s.put.out:2;PFDS:6;body;rs13_shard.sel:2;rwro.ins:2/same entry;rs13_shard.sel:2;rwro.get:2;MQ;RS.not:;RS:5;rs.put:6;rs-upload.putFile:13;UP:14","xvia":""}
+12-11 00:58:38.383 I/LogUtils-BaseCallback: jsonObject -> {"nameValuePairs":{"key":"a86b7a8deae462e9ae32ceb1c37b0ae0","hash":"FjhPs6VXGG2I9Ie5DVaYrexOSpeU","fsize":183640}}
+12-11 00:58:38.383 I/LogUtils-BaseCallback: Upload Success
+12-11 00:58:38.385 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:58:38.385 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/save
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=c757bdabbafa895138c5147749ab18a7, token=21754f0330f544d687726df3b933843a}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544461118383"},"param":{"fileType":"","sevenFileName":"a86b7a8deae462e9ae32ceb1c37b0ae0","sevenFileSize":"183640","sevenHash":"FjhPs6VXGG2I9Ie5DVaYrexOSpeU"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:58:38.409 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/save
+                                             response_data -> {"statusCode":900,"data":true,"timestamp":1544461118507,"msg":null}
+12-11 00:58:38.410 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:58:38.411 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/uploadfile
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=da2875884ee820cc119afc2ec8caef19, token=21754f0330f544d687726df3b933843a}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544461118410"},"param":{"data":"FjhPs6VXGG2I9Ie5DVaYrexOSpeU"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:58:38.433 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/uploadfile
+                                             response_data -> {"statusCode":900,"data":"http://restest.readeryun.com/FjhPs6VXGG2I9Ie5DVaYrexOSpeU?e=1544464718&token=m8AzRuHoXbhXtql06Hy8XTNWvDCtaNvS0_R2Y_io:VXWS4LCVvpoEAZf0W4vh9Kl38pQ=","timestamp":1544461118535,"msg":null}

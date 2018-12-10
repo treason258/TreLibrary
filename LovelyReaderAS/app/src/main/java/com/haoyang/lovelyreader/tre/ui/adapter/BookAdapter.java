@@ -16,6 +16,7 @@ import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.UploadBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
+import com.haoyang.lovelyreader.tre.bean.api.SevenFileSaveParam;
 import com.haoyang.lovelyreader.tre.bean.api.UploadBookParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
@@ -37,6 +38,7 @@ import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.FileCallback;
+import com.mjiayou.trecorelib.http.callback.ObjectCallback;
 import com.mjiayou.trecorelib.image.ImageLoader;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.LogUtils;
@@ -480,11 +482,52 @@ public class BookAdapter extends TCAdapter {
                                 if (responseInfo.isOK()) {
                                     LogUtils.i(TAG, "Upload Success");
                                     try {
-                                        String keykey = jsonObject.getString("key");
-                                        String hash = jsonObject.getString("khashey");
+                                        String hash = jsonObject.getString("hash");
                                         String fsize = jsonObject.getString("fsize");
 
+                                        SevenFileSaveParam sevenFileSaveParam = new SevenFileSaveParam();
+                                        sevenFileSaveParam.setFileType("");
+                                        sevenFileSaveParam.setSevenFileName(key);
+                                        sevenFileSaveParam.setSevenHash(hash);
+                                        sevenFileSaveParam.setSevenFileSize(fsize);
 
+                                        MyRequestEntity myRequestEntity1 = new MyRequestEntity(UrlConfig.apiSevenfileSave);
+                                        myRequestEntity1.setContentWithHeader(ApiRequest.getContent(sevenFileSaveParam));
+                                        RequestSender.get().send(myRequestEntity1, new RequestCallback<Object>() {
+                                            @Override
+                                            public void onStart() {
+
+                                            }
+
+                                            @Override
+                                            public void onSuccess(int code, Object object) {
+                                                CommonParam commonParam1 = new CommonParam();
+                                                commonParam1.setData(hash);
+                                                MyRequestEntity myRequestEntity2 = new MyRequestEntity(UrlConfig.apiSevenfileUploadfile);
+                                                myRequestEntity2.setContentWithHeader(ApiRequest.getContent(commonParam1));
+                                                RequestSender.get().send(myRequestEntity2, new ObjectCallback() {
+                                                    @Override
+                                                    public void onStart() {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onSuccess(int code, Object object) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(int code, String msg) {
+
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void onFailure(int code, String msg) {
+
+                                            }
+                                        });
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
