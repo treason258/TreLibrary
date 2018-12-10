@@ -69,6 +69,7 @@ import com.mjiayou.trecorelib.util.KeyBoardUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -1082,6 +1083,12 @@ public class HomeFragment extends BaseFragment {
             public void onClick(View v) {
                 Global.debugTokenExpired = !Global.debugTokenExpired;
                 ToastUtils.show("debugTokenExpired = " + Global.debugTokenExpired);
+            }
+        }));
+        tcMenus.add(new TCMenu("CrashReport.testJavaCrash();", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrashReport.testJavaCrash();
             }
         }));
         DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();

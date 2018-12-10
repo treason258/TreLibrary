@@ -3,7 +3,7 @@
 buildscript {
 
     repositories {
-//        jcenter()
+        jcenter()
 //        google()
 //        mavenCentral()
         // 先从url中下载jar，若没有找到，则在artifactUrls中寻找
@@ -26,7 +26,7 @@ buildscript {
 
 allprojects {
     repositories {
-//        jcenter()
+        jcenter()
 //        google()
 //        mavenCentral()
         // 先从url中下载jar，若没有找到，则在artifactUrls中寻找
