@@ -1,0 +1,129 @@
+12-11 00:28:48.222 I/LogUtils-TCApp: 初始化数据 -> TCApp
+12-11 00:28:48.223 I/LogUtils-Caches: 初始化数据 -> Caches
+12-11 00:28:48.226 I/LogUtils-VersionUtils: 初始化数据 -> VersionUtils
+12-11 00:28:48.230 I/LogUtils-SharedUtils: GET key_config_version_code -> 2
+12-11 00:28:48.230 I/LogUtils-VersionUtils: 当前APK版本号 -> 2
+12-11 00:28:48.230 I/LogUtils-VersionUtils: 旧版APK版本号 -> 2
+12-11 00:28:48.230 I/LogUtils-VersionUtils: 覆盖安装
+12-11 00:28:48.230 I/LogUtils-VersionUtils: 版本号没有更新
+12-11 00:28:48.231 I/LogUtils-VolleyHelper: 初始化数据 -> VolleyHelper
+12-11 00:28:48.232 I/LogUtils-GsonHelper: 初始化数据 -> GsonHelper
+12-11 00:28:48.427 I/LogUtils: printActivityList | size -> 1
+                               0 -> SplashActivity
+12-11 00:28:49.078 D/LogUtils-MainActivity: initView() called
+12-11 00:28:49.078 D/LogUtils-MainActivity: initCategoryView() called
+12-11 00:28:49.080 D/LogUtils-MainActivity: initViewPager() called
+12-11 00:28:49.082 D/LogUtils-MainActivity: switchFragment() called with: position = [0]
+12-11 00:28:49.100 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:28:49.101 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/api/appupgrade/v1/check
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=c389f0bad43159582ad6347c04e83765, token=21754f0330f544d687726df3b933843a}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544459329096"},"param":{"data":"2"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:28:49.110 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/api/token/v1/temp
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=bc9094613f7db5f305b07e497299f593}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544459329109"},"param":{"data":"th5wIf"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:28:49.113 I/LogUtils: printActivityList | size -> 1
+                               0 -> MainActivity
+12-11 00:28:49.174 I/LogUtils-SharedUtils: GET key_user_bean -> {"nickName":"treason1","phone":"18600574121","token":"21754f0330f544d687726df3b933843a","uid":"4"}
+12-11 00:28:49.177 I/LogUtils-SharedUtils: GET key_book_store -> {"data":{"4":{"88":{"bookLocalInfo":{"book":{"authors":"刘慈欣","bookCover":"cover-image","bookName":"三体","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/LovelyReader/book/4-刘慈欣-三体.epub","publisher":"ixdzs.com"},"fileName":"4-刘慈欣-三体","fileSuffix":"epub","localBookPath":"/storage/emulated/0/LovelyReader/book/4-刘慈欣-三体.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/910fabd1e35f08a3f5de145f1861ddcf.jpg"},"bookServerInfo":{"author":"刘慈欣","bookCategory":"","bookDesc":"","bookDocId":"66","bookId":"88","bookName":"三体","bookPath":"http://123.56.194.104//doc/book//2018-11-28/4a5340facda44632be691a2e1aba3f49.epub","categoryId":"8","coverDocId":"67","coverPath":"http://123.56.194.104//doc/img//2018-11-28/356ecbbdea7445d7b8e8162827b14540.jpg","createDate":"1543074874000","isDel":"false","isUpload":"false","source":"ANDROID_PHONE"}},"87":{"bookLocalInfo":{"book":{"authors":"林和平","bookCover":"cover-image","bookName":"继父","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/LovelyReader/book/4-林和平-继父.epub","publisher":"ixdzs.com"},"fileName":"4-林和平-继父","fileSuffix":"epub","localBookPath":"/storage/emulated/0/LovelyReader/book/4-林和平-继父.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/91180b40c426f8d1fe7b2996d6edfc55.jpg"},"bookServerInfo":{"author":"林和平","bookCategory":"","bookDesc":"","bookDocId":"55","bookId":"87","bookName":"继父","bookPath":"http://123.56.194.104//doc/book//2018-11-25/bf6ca10014df4bb484c27d5b6c2ac213.epub","categoryId":"8","coverDocId":"56","coverPath":"http://123.56.194.104//doc/img//2018-11-25/bf43b254ba60437094562842b28b09cf.jpg","createDate":"1543074874000","isDel":"false","isUpload":"true","source":"ANDROID_PHONE"}},"85":{"bookLocalInfo":{"book":{"authors":"王海鸰","bookCover":"cover-image","bookName":"大校的女儿","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/LovelyReader/book/4-王海鸰-大校的女儿.epub","publisher":"ixdzs.com"},"fileName":"4-王海鸰-大校的女儿","fileSuffix":"epu
+12-11 00:28:49.177 I/LogUtils-SharedUtils: b","localBookPath":"/storage/emulated/0/LovelyReader/book/4-王海鸰-大校的女儿.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/1222faa6ae36feaf8a43dec75b4223c3.jpg"},"bookServerInfo":{"author":"王海鸰","bookCategory":"","bookDesc":"","bookDocId":"57","bookId":"85","bookName":"大校的女儿","bookPath":"http://123.56.194.104//doc/book//2018-11-25/5de8c53fe71a40edb0e3095bb6379280.epub","categoryId":"8","coverDocId":"58","coverPath":"http://123.56.194.104//doc/img//2018-11-25/55ae14dfe5cf4c9fafba634791f35ecd.jpg","createDate":"1543074874000","isDel":"false","isUpload":"true","source":"ANDROID_PHONE"}},"206":{"bookLocalInfo":{"book":{"authors":"温斯顿·格卢姆","bookCover":"cover-image","bookName":"阿甘正传","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/.estrongs/recycle/1541672500857/storage/emulated/0/LovelyReader/es_recycle_content/book/2-温斯顿·格卢姆-阿甘正传.epub","publisher":"ixdzs.com"},"fileName":"2-温斯顿·格卢姆-阿甘正传","fileSuffix":"epub","localBookPath":"/storage/emulated/0/LovelyReader/book/4-温斯顿·格卢姆-阿甘正传.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/e43237f8aa6b82f61d12900a68a002a9.jpg"},"bookServerInfo":{"author":"温斯顿·格卢姆","bookCategory":"","bookDesc":"","bookId":"206","bookName":"阿甘正传","categoryId":"8","createDate":"1544457792000","isDel":"false","isUpload":"false","source":"ANDROID_PHONE"}}}}}
+12-11 00:28:49.201 I/LogUtils-SharedUtils: GET key_category_store -> {"data":{"4":[{"categoryId":"8","categoryName":"默认分类","createDate":1542594328000,"isDel":false,"level":11,"parentId":"-1","selected":true,"updateDate":1542594328000},{"categoryId":"46","categoryName":"9901","createDate":1542725359000,"isDel":false,"level":11,"parentId":"-1","selected":false,"updateDate":1542725359000},{"categoryId":"47","categoryName":"9902","createDate":1542725366000,"isDel":false,"level":11,"parentId":"-1","selected":false,"updateDate":1542725366000},{"categoryId":"51","categoryName":"9906","createDate":1542725403000,"isDel":false,"level":12,"parentId":"47","selected":false,"updateDate":1542725403000}]}}
+12-11 00:28:49.210 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:28:49.210 I/LogUtils-SharedUtils: GET key_last_sync_date_store -> {"data":{"4":1544458831119}}
+12-11 00:28:49.215 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:28:49.216 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/api/book/v1/sync
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=1ef37fb8874e4528ab283f85bea3b3c3, token=21754f0330f544d687726df3b933843a}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544459329214"},"param":{"lastSyncDate":"1544458831119","syncType":"2"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:28:49.284 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:28:49.284 I/LogUtils-SharedUtils: GET key_user_bean -> {"nickName":"treason1","phone":"18600574121","token":"21754f0330f544d687726df3b933843a","uid":"4"}
+12-11 00:28:49.469 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/api/appupgrade/v1/check
+                                             response_data -> {"statusCode":900,"data":{"hasNewApp":false,"terminal":null,"version":null,"upgradeNum":0,"appUrl":null,"upgradeType":null,"appName":null,"desc":null},"timestamp":1544459329321,"msg":null}
+12-11 00:28:49.477 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/api/token/v1/temp
+                                             response_data -> {"statusCode":900,"data":"08aea6d823fa4c5a9b7bdf921f4d7c06","timestamp":1544459329320,"msg":null}
+12-11 00:28:49.478 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/api/clientconfig/v1/all
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=5006e40f120e016d7ab7de81cf5926cf, token=08aea6d823fa4c5a9b7bdf921f4d7c06}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544459329477"},"param":{"data":"tbLM1y"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:28:49.478 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/api/book/v1/sync
+                                             response_data -> {"statusCode":900,"data":[],"timestamp":1544459329337,"msg":null}
+12-11 00:28:49.482 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:28:49.483 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/api/category/v1/sync
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=21fa34e20e6e2facfee6253d4ccaae01, token=21754f0330f544d687726df3b933843a}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544459329481"},"param":{"lastSyncDate":"1544458831119","syncType":"2"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:28:49.565 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/api/clientconfig/v1/all
+                                             response_data -> {"statusCode":900,"data":{"maxFileSize":"30"},"timestamp":1544459329592,"msg":null}
+12-11 00:28:49.568 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/api/category/v1/sync
+                                             response_data -> {"statusCode":900,"data":[],"timestamp":1544459329604,"msg":null}
+12-11 00:28:49.575 I/LogUtils-ToastUtils: 同步完成
+12-11 00:28:49.575 I/LogUtils-SharedUtils: GET key_book_store -> {"data":{"4":{"88":{"bookLocalInfo":{"book":{"authors":"刘慈欣","bookCover":"cover-image","bookName":"三体","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/LovelyReader/book/4-刘慈欣-三体.epub","publisher":"ixdzs.com"},"fileName":"4-刘慈欣-三体","fileSuffix":"epub","localBookPath":"/storage/emulated/0/LovelyReader/book/4-刘慈欣-三体.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/910fabd1e35f08a3f5de145f1861ddcf.jpg"},"bookServerInfo":{"author":"刘慈欣","bookCategory":"","bookDesc":"","bookDocId":"66","bookId":"88","bookName":"三体","bookPath":"http://123.56.194.104//doc/book//2018-11-28/4a5340facda44632be691a2e1aba3f49.epub","categoryId":"8","coverDocId":"67","coverPath":"http://123.56.194.104//doc/img//2018-11-28/356ecbbdea7445d7b8e8162827b14540.jpg","createDate":"1543074874000","isDel":"false","isUpload":"false","source":"ANDROID_PHONE"}},"87":{"bookLocalInfo":{"book":{"authors":"林和平","bookCover":"cover-image","bookName":"继父","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/LovelyReader/book/4-林和平-继父.epub","publisher":"ixdzs.com"},"fileName":"4-林和平-继父","fileSuffix":"epub","localBookPath":"/storage/emulated/0/LovelyReader/book/4-林和平-继父.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/91180b40c426f8d1fe7b2996d6edfc55.jpg"},"bookServerInfo":{"author":"林和平","bookCategory":"","bookDesc":"","bookDocId":"55","bookId":"87","bookName":"继父","bookPath":"http://123.56.194.104//doc/book//2018-11-25/bf6ca10014df4bb484c27d5b6c2ac213.epub","categoryId":"8","coverDocId":"56","coverPath":"http://123.56.194.104//doc/img//2018-11-25/bf43b254ba60437094562842b28b09cf.jpg","createDate":"1543074874000","isDel":"false","isUpload":"true","source":"ANDROID_PHONE"}},"85":{"bookLocalInfo":{"book":{"authors":"王海鸰","bookCover":"cover-image","bookName":"大校的女儿","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/LovelyReader/book/4-王海鸰-大校的女儿.epub","publisher":"ixdzs.com"},"fileName":"4-王海鸰-大校的女儿","fileSuffix":"epu
+12-11 00:28:49.575 I/LogUtils-SharedUtils: b","localBookPath":"/storage/emulated/0/LovelyReader/book/4-王海鸰-大校的女儿.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/1222faa6ae36feaf8a43dec75b4223c3.jpg"},"bookServerInfo":{"author":"王海鸰","bookCategory":"","bookDesc":"","bookDocId":"57","bookId":"85","bookName":"大校的女儿","bookPath":"http://123.56.194.104//doc/book//2018-11-25/5de8c53fe71a40edb0e3095bb6379280.epub","categoryId":"8","coverDocId":"58","coverPath":"http://123.56.194.104//doc/img//2018-11-25/55ae14dfe5cf4c9fafba634791f35ecd.jpg","createDate":"1543074874000","isDel":"false","isUpload":"true","source":"ANDROID_PHONE"}},"206":{"bookLocalInfo":{"book":{"authors":"温斯顿·格卢姆","bookCover":"cover-image","bookName":"阿甘正传","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/.estrongs/recycle/1541672500857/storage/emulated/0/LovelyReader/es_recycle_content/book/2-温斯顿·格卢姆-阿甘正传.epub","publisher":"ixdzs.com"},"fileName":"2-温斯顿·格卢姆-阿甘正传","fileSuffix":"epub","localBookPath":"/storage/emulated/0/LovelyReader/book/4-温斯顿·格卢姆-阿甘正传.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/e43237f8aa6b82f61d12900a68a002a9.jpg"},"bookServerInfo":{"author":"温斯顿·格卢姆","bookCategory":"","bookDesc":"","bookId":"206","bookName":"阿甘正传","categoryId":"8","createDate":"1544457792000","isDel":"false","isUpload":"false","source":"ANDROID_PHONE"}}}}}
+12-11 00:28:49.577 I/LogUtils-SharedUtils: SET key_book_store -> {"data":{"4":{"88":{"bookLocalInfo":{"book":{"authors":"刘慈欣","bookCover":"cover-image","bookName":"三体","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/LovelyReader/book/4-刘慈欣-三体.epub","publisher":"ixdzs.com"},"fileName":"4-刘慈欣-三体","fileSuffix":"epub","localBookPath":"/storage/emulated/0/LovelyReader/book/4-刘慈欣-三体.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/910fabd1e35f08a3f5de145f1861ddcf.jpg"},"bookServerInfo":{"author":"刘慈欣","bookCategory":"","bookDesc":"","bookDocId":"66","bookId":"88","bookName":"三体","bookPath":"http://123.56.194.104//doc/book//2018-11-28/4a5340facda44632be691a2e1aba3f49.epub","categoryId":"8","coverDocId":"67","coverPath":"http://123.56.194.104//doc/img//2018-11-28/356ecbbdea7445d7b8e8162827b14540.jpg","createDate":"1543074874000","isDel":"false","isUpload":"false","source":"ANDROID_PHONE"}},"87":{"bookLocalInfo":{"book":{"authors":"林和平","bookCover":"cover-image","bookName":"继父","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/LovelyReader/book/4-林和平-继父.epub","publisher":"ixdzs.com"},"fileName":"4-林和平-继父","fileSuffix":"epub","localBookPath":"/storage/emulated/0/LovelyReader/book/4-林和平-继父.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/91180b40c426f8d1fe7b2996d6edfc55.jpg"},"bookServerInfo":{"author":"林和平","bookCategory":"","bookDesc":"","bookDocId":"55","bookId":"87","bookName":"继父","bookPath":"http://123.56.194.104//doc/book//2018-11-25/bf6ca10014df4bb484c27d5b6c2ac213.epub","categoryId":"8","coverDocId":"56","coverPath":"http://123.56.194.104//doc/img//2018-11-25/bf43b254ba60437094562842b28b09cf.jpg","createDate":"1543074874000","isDel":"false","isUpload":"true","source":"ANDROID_PHONE"}},"85":{"bookLocalInfo":{"book":{"authors":"王海鸰","bookCover":"cover-image","bookName":"大校的女儿","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/LovelyReader/book/4-王海鸰-大校的女儿.epub","publisher":"ixdzs.com"},"fileName":"4-王海鸰-大校的女儿","fileSuffix":"epu
+12-11 00:28:49.577 I/LogUtils-SharedUtils: b","localBookPath":"/storage/emulated/0/LovelyReader/book/4-王海鸰-大校的女儿.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/1222faa6ae36feaf8a43dec75b4223c3.jpg"},"bookServerInfo":{"author":"王海鸰","bookCategory":"","bookDesc":"","bookDocId":"57","bookId":"85","bookName":"大校的女儿","bookPath":"http://123.56.194.104//doc/book//2018-11-25/5de8c53fe71a40edb0e3095bb6379280.epub","categoryId":"8","coverDocId":"58","coverPath":"http://123.56.194.104//doc/img//2018-11-25/55ae14dfe5cf4c9fafba634791f35ecd.jpg","createDate":"1543074874000","isDel":"false","isUpload":"true","source":"ANDROID_PHONE"}},"206":{"bookLocalInfo":{"book":{"authors":"温斯顿·格卢姆","bookCover":"cover-image","bookName":"阿甘正传","bookType":"EPUB","language":"zh","path":"/storage/emulated/0/.estrongs/recycle/1541672500857/storage/emulated/0/LovelyReader/es_recycle_content/book/2-温斯顿·格卢姆-阿甘正传.epub","publisher":"ixdzs.com"},"fileName":"2-温斯顿·格卢姆-阿甘正传","fileSuffix":"epub","localBookPath":"/storage/emulated/0/LovelyReader/book/4-温斯顿·格卢姆-阿甘正传.epub","localCoverPath":"/storage/emulated/0/LovelyReader/cover/e43237f8aa6b82f61d12900a68a002a9.jpg"},"bookServerInfo":{"author":"温斯顿·格卢姆","bookCategory":"","bookDesc":"","bookId":"206","bookName":"阿甘正传","categoryId":"8","createDate":"1544457792000","isDel":"false","isUpload":"false","source":"ANDROID_PHONE"}}}}}
+12-11 00:28:49.578 I/LogUtils-SharedUtils: GET key_category_store -> {"data":{"4":[{"categoryId":"8","categoryName":"默认分类","createDate":1542594328000,"isDel":false,"level":11,"parentId":"-1","selected":true,"updateDate":1542594328000},{"categoryId":"46","categoryName":"9901","createDate":1542725359000,"isDel":false,"level":11,"parentId":"-1","selected":false,"updateDate":1542725359000},{"categoryId":"47","categoryName":"9902","createDate":1542725366000,"isDel":false,"level":11,"parentId":"-1","selected":false,"updateDate":1542725366000},{"categoryId":"51","categoryName":"9906","createDate":1542725403000,"isDel":false,"level":12,"parentId":"47","selected":false,"updateDate":1542725403000}]}}
+12-11 00:28:49.579 I/LogUtils-SharedUtils: SET key_category_store -> {"data":{"4":[{"categoryId":"8","categoryName":"默认分类","createDate":1542594328000,"isDel":false,"level":11,"parentId":"-1","selected":true,"updateDate":1542594328000},{"categoryId":"46","categoryName":"9901","createDate":1542725359000,"isDel":false,"level":11,"parentId":"-1","selected":false,"updateDate":1542725359000},{"categoryId":"47","categoryName":"9902","createDate":1542725366000,"isDel":false,"level":11,"parentId":"-1","selected":false,"updateDate":1542725366000},{"categoryId":"51","categoryName":"9906","createDate":1542725403000,"isDel":false,"level":12,"parentId":"47","selected":false,"updateDate":1542725403000}]}}
+12-11 00:28:49.579 I/LogUtils-SharedUtils: GET key_last_sync_date_store -> {"data":{"4":1544458831119}}
+12-11 00:28:49.579 I/LogUtils-SharedUtils: SET key_last_sync_date_store -> {"data":{"4":1544459329579}}
+12-11 00:28:52.304 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:28:52.310 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:28:52.310 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/exists
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=dad0f4c8e270e4c7cd7bc56c1ba2aed4, token=21754f0330f544d687726df3b933843a}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544459332310"},"param":{"data":"a86b7a8deae462e9ae32ceb1c37b0ae0"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:28:52.463 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/exists
+                                             response_data -> {"statusCode":900,"data":{"hasExistFile":false,"fileVo":null},"timestamp":1544459332534,"msg":null}
+12-11 00:28:52.464 I/LogUtils-SharedUtils: GET key_account_token -> 21754f0330f544d687726df3b933843a
+12-11 00:28:52.465 D/LogUtils-RequestSender: send -> request_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/token
+                                             request_method -> POST_STRING
+                                             request_headers -> {sign=5c3695993eb237059120e0102cf38e00, token=21754f0330f544d687726df3b933843a}
+                                             request_params -> {}
+                                             request_files -> {}
+                                             request_content -> {"commonData":{"terminal":"ANDROID_PHONE","timestamp":"1544459332464"},"param":{"data":"oM5vV5"}}
+                                             request_filePath ->
+                                             request_jsonObject -> {}
+12-11 00:28:52.492 D/LogUtils-RequestSender: send -> response_info |
+                                             request_url -> http://47.94.109.157/doc/sevenfile/v1/token
+                                             response_data -> {"statusCode":900,"data":"m8AzRuHoXbhXtql06Hy8XTNWvDCtaNvS0_R2Y_io:ywMUuZVm8WlaLpjDHgfBoxL2DXM=:eyJzY29wZSI6InJlYWRlci1ib29rLXRlc3QiLCJyZXR1cm5Cb2R5Ijoie1wia2V5XCI6XCIkKGtleSlcIixcImhhc2hcIjpcIiQoZXRhZylcIixcImZzaXplXCI6JChmc2l6ZSl9IiwiZGVhZGxpbmUiOjE1NDQ0ODcwMjh9","timestamp":1544459332565,"msg":null}
+12-11 00:28:52.967 I/LogUtils-BaseCallback: key -> a86b7a8deae462e9ae32ceb1c37b0ae0
+12-11 00:28:52.975 I/LogUtils-BaseCallback: info -> {"duration":334.0,"host":"upload-z1.qiniu.com","id":"1544459332499839","ip":"/110.242.48.23:80","path":"/","port":80,"reqId":"D40AALKpeZWUBW8V","response":{"nameValuePairs":{"key":"a86b7a8deae462e9ae32ceb1c37b0ae0","hash":"FjhPs6VXGG2I9Ie5DVaYrexOSpeU","fsize":183640}},"sent":0,"statusCode":200,"timeStamp":1544459332,"xlog":"body;0s.ph;0s.put.in;0s.put.disk:1;1s.put.in;1s.put.disk:2;1s.ph;PFDS:3;0s.put.out:1;PFDS:4;body;rs13_shard.sel:3/not found;rs12_9.sel:2/not found;rdb.g/no such key;DBD/404;v4.get/Document not found;rs13_shard.ins:4;rwro.ins:10;RS:11;rs.put:11;rs-upload.putFile:16;UP:111","xvia":""}
+12-11 00:28:52.975 I/LogUtils-BaseCallback: res -> {"nameValuePairs":{"key":"a86b7a8deae462e9ae32ceb1c37b0ae0","hash":"FjhPs6VXGG2I9Ie5DVaYrexOSpeU","fsize":183640}}
+12-11 00:28:52.975 I/LogUtils-BaseCallback: Upload Success

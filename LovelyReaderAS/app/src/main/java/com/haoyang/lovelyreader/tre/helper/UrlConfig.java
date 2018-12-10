@@ -58,4 +58,11 @@ public class UrlConfig {
     public static String apiUploadBook = mHostRoot + mPathDoc + "/upload/book"; // 电子书上传
     public static String apiUploadDel = mHostRoot + mPathDoc + "/upload/del"; // 文档删除
     public static String apiUploadPath = mHostRoot + mPathDoc + "/upload/path"; // 文档访问地址,需要申请临时token
+
+    // 7牛文件Api接口
+    public static String apiSevenfileExists = mHostRoot + mPathDoc + "/sevenfile/v1/exists";
+    public static String apiSevenfileRemove = mHostRoot + mPathDoc + "/sevenfile/v1/remove";
+    public static String apiSevenfileSave = mHostRoot + mPathDoc + "/sevenfile/v1/save";
+    public static String apiSevenfileTOken = mHostRoot + mPathDoc + "/sevenfile/v1/token";
+    public static String apiSevenfileUploadfile = mHostRoot + mPathDoc + "/sevenfile/v1/uploadfile";
 }

@@ -71,3 +71,7 @@ IOS_PHONE("IOS_PHONE", "苹果手机"),
 IOS_PAD("IOS_PAD", "苹果pad"),
 WINDOWS("WINDOWS", "windows"),
 MAC("MAC", "mac");
+
+
+http://123.56.194.104:9005/swagger-ui.html
+http://123.56.194.104:9005/swagger-ui.html

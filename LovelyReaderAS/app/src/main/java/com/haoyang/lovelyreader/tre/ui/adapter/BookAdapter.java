@@ -15,12 +15,15 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.UploadBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
+import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
 import com.haoyang.lovelyreader.tre.bean.api.UploadBookParam;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.EncodeHelper;
 import com.haoyang.lovelyreader.tre.helper.Global;
+import com.haoyang.lovelyreader.tre.helper.QiNiuHelper;
 import com.haoyang.lovelyreader.tre.helper.UrlConfig;
+import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.util.LoginUtils;
@@ -35,9 +38,15 @@ import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.FileCallback;
 import com.mjiayou.trecorelib.image.ImageLoader;
+import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
@@ -164,6 +173,7 @@ public class BookAdapter extends TCAdapter {
                 final int SYNC_TYPE_ERROR = 4;
                 int syncType = SYNC_TYPE_HIDE;
                 String bookUrl = bookBean.getBookServerInfo().getBookPath();
+                bookUrl = "";
                 String bookPath = bookBean.getBookLocalInfo().getLocalBookPath();
                 if (!TextUtils.isEmpty(bookUrl)) {
                     if (!TextUtils.isEmpty(bookPath)) {
@@ -209,7 +219,7 @@ public class BookAdapter extends TCAdapter {
                                 if (LoginUtils.checkNotLoginAndToast()) {
                                     return;
                                 }
-                                uploadBook(bookBean, position, llSync, tvSync, ivSync);
+                                uploadBook222(bookBean, position, llSync, tvSync, ivSync);
                             }
                         });
                         break;
@@ -418,4 +428,84 @@ public class BookAdapter extends TCAdapter {
 //    public void setOnOptionListener(CategoryAdapter.OnOptionListener onOptionListener) {
 //        mOnOptionListener = onOptionListener;
 //    }
+
+    /**
+     * 上传电子书文件
+     */
+    private void uploadBook222(BookBean bookBean, int position, LinearLayout llSync, TextView tvSync, ImageView ivSync) {
+        if (Global.mIsUploading) {
+            ToastUtils.show("有其他电子书正在上传，请稍后操作");
+            return;
+        }
+
+        File bookFile = new File(bookBean.getBookLocalInfo().getLocalBookPath());
+        String bookMD5 = Utils.getFileMD5(bookFile);
+
+        CommonParam commonParam = new CommonParam();
+        commonParam.setData(bookMD5);
+        String content = ApiRequest.getContent(commonParam);
+
+        MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiSevenfileExists);
+        myRequestEntity.setContentWithHeader(content);
+        RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(int code, Object object) {
+                CommonParam commonParam = new CommonParam();
+                commonParam.setData(EncodeHelper.getRandomChar());
+
+                MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiSevenfileTOken);
+                myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
+                RequestSender.get().send(myRequestEntity, new RequestCallback<String>() {
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onSuccess(int code, String result) {
+                        String key = bookMD5;
+                        File file = bookFile;
+                        String token = result;
+                        QiNiuHelper.getUploadManager().put(file, key, token, new UpCompletionHandler() {
+                            @Override
+                            public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
+                                LogUtils.i(TAG, "key -> " + key);
+                                LogUtils.i(TAG, "responseInfo -> " + JsonParser.get().toJson(responseInfo));
+                                LogUtils.i(TAG, "jsonObject -> " + JsonParser.get().toJson(jsonObject));
+                                // res包含hash、key等信息，具体字段取决于上传策略的设置
+                                if (responseInfo.isOK()) {
+                                    LogUtils.i(TAG, "Upload Success");
+                                    try {
+                                        String keykey = jsonObject.getString("key");
+                                        String hash = jsonObject.getString("khashey");
+                                        String fsize = jsonObject.getString("fsize");
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    LogUtils.i(TAG, "Upload Fail");
+                                }
+                            }
+                        }, null);
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtils.show(msg);
+            }
+        });
+    }
 }
