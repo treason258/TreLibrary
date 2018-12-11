@@ -81,6 +81,12 @@ http://47.94.109.157:8080/swagger-ui.html#
 http://123.56.194.104:9005/swagger-ui.html
 
 
+http://47.94.109.157:8888/index
+这个是后台的地址,用户名和密码: admin/admin123
+你们开发好的客户端就在这个里面维护,功能已经做好
+
+
+@田宇 @马腾飞-Android @侯力 @我叫咚咚枪  api接口域名已经配置好了,用这个 :  https://apitest.readeryun.com/
 
 
 
