@@ -7,7 +7,7 @@ package com.haoyang.lovelyreader.tre.helper;
 public class UrlConfig {
 
     // 接口地址
-    private static String mHostRoot = "http://47.94.109.157";
+    private static String mHostRoot = "https://apitest.readeryun.com"; // http://47.94.109.157
     private static String mPathApi = "/api";
     private static String mPathDoc = "/doc";
 
@@ -47,6 +47,7 @@ public class UrlConfig {
     public static String apiBookSync = mHostRoot + mPathApi + "/book/v1/sync"; // 同步电子书
     public static String apiBookConfigPath = mHostRoot + mPathApi + "/book/v1/configPath"; // configBookPath
     public static String apiBookDetail = mHostRoot + mPathApi + "/book/v1/detail"; // 查看电子书详情
+    public static String apiBookConfirm = mHostRoot + mPathApi + "/book/v1/confirm"; // 确认7牛文件数据
 
 
     // 客户端配置参数 Api接口

@@ -6,17 +6,17 @@ package com.haoyang.lovelyreader.tre.bean.api;
 
 public class SevenFileSaveParam extends BaseParam {
 
-    private String fileType;
+    private String bookId;
     private String sevenFileName;
     private String sevenFileSize;
     private String sevenHash;
 
-    public String getFileType() {
-        return fileType;
+    public String getBookId() {
+        return bookId;
     }
 
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 
     public String getSevenFileName() {

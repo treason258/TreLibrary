@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
+import com.haoyang.lovelyreader.tre.bean.ConfirmBean;
+import com.haoyang.lovelyreader.tre.bean.ExistsBean;
 import com.haoyang.lovelyreader.tre.bean.UploadBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
@@ -38,7 +40,6 @@ import com.mjiayou.trecorelib.http.RequestEntity;
 import com.mjiayou.trecorelib.http.RequestMethod;
 import com.mjiayou.trecorelib.http.RequestSender;
 import com.mjiayou.trecorelib.http.callback.FileCallback;
-import com.mjiayou.trecorelib.http.callback.ObjectCallback;
 import com.mjiayou.trecorelib.image.ImageLoader;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.LogUtils;
@@ -46,6 +47,8 @@ import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
+import com.qiniu.android.storage.UploadOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +61,9 @@ import java.util.List;
  */
 
 public class BookAdapter extends TCAdapter {
+
+    // TAG
+    protected final String TAG = this.getClass().getSimpleName();
 
     private Context mContext;
     private List<BookBean> mList;
@@ -175,7 +181,6 @@ public class BookAdapter extends TCAdapter {
                 final int SYNC_TYPE_ERROR = 4;
                 int syncType = SYNC_TYPE_HIDE;
                 String bookUrl = bookBean.getBookServerInfo().getBookPath();
-                bookUrl = "";
                 String bookPath = bookBean.getBookLocalInfo().getLocalBookPath();
                 if (!TextUtils.isEmpty(bookUrl)) {
                     if (!TextUtils.isEmpty(bookPath)) {
@@ -221,55 +226,26 @@ public class BookAdapter extends TCAdapter {
                                 if (LoginUtils.checkNotLoginAndToast()) {
                                     return;
                                 }
-                                uploadBook222(bookBean, position, llSync, tvSync, ivSync);
+                                uploadBook2(bookBean, position, llSync, tvSync, ivSync);
                             }
                         });
                         break;
                     case SYNC_TYPE_ERROR:
-                        tvSync.setText("异常");
+                        tvSync.setText("未上传");
                         ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_1));
                         llSync.setVisibility(View.VISIBLE);
                         llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_1));
                         llSync.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.show("服务端和本地均没有书文件");
+                                ToastUtils.show("电子书不在当设备中，请到 " +getPlatform(bookBean)+ " 平台上传");
                             }
                         });
                         break;
                 }
 
                 // tvSource
-                String source;
-                if (bookBean.getBookServerInfo() != null && !TextUtils.isEmpty(bookBean.getBookServerInfo().getSource())) {
-                    source = bookBean.getBookServerInfo().getSource();
-                    switch (source) {
-                        case "ANDROID_PHONE":
-                            source = "Android";
-                            break;
-                        case "ANDROID_PAD":
-                            source = "Android";
-                            break;
-                        case "IOS_PHONE":
-                            source = "iPhone";
-                            break;
-                        case "IOS_PAD":
-                            source = "iPad";
-                            break;
-                        case "WINDOWS":
-                            source = "Windows";
-                            break;
-                        case "MAC":
-                            source = "Mac";
-                            break;
-                        default:
-                            source = "未知";
-                            break;
-                    }
-                } else {
-                    source = "未知";
-                }
-                tvSource.setText("来源：" + source);
+                tvSource.setText("来源：" + getPlatform(bookBean));
             }
         }
     }
@@ -416,139 +392,202 @@ public class BookAdapter extends TCAdapter {
         });
     }
 
-//    /**
-//     * OnOptionListener
-//     */
-//    public interface OnOptionListener {
-//        void onItemClick(BookBean bookBean, int position);
-//
-//        void onItemLongClick(BookBean bookBean, int position);
-//    }
-//
-//    private CategoryAdapter.OnOptionListener mOnOptionListener;
-//
-//    public void setOnOptionListener(CategoryAdapter.OnOptionListener onOptionListener) {
-//        mOnOptionListener = onOptionListener;
-//    }
-
     /**
-     * 上传电子书文件
+     * 上传电子书文件到七牛
      */
-    private void uploadBook222(BookBean bookBean, int position, LinearLayout llSync, TextView tvSync, ImageView ivSync) {
+    private void uploadBook2(BookBean bookBean, int position, LinearLayout llSync, TextView tvSync, ImageView ivSync) {
         if (Global.mIsUploading) {
             ToastUtils.show("有其他电子书正在上传，请稍后操作");
             return;
         }
 
-        File bookFile = new File(bookBean.getBookLocalInfo().getLocalBookPath());
-        String bookMD5 = Utils.getFileMD5(bookFile);
+        tvSync.setText("准备上传");
 
-        CommonParam commonParam = new CommonParam();
-        commonParam.setData(bookMD5);
-        String content = ApiRequest.getContent(commonParam);
+        // 电子书文件
+        final File bookFile = new File(bookBean.getBookLocalInfo().getLocalBookPath());
+        // 电子书id
+        final String bookId = bookBean.getBookServerInfo().getBookId();
+        // 电子书服务端文件名
+        final String bookKey = Utils.getFileMD5(bookFile) + "." + bookBean.getBookLocalInfo().getFileSuffix();
 
+        /*
+         * step1-检查当前文件是否存在
+         */
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiSevenfileExists);
-        myRequestEntity.setContentWithHeader(content);
-        RequestSender.get().send(myRequestEntity, new RequestCallback<Object>() {
+        myRequestEntity.setContentWithHeader(ApiRequest.getContent(CommonParam.get(bookKey)));
+        RequestSender.get().send(myRequestEntity, new RequestCallback<ExistsBean>() {
             @Override
             public void onStart() {
+                Global.mIsUploading = true;
             }
 
             @Override
-            public void onSuccess(int code, Object object) {
-                CommonParam commonParam = new CommonParam();
-                commonParam.setData(EncodeHelper.getRandomChar());
+            public void onSuccess(int code, ExistsBean existsBean) {
+                existsBean.setHasExistFile(false);
+                if (existsBean != null && existsBean.isHasExistFile()) {
+                    Global.mIsUploading = false;
 
-                MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiSevenfileTOken);
-                myRequestEntity.setContentWithHeader(ApiRequest.getContent(commonParam));
-                RequestSender.get().send(myRequestEntity, new RequestCallback<String>() {
-                    @Override
-                    public void onStart() {
+                    ToastUtils.show("极速上传成功");
+                    LogUtils.i("极速上传成功 -> " + existsBean.getUrl());
 
-                    }
+                    String url = existsBean.getUrl();
+                    bookBean.getBookServerInfo().setBookPath(url);
+                    DBHelper.modifyBookBean(Global.mCurrentUser.getUid(), bookBean);
 
-                    @Override
-                    public void onSuccess(int code, String result) {
-                        String key = bookMD5;
-                        File file = bookFile;
-                        String token = result;
-                        QiNiuHelper.getUploadManager().put(file, key, token, new UpCompletionHandler() {
-                            @Override
-                            public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
-                                LogUtils.i(TAG, "key -> " + key);
-                                LogUtils.i(TAG, "responseInfo -> " + JsonParser.get().toJson(responseInfo));
-                                LogUtils.i(TAG, "jsonObject -> " + JsonParser.get().toJson(jsonObject));
-                                // res包含hash、key等信息，具体字段取决于上传策略的设置
-                                if (responseInfo.isOK()) {
-                                    LogUtils.i(TAG, "Upload Success");
-                                    try {
-                                        String hash = jsonObject.getString("hash");
-                                        String fsize = jsonObject.getString("fsize");
+                    mList.set(position, bookBean);
+                    notifyDataSetChanged();
+                } else {
+                    /*
+                     * step2-获取七牛token
+                     */
+                    MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiSevenfileTOken);
+                    myRequestEntity.setContentWithHeader(ApiRequest.getContent(CommonParam.get(EncodeHelper.getRandomChar())));
+                    RequestSender.get().send(myRequestEntity, new RequestCallback<String>() {
+                        @Override
+                        public void onStart() {
+                        }
 
-                                        SevenFileSaveParam sevenFileSaveParam = new SevenFileSaveParam();
-                                        sevenFileSaveParam.setFileType("");
-                                        sevenFileSaveParam.setSevenFileName(key);
-                                        sevenFileSaveParam.setSevenHash(hash);
-                                        sevenFileSaveParam.setSevenFileSize(fsize);
-
-                                        MyRequestEntity myRequestEntity1 = new MyRequestEntity(UrlConfig.apiSevenfileSave);
-                                        myRequestEntity1.setContentWithHeader(ApiRequest.getContent(sevenFileSaveParam));
-                                        RequestSender.get().send(myRequestEntity1, new RequestCallback<Object>() {
-                                            @Override
-                                            public void onStart() {
-
+                        @Override
+                        public void onSuccess(int code, String token) {
+                            if (TextUtils.isEmpty(token)) {
+                                Global.mIsUploading = false;
+                                ToastUtils.show("获取token失败");
+                            } else {
+                                /*
+                                 * step3-调用七牛sdk上传文件
+                                 */
+                                QiNiuHelper.getUploadManager().put(bookFile, bookKey, token, new UpCompletionHandler() {
+                                    @Override
+                                    public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
+                                        LogUtils.i(TAG, "key -> " + key);
+                                        LogUtils.i(TAG, "responseInfo -> " + JsonParser.get().toJson(responseInfo));
+                                        LogUtils.i(TAG, "jsonObject -> " + JsonParser.get().toJson(jsonObject));
+                                        // res包含hash、key等信息，具体字段取决于上传策略的设置
+                                        if (responseInfo.isOK()) {
+                                            LogUtils.i(TAG, "Upload Success");
+                                            String hash = "";
+                                            String fsize = "";
+                                            try {
+                                                hash = jsonObject.getString("hash");
+                                                fsize = jsonObject.getString("fsize");
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
                                             }
 
-                                            @Override
-                                            public void onSuccess(int code, Object object) {
-                                                CommonParam commonParam1 = new CommonParam();
-                                                commonParam1.setData(hash);
-                                                MyRequestEntity myRequestEntity2 = new MyRequestEntity(UrlConfig.apiSevenfileUploadfile);
-                                                myRequestEntity2.setContentWithHeader(ApiRequest.getContent(commonParam1));
-                                                RequestSender.get().send(myRequestEntity2, new ObjectCallback() {
+                                            if (TextUtils.isEmpty(hash) || TextUtils.isEmpty(fsize)) {
+                                                Global.mIsUploading = false;
+                                                ToastUtils.show("上传失败");
+                                            } else {
+                                                /*
+                                                 * step4-将文件和电子书绑定
+                                                */
+                                                SevenFileSaveParam sevenFileSaveParam = new SevenFileSaveParam();
+                                                sevenFileSaveParam.setBookId(bookId);
+                                                sevenFileSaveParam.setSevenFileName(key);
+                                                sevenFileSaveParam.setSevenHash(hash);
+                                                sevenFileSaveParam.setSevenFileSize(fsize);
+                                                MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookConfirm);
+                                                myRequestEntity.setContentWithHeader(ApiRequest.getContent(sevenFileSaveParam));
+                                                RequestSender.get().send(myRequestEntity, new RequestCallback<ConfirmBean>() {
                                                     @Override
                                                     public void onStart() {
 
                                                     }
 
                                                     @Override
-                                                    public void onSuccess(int code, Object object) {
+                                                    public void onSuccess(int code, ConfirmBean confirmBean) {
+                                                        if (confirmBean != null && !TextUtils.isEmpty(confirmBean.getUrl())) {
+                                                            Global.mIsUploading = false;
 
+                                                            ToastUtils.show("上传成功");
+                                                            LogUtils.i("上传成功 -> " + existsBean.getUrl());
+
+                                                            String url = confirmBean.getUrl();
+                                                            bookBean.getBookServerInfo().setBookPath(url);
+                                                            DBHelper.modifyBookBean(Global.mCurrentUser.getUid(), bookBean);
+
+                                                            mList.set(position, bookBean);
+                                                            notifyDataSetChanged();
+                                                        } else {
+                                                            Global.mIsUploading = false;
+                                                        }
                                                     }
 
                                                     @Override
                                                     public void onFailure(int code, String msg) {
-
+                                                        Global.mIsUploading = false;
+                                                        ToastUtils.show(msg);
                                                     }
                                                 });
                                             }
-
-                                            @Override
-                                            public void onFailure(int code, String msg) {
-
-                                            }
-                                        });
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                                        } else {
+                                            Global.mIsUploading = false;
+                                            ToastUtils.show("上传失败");
+                                        }
                                     }
-                                } else {
-                                    LogUtils.i(TAG, "Upload Fail");
-                                }
+                                }, new UploadOptions(null, null, false, new UpProgressHandler() {
+                                    @Override
+                                    public void progress(String key, double percent) {
+                                        if (percent >= 0.95d) {
+                                            percent = 0.95d;
+                                        }
+                                        String progress = ((int) (percent * 100.0f)) + "%";
+
+                                        LogUtils.i("正在上传：" + progress);
+                                        tvSync.setText(progress);
+                                        ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_2));
+                                        llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_2));
+
+                                    }
+                                }, null));
                             }
-                        }, null);
-                    }
+                        }
 
-                    @Override
-                    public void onFailure(int code, String msg) {
-
-                    }
-                });
+                        @Override
+                        public void onFailure(int code, String msg) {
+                            Global.mIsUploading = false;
+                            ToastUtils.show(msg);
+                        }
+                    });
+                }
             }
 
             @Override
             public void onFailure(int code, String msg) {
+                Global.mIsUploading = false;
                 ToastUtils.show(msg);
             }
         });
+    }
+
+    private String getPlatform(BookBean bookBean) {
+        String source = "未知";
+        if (bookBean != null && bookBean.getBookServerInfo() != null && !TextUtils.isEmpty(bookBean.getBookServerInfo().getSource())) {
+            source = bookBean.getBookServerInfo().getSource();
+            switch (source) {
+                case "ANDROID_PHONE":
+                    source = "Android";
+                    break;
+                case "ANDROID_PAD":
+                    source = "Android";
+                    break;
+                case "IOS_PHONE":
+                    source = "iPhone";
+                    break;
+                case "IOS_PAD":
+                    source = "iPad";
+                    break;
+                case "WINDOWS":
+                    source = "Windows";
+                    break;
+                case "MAC":
+                    source = "Mac";
+                    break;
+                default:
+                    source = "未知";
+                    break;
+            }
+        }
+        return source;
     }
 }
