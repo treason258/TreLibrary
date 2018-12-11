@@ -15,6 +15,7 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.ConfirmBean;
 import com.haoyang.lovelyreader.tre.bean.ExistsBean;
+import com.haoyang.lovelyreader.tre.bean.FileVoBean;
 import com.haoyang.lovelyreader.tre.bean.UploadBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.CommonParam;
@@ -423,19 +424,53 @@ public class BookAdapter extends TCAdapter {
 
             @Override
             public void onSuccess(int code, ExistsBean existsBean) {
-                existsBean.setHasExistFile(false);
                 if (existsBean != null && existsBean.isHasExistFile()) {
-                    Global.mIsUploading = false;
+                    FileVoBean fileVoBean = existsBean.getFileVo();
+                    String key = fileVoBean.getSevenFileName();
+                    String hash = fileVoBean.getSevenHash();
+                    String fsize = fileVoBean.getSevenFileSize();
 
-                    ToastUtils.show("极速上传成功");
-                    LogUtils.i("极速上传成功 -> " + existsBean.getUrl());
+                    /*
+                     * step4-将文件和电子书绑定
+                     */
+                    SevenFileSaveParam sevenFileSaveParam = new SevenFileSaveParam();
+                    sevenFileSaveParam.setBookId(bookId);
+                    sevenFileSaveParam.setSevenFileName(key);
+                    sevenFileSaveParam.setSevenHash(hash);
+                    sevenFileSaveParam.setSevenFileSize(fsize);
+                    MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookConfirm);
+                    myRequestEntity.setContentWithHeader(ApiRequest.getContent(sevenFileSaveParam));
+                    RequestSender.get().send(myRequestEntity, new RequestCallback<ConfirmBean>() {
+                        @Override
+                        public void onStart() {
 
-                    String url = existsBean.getUrl();
-                    bookBean.getBookServerInfo().setBookPath(url);
-                    DBHelper.modifyBookBean(Global.mCurrentUser.getUid(), bookBean);
+                        }
 
-                    mList.set(position, bookBean);
-                    notifyDataSetChanged();
+                        @Override
+                        public void onSuccess(int code, ConfirmBean confirmBean) {
+                            if (confirmBean != null && !TextUtils.isEmpty(confirmBean.getUrl())) {
+                                Global.mIsUploading = false;
+
+                                ToastUtils.show("极速上传成功");
+                                LogUtils.i("极速上传成功 -> " + existsBean.getUrl());
+
+                                String url = confirmBean.getUrl();
+                                bookBean.getBookServerInfo().setBookPath(url);
+                                DBHelper.modifyBookBean(Global.mCurrentUser.getUid(), bookBean);
+
+                                mList.set(position, bookBean);
+                                notifyDataSetChanged();
+                            } else {
+                                Global.mIsUploading = false;
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int code, String msg) {
+                            Global.mIsUploading = false;
+                            ToastUtils.show(msg);
+                        }
+                    });
                 } else {
                     /*
                      * step2-获取七牛token
