@@ -1,9 +1,190 @@
 
+
 ****************************************************************
 ****************************************************************
 ****************************************************************
 
-// 修复BUG：http://tlc.xin.com/browse/NCCESHIZU-23892
+uxin://uxin.app/openVehicleDetailsActivity?from=true&car_id=61906061&channel=webview
+uxin://uxin.app/openDirectHalfCarActivity
+uxin://uxin.app?from=true&car_id=123456&channel=webview
+uxin://uxin.app/openVehicleDetailsActivity?from=true&car_id=61906061&channel=webview
+uxin://uxin.app/openDirectHalfCarActivity
+uxin://uxin.app/openDirectHalfCarActivity?brandid=68&brandname=阿斯顿·马丁&serieid=2417&seriename=V8 Vantage敞篷
+uxin://uxin.app/openDirectHalfCarActivity?brandid=68&brandname=阿斯顿·马丁&serieid=1191&seriename=V8 Vantage
+uxin://uxin.app/openDirectHalfCarActivity?brandid=68&brandname=阿斯顿·马丁&serieid=2414&seriename=V8 Vantage敞篷
+uxin://uxin.app/openDirectHalfCarActivity?brandid=68&brandname=阿斯顿·马丁&serieid=1191&seriename=V8 Vantage
+uxin://uxin.app/openDirectHalfCarActivity?brandid=62&brandname=奥迪&serieid=621&seriename=A4L
+uxin://uxin.app/openDirectHalfCarActivity?brandid=77&brandname=中华&serieid=1092&seriename=骏捷FSV
+market://details?id=com.uxin.usedcar
+uxin://uxin.app/openWith?origin=dplink&channel=xx
+
+android:scheme
+getQueryParameter
+
+******** 首页-SplashActivity
+<data
+    android:host="uxin.app"
+    android:pathPrefix="/openDirectHalfCarActivity"
+    android:scheme="uxin" />
+<data
+    android:host="uxin.app"
+    android:pathPrefix="/openWith"
+    android:scheme="uxin" />
+
+******** 详情页-VehicleDetailsActivity
+<data
+    android:host="uxin.app"
+    android:pathPrefix="/openVehicleDetailsActivity"
+    android:scheme="uxin" />
+
+******** H5页-WebViewActivity 
+<data
+    android:host="uxin.app"
+    android:pathPrefix="/WebViewActivityActivity"
+    android:scheme="uxin" />
+
+****************************************************************
+
+14799995656
+
+<Text style={{fontWeight: "bold", fontSize: 20}}>123****1111</Text>
+
+<View>
+    <Text style={{fontWeight: "bold", fontSize: 20}}>123****2222</Text>
+</View>
+
+<View style={{flexDirection: "row"}}>
+    <Text style={{fontWeight: "bold", fontSize: 20}}>123****3333</Text>
+</View>
+
+****************************************************************
+
+guess_like_expo
+car_click_guesslike_home
+guess_expo
+
+
+p#1,c#66696565,type#0,icon#1,lable#0,video#0;
+p#2,c#13192705,type#0,icon#1,lable#0video#0;
+p#3,c#42296354,type#1,icon#1,lable#0video#1;
+p#4,c#66099816,type#0,icon#1,lable#0video#0;
+p#5,c#66266193,type#0,icon#1,lable#0video#0;
+p#6,c#20785401,type#0,icon#0,lable#0video#0;
+p#7,c#50241258,type#0,icon#0,lable#0video#0;
+p#8,c#65172658,type#0,icon#1,lable#0video#0;
+p#9,c#57654293,type#0,icon#0,lable#0video#0;
+p#10,c#35771093,type#0,icon#0,lable#0video#0;
+p#11,c#57836788,type#0,icon#0,lable#0video#0;
+p#12,c#68221325,type#0,icon#0,lable#0video#0;
+p#13,c#57745122,type#0,icon#0,lable#0video#0;
+p#14,c#73865070,type#0,icon#0,lable#0video#0;
+p#15,c#66877470,type#0,icon#0,lable#0video#0;
+p#16,c#59741990,type#0,icon#1,lable#0video#0;
+p#17,c#70734972,type#0,icon#0,lable#0video#0;
+p#18,c#11383630,type#0,icon#0,lable#0video#0;
+p#19,c#50580691,type#0,icon#0,lable#1video#0;
+p#20,c#50148447,type#0,icon#0,lable#0video#0;
+p#21,c#68374987,type#0,icon#0,lable#1video#0;
+p#22,c#44290510,type#0,icon#0,lable#0video#0;
+p#23,c#79914109,type#0,icon#0,lable#0video#0;
+p#24,c#22174991,type#0,icon#1,lable#0video#0;
+p#25,c#26331511,type#0,icon#0,lable#0video#0;
+p#26,c#42311247,type#0,icon#0,lable#0video#0;
+p#27,c#21693128,type#0,icon#1,lable#0video#0;
+p#28,c#78776951,type#0,icon#0,lable#0video#0;
+p#29,c#75966019,type#0,icon#0,lable#0video#0;
+p#30,c#52208231,type#0,icon#1,lable#0video#0;
+p#31,c#71083868,type#0,icon#0,lable#0video#0;
+p#32,c#29439192,type#0,icon#0,lable#0video#0;
+p#33,c#49160905,type#0,icon#0,lable#0video#0;
+p#34,c#40842653,type#0,icon#0,lable#0video#0;
+p#35,c#74084297,type#0,icon#1,lable#0video#0;
+p#36,c#53008402,type#0,icon#1,lable#0video#0;
+p#37,c#56023816,type#0,icon#1,lable#0video#0;
+p#38,c#41983102,type#0,icon#1,lable#0video#0;
+p#39,c#61111798,type#0,icon#0,lable#0video#0
+
+p#1,c#66696565,type#0,icon#1,lable#0,video#0;
+p#2,c#13192705,type#0,icon#1,lable#0video#0;
+p#3,c#42296354,type#1,icon#1,lable#0video#1;
+p#4,c#66099816,type#0,icon#1,lable#0video#0;p#5,c#66266193,type#0,icon#1,lable#0video#0;p#6,c#20785401,type#0,icon#0,lable#0video#0;p#7,c#50241258,type#0,icon#0,lable#0video#0;p#8,c#65172658,type#0,icon#1,lable#0video#0;p#9,c#57654293,type#0,icon#0,lable#0video#0;p#10,c#35771093,type#0,icon#0,lable#0video#0;p#11,c#57836788,type#0,icon#0,lable#0video#0;p#12,c#68221325,type#0,icon#0,lable#0video#0;p#13,c#57745122,type#0,icon#0,lable#0video#0;p#14,c#73865070,type#0,icon#0,lable#0video#0;p#15,c#66877470,type#0,icon#0,lable#0video#0;p#16,c#59741990,type#0,icon#1,lable#0video#0;p#17,c#70734972,type#0,icon#0,lable#0video#0;p#18,c#11383630,type#0,icon#0,lable#0video#0;p#19,c#50580691,type#0,icon#0,lable#1video#0;p#20,c#50148447,type#0,icon#0,lable#0video#0
+
+
+p#1,c#66696565,type#0,icon#1,lable#0,video#0,tab#0;p#2,c#13192705,type#0,icon#1,lable#0video#0,tab#0;p#3,c#42296354,type#1,icon#1,lable#0video#1,tab#0;p#11,c#57836788,type#0,icon#0,lable#0video#0,tab#0;p#12,c#68221325,type#0,icon#0,lable#0video#0,tab#0;p#13,c#57745122,type#0,icon#0,lable#0video#0,tab#0;p#14,c#73865070,type#0,icon#0,lable#0video#0,tab#0;p#13,c#57745122,type#0,icon#0,lable#0video#0,tab#0;p#14,c#73865070,type#0,icon#0,lable#0video#0,tab#0;p#15,c#66877470,type#0,icon#0,lable#0video#0,tab#0;p#11,c#57836788,type#0,icon#0,lable#0video#0,tab#0;p#12,c#68221325,type#0,icon#0,lable#0video#0,tab#0;p#13,c#57745122,type#0,icon#0,lable#0video#0,tab#0;p#4,c#66099816,type#0,icon#1,lable#0video#0,tab#0;p#5,c#66266193,type#0,icon#1,lable#0video#0,tab#0;p#6,c#20785401,type#0,icon#0,lable#0video#0,tab#0;p#7,c#50241258,type#0,icon#0,lable#0video#0,tab#0;p#1,c#66696565,type#0,icon#1,lable#0video#0,tab#0;p#2,c#13192705,type#0,icon#1,lable#0video#0,tab#0;p#7,c#50241258,type#0,icon#0,lable#0video#0,tab#0
+
+****************************************************************
+
+ConcurrentModificationException
+
+https://apis.xin.com/home/scheme_show
+
+algorithm
+
+guess_like_expo#algorithm=bus丢失
+
+        if (true) {
+          return;
+        }
+
+****************************************************************
+
+http://c1.xinstatic.com/c/20181107/1140/5be25eb017c00838616_19.jpg
+http://c4.xinstatic.com/c/20181107/1140/5be25eb017c00838616_19.jpg
+
+"carid": 35225466,
+"dealerid": 71709,
+"mortgage": 0,
+"carserie": "本田 雅阁",
+"carname": "2014款 2.4 自动 豪华版EX",
+"carnotime": "2014-01-01",
+"mileage": "6.6万",
+"carimg": "http://c1.xinstatic.com/c/20181107/1140/5be25eb017c00838616_18.jpg",
+"carimg_src": "http://c1.xinstatic.com/c/20181107/1140/5be25eb017c00838616_18.jpg",
+"status": 1,
+
+35225466
+这个车
+https://apis.xin.com/detail/car/view接口返回的图片地址是 http://c1.xinstatic.com/c/20181107/1140/5be25eb017c00838616_19.jpg
+https://apis.xin.com/detail/pic/lists接口返回的图片地址是 http://c4.xinstatic.com/c/20181107/1140/5be25eb017c00838616_19.jpg
+
+
+
+
+http://c1.xinstatic.com/c/20181121/1246/5bf4e34229778122822_19.jpg
+http://c2.xinstatic.com/c/20181121/1246/5bf4e34229778122822_19.jpg
+
+
+http:\/\/c2.xinstatic.com\/c\/20181121\/1246\/5bf4e34229778122822_18.jpg
+
+
+
+
+
+5bf4e34229778122822_
+
+https://apis.xin.com/home/scheme_show
+http://c1.xinstatic.com/c/20181121/1246/5bf4e34229778122822_19.jpg
+
+https://apis.xin.com/detail/car/view
+https://apis.xin.com/detail/pic/lists
+
+http://c2.xinstatic.com/c/20181121/1246/5bf4e34229778122822_19.jpg
+http://c2.xinstatic.com/c/20181121/1246/5bf4e34229778122822_19.jpg
+http://c2.xinstatic.com/c/20181121/1246/5bf4e34229778122822_19.jpg
+
+
+
+
+
+
+5bf7b8f0a29bf684848_
+http://c1.xinstatic.com/c/20181123/1623/5bf7b8f0a29bf684848_19.jpg
+http://c6.xinstatic.com/c/20181123/1623/5bf7b8f0a29bf684848_19.jpg
+
+****************************************************************
+
+chmod 777 bundleandroid.sh
+./bundleandroid.sh
 
 ****************************************************************
 
