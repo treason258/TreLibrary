@@ -50,7 +50,25 @@ public class BookBean implements Serializable {
         private String fileSuffix; // 后缀
         private String localBookPath; // 书的本地路径
         private String localCoverPath; // 封面图片本地路径
-        private Book book; // 书的信息
+//        private Book book; // 书的信息
+        private String bookName;
+        private String bookAuthor;
+
+        public String getBookAuthor() {
+            return bookAuthor;
+        }
+
+        public void setBookAuthor(String bookAuthor) {
+            this.bookAuthor = bookAuthor;
+        }
+
+        public String getBookName() {
+            return bookName;
+        }
+
+        public void setBookName(String bookName) {
+            this.bookName = bookName;
+        }
 
         public String getFileName() {
             return fileName;
@@ -84,13 +102,13 @@ public class BookBean implements Serializable {
             this.localCoverPath = localCoverPath;
         }
 
-        public Book getBook() {
-            return book;
-        }
-
-        public void setBook(Book book) {
-            this.book = book;
-        }
+//        public Book getBook() {
+//            return book;
+//        }
+//
+//        public void setBook(Book book) {
+//            this.book = book;
+//        }
     }
 
     /**

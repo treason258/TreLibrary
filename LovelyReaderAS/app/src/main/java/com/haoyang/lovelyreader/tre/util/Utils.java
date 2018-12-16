@@ -12,7 +12,6 @@ import com.haoyang.lovelyreader.tre.bean.UserBean;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 
 /**
@@ -92,6 +91,18 @@ public class Utils {
         return userBean.getUid() + "-" + bookServerInfo.getAuthor() + "-" + bookServerInfo.getBookName() + ".epub";
     }
 
+    public static String getBookIdentifie(String bookAuthor, String bookName) {
+//        return MD5Utils.md5("0" + "-" + bookAuthor + "-" + bookName);
+        return "123" + "-" + bookAuthor + "-" + bookName;
+    }
+
+    public static String getCoverFileName(String bookAuthor, String bookName) {
+        return getBookIdentifie(bookAuthor, bookName) + ".jpg";
+    }
+
+    public static String getBookFileName(String bookAuthor, String bookName) {
+        return getBookIdentifie(bookAuthor, bookName) + ".epub";
+    }
 
     /**
      * @param @param mobiles 手机号

@@ -331,7 +331,7 @@ public class BookAdapter extends TCAdapter {
         }
         String fileUrl = bookBean.getBookServerInfo().getBookPath();
         String fileDir = Configs.DIR_SDCARD_PROJECT_BOOK;
-        String fileName = Utils.getBookName(DBHelper.getUserBean(), bookBean.getBookServerInfo());
+        String fileName = Utils.getBookFileName(bookBean.getBookServerInfo().getAuthor(), bookBean.getBookServerInfo().getBookName());
         RequestSender.get().downloadFile(fileUrl, fileDir, fileName, new FileCallback() {
             @Override
             public void onStart() {
@@ -367,15 +367,18 @@ public class BookAdapter extends TCAdapter {
 
                     BookInfoService bookInfoService = new BookInfoService();
                     bookInfoService.init(filePath);
-                    Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
-                    String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath);
+//                    Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
+                    String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath
+                            , Utils.getCoverFileName(bookBean.getBookServerInfo().getAuthor(), bookBean.getBookServerInfo().getBookName()));
                     bookInfoService.clear();
 
                     bookBean.getBookLocalInfo().setFileName(fileName);
                     bookBean.getBookLocalInfo().setFileSuffix(fileSuffix);
                     bookBean.getBookLocalInfo().setLocalBookPath(filePath);
                     bookBean.getBookLocalInfo().setLocalCoverPath(localCoverPath);
-                    bookBean.getBookLocalInfo().setBook(book);
+//                    bookBean.getBookLocalInfo().setBook(book);
+                    bookBean.getBookLocalInfo().setBookName(bookBean.getBookServerInfo().getBookName());
+                    bookBean.getBookLocalInfo().setBookAuthor(bookBean.getBookServerInfo().getAuthor());
 
                     DBHelper.modifyBookBean(Global.mCurrentUser.getUid(), bookBean);
 

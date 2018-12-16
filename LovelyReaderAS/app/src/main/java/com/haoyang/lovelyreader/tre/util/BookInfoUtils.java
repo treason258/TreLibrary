@@ -36,7 +36,7 @@ public class BookInfoUtils {
     /**
      * getBookCover
      */
-    public static String getBookCover(BookInfoService bookInfoService, String filePath) {
+    public static String getBookCover(BookInfoService bookInfoService, String filePath, String coverFileName) {
         if (bookInfoService == null || TextUtils.isEmpty(filePath)) {
             return null;
         }
@@ -65,7 +65,7 @@ public class BookInfoUtils {
             }
 
             // 图片文件
-            File coverPathFile = new File(coverDirFile, com.java.common.utils.Utils.md5(filePath.getBytes()) + ".jpg");
+            File coverPathFile = new File(coverDirFile, coverFileName);
             if (coverPathFile.exists()) {
                 coverPathFile.delete();
             }
