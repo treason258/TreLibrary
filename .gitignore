@@ -28,6 +28,7 @@ out
 *.ap_
 *.dex
 *.class
+node_modules
 
 #    语法规范
 #    空行或是以 # 开头的行即注释行将被忽略。
