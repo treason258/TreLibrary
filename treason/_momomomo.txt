@@ -518,21 +518,20 @@ YEB
 1218 0920 -1700=9659 zhuan,shasha----
 1218 0921 -900=8759 zhuan,shasha----
 1218 0922 -500=8259 zhuan,beijing----
-8259ok
-1218 1953 -100=8159 zhuan,zhifubao
-1219 2330 +1=8160 lixi
-1220 1512 -2100=6060 zhuan,shasha
-1220 1658 +8200=14260 zhuan,jiaohang
-1220 1847 +10000=24260 zhuan,jiaohang
-1220 1848 +10000=34260 zhuan,jiaohang
-1220 1848 +10000=44260 zhuan,jiaohang
-1220 1850 -13120=31140 huan,daikuan
-1220 1852 -10000=21140 zhuan,zhaohang
-1220 1935 -15080=6060 zhuan,zhaohang
-1221 0913 +10000=16060 zhuan,jianhang
-1221 1659 -100=15960 zhuan,shasha
-1221 1754 -10000=5960 zhuan,baba
-5960o
+1218 1953 -100=8159 zhuan,zhifubao----
+1219 2330 +1=8160 lixi----
+1220 1512 -2100=6060 zhuan,shasha----
+1220 1658 +8200=14260 zhuan,jiaohang----
+1220 1847 +10000=24260 zhuan,jiaohang----
+1220 1848 +10000=34260 zhuan,jiaohang----
+1220 1848 +10000=44260 zhuan,jiaohang----
+1220 1850 -13120=31140 huan,daikuan------
+1220 1852 -10000=21140 zhuan,zhaohang----
+1220 1935 -15080=6060 zhuan,zhaohang----
+1221 0913 +10000=16060 zhuan,jianhang----
+1221 1659 -100=15960 zhuan,shasha----
+1221 1754 -10000=5960 zhuan,baba----
+5960ok
 
 				YLB
 				0619 1059 -8000=3 zhuan,zhifubao
