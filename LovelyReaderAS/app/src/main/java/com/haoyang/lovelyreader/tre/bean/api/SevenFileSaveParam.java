@@ -7,9 +7,8 @@ package com.haoyang.lovelyreader.tre.bean.api;
 public class SevenFileSaveParam extends BaseParam {
 
     private String bookId;
-    private String sevenFileName;
-    private String sevenFileSize;
-    private String sevenHash;
+    private String fileSize;
+    private String md5FileName;
 
     public String getBookId() {
         return bookId;
@@ -19,27 +18,19 @@ public class SevenFileSaveParam extends BaseParam {
         this.bookId = bookId;
     }
 
-    public String getSevenFileName() {
-        return sevenFileName;
+    public String getFileSize() {
+        return fileSize;
     }
 
-    public void setSevenFileName(String sevenFileName) {
-        this.sevenFileName = sevenFileName;
+    public void setFileSize(String fileSize) {
+        this.fileSize = fileSize;
     }
 
-    public String getSevenFileSize() {
-        return sevenFileSize;
+    public String getMd5FileName() {
+        return md5FileName;
     }
 
-    public void setSevenFileSize(String sevenFileSize) {
-        this.sevenFileSize = sevenFileSize;
-    }
-
-    public String getSevenHash() {
-        return sevenHash;
-    }
-
-    public void setSevenHash(String sevenHash) {
-        this.sevenHash = sevenHash;
+    public void setMd5FileName(String md5FileName) {
+        this.md5FileName = md5FileName;
     }
 }

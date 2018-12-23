@@ -32,7 +32,6 @@ import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.util.LoginUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;
-import com.haoyang.reader.sdk.Book;
 import com.haoyang.reader.service.bookservice.BookInfoService;
 import com.java.common.service.file.FileNameService;
 import com.mjiayou.trecorelib.base.TCAdapter;
@@ -65,6 +64,16 @@ public class BookAdapter extends TCAdapter {
 
     // TAG
     protected final String TAG = this.getClass().getSimpleName();
+
+    // tvSync-分四种情况
+    // 1-服务器有文件，本地有文件，则隐藏按钮
+    // 2-服务器有文件，本地没有文件，则显示"下载"
+    // 3-服务器没有文件，本地有文件，则显示"上传"
+    // 4-服务器没有文件，本地没有文件，则显示"异常"
+    final int SYNC_TYPE_HIDE = 1;
+    final int SYNC_TYPE_DOWNLOAD = 2;
+    final int SYNC_TYPE_UPLOAD = 3;
+    final int SYNC_TYPE_ERROR = 4;
 
     private Context mContext;
     private List<BookBean> mList;
@@ -171,15 +180,6 @@ public class BookAdapter extends TCAdapter {
                     ivBook.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_default_3));
                     tvBook.setVisibility(View.VISIBLE);
                 }
-                // tvSync-分四种情况
-                // 1-服务器有文件，本地有文件，则隐藏按钮
-                // 2-服务器有文件，本地没有文件，则显示"下载"
-                // 3-服务器没有文件，本地有文件，则显示"上传"
-                // 4-服务器没有文件，本地没有文件，则显示"异常"
-                final int SYNC_TYPE_HIDE = 1;
-                final int SYNC_TYPE_DOWNLOAD = 2;
-                final int SYNC_TYPE_UPLOAD = 3;
-                final int SYNC_TYPE_ERROR = 4;
                 int syncType = SYNC_TYPE_HIDE;
                 String bookUrl = bookBean.getBookServerInfo().getBookPath();
                 String bookPath = bookBean.getBookLocalInfo().getLocalBookPath();
@@ -239,7 +239,7 @@ public class BookAdapter extends TCAdapter {
                         llSync.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.show("电子书不在当设备中，请到 " +getPlatform(bookBean)+ " 平台上传");
+                                ToastUtils.show("电子书不在当设备中，请到 " + getPlatform(bookBean) + " 平台上传");
                             }
                         });
                         break;
@@ -438,9 +438,8 @@ public class BookAdapter extends TCAdapter {
                      */
                     SevenFileSaveParam sevenFileSaveParam = new SevenFileSaveParam();
                     sevenFileSaveParam.setBookId(bookId);
-                    sevenFileSaveParam.setSevenFileName(key);
-                    sevenFileSaveParam.setSevenHash(hash);
-                    sevenFileSaveParam.setSevenFileSize(fsize);
+                    sevenFileSaveParam.setFileSize(fsize);
+                    sevenFileSaveParam.setMd5FileName(key);
                     MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookConfirm);
                     myRequestEntity.setContentWithHeader(ApiRequest.getContent(sevenFileSaveParam));
                     RequestSender.get().send(myRequestEntity, new RequestCallback<ConfirmBean>() {
@@ -465,12 +464,14 @@ public class BookAdapter extends TCAdapter {
                                 notifyDataSetChanged();
                             } else {
                                 Global.mIsUploading = false;
+                                updateSyncIcon(tvSync, ivSync, llSync, SYNC_TYPE_UPLOAD, null);
                             }
                         }
 
                         @Override
                         public void onFailure(int code, String msg) {
                             Global.mIsUploading = false;
+                            updateSyncIcon(tvSync, ivSync, llSync, SYNC_TYPE_UPLOAD, null);
                             ToastUtils.show(msg);
                         }
                     });
@@ -489,6 +490,7 @@ public class BookAdapter extends TCAdapter {
                         public void onSuccess(int code, String token) {
                             if (TextUtils.isEmpty(token)) {
                                 Global.mIsUploading = false;
+                                updateSyncIcon(tvSync, ivSync, llSync, SYNC_TYPE_UPLOAD, null);
                                 ToastUtils.show("获取token失败");
                             } else {
                                 /*
@@ -514,6 +516,7 @@ public class BookAdapter extends TCAdapter {
 
                                             if (TextUtils.isEmpty(hash) || TextUtils.isEmpty(fsize)) {
                                                 Global.mIsUploading = false;
+                                                updateSyncIcon(tvSync, ivSync, llSync, SYNC_TYPE_UPLOAD, null);
                                                 ToastUtils.show("上传失败");
                                             } else {
                                                 /*
@@ -521,9 +524,8 @@ public class BookAdapter extends TCAdapter {
                                                 */
                                                 SevenFileSaveParam sevenFileSaveParam = new SevenFileSaveParam();
                                                 sevenFileSaveParam.setBookId(bookId);
-                                                sevenFileSaveParam.setSevenFileName(key);
-                                                sevenFileSaveParam.setSevenHash(hash);
-                                                sevenFileSaveParam.setSevenFileSize(fsize);
+                                                sevenFileSaveParam.setFileSize(fsize);
+                                                sevenFileSaveParam.setMd5FileName(key);
                                                 MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookConfirm);
                                                 myRequestEntity.setContentWithHeader(ApiRequest.getContent(sevenFileSaveParam));
                                                 RequestSender.get().send(myRequestEntity, new RequestCallback<ConfirmBean>() {
@@ -548,18 +550,21 @@ public class BookAdapter extends TCAdapter {
                                                             notifyDataSetChanged();
                                                         } else {
                                                             Global.mIsUploading = false;
+                                                            updateSyncIcon(tvSync, ivSync, llSync, SYNC_TYPE_UPLOAD, null);
                                                         }
                                                     }
 
                                                     @Override
                                                     public void onFailure(int code, String msg) {
                                                         Global.mIsUploading = false;
+                                                        updateSyncIcon(tvSync, ivSync, llSync, SYNC_TYPE_UPLOAD, null);
                                                         ToastUtils.show(msg);
                                                     }
                                                 });
                                             }
                                         } else {
                                             Global.mIsUploading = false;
+                                            updateSyncIcon(tvSync, ivSync, llSync, SYNC_TYPE_UPLOAD, null);
                                             ToastUtils.show("上传失败");
                                         }
                                     }
@@ -584,6 +589,7 @@ public class BookAdapter extends TCAdapter {
                         @Override
                         public void onFailure(int code, String msg) {
                             Global.mIsUploading = false;
+                            updateSyncIcon(tvSync, ivSync, llSync, SYNC_TYPE_UPLOAD, null);
                             ToastUtils.show(msg);
                         }
                     });
@@ -593,6 +599,7 @@ public class BookAdapter extends TCAdapter {
             @Override
             public void onFailure(int code, String msg) {
                 Global.mIsUploading = false;
+                updateSyncIcon(tvSync, ivSync, llSync, SYNC_TYPE_UPLOAD, null);
                 ToastUtils.show(msg);
             }
         });
@@ -627,5 +634,37 @@ public class BookAdapter extends TCAdapter {
             }
         }
         return source;
+    }
+
+    private void updateSyncIcon(TextView tvSync, ImageView ivSync, LinearLayout llSync, int syncType, String progress) {
+        if (TextUtils.isEmpty(progress)) {
+            switch (syncType) {
+                case SYNC_TYPE_HIDE:
+                    llSync.setVisibility(View.GONE);
+                    break;
+                case SYNC_TYPE_DOWNLOAD:
+                    tvSync.setText("下载");
+                    ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_1));
+                    llSync.setVisibility(View.VISIBLE);
+                    llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_1));
+                    break;
+                case SYNC_TYPE_UPLOAD:
+                    tvSync.setText("上传");
+                    ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_1));
+                    llSync.setVisibility(View.VISIBLE);
+                    llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_1));
+                    break;
+                case SYNC_TYPE_ERROR:
+                    tvSync.setText("未上传");
+                    ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_1));
+                    llSync.setVisibility(View.VISIBLE);
+                    llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_1));
+                    break;
+            }
+        } else {
+            tvSync.setText(progress);
+            ivSync.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_home_book_item_download_2));
+            llSync.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.shape_main_home_book_item_download_2));
+        }
     }
 }
