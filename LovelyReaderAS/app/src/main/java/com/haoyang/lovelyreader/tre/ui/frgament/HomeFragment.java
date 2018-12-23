@@ -472,7 +472,7 @@ public class HomeFragment extends BaseFragment {
                                     bookBean.getBookLocalInfo().setFileName(fileName);
                                     bookBean.getBookLocalInfo().setFileSuffix(fileSuffix);
                                     bookBean.getBookLocalInfo().setLocalBookPath(filePath);
-                                    bookBean.getBookLocalInfo().setLocalCoverPath(Utils.getCoverFileName(bookServerInfo.getAuthor(), bookServerInfo.getBookName()));
+                                    bookBean.getBookLocalInfo().setLocalCoverPath(Configs.DIR_SDCARD_PROJECT_COVER + "/" + Utils.getCoverFileName(bookServerInfo.getAuthor(), bookServerInfo.getBookName()));
 //                                    bookBean.getBookLocalInfo().setBook(book);
                                     bookBean.getBookLocalInfo().setBookName(bookServerInfo.getBookName());
                                     bookBean.getBookLocalInfo().setBookAuthor(bookServerInfo.getAuthor());
