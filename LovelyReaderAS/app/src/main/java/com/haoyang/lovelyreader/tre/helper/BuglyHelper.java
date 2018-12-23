@@ -12,6 +12,6 @@ import com.tencent.bugly.crashreport.CrashReport;
 public class BuglyHelper {
 
     public static void init(Context context) {
-        CrashReport.initCrashReport(context, "7c60c5e9ac", BuildConfig.DEBUG);
+        CrashReport.initCrashReport(context, "358f7bb3e9", BuildConfig.DEBUG);
     }
 }
