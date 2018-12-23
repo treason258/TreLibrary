@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.reader.sdk.Book;
-import com.haoyang.reader.service.bookservice.BookInfoService;
+import com.haoyang.reader.sdk.BookInfoService;
 import com.mjiayou.trecorelib.util.LogUtils;
 
 import java.io.File;

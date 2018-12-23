@@ -74,8 +74,8 @@ public class ReaderHelper {
             readerSDK.setTypefaceSwitchEnable(false); // 是否需要有切换字体功能。
 
             // 设置阅读器内部一些功能由开发者来实现的接口，这里需要开发者实现SDKInteractive接口。
-            readerSDK.setSDKInteractive(new SDKInteractiveImpl(activity));
-            readerSDK.setCustomServivce(new CustomServiceImpl());
+//            readerSDK.setSDKInteractive(new SDKInteractiveImpl(activity));
+//            readerSDK.setCustomServivce(new CustomServiceImpl());
 
             String id = book.path;
             if (book.path != null) {
@@ -121,65 +121,65 @@ public class ReaderHelper {
         }
     }
 
-    /**
-     * SDKInteractiveImpl
-     */
-    private static class SDKInteractiveImpl implements ReaderSDK.SDKInteractive {
-
-        private Context mContext;
-
-        public SDKInteractiveImpl(Context context) {
-            mContext = context;
-        }
-
-        @Override
-        public void share(ShareEntity shareEntity) { // 打开分享界面
-            ToastUtils.show("分享");
-        }
-
-        @Override
-        public void typefaceSwitch() { // 打开切换字体界面
-            Log.d(TAG, "typefaceSwitch() called");
-            ToastUtils.show("切换字体");
-        }
-
-        @Override
-        public void toolsBar(RelativeLayout relativeLayout) {
-            View contentView = LayoutInflater.from(mContext).inflate(R.layout.layout_reader_custom, null);
-            relativeLayout.addView(contentView);
-
-            // findViewById
-            View tvComment = contentView.findViewById(R.id.tvComment);
-            View tvBuy = contentView.findViewById(R.id.tvBuy);
-
-            // tvComment
-            tvComment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtils.show("评论");
-                }
-            });
-            // tvBuy
-            tvBuy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtils.show("购买");
-                }
-            });
-        }
-
-        @Override
-        public void feedback(FeedBack feedBack) {
-            LogUtils.d(TAG, "feedback() called with: feedBack = [" + JsonParser.get().toJson(feedBack) + "]");
-            ToastUtils.show("意见反馈");
-        }
-
-        @Override
-        public void decrypt(String sourceFilePath, String targetFilePath) {
-            LogUtils.d(TAG, "decrypt() called with: sourceFilePath = [" + sourceFilePath + "], targetFilePath = [" + targetFilePath + "]");
-            ToastUtils.show("decrypt");
-        }
-    }
+//    /**
+//     * SDKInteractiveImpl
+//     */
+//    private static class SDKInteractiveImpl implements ReaderSDK.SDKInteractive {
+//
+//        private Context mContext;
+//
+//        public SDKInteractiveImpl(Context context) {
+//            mContext = context;
+//        }
+//
+//        @Override
+//        public void share(ShareEntity shareEntity) { // 打开分享界面
+//            ToastUtils.show("分享");
+//        }
+//
+//        @Override
+//        public void typefaceSwitch() { // 打开切换字体界面
+//            Log.d(TAG, "typefaceSwitch() called");
+//            ToastUtils.show("切换字体");
+//        }
+//
+//        @Override
+//        public void toolsBar(RelativeLayout relativeLayout) {
+//            View contentView = LayoutInflater.from(mContext).inflate(R.layout.layout_reader_custom, null);
+//            relativeLayout.addView(contentView);
+//
+//            // findViewById
+//            View tvComment = contentView.findViewById(R.id.tvComment);
+//            View tvBuy = contentView.findViewById(R.id.tvBuy);
+//
+//            // tvComment
+//            tvComment.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    ToastUtils.show("评论");
+//                }
+//            });
+//            // tvBuy
+//            tvBuy.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    ToastUtils.show("购买");
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void feedback(FeedBack feedBack) {
+//            LogUtils.d(TAG, "feedback() called with: feedBack = [" + JsonParser.get().toJson(feedBack) + "]");
+//            ToastUtils.show("意见反馈");
+//        }
+//
+//        @Override
+//        public void decrypt(String sourceFilePath, String targetFilePath) {
+//            LogUtils.d(TAG, "decrypt() called with: sourceFilePath = [" + sourceFilePath + "], targetFilePath = [" + targetFilePath + "]");
+//            ToastUtils.show("decrypt");
+//        }
+//    }
 
     /**
      * getPageStyleList

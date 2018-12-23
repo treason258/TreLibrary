@@ -148,7 +148,7 @@ dependencies {
     compile 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile project(':appbase')
 //    compile files('libs/kxml2-2.3.0.jar')
-    compile files('libs/reader-2.3.2.jar')
+    compile files('libs/reader-2.3.3.jar')
     compile files('libs/slf4j-api-1.6.1.jar')
     compile project(':TreCoreLib')
 
