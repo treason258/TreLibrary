@@ -710,6 +710,51 @@ ZSXYK-6553
 1113 1950 -2= youbao
 1114 1942 +5930=-21298.4 huan---- (+51000=29701.6)
 -21298.4o
+1117 1603 -1.2= taobao,shouna
+1117 1859 -1= qingqikeji???
+1118 1858 -6= yinliao
+1120 0957 +10000= huan
+1122 2344 -69= aliyun
+1124 0104 -3= appstore
+1124 1557 -18= caishichang???
+1124 2303 -100= dianfeiaa
+1125 1052 -10= youbao,lingshi
+1125 1054 -11= lingshi,gongsi
+1125 1701 -5= lingshi,gongsi
+1125 1928 -9.87= taobao,kaolengmian
+1126 1324 -110= shuifeiaa
+1126 1337 -9.9= taobao???
+1127 0051 -25= taqu
+1127 0059 -25= taqu
+1127 0107 -25= taqu
+1128 0047 -9.9= shujuxian
+1128 0055 -9.9= shujuxian
+1201 1832 -4.9= kouxiangtang
+1201 2125 -11.29= gouwu,jingkelong
+1202 0034 -5= ditie
+1202 1413 -20.5= waimai
+1202 2027 -28= waimai
+1203 0829 -99.89= huafei
+1203 1312 -161= wucan,zaozhuangrenjia
+1206 1522 -9= aliyun
+1206 1729 -1= appstore
+1208 1010 -5= ditie
+1212 2015 -5.5= maolihua???
+1212 2018 -13.9= zuoshangqimaoyi???
+1216 1503 -1= youlihuikeji
+1216 1504 -1.99= youlihuikeji
+1216 2355 +1820= huan
+1217 2149 +10000= huan
+1220 1343 -2= gongxiangdianyuan
+1221 1946 -4.94= yinliao
+1221 1948 -5= ditie
+1222 1507 -28= gofun
+1224 0954 -5= ditie
+1224 1958 -5= ditie
+1225 0946 -5= ditie
+1225 1952 -5= ditie
+1226 0946 -5=-360.08 ditie (+51000=50639.92)
+-360.08o
 
 JTXYK-3520
 0831 1307 -19.6=-11757.76 wucan (+20000=8242.24)----
