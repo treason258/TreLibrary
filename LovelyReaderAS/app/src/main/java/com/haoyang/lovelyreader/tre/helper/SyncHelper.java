@@ -2,12 +2,14 @@ package com.haoyang.lovelyreader.tre.helper;
 
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.CategoryBean;
+import com.haoyang.lovelyreader.tre.bean.ResponseBean;
 import com.haoyang.lovelyreader.tre.bean.api.ApiRequest;
 import com.haoyang.lovelyreader.tre.bean.api.BookSyncParam;
 import com.haoyang.lovelyreader.tre.bean.api.CategorySyncParam;
 import com.haoyang.lovelyreader.tre.http.MyRequestEntity;
 import com.haoyang.lovelyreader.tre.http.RequestCallback;
 import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.http.callback.ObjectCallback;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class SyncHelper {
 
         MyRequestEntity myRequestEntity = new MyRequestEntity(UrlConfig.apiBookSync);
         myRequestEntity.setContentWithHeader(ApiRequest.getContent(bookSyncParam));
-        RequestSender.get().send(myRequestEntity, new RequestCallback<List<BookBean.BookServerInfo>>() {
+        RequestSender.get().send(myRequestEntity, new ObjectCallback<ResponseBean<List<BookBean.BookServerInfo>>>() {
             @Override
             public void onStart() {
                 if (onSyncDataListener != null) {
@@ -45,9 +47,10 @@ public class SyncHelper {
             }
 
             @Override
-            public void onSuccess(int code, List<BookBean.BookServerInfo> bookServerInfoList) {
+            public void onSuccess(int code, ResponseBean<List<BookBean.BookServerInfo>> object) {
                 // 同步分类数据
-                syncCategoryList(onSyncDataListener, timestamp, bookServerInfoList);
+                DBHelper.setLastSyncDate(Global.mCurrentUser.getUid(), object.getTimestamp());
+                syncCategoryList(onSyncDataListener, timestamp, object.getData());
             }
 
             @Override
@@ -85,7 +88,6 @@ public class SyncHelper {
                 if (onSyncDataListener != null) {
                     onSyncDataListener.onSyncSuccess(bookServerInfoList, categoryBeanList);
                 }
-                DBHelper.setLastSyncDate(Global.mCurrentUser.getUid(), System.currentTimeMillis());
             }
 
             @Override
