@@ -50,11 +50,9 @@ import com.haoyang.lovelyreader.tre.util.FileUtils;
 import com.haoyang.lovelyreader.tre.util.LoginUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;
 import com.haoyang.lovelyreader.tre.widget.GridViewWithHeaderAndFooter;
-import com.haoyang.lovelyreader.tre.widget.HeaderGridView;
 import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
 import com.haoyang.lovelyreader.tre.wifi.WebService;
 import com.haoyang.reader.sdk.Book;
-//import com.haoyang.reader.service.bookservice.BookInfoService;
 import com.haoyang.reader.sdk.BookInfoService;
 import com.java.common.service.file.FileNameService;
 import com.mjiayou.trecorelib.bean.entity.TCMenu;
@@ -518,16 +516,6 @@ public class HomeFragment extends BaseFragment {
             return;
         }
 
-        // 查询该书是否已添加
-        List<BookBean> bookBeanList = convertBookBeanList(mMapBookAll);
-        for (int i = 0; i < bookBeanList.size(); i++) {
-            if (!TextUtils.isEmpty(bookBeanList.get(i).getBookLocalInfo().getLocalBookPath())
-                    && bookBeanList.get(i).getBookLocalInfo().getLocalBookPath().equals(fileBean.getPath())) {
-                ToastUtils.show(fileBean.getName() + fileBean.getSuffix() + "-这本书已经添加过了");
-                return;
-            }
-        }
-
         // bookInfoService操作
         String filePath = fileBean.getPath();
         BookInfoService bookInfoService = new BookInfoService();
@@ -557,6 +545,39 @@ public class HomeFragment extends BaseFragment {
         }
         bookBean.getBookServerInfo().setCategoryId(categoryId);
 
+        // 查询该书是否已添加
+        boolean bookExist = false;
+        List<BookBean> bookBeanList = convertBookBeanList(mMapBookAll);
+        for (int i = 0; i < bookBeanList.size(); i++) {
+            if (bookBeanList.get(i).getBookLocalInfo().getBookAuthor().equals(bookBean.getBookLocalInfo().getBookAuthor())
+                    && bookBeanList.get(i).getBookLocalInfo().getBookName().equals(bookBean.getBookLocalInfo().getBookName())) {
+                bookExist = true;
+                break;
+            }
+        }
+
+        if (bookExist) {
+            String title = "提示";
+            String message = "《" + bookBean.getBookLocalInfo().getBookName() + "》该书已存在，是否继续添加？";
+            TCAlertDialog tcAlertDialog = DialogHelper.createTCAlertDialog(mContext, title, message, "确定", "取消", false,
+                    new TCAlertDialog.OnTCActionListener() {
+                        @Override
+                        public void onOkAction() {
+                            addbook2(bookBean, fileBean);
+                        }
+
+                        @Override
+                        public void onCancelAction() {
+                        }
+                    });
+            tcAlertDialog.setCanceledOnTouchOutside(false);
+            tcAlertDialog.show();
+        } else {
+            addbook2(bookBean, fileBean);
+        }
+    }
+
+    private void addbook2(BookBean bookBean, FileBean fileBean) {
         // 移动到book文件夹下，并且以文件的md5命名
         String fileName = Utils.getBookFileName(bookBean.getBookServerInfo().getAuthor(), bookBean.getBookServerInfo().getBookName());
         String localBookPath = Configs.DIR_SDCARD_PROJECT_BOOK + "/" + fileName;
