@@ -587,6 +587,13 @@ public class MainActivity extends BaseActivity {
         mListCategoryShow.clear();
         mListCategoryShow.addAll(CategoryBean.convertToShow222(mListCategoryAll));
 
+        // 找到"默认分类"
+        for (int i = 0; i < mListCategoryShow.size(); i++) {
+            if (mListCategoryShow.get(i).getCategoryName().equals(CategoryBean.CATEGORY_DEFAULT_NAME)) {
+                CategoryBean.CATEGORY_DEFAULT_ID = mListCategoryShow.get(i).getCategoryId();
+            }
+        }
+
         if (Global.mCurrentCategory == null) {
             // 默认选中"默认分类"
             for (int i = 0; i < mListCategoryShow.size(); i++) {
@@ -602,6 +609,16 @@ public class MainActivity extends BaseActivity {
             if (Global.mCurrentCategory == null) {
                 Global.mCurrentCategory = mListCategoryShow.get(0);
                 mListCategoryShow.get(0).setSelected(true);
+            }
+
+            mCategoryAdapter.setList(mListCategoryShow);
+        } else {
+            for (int i = 0; i < mListCategoryShow.size(); i++) {
+                mListCategoryShow.get(i).setSelected(false);
+                if (mListCategoryShow.get(i).getCategoryName().equals(Global.mCurrentCategory.getCategoryName())) {
+                    Global.mCurrentCategory = mListCategoryShow.get(i);
+                    mListCategoryShow.get(i).setSelected(true);
+                }
             }
 
             mCategoryAdapter.setList(mListCategoryShow);
