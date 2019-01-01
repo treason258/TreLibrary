@@ -15,6 +15,7 @@ import com.haoyang.lovelyreader.R;
 import com.haoyang.lovelyreader.tre.base.BaseActivity;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
 import com.haoyang.lovelyreader.tre.bean.store.LocalFileStore;
+import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.DBHelper;
 import com.haoyang.lovelyreader.tre.helper.Global;
 import com.haoyang.lovelyreader.tre.ui.adapter.FileAdapter;
@@ -115,6 +116,8 @@ public class FileFilterActivity extends BaseActivity {
         tvMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mList.clear();
+                mFileAdapter.setList(mList);
                 searchLocalFile();
             }
         });
@@ -175,11 +178,14 @@ public class FileFilterActivity extends BaseActivity {
             LogUtils.i(TAG, "file -> " + file.getAbsolutePath());
 
             if (file.isDirectory()) {
-                epubFileList.addAll(getEpubFileList(file));
+                epubFileList.addAll(0, getEpubFileList(file));
             } else {
                 String filePath = file.getAbsolutePath();
                 String fileName = mFileNameService.getFileName(filePath);
                 String fileSuffix = mFileNameService.getFileExtendName(filePath);
+                if (filePath.contains(Configs.DIR_SDCARD_PROJECT)) {
+                    continue;
+                }
                 if (TextUtils.isEmpty(fileName)) {
                     continue;
                 }
@@ -195,12 +201,12 @@ public class FileFilterActivity extends BaseActivity {
                 fileBean.setSuffix(fileSuffix);
                 fileBean.setPath(filePath);
                 fileBean.setFolder(false);
-                epubFileList.add(fileBean);
+                epubFileList.add(0, fileBean);
                 LogUtils.i(TAG, "file add");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mList.add(fileBean);
+                        mList.add(0, fileBean);
                         mFileAdapter.setList(mList);
                     }
                 });
