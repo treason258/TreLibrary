@@ -50,8 +50,8 @@ ext {
     targetSdkVersion = 19
 
     applicationId = 'com.haoyang.lovelyreader'
-    versionCode = 4
-    versionName = '1.0.3'
+    versionCode = 5
+    versionName = '1.0.4'
 
     dependencies = [
             'supportV4'     : 'com.android.support:support-v4:25.3.1',
