@@ -236,11 +236,15 @@ public class HomeFragment extends BaseFragment {
         gvBook.setAdapter(mBookAdapter);
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int positionFake, long id) {
-                LogUtils.d(TAG, "onItemClick() called with: parent = [" + parent + "], view = [" + view + "], positionFake = [" + positionFake + "], id = [" + id + "]");
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtils.d(TAG, "onItemClick() called with: position = [" + position + "], id = [" + id + "]");
 
-                int position = positionFake - gvBook.getHeaderViewCount() * gvBook.getNumColumns();
-                BookBean bookBean = convertBookBeanList(mMapBookShow).get(position);
+                List<BookBean> bookBeanList = convertBookBeanList(mMapBookShow);
+                if (position < 0 || position >= bookBeanList.size()) {
+                    return;
+                }
+
+                BookBean bookBean = bookBeanList.get(position);
                 if (bookBean == null
                         || bookBean.getBookLocalInfo() == null
 //                        || bookBean.getBookLocalInfo().getBook() == null
@@ -261,11 +265,15 @@ public class HomeFragment extends BaseFragment {
         });
         gvBook.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int positionFake, long id) {
-                LogUtils.d(TAG, "onItemLongClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + positionFake + "], id = [" + id + "]");
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtils.d(TAG, "onItemLongClick() called with: position = [" + position + "], id = [" + id + "]");
 
-                int position = positionFake - gvBook.getHeaderViewCount() * gvBook.getNumColumns();
-                BookBean bookBean = convertBookBeanList(mMapBookShow).get(position);
+                List<BookBean> bookBeanList = convertBookBeanList(mMapBookShow);
+                if (position < 0 || position >= bookBeanList.size()) {
+                    return true;
+                }
+
+                BookBean bookBean = bookBeanList.get(position);
                 if (bookBean != null) {
                     DialogHelper.createTCAlertDialog(mContext, "提示", "确定要删除？", "确定", "取消", true,
                             new TCAlertDialog.OnTCActionListener() {
@@ -538,6 +546,7 @@ public class HomeFragment extends BaseFragment {
         bookBean.getBookServerInfo().setBookName(book.bookName);
         bookBean.getBookServerInfo().setBookCategory("");
         bookBean.getBookServerInfo().setBookDesc("");
+        bookBean.getBookServerInfo().setSource("ANDROID_PHONE");
         String categoryId = Global.mCurrentCategory.getCategoryId();
         // 如果是登录用户，切当前分类是选择了"所有电子书"，则自动切换到"默认分类"中
         if (UserUtils.checkLoginStatus() && categoryId.equals(CategoryBean.CATEGORY_ROOT_ID)) {
@@ -669,7 +678,8 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(int code, BookBean.BookServerInfo bookServerInfo) {
                 showLoading(false);
                 if (bookServerInfo != null) {
-                    ToastUtils.show("新增电子书成功 | " + bookServerInfo.getBookId() + " - " + bookServerInfo.getBookName());
+                    ToastUtils.show("新增电子书成功");
+                    LogUtils.i("新增电子书成功 | " + bookServerInfo.getBookId() + " - " + bookServerInfo.getBookName());
 
                     bookBean.getBookServerInfo().setBookId(bookServerInfo.getBookId());
 
@@ -708,7 +718,8 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(int code, Object object) {
                 showLoading(false);
                 if (object != null) {
-                    ToastUtils.show("删除电子书成功 | " + bookBean.getBookServerInfo().getBookId() + " - " + bookBean.getBookServerInfo().getBookName());
+                    ToastUtils.show("删除电子书成功");
+                    LogUtils.i("删除电子书成功 | " + bookBean.getBookServerInfo().getBookId() + " - " + bookBean.getBookServerInfo().getBookName());
 
                     mMapBookAll.remove(bookBean.getBookServerInfo().getBookId());
                     DBHelper.setBookBeanList(Global.mCurrentUser.getUid(), mMapBookAll);
