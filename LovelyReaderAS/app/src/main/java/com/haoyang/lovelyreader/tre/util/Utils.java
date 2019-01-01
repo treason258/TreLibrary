@@ -9,6 +9,7 @@ import android.text.TextUtils;
 
 import com.haoyang.lovelyreader.tre.bean.BookBean;
 import com.haoyang.lovelyreader.tre.bean.UserBean;
+import com.mjiayou.trecorelib.util.MD5Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,8 +93,7 @@ public class Utils {
     }
 
     public static String getBookIdentifie(String bookAuthor, String bookName) {
-//        return MD5Utils.md5("0" + "-" + bookAuthor + "-" + bookName);
-        return "123" + "-" + bookAuthor + "-" + bookName;
+        return MD5Utils.md5("0" + "-" + bookAuthor + "-" + bookName);
     }
 
     public static String getCoverFileName(String bookAuthor, String bookName) {
