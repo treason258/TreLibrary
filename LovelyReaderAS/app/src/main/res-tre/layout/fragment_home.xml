@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <!-- 书列表 -->
-        <com.haoyang.lovelyreader.tre.widget.HeaderGridView
+        <com.haoyang.lovelyreader.tre.widget.GridViewWithHeaderAndFooter
             android:id="@+id/gvBook"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

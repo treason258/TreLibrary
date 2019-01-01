@@ -49,6 +49,7 @@ import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.util.FileUtils;
 import com.haoyang.lovelyreader.tre.util.LoginUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;
+import com.haoyang.lovelyreader.tre.widget.GridViewWithHeaderAndFooter;
 import com.haoyang.lovelyreader.tre.widget.HeaderGridView;
 import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
 import com.haoyang.lovelyreader.tre.wifi.WebService;
@@ -87,7 +88,7 @@ public class HomeFragment extends BaseFragment {
 
     private final int REQUEST_CODE_ADD_BOOK = 102;
 
-    private HeaderGridView gvBook;
+    private GridViewWithHeaderAndFooter gvBook;
     private ListView lvSearch;
     private ImageView ivAdd;
 
@@ -98,6 +99,8 @@ public class HomeFragment extends BaseFragment {
     private ImageView ivSearch;
     private EditText etSearch;
     private ImageView ivDelete;
+
+    private View mViewFooter;
 
     private BookAdapter mBookAdapter;
     private LinkedHashMap<String, BookBean> mMapBookShow = new LinkedHashMap<>();
@@ -117,11 +120,12 @@ public class HomeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_home, null);
 
         // findViewById
-        gvBook = (HeaderGridView) view.findViewById(R.id.gvBook);
+        gvBook = (GridViewWithHeaderAndFooter) view.findViewById(R.id.gvBook);
         lvSearch = (ListView) view.findViewById(R.id.lvSearch);
         ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
 
         mViewHeader = LayoutInflater.from(mContext).inflate(R.layout.view_home_header, null);
+        mViewFooter = LayoutInflater.from(mContext).inflate(R.layout.view_home_footer, null);
         ivCategory = (ImageView) mViewHeader.findViewById(R.id.ivCategory);
         tvSync = (TextView) mViewHeader.findViewById(R.id.tvSync);
         ivSync = (ImageView) mViewHeader.findViewById(R.id.ivSync);
@@ -230,6 +234,7 @@ public class HomeFragment extends BaseFragment {
         // gvBook
         mBookAdapter = new BookAdapter(mContext, convertBookBeanList(mMapBookShow));
         gvBook.addHeaderView(mViewHeader);
+        gvBook.addFooterView(mViewFooter);
         gvBook.setAdapter(mBookAdapter);
         gvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
