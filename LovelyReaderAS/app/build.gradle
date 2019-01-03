@@ -55,14 +55,6 @@ android {
             signingConfig signingConfigs.debug // 使用release的签名
             applicationIdSuffix "" // 包名后缀
             versionNameSuffix "" // 版本号后缀
-
-            buildConfigField "boolean", "GRADLE_DEBUG", "true"
-
-            resValue "string", "gradle_build_types_name", "debug"
-            resValue "string", "gradle_build_types_value", "开发模式"
-
-            resValue "string", "gradle_app_name", "TreCoreDebug"
-            manifestPlaceholders = [gradle_tc_id: "debug-0000000000000000", gradle_tc_key: "debug-xxxxxxxxxxxxxxxx"]
         }
         release {
             minifyEnabled false // 是否开启混淆
@@ -74,14 +66,6 @@ android {
             signingConfig signingConfigs.release // 使用release的签名
             applicationIdSuffix "" // 包名后缀
             versionNameSuffix "" // 版本号后缀
-
-            buildConfigField "boolean", "GRADLE_DEBUG", "false"
-
-            resValue "string", "gradle_build_types_name", "debug"
-            resValue "string", "gradle_build_types_value", "发布模式"
-
-            resValue "string", "gradle_app_name", "TreCore"
-            manifestPlaceholders = [gradle_tc_id: "release-0000000000000000", gradle_tc_key: "release-xxxxxxxxxxxxxxxx"]
         }
     }
 
@@ -89,18 +73,12 @@ android {
     productFlavors {
         // 默认渠道 - official
         official {
-            buildConfigField "boolean", "GRADLE_OFFICIAL", "true"
-
             resValue "string", "gradle_product_flavors_name", name
-            resValue "string", "gradle_product_flavors_value", "官网"
         }
-//        // 应用宝 - yingyongbao
-//        yingyongbao {
-//            buildConfigField "boolean", "GRADLE_OFFICIAL", "false"
-//
-//            resValue "string", "gradle_product_flavors_name", name
-//            resValue "string", "gradle_product_flavors_value", "应用宝"
-//        }
+        // 应用宝 - yingyongbao
+        yingyongbao {
+            resValue "string", "gradle_product_flavors_name", name
+        }
     }
     productFlavors.all {
         flavor ->
@@ -113,9 +91,8 @@ android {
             variant.outputs.each {
                 output ->
                     // 输出APK文件名为：TreCore-1.0.0.1-release-official.apk
-                    def fileName = "LovelyReader-${defaultConfig.versionName}-${buildType.name}-${variant.productFlavors[0].name}.apk"
+                    def fileName = "LovelyReader-${defaultConfig.versionName}.${defaultConfig.versionCode}-${buildType.name}-${variant.productFlavors[0].name}.apk"
                     output.outputFile = new File(output.outputFile.parent, fileName)
-                    // println("gradle | output | fileName -> " + fileName)
             }
     }
 
