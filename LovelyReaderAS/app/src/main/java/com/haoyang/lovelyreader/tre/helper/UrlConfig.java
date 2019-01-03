@@ -1,13 +1,18 @@
 package com.haoyang.lovelyreader.tre.helper;
 
+import com.haoyang.lovelyreader.BuildConfig;
+
 /**
  * Created by xin on 18/9/23.
  */
 
 public class UrlConfig {
 
+    private static final String HOST_ROOT_RELEASE = "https://api.readeryun.com";
+    private static final String HOST_ROOT_DEBUG = "https://apitest.readeryun.com"; // http://47.94.109.157
+
     // 接口地址
-    private static String mHostRoot = "https://apitest.readeryun.com"; // http://47.94.109.157
+    private static String mHostRoot = BuildConfig.DEBUG ? HOST_ROOT_DEBUG : HOST_ROOT_RELEASE;
     private static String mPathApi = "/api";
     private static String mPathDoc = "/doc";
 

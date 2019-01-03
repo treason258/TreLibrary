@@ -88,7 +88,7 @@ http://47.94.109.157:8888/index
 
 @田宇 @马腾飞-Android @侯力 @我叫咚咚枪  api接口域名已经配置好了,用这个 :  https://apitest.readeryun.com/
 
-
+http://oper.readeryun.com/   admin/admin123
 
 
 

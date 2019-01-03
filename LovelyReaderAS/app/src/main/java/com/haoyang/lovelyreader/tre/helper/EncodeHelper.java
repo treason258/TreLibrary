@@ -2,6 +2,7 @@ package com.haoyang.lovelyreader.tre.helper;
 
 import android.text.TextUtils;
 
+import com.haoyang.lovelyreader.BuildConfig;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.MD5Utils;
 
@@ -15,10 +16,13 @@ import java.util.TreeMap;
 
 public class EncodeHelper {
 
+    private static final String MD5_SECRET_RELEASE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCHW2Hpt2aAVv32mJf6mj2djQRKJcH8EklyR_9jCIza_yMDVVUuV95xtexeehhI9KA9vaY5FBShYb1GN-MPyms3KiApSAYIv1QdwKJpso1Yyoi3RWjanos8eKe94lYmTWKmH7ySsZyXeIKVXuNt3Erk3C8MFwmkbah3sI6T4JU9eQIDAQAB";
+    private static final String MD5_SECRET_DEBUG = "111";
+
     // TAG
     protected static final String TAG = "EncodeHelper";
 
-    private static final String MD5_SECRET = "111";
+    private static final String MD5_SECRET = BuildConfig.DEBUG ? MD5_SECRET_DEBUG : MD5_SECRET_RELEASE;
     private static final String KEY_RANDOM_CHAR = "randomChar";
 
     // ******************************** 获取sign ********************************
