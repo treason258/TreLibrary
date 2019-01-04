@@ -55,6 +55,7 @@ import com.haoyang.lovelyreader.tre.wifi.WebService;
 import com.haoyang.reader.sdk.Book;
 import com.haoyang.reader.sdk.BookInfoService;
 import com.java.common.service.file.FileNameService;
+import com.mjiayou.trecorelib.base.TCMenuActivity;
 import com.mjiayou.trecorelib.bean.entity.TCMenu;
 import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
@@ -65,6 +66,7 @@ import com.mjiayou.trecorelib.http.callback.StringCallback;
 import com.mjiayou.trecorelib.json.JsonParser;
 import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.HandlerUtils;
+import com.mjiayou.trecorelib.util.HelloUtils;
 import com.mjiayou.trecorelib.util.KeyBoardUtils;
 import com.mjiayou.trecorelib.util.LogUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
@@ -1134,6 +1136,19 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 CrashReport.testJavaCrash();
+            }
+        }));
+        tcMenus.add(new TCMenu("TCMenuActivity", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // mTvInfo
+                StringBuilder builder = new StringBuilder();
+                builder.append("\n");
+                builder.append(HelloUtils.getHI());
+                builder.append("\n");
+                builder.append(AppUtils.getAppInfoDetail(mContext));
+                builder.append("\n");
+                TCMenuActivity.open(mContext, "111", builder.toString(), null);
             }
         }));
         DialogHelper.createTCAlertMenuDialog(mContext, "测试", "接口测试", true, tcMenus).show();
