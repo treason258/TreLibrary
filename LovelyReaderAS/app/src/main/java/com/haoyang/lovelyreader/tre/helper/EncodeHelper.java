@@ -22,7 +22,7 @@ public class EncodeHelper {
     // TAG
     protected static final String TAG = "EncodeHelper";
 
-    private static final String MD5_SECRET = BuildConfig.DEBUG ? MD5_SECRET_DEBUG : MD5_SECRET_RELEASE;
+    private static final String MD5_SECRET = Global.DEBUG ? MD5_SECRET_DEBUG : MD5_SECRET_RELEASE;
     private static final String KEY_RANDOM_CHAR = "randomChar";
 
     // ******************************** 获取sign ********************************

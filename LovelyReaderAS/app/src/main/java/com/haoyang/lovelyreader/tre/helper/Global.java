@@ -20,4 +20,6 @@ public class Global {
     public static boolean debugTokenExpired = false;
 
     public static boolean showEpubFilePath = false;
+
+    public static boolean DEBUG = false;
 }
