@@ -129,8 +129,8 @@ dependencies {
     compile files('libs/slf4j-api-1.6.1.jar')
     compile project(':TreCoreLib')
 
-    compile "com.jakewharton:butterknife:8.4.0"
-    apt "com.jakewharton:butterknife-compiler:8.4.0"
+//    compile "com.jakewharton:butterknife:8.4.0"
+//    apt "com.jakewharton:butterknife-compiler:8.4.0"
     compile("com.hwangjr.rxbus:rxbus:1.0.5") {
         exclude group: 'com.jakewharton.timber', module: 'timber'
     }
