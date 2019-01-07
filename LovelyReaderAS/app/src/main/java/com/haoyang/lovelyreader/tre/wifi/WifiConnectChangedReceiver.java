@@ -7,7 +7,9 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Parcelable;
 
-import com.hwangjr.rxbus.RxBus;
+import com.haoyang.lovelyreader.tre.event.OnWifiChangedEvent;
+
+import de.greenrobot.event.EventBus;
 
 public class WifiConnectChangedReceiver extends BroadcastReceiver {
 
@@ -18,7 +20,8 @@ public class WifiConnectChangedReceiver extends BroadcastReceiver {
                     .getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
             if (null != parcelableExtra) {
                 NetworkInfo networkInfo = (NetworkInfo) parcelableExtra;
-                RxBus.get().post(Constants.RxBusEventType.WIFI_CONNECT_CHANGE_EVENT, networkInfo.getState());
+//                RxBus.get().post(Constants.RxBusEventType.WIFI_CONNECT_CHANGE_EVENT, networkInfo.getState());
+                EventBus.getDefault().post(new OnWifiChangedEvent(networkInfo.getState()));
             }
         }
     }

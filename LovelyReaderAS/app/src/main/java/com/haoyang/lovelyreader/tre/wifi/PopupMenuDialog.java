@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,11 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haoyang.lovelyreader.R;
+import com.haoyang.lovelyreader.tre.event.OnWifiChangedEvent;
 import com.haoyang.lovelyreader.tre.event.OnWifiDialogDismissEvent;
 import com.haoyang.lovelyreader.tre.helper.Configs;
-import com.hwangjr.rxbus.RxBus;
-import com.hwangjr.rxbus.annotation.Subscribe;
-import com.hwangjr.rxbus.annotation.Tag;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -61,7 +60,7 @@ public class PopupMenuDialog {
         WindowManager windowManager = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
         display = windowManager.getDefaultDisplay();
-        RxBus.get().register(this);
+        EventBus.getDefault().register(this);
     }
 
     public PopupMenuDialog builder() {
@@ -122,9 +121,17 @@ public class PopupMenuDialog {
         context.unregisterReceiver(mWifiConnectChangedReceiver);
     }
 
-    @Subscribe(tags = {@Tag(Constants.RxBusEventType.WIFI_CONNECT_CHANGE_EVENT)})
-    public void onWifiConnectStateChanged(NetworkInfo.State state) {
-        checkWifiState(state);
+//    @Subscribe(tags = {@Tag(Constants.RxBusEventType.WIFI_CONNECT_CHANGE_EVENT)})
+//    public void onWifiConnectStateChanged(NetworkInfo.State state) {
+//        checkWifiState(state);
+//    }
+
+    /**
+     * onEvent
+     */
+    public void onEvent(OnWifiChangedEvent onWifiChangedEvent) {
+        Log.d("PopupMenuDialog", "onEvent() called with: onWifiChangedEvent = [" + onWifiChangedEvent + "]");
+        checkWifiState(onWifiChangedEvent.getState());
     }
 
     void checkWifiState(NetworkInfo.State state) {
@@ -178,9 +185,8 @@ public class PopupMenuDialog {
 
     void onDialogDismiss(DialogInterface dialog) {
         Timber.d("dialog dismiss!");
-        RxBus.get().post(Constants.RxBusEventType.POPUP_MENU_DIALOG_SHOW_DISMISS, 0);
         EventBus.getDefault().post(new OnWifiDialogDismissEvent(true));
         unregisterWifiConnectChangedReceiver();
-        RxBus.get().unregister(PopupMenuDialog.this);
+        EventBus.getDefault().unregister(this);
     }
 }

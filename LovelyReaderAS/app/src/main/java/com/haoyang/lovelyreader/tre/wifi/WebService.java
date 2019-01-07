@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import com.haoyang.lovelyreader.tre.bean.FileBean;
 import com.haoyang.lovelyreader.tre.helper.Configs;
 import com.haoyang.lovelyreader.tre.helper.OnBookAddEvent;
-import com.hwangjr.rxbus.RxBus;
 import com.java.common.service.file.FileNameService;
 import com.koushikdutta.async.AsyncServer;
 import com.koushikdutta.async.ByteBufferList;
@@ -179,8 +178,6 @@ public class WebService extends TCService {
                     request.setEndCallback((Exception e) -> {
                         fileUploadHolder.reset();
                         response.end();
-                        RxBus.get().post(Constants.RxBusEventType.LOAD_BOOK_LIST, 0);
-
 
                         File receivedFile = fileUploadHolder.getReceivedFile();
                         String filePath = receivedFile.getAbsolutePath();
@@ -213,7 +210,6 @@ public class WebService extends TCService {
                 File file = new File(Configs.DIR_SDCARD_PROJECT_BOOK, path);
                 if (file.exists() && file.isFile()) {
                     file.delete();
-                    RxBus.get().post(Constants.RxBusEventType.LOAD_BOOK_LIST, 0);
                 }
             }
             response.end();
