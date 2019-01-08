@@ -23,10 +23,18 @@ public class Test {
             posBean.setCard(textLineArray[2]);
             posBean.setType(textLineArray[3]);
             posBean.setMoneyPay(textLineArray[4]);
-            posBean.setMoneyEarn(textLineArray[5]);
-            posBean.setMoneyTax(textLineArray[6]);
-            posBean.setMoneyRate(textLineArray[7]);
-            posBean.setMoneySum(textLineArray[8]);
+            if (textLineArray.length >= 6) {
+                posBean.setMoneyEarn(textLineArray[5]);
+            }
+            if (textLineArray.length >= 7) {
+                posBean.setMoneyTax(textLineArray[6]);
+            }
+            if (textLineArray.length >= 8) {
+                posBean.setMoneyRate(textLineArray[7]);
+            }
+            if (textLineArray.length >= 9) {
+                posBean.setMoneySum(textLineArray[8]);
+            }
             if (textLineArray.length >= 10) {
                 posBean.setRemark(textLineArray[9]);
             }
@@ -39,8 +47,12 @@ public class Test {
         for (PosBean bean : posBeanList) {
             System.out.println(bean.toString());
             moneyPaySum += Double.valueOf(bean.getMoneyPay());
-            moneyEarnSum += Double.valueOf(bean.getMoneyEarn());
-            moneyTaxSum += Double.valueOf(bean.getMoneyTax());
+            if (bean.getMoneyEarn() != null) {
+                moneyEarnSum += Double.valueOf(bean.getMoneyEarn());
+            }
+            if (bean.getMoneyTax() != null) {
+                moneyTaxSum += Double.valueOf(bean.getMoneyTax());
+            }
         }
 
         System.out.println("统计：");
