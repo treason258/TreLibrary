@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="Reader"
+            android:text="读书笔记"
             android:textColor="@color/tc_black"
             android:textSize="20sp" />
 

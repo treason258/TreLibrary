@@ -28,6 +28,7 @@ import com.mjiayou.trecorelib.dialog.DialogHelper;
 import com.mjiayou.trecorelib.dialog.TCAlertDialog;
 import com.mjiayou.trecorelib.event.UserLoginStatusEvent;
 import com.mjiayou.trecorelib.http.RequestSender;
+import com.mjiayou.trecorelib.util.AppUtils;
 import com.mjiayou.trecorelib.util.ToastUtils;
 import com.mjiayou.trecorelib.util.UserUtils;
 
@@ -45,6 +46,8 @@ public class MineFragment extends BaseFragment {
     private LinearLayout llMember;
     private LinearLayout llFeedback;
     private LinearLayout llAbout;
+    private LinearLayout llVersion;
+    private TextView tvVersion;
     private LinearLayout llLogout;
 
     @Override
@@ -65,6 +68,8 @@ public class MineFragment extends BaseFragment {
         llMember = (LinearLayout) view.findViewById(R.id.llMember);
         llFeedback = (LinearLayout) view.findViewById(R.id.llFeedback);
         llAbout = (LinearLayout) view.findViewById(R.id.llAbout);
+        llVersion = (LinearLayout) view.findViewById(R.id.llVersion);
+        tvVersion = (TextView) view.findViewById(R.id.tvVersion);
         llLogout = (LinearLayout) view.findViewById(R.id.llLogout);
 
         initView();
@@ -195,6 +200,9 @@ public class MineFragment extends BaseFragment {
 //                ToastUtils.show("功能暂未开放");
             }
         });
+
+        // tvVersion
+        tvVersion.setText("v" + AppUtils.getVersionName(mContext));
     }
 
     /**

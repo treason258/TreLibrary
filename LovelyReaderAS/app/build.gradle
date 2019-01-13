@@ -90,8 +90,8 @@ android {
         variant ->
             variant.outputs.each {
                 output ->
-                    // 输出APK文件名为：TreCore-1.0.0_1-release-official.apk
-                    def fileName = "LovelyReader-${defaultConfig.versionName}_${defaultConfig.versionCode}-${buildType.name}-${variant.productFlavors[0].name}.apk"
+                    // 输出APK文件名为：TreCore-1.0.0-1-release-official.apk
+                    def fileName = "LovelyReader-${defaultConfig.versionName}-${defaultConfig.versionCode}-${buildType.name}-${variant.productFlavors[0].name}.apk"
                     output.outputFile = new File(output.outputFile.parent, fileName)
             }
     }
