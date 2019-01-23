@@ -501,409 +501,20 @@ BJ
 				1221 0030 +1=1483 lixi
 				1483ok
 
-ZXXYK-9796
+ZXXYK-9796  ----payday0124-0
 0110 1343 +295.83=0 (+35000=35000)
-0ok ----payday0124-0
+0ok
 
-ZXXYK-6580
+ZXXYK-6580  ----payday0124-0
 0110 1343 +360=0 (+35000=35000)
-0ok ----payday0124-0
+0ok
 
-ZSXYK-6553
-0918 2053 -139=-12325.09 wancan (+51000=38674.91)
--12325.09ok
-0919 1302 -9.9= taobao,xiumeidao----
-0922 1117 -30.8= waimai,eleme,huangmenji----
-0922 2351 -472= wancan,qingke,gaofeng,kaoyangtui----
-0922 2352 -8= wancan,yinliao----
-0923 1118 -15= didi,huijia----
-0923 1951 -54.6= waimai,eleme,kaochuan
-0924 2320 -85= wancan,chuanchuan----
-0924 2321 -65= wancan,chuanchuan----
-0924 2336 -17= 711,yinliao,tang
-0924 2337 -5.6= 711,qiaokeli
-0925 2109 -5.1= shuiguo,lizi
-0925 2128 -16.1= 711,yinliao,tang
-0927 1026 -658= menpiao,nanjingsenlin----
-0927 1105 -7.9= lingshi,gongsi,mianbao
-0927 1252 -99.9= dianfei,aa
-0927 1407 -210= yan,gaofeng----
-0927 1414 -66= yinliao,xingbake
-0927 1634 -19= yinliao,gaosu,fuwuqu
-0927 1936 -289= huochepiao,dezhoudaobeijing----
-0928 1440 -1020= jipiao,beijingdaonanjing----
-0928 1626 -25= yinliao,dezhou,gaotiezhan
-0930 1411 -1.5= yinliao,youbao
-1001 0030 +2000= shenzhouzuche----
-1001 1145 -26.4= waimai,eleme,huangmenji
-1001 1320 -365= zhusu,hanting
-1001 1417 +365= zhusu,hanting,tuikuan
-1001 1855 -18= waimai,eleme,naicha
-1002 0933 -168= huochepiao,nanjingdaosuzhou----
-1002 1153 -41.3= waimai,wucan,jianjiangyipin
-1002 1550 -10= yinliao,jichang
-1002 1612 -3= yinliao,jichang,youbao
-1002 2112 -66= quchenshi,fajiao,lvxingtaozhuang
-1002 2124 -3= dache,meituan,ditiedaobinguan
-1002 2313 -15= paopaoyu,binguan
-1003 1120 -29.94= dache,meituan,binguandaofuzimiao
-1003 1207 -15= lingshi,kaoyachang
-1003 1349 -109= wucan,nanjingdapaidang----
-1004 1126 -8= didi,binguandaoditiezhan
-1004 1412 -28.45= didi,jinianguandaohuochezhan
-1004 1809 -17.13= didi,huochezhandaobinguan
-1004 1911 -34= lingshi,yabashengjian
-1004 1949 -13= yinliao,naicai,coco
-1004 2117 -30= lingshi,niuzhatang
-1004 2226 -9.85= didi,pingjiangludaoshantangjie
-1004 2245 -12= yinliao,naicha,yidiandian
-1005 0238 -79= huochepiao,suzhoudaoshanghai
-1005 0318 -13.6= didi,shantangjiedaobinguan
-1005 0624 +79= huochepiao,tuikuan
-1005 0853 -80= huochepiao,suzhoudaoshanghai
-1005 1155 -25= bingqilin
-1005 1340 -29= huochepiao,suzhoudaoshanghai
-1005 1805 -308= jiudian,buding,yiye----
-1005 1852 -15= yinliao,naicha,yidiandian
-1005 2245 -9= didi,budingjiudiandaojingzhijiudian
-1005 2259 -79= huochepiao,suzhoudaoshanghai
-1005 2330 +31.5+31.5=+63= huochepiao,tuikuan
-1005 2330 +31.5+31.5=+63= huochepiao,tuikuan
-1006 0911 -43= zaocan,mian
-1006 0954 -188= shenzhouzuche----
-1006 1232 -88= wucan,dazhaxie----
-1006 1417 -14= fuwuqu,yinliao,huotui
-1006 2102 -27= yinliao,yidiandian
-1006 2258 -1106= huochepiao,shanghaidaobeijing----
-1007 0000 -11.22= didi,binguandaoshenzhouzuche
-1007 0915 -185.49= jiayou----
-1007 0959 -45= zaocan,suzhouzhan----
-1007 1338 -6= yinliao,ditiezhan
-1007 1344 -3= ditie,shanghai
-1007 1453 -4= ditie,shanghai
-1007 1622 -8= yinliao,gaotiezhan
-1007 1623 -4= yinliao,gaotiezhan
-1007 2225 -11.5= guoduomei,mianbao
-1008 1247 -2000= tixian----
-1008 2021 -48.6= yabo----
-1009 1947 -5.5= taobao,daizi
-1009 1951 -1.1=-18394.57 taobao,xiangkuang (+51000=32605.43)
-1010 1143 -376.2= zhusu,suzhou----
-1010 1149 -188= zhusu,suzhou----
-1010 1342 -651= zhusu,nanjing----
-1010 1424 -4= yinliao,kafei
-1010 1454 -17.5= taobao,zimimianbao
-1010 1527 -39.77= jingdong,mianbao
-1011 1329 -26= naicha,yidiandian
-1011 1629 -5.9= taobao,baijiebu
-1011 2255 -60.9= jingdong,you,gouqi
-1012 1411 -4= yinliao,kafei
-1012 2036 -314= zhusu,zhangkun,hanting----
-1013 0235 -2= apple store
-1013 1515 -120= menpiao,yiheyuan----
-1013 1758 -10= ditie
-1013 2112 -286= wancan,xiaodiaolitang----
-1013 2114 -20= wancan,xiaodiaolitang----
-1013 2224 -10= ditie
-1014 0856 -8= ditie
-1014 0930 -159= menpiao,gugong----
-1014 1722 -8= ditie
-1014 1840 -12.9= shuiguo,juzi
-1015 1505 -3.94= yinliao,kafei
-1015 2008 -47= wancan,waimai
-1016 0028 -6= apple store
-1017 0945 -5= ditie
-1017 1013 -7= lingshi,gongsi
-1017 1255 -16= wucan,mixian
-1017 2104 -13= didi,gongsihuodong
-1018 2013 -57.1= chaoshi,rio,guodong,yinliao
-1019 1446 -4= yinliao,kafei
-1020 0949 -5.8= taobao,
-1020 1223 -16.32= didi,jiadaodayali
-1020 1710 -34=-20924.9 yinliao,yidiandian
-1021 0035 +3857= huan,zhifubao----
-1021 1029 -5.6= taobao,
-1021 1038 -2.8= taobao,
-1021 1054 -8200= tixian,----
-1021 1100 +10000= huan,yuebao----
-1021 1157 -28.7=-15313 wucan,waimai (+51000=35687)
-1021 1858 -47.8= wancan
-1021 2010 -28.8=-15389.6 wancan (+51000=35610.4)
--15389.6
-1022 1944 -19.8= taobao,zimimianbao,meimei
-1024 1458 -4= youbao
-1026 0932 -5= ditie
-1026 1008 -49.98= huafei,shasha
-1026 2042 -34.3= waimai
-1027 1817 -33.4= waimai
-1027 2134 -5.5= taobao,qicheshoujihao
-1028 1135 -40.4= waimai
-1028 1546 -2.8= dangdang,bi
-1028 1927 -24= wancan,zhou
-1028 2110 -51.8= kuaifang,sanjiu,yanyunbang
-1029 1045 -5.5= lingshi
-1029 2044 -87.25= chaoshi,lingshi
-1030 2151 -6.7= taobao,xiedai
-1030 2316 -8.8= taobao,lajidai
-1101 1116 -100.58= jingdong,xifashui,weishengzhi
-1101 1229 -1= taobao,mifendai
-1101 1238 -39= taobao,wuxianchongdianqi
-1101 2313 -20= taobao,yinxiang,yufukuan
-1103 1212 -31.9= waimai
-1103 2010 -36.6= waimai
-1104 1207 -35.2= waimai
-1104 1851 -52.5= waimai
-1105 1045 -49.99= huafei
-1105 1432 -20= naicha
-1105 2340 -0.99= zhifubao,zhifuma
-1106 1158 -6800= tixian----
-1108 1937 -3400= tixian----
-1109 1955 -74= huiyuan,yinxiangbiji
-1110 1118 -45.1= waimai
-1110 1311 -11.8= taobao,wanju,3dmigong
-1110 1456 -116.4= jingdong,mama,xijiejing,weishengzhi,deng
-1110 1512 -94.91= dianying
-1110 1611 -25= naicha
-1110 1928 -58= wancan,xiaohuoguo
-1111 0010 -91= taobao,wanju,fangzi
-1111 0017 -9.85= jingdong,chouzhi
-1111 0121 -186= rongyaoerji
-1111 0852 -69= taobao,yinxiang,weikuan
-1111 1057 -39.2= waimai
-1111 2232 -0.75= taobao,shuangmianjiao
-1112 1302 -28.8= taobao,yashuajia
-1112 1311 -20= taobao,fajiao
-1113 1950 -2= youbao
-1114 1942 +5930=-21298.4 huan---- (+51000=29701.6)
--21298.4o
-1117 1603 -1.2= taobao,shouna
-1117 1859 -1= qingqikeji???
-1118 1858 -6= yinliao
-1120 0957 +10000= huan----
-1122 2344 -69= aliyun
-1124 0104 -3= appstore
-1124 1557 -18= caishichang???
-1124 2303 -100= dianfeiaa
-1125 1052 -10= youbao,lingshi
-1125 1054 -11= lingshi,gongsi
-1125 1701 -5= lingshi,gongsi
-1125 1928 -9.87= taobao,kaolengmian
-1126 1324 -110= shuifeiaa
-1126 1337 -9.9= taobao???
-1127 0051 -25= taqu
-1127 0059 -25= taqu
-1127 0107 -25= taqu
-1128 0047 -9.9= shujuxian
-1128 0055 -9.9= shujuxian
-1201 1832 -4.9= kouxiangtang
-1201 2125 -11.29= gouwu,jingkelong
-1202 0034 -5= ditie
-1202 1413 -20.5= waimai
-1202 2027 -28= waimai
-1203 0829 -99.89= huafei
-1203 1312 -161= wucan,zaozhuangrenjia
-1206 1522 -9= aliyun
-1206 1729 -1= appstore
-1208 1010 -5= ditie
-1212 2015 -5.5= maolihua???
-1212 2018 -13.9= zuoshangqimaoyi???
-1216 1503 -1= youlihuikeji
-1216 1504 -1.99= youlihuikeji
-1216 2355 +1820= huan----
-1217 2149 +10000= huan----
-1220 1343 -2= gongxiangdianyuan
-1221 1946 -4.94= yinliao
-1221 1948 -5= ditie
-1222 1507 -28= gofun
-1224 0954 -5= ditie
-1224 1958 -5= ditie
-1225 0946 -5= ditie
-1225 1952 -5= ditie
-1226 0946 -5=-360.08
-1226 1945 -5=-365.08 ditie
-1227 0946 -5=-370.08 ditie
-1227 1958 -5=-375.08 ditie (+51000=50624.92)
-1228 0945 -5=-380.08
-1228 1945 -5=-385.08
-1229 0949 -5=-390.08
-1229 1955 -5=-395.08 ditie (+51000=50604.92)
--395.08ok
-0110 1343 +395.08=0 (+51000=51000)----
-0ok ----payday0121-0
+ZSXYK-6553  ----payday0121-0
+0110 1343 +395.08=0 (+51000=51000)
+0ok
 
-JTXYK-3520
-0831 1307 -19.6=-11757.76 wucan (+20000=8242.24)----
--11757.76ok
-0903 1015 -5= zaocan----
-0903 1415 -18.7= wucan----
-0903 1437 -3= yinliao
-0904 0950 -5= zaocan----
-0905 1024 -5= zaocan----
-0905 1300 -18.7= wucan----
-0905 1330 -5.5= yinliao
-0906 0947 -5= zaocan----
-0906 1939 -18.7= wancan
-0906 1939 -3= wancan
-0906 1941 -15= wancan
-0907 0943 -5= zaocan----
-0907 1211 -103.55= gouwu,jingdong----
-0910 1009 -5= zaocan----
-0911 0948 -5= zaocan----
-0911 1236 +1620.15=----
-0912 0854 +2000=----
-0912 0923 -5= zaocan----
-0912 0942 -0.5= yinliao
-0912 1405 -19= wucan
-0912 2100 -0.25= yinliao
-0912 2101 -0.01= yinliao
-0913 0832 -10200= tixian----
-0913 1505 -19= wucan
-0913 2005 -5= wancan,hongdoubing
-0914 0946 -5= zaocan----
-0914 1240 -16= wucan
-0917 1031 -5= zaocan----
-0917 1339 -19=-18652.52 wucan (+20000=1347.48)
-0918 1017 -9= zaocan----
-0918 1031 +8000= huan----
-0918 1313 -13= wucan
-0919 0941 -5=-10679.52 ditie (+20000=9320.48)
-0919 1309 -11= wucan
-0920 0932 -5= ditie
-0920 0943 -5= zaocan----
-0920 1313 -14= wucan
-0920 1346 -1= yinliao
-0920 2010 -5= ditie
-0921 0940 -5= ditie
-0921 1014 -9= zaocan----
-0922 1322 -2.5= ditie
-0923 1132 -0.5= yinliao
-0923 1445 -5.9= lingshi,gongsi
-0923 1516 -23= wucan
-0924 1124 -0.5= yinliao
-0926 0940 -5= ditie
-0926 1039 -7= zaocan----
-0926 1408 -19= wucan
-0927 1340 -21.2= wucan
-0929 1026 -7= zaocan----
-0929 1441 -21= wucan
-0929 1829 -0.5= yinliao
-0930 0913 +7800= huan,----
-0930 1031 -15600= fangzu----
-0930 1210 -28.5= wucan,xinhuicheng
-1008 1040 -7=-18683.12 zaocan (+20000=1316.88)----
-1010 1044 -7= zaocan----
-1010 1235 -16= wucan
-1011 1021 -5= zaocan----
-1015 1114 -7= zaocan----
-1016 1027 -5= zaocan----
-1018 0943 -5= zaocan----
-1018 1956 +3000=-15728.12 huan,yuebao (+20000=4271.88)----
--15728.12o
-1022 1327 -38= wucan
-1023 0952 -5= zaocan
-1024 0952 -5= zaocan
-1024 1237 -17= wucan
-1025 1035 -5= zaocan
-1025 1352 -19= wucan
-1026 0947 -5= zaocan
-1030 1024 -5= zaocan
-1030 1409 -16= wucan
-1031 1049 -5= zaocan
-1101 0951 -5= zaocan
-1101 1353 -18= wucan
-1102 0946 -5= zaocan
-1102 1332 -19= wucan
-1105 1407 -16= wucan
-1106 0952 -5= zaocan
-1107 0943 -5= zaocan
-1107 1410 -16= wucan
-1108 0946 -5= zaocan
-1108 1319 -19= wucan
-1108 2031 -5.5= lingshi,youbao
-1108 2045 -5= lingshi,youbao
-1109 0952 -5= zaocan
-1109 1322 -40= wucan
-1112 1027 -5=  zaocan
-1112 1411 -16= wucan
-1113 0949 -5= zaocan
-1113 1953 -6= lingshi,youbao
-1113 2014 -1.5= lingshi,youbao
-1114 0952 -5= zaocan
-1114 1432 -19= wucan
-1114 1926 -9800= tixian----
-1114 2010 -3.5= lingshi,youbao
-1115 0950 -5= zaocan
-1116 0932 -5= zaocan
-1116 1405 -16= wucan
-1112 1323 +13794= huan----
-1114 1038 +2000=-10109.62 huan---- (+20000=9890.38)
--10109.62o
-1117 1231 -25.4=
-1119 1333 -16=
-1119 2032 -1.5=
-1119 2048 -3=
-1122 1340 -16=
-1125 1322 -20=
-1125 1326 -4=
-1126 1205 -19=
-1127 0937 -6.8=-10221.32
-1128 0940 -4.9=
-1128 1941 -14=
-1130 0947 -4.9=
-1130 1246 -25=
-1201 1600 -14=
-1201 1633 -2400=----
-1204 1251 -19.8=
-1205 0957 -4.9=
-1205 1947 -8=
-1206 1609 -6.5=
-1207 0955 -4.9=
-1209 1221 -17.72=
-1210 1049 -12.4=
-1211 0951 -4.9=
-1211 1830 -7800=----
-1213 1126 -4=
-1214 1026 -2999=----
-1214 1856 -6888=----
-1215 0212 -625= -----
-1215 1854 -0.05=
-1216 1436 -90=
-1216 1532 -108=
-1216 1702 +90= tui
-1216 1958 -119=
-1216 2218 -499=----
-1216 2352 +10200= huan----
-1217 1327 -19.9=
-1217 1955 -20=
-1219 1241 -13=
-1219 2042 -131=
-1219 2047 -10=
-1220 0947 -4.9=
-1220 1343 -41=-21845.09
-1223 1353 +10000=----
-1223 1354 +3000=-8845.09----
--8845.09o
-1230 1212 -7.9= taobao,dingshiqi----
-1230 1213 +7.9= shuakajin----
-1230 1751 -63.8= didi
-1230 2208 -40= lizhikuanian
-1230 2209 -21.68= didi
-1231 1002 -99.8= dianyingpiao
-1231 1512 -195= jipiao
-0101 0955 -13.4=-9286.67 taobao,kuaizi (-22673.26+37000=5040.07)----
--9286.67ok
-0103 1028 -357= huochepiao,yantai----
-0105 2104 -8.8= taobao,shu----
-0107 1304 -59= wucan,huoguo----
-0109 2351 -5=-9716.47 shounaxiang (-23701.08+37000=3582.45)----
-0110 1345 +8837.19=-871.38 (-20701.08+37000=15427.54)----
-0110 2117 -50=-921.38 weizhangfakuan (-20701.08+37000=15377.54)----
-0112 1515 -4=-925.38 (-21831.08+37000=14243.54)----
-0120 2345 -68----
-0121 0033 -68----
-0121 1047 -162----
-0121 1049 -109=-1332.38 (-17871.08+37000=17796.54)----
-0000 0000 -0=-1332.38 (-19047.08+37000=16620.54)----
+JTXYK-3520  ----payday0119-0
+0000 0000 -0=-1332.38 (-19047.08+37000=16620.54)
 -1332.38ok
 
 JTXYK-1053  ----payday0119-0
@@ -1342,6 +953,404 @@ X月
 ......
 ......
 
-// ******************************** OT ********************************
+// ******************************** ZSXYK-6553 ********************************
 
+ZSXYK-6553
+0918 2053 -139=-12325.09 wancan (+51000=38674.91)
+-12325.09ok
+0919 1302 -9.9= taobao,xiumeidao----
+0922 1117 -30.8= waimai,eleme,huangmenji----
+0922 2351 -472= wancan,qingke,gaofeng,kaoyangtui----
+0922 2352 -8= wancan,yinliao----
+0923 1118 -15= didi,huijia----
+0923 1951 -54.6= waimai,eleme,kaochuan
+0924 2320 -85= wancan,chuanchuan----
+0924 2321 -65= wancan,chuanchuan----
+0924 2336 -17= 711,yinliao,tang
+0924 2337 -5.6= 711,qiaokeli
+0925 2109 -5.1= shuiguo,lizi
+0925 2128 -16.1= 711,yinliao,tang
+0927 1026 -658= menpiao,nanjingsenlin----
+0927 1105 -7.9= lingshi,gongsi,mianbao
+0927 1252 -99.9= dianfei,aa
+0927 1407 -210= yan,gaofeng----
+0927 1414 -66= yinliao,xingbake
+0927 1634 -19= yinliao,gaosu,fuwuqu
+0927 1936 -289= huochepiao,dezhoudaobeijing----
+0928 1440 -1020= jipiao,beijingdaonanjing----
+0928 1626 -25= yinliao,dezhou,gaotiezhan
+0930 1411 -1.5= yinliao,youbao
+1001 0030 +2000= shenzhouzuche----
+1001 1145 -26.4= waimai,eleme,huangmenji
+1001 1320 -365= zhusu,hanting
+1001 1417 +365= zhusu,hanting,tuikuan
+1001 1855 -18= waimai,eleme,naicha
+1002 0933 -168= huochepiao,nanjingdaosuzhou----
+1002 1153 -41.3= waimai,wucan,jianjiangyipin
+1002 1550 -10= yinliao,jichang
+1002 1612 -3= yinliao,jichang,youbao
+1002 2112 -66= quchenshi,fajiao,lvxingtaozhuang
+1002 2124 -3= dache,meituan,ditiedaobinguan
+1002 2313 -15= paopaoyu,binguan
+1003 1120 -29.94= dache,meituan,binguandaofuzimiao
+1003 1207 -15= lingshi,kaoyachang
+1003 1349 -109= wucan,nanjingdapaidang----
+1004 1126 -8= didi,binguandaoditiezhan
+1004 1412 -28.45= didi,jinianguandaohuochezhan
+1004 1809 -17.13= didi,huochezhandaobinguan
+1004 1911 -34= lingshi,yabashengjian
+1004 1949 -13= yinliao,naicai,coco
+1004 2117 -30= lingshi,niuzhatang
+1004 2226 -9.85= didi,pingjiangludaoshantangjie
+1004 2245 -12= yinliao,naicha,yidiandian
+1005 0238 -79= huochepiao,suzhoudaoshanghai
+1005 0318 -13.6= didi,shantangjiedaobinguan
+1005 0624 +79= huochepiao,tuikuan
+1005 0853 -80= huochepiao,suzhoudaoshanghai
+1005 1155 -25= bingqilin
+1005 1340 -29= huochepiao,suzhoudaoshanghai
+1005 1805 -308= jiudian,buding,yiye----
+1005 1852 -15= yinliao,naicha,yidiandian
+1005 2245 -9= didi,budingjiudiandaojingzhijiudian
+1005 2259 -79= huochepiao,suzhoudaoshanghai
+1005 2330 +31.5+31.5=+63= huochepiao,tuikuan
+1005 2330 +31.5+31.5=+63= huochepiao,tuikuan
+1006 0911 -43= zaocan,mian
+1006 0954 -188= shenzhouzuche----
+1006 1232 -88= wucan,dazhaxie----
+1006 1417 -14= fuwuqu,yinliao,huotui
+1006 2102 -27= yinliao,yidiandian
+1006 2258 -1106= huochepiao,shanghaidaobeijing----
+1007 0000 -11.22= didi,binguandaoshenzhouzuche
+1007 0915 -185.49= jiayou----
+1007 0959 -45= zaocan,suzhouzhan----
+1007 1338 -6= yinliao,ditiezhan
+1007 1344 -3= ditie,shanghai
+1007 1453 -4= ditie,shanghai
+1007 1622 -8= yinliao,gaotiezhan
+1007 1623 -4= yinliao,gaotiezhan
+1007 2225 -11.5= guoduomei,mianbao
+1008 1247 -2000= tixian----
+1008 2021 -48.6= yabo----
+1009 1947 -5.5= taobao,daizi
+1009 1951 -1.1=-18394.57 taobao,xiangkuang (+51000=32605.43)
+1010 1143 -376.2= zhusu,suzhou----
+1010 1149 -188= zhusu,suzhou----
+1010 1342 -651= zhusu,nanjing----
+1010 1424 -4= yinliao,kafei
+1010 1454 -17.5= taobao,zimimianbao
+1010 1527 -39.77= jingdong,mianbao
+1011 1329 -26= naicha,yidiandian
+1011 1629 -5.9= taobao,baijiebu
+1011 2255 -60.9= jingdong,you,gouqi
+1012 1411 -4= yinliao,kafei
+1012 2036 -314= zhusu,zhangkun,hanting----
+1013 0235 -2= apple store
+1013 1515 -120= menpiao,yiheyuan----
+1013 1758 -10= ditie
+1013 2112 -286= wancan,xiaodiaolitang----
+1013 2114 -20= wancan,xiaodiaolitang----
+1013 2224 -10= ditie
+1014 0856 -8= ditie
+1014 0930 -159= menpiao,gugong----
+1014 1722 -8= ditie
+1014 1840 -12.9= shuiguo,juzi
+1015 1505 -3.94= yinliao,kafei
+1015 2008 -47= wancan,waimai
+1016 0028 -6= apple store
+1017 0945 -5= ditie
+1017 1013 -7= lingshi,gongsi
+1017 1255 -16= wucan,mixian
+1017 2104 -13= didi,gongsihuodong
+1018 2013 -57.1= chaoshi,rio,guodong,yinliao
+1019 1446 -4= yinliao,kafei
+1020 0949 -5.8= taobao,
+1020 1223 -16.32= didi,jiadaodayali
+1020 1710 -34=-20924.9 yinliao,yidiandian
+1021 0035 +3857= huan,zhifubao----
+1021 1029 -5.6= taobao,
+1021 1038 -2.8= taobao,
+1021 1054 -8200= tixian,----
+1021 1100 +10000= huan,yuebao----
+1021 1157 -28.7=-15313 wucan,waimai (+51000=35687)
+1021 1858 -47.8= wancan
+1021 2010 -28.8=-15389.6 wancan (+51000=35610.4)
+-15389.6
+1022 1944 -19.8= taobao,zimimianbao,meimei
+1024 1458 -4= youbao
+1026 0932 -5= ditie
+1026 1008 -49.98= huafei,shasha
+1026 2042 -34.3= waimai
+1027 1817 -33.4= waimai
+1027 2134 -5.5= taobao,qicheshoujihao
+1028 1135 -40.4= waimai
+1028 1546 -2.8= dangdang,bi
+1028 1927 -24= wancan,zhou
+1028 2110 -51.8= kuaifang,sanjiu,yanyunbang
+1029 1045 -5.5= lingshi
+1029 2044 -87.25= chaoshi,lingshi
+1030 2151 -6.7= taobao,xiedai
+1030 2316 -8.8= taobao,lajidai
+1101 1116 -100.58= jingdong,xifashui,weishengzhi
+1101 1229 -1= taobao,mifendai
+1101 1238 -39= taobao,wuxianchongdianqi
+1101 2313 -20= taobao,yinxiang,yufukuan
+1103 1212 -31.9= waimai
+1103 2010 -36.6= waimai
+1104 1207 -35.2= waimai
+1104 1851 -52.5= waimai
+1105 1045 -49.99= huafei
+1105 1432 -20= naicha
+1105 2340 -0.99= zhifubao,zhifuma
+1106 1158 -6800= tixian----
+1108 1937 -3400= tixian----
+1109 1955 -74= huiyuan,yinxiangbiji
+1110 1118 -45.1= waimai
+1110 1311 -11.8= taobao,wanju,3dmigong
+1110 1456 -116.4= jingdong,mama,xijiejing,weishengzhi,deng
+1110 1512 -94.91= dianying
+1110 1611 -25= naicha
+1110 1928 -58= wancan,xiaohuoguo
+1111 0010 -91= taobao,wanju,fangzi
+1111 0017 -9.85= jingdong,chouzhi
+1111 0121 -186= rongyaoerji
+1111 0852 -69= taobao,yinxiang,weikuan
+1111 1057 -39.2= waimai
+1111 2232 -0.75= taobao,shuangmianjiao
+1112 1302 -28.8= taobao,yashuajia
+1112 1311 -20= taobao,fajiao
+1113 1950 -2= youbao
+1114 1942 +5930=-21298.4 huan---- (+51000=29701.6)
+-21298.4o
+1117 1603 -1.2= taobao,shouna
+1117 1859 -1= qingqikeji???
+1118 1858 -6= yinliao
+1120 0957 +10000= huan----
+1122 2344 -69= aliyun
+1124 0104 -3= appstore
+1124 1557 -18= caishichang???
+1124 2303 -100= dianfeiaa
+1125 1052 -10= youbao,lingshi
+1125 1054 -11= lingshi,gongsi
+1125 1701 -5= lingshi,gongsi
+1125 1928 -9.87= taobao,kaolengmian
+1126 1324 -110= shuifeiaa
+1126 1337 -9.9= taobao???
+1127 0051 -25= taqu
+1127 0059 -25= taqu
+1127 0107 -25= taqu
+1128 0047 -9.9= shujuxian
+1128 0055 -9.9= shujuxian
+1201 1832 -4.9= kouxiangtang
+1201 2125 -11.29= gouwu,jingkelong
+1202 0034 -5= ditie
+1202 1413 -20.5= waimai
+1202 2027 -28= waimai
+1203 0829 -99.89= huafei
+1203 1312 -161= wucan,zaozhuangrenjia
+1206 1522 -9= aliyun
+1206 1729 -1= appstore
+1208 1010 -5= ditie
+1212 2015 -5.5= maolihua???
+1212 2018 -13.9= zuoshangqimaoyi???
+1216 1503 -1= youlihuikeji
+1216 1504 -1.99= youlihuikeji
+1216 2355 +1820= huan----
+1217 2149 +10000= huan----
+1220 1343 -2= gongxiangdianyuan
+1221 1946 -4.94= yinliao
+1221 1948 -5= ditie
+1222 1507 -28= gofun
+1224 0954 -5= ditie
+1224 1958 -5= ditie
+1225 0946 -5= ditie
+1225 1952 -5= ditie
+1226 0946 -5=-360.08
+1226 1945 -5=-365.08 ditie
+1227 0946 -5=-370.08 ditie
+1227 1958 -5=-375.08 ditie (+51000=50624.92)
+1228 0945 -5=-380.08
+1228 1945 -5=-385.08
+1229 0949 -5=-390.08
+1229 1955 -5=-395.08 ditie (+51000=50604.92)
+-395.08ok
+0110 1343 +395.08=0 (+51000=51000)----
+0ok ----payday0121-0
+
+// ******************************** JTXYK-3520 ********************************
+
+JTXYK-3520
+0831 1307 -19.6=-11757.76 wucan (+20000=8242.24)----
+-11757.76ok
+0903 1015 -5= zaocan----
+0903 1415 -18.7= wucan----
+0903 1437 -3= yinliao
+0904 0950 -5= zaocan----
+0905 1024 -5= zaocan----
+0905 1300 -18.7= wucan----
+0905 1330 -5.5= yinliao
+0906 0947 -5= zaocan----
+0906 1939 -18.7= wancan
+0906 1939 -3= wancan
+0906 1941 -15= wancan
+0907 0943 -5= zaocan----
+0907 1211 -103.55= gouwu,jingdong----
+0910 1009 -5= zaocan----
+0911 0948 -5= zaocan----
+0911 1236 +1620.15=----
+0912 0854 +2000=----
+0912 0923 -5= zaocan----
+0912 0942 -0.5= yinliao
+0912 1405 -19= wucan
+0912 2100 -0.25= yinliao
+0912 2101 -0.01= yinliao
+0913 0832 -10200= tixian----
+0913 1505 -19= wucan
+0913 2005 -5= wancan,hongdoubing
+0914 0946 -5= zaocan----
+0914 1240 -16= wucan
+0917 1031 -5= zaocan----
+0917 1339 -19=-18652.52 wucan (+20000=1347.48)
+0918 1017 -9= zaocan----
+0918 1031 +8000= huan----
+0918 1313 -13= wucan
+0919 0941 -5=-10679.52 ditie (+20000=9320.48)
+0919 1309 -11= wucan
+0920 0932 -5= ditie
+0920 0943 -5= zaocan----
+0920 1313 -14= wucan
+0920 1346 -1= yinliao
+0920 2010 -5= ditie
+0921 0940 -5= ditie
+0921 1014 -9= zaocan----
+0922 1322 -2.5= ditie
+0923 1132 -0.5= yinliao
+0923 1445 -5.9= lingshi,gongsi
+0923 1516 -23= wucan
+0924 1124 -0.5= yinliao
+0926 0940 -5= ditie
+0926 1039 -7= zaocan----
+0926 1408 -19= wucan
+0927 1340 -21.2= wucan
+0929 1026 -7= zaocan----
+0929 1441 -21= wucan
+0929 1829 -0.5= yinliao
+0930 0913 +7800= huan,----
+0930 1031 -15600= fangzu----
+0930 1210 -28.5= wucan,xinhuicheng
+1008 1040 -7=-18683.12 zaocan (+20000=1316.88)----
+1010 1044 -7= zaocan----
+1010 1235 -16= wucan
+1011 1021 -5= zaocan----
+1015 1114 -7= zaocan----
+1016 1027 -5= zaocan----
+1018 0943 -5= zaocan----
+1018 1956 +3000=-15728.12 huan,yuebao (+20000=4271.88)----
+-15728.12o
+1022 1327 -38= wucan
+1023 0952 -5= zaocan
+1024 0952 -5= zaocan
+1024 1237 -17= wucan
+1025 1035 -5= zaocan
+1025 1352 -19= wucan
+1026 0947 -5= zaocan
+1030 1024 -5= zaocan
+1030 1409 -16= wucan
+1031 1049 -5= zaocan
+1101 0951 -5= zaocan
+1101 1353 -18= wucan
+1102 0946 -5= zaocan
+1102 1332 -19= wucan
+1105 1407 -16= wucan
+1106 0952 -5= zaocan
+1107 0943 -5= zaocan
+1107 1410 -16= wucan
+1108 0946 -5= zaocan
+1108 1319 -19= wucan
+1108 2031 -5.5= lingshi,youbao
+1108 2045 -5= lingshi,youbao
+1109 0952 -5= zaocan
+1109 1322 -40= wucan
+1112 1027 -5=  zaocan
+1112 1411 -16= wucan
+1113 0949 -5= zaocan
+1113 1953 -6= lingshi,youbao
+1113 2014 -1.5= lingshi,youbao
+1114 0952 -5= zaocan
+1114 1432 -19= wucan
+1114 1926 -9800= tixian----
+1114 2010 -3.5= lingshi,youbao
+1115 0950 -5= zaocan
+1116 0932 -5= zaocan
+1116 1405 -16= wucan
+1112 1323 +13794= huan----
+1114 1038 +2000=-10109.62 huan---- (+20000=9890.38)
+-10109.62o
+1117 1231 -25.4=
+1119 1333 -16=
+1119 2032 -1.5=
+1119 2048 -3=
+1122 1340 -16=
+1125 1322 -20=
+1125 1326 -4=
+1126 1205 -19=
+1127 0937 -6.8=-10221.32
+1128 0940 -4.9=
+1128 1941 -14=
+1130 0947 -4.9=
+1130 1246 -25=
+1201 1600 -14=
+1201 1633 -2400=----
+1204 1251 -19.8=
+1205 0957 -4.9=
+1205 1947 -8=
+1206 1609 -6.5=
+1207 0955 -4.9=
+1209 1221 -17.72=
+1210 1049 -12.4=
+1211 0951 -4.9=
+1211 1830 -7800=----
+1213 1126 -4=
+1214 1026 -2999=----
+1214 1856 -6888=----
+1215 0212 -625= -----
+1215 1854 -0.05=
+1216 1436 -90=
+1216 1532 -108=
+1216 1702 +90= tui
+1216 1958 -119=
+1216 2218 -499=----
+1216 2352 +10200= huan----
+1217 1327 -19.9=
+1217 1955 -20=
+1219 1241 -13=
+1219 2042 -131=
+1219 2047 -10=
+1220 0947 -4.9=
+1220 1343 -41=-21845.09
+1223 1353 +10000=----
+1223 1354 +3000=-8845.09----
+-8845.09o
+1230 1212 -7.9= taobao,dingshiqi----
+1230 1213 +7.9= shuakajin----
+1230 1751 -63.8= didi
+1230 2208 -40= lizhikuanian
+1230 2209 -21.68= didi
+1231 1002 -99.8= dianyingpiao
+1231 1512 -195= jipiao
+0101 0955 -13.4=-9286.67 taobao,kuaizi (-22673.26+37000=5040.07)----
+-9286.67ok
+0103 1028 -357= huochepiao,yantai----
+0105 2104 -8.8= taobao,shu----
+0107 1304 -59= wucan,huoguo----
+0109 2351 -5=-9716.47 shounaxiang (-23701.08+37000=3582.45)----
+0110 1345 +8837.19=-871.38 (-20701.08+37000=15427.54)----
+0110 2117 -50=-921.38 weizhangfakuan (-20701.08+37000=15377.54)----
+0112 1515 -4=-925.38 (-21831.08+37000=14243.54)----
+0120 2345 -68----
+0121 0033 -68----
+0121 1047 -162----
+0121 1049 -109=-1332.38 (-17871.08+37000=17796.54)----
+0000 0000 -0=-1332.38 (-19047.08+37000=16620.54)----
+-1332.38ok
 
