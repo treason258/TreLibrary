@@ -3,6 +3,59 @@
 ****************************************************************
 ****************************************************************
 ****************************************************************
+****************************************************************
+
+// TODO 实时埋点
+
+找不到
+im_infor_vr h5
+im_vr h5
+没有用
+im_list_carlist
+im_home
+
+首页&我的页
+im_infor_home
+im_home
+car_click_guesslike_my
+car_guess_my_expo
+car_click_guesslike_home
+guess_expo
+找不到
+car_guess_my_expo
+
+****************************************************************
+
+0
+1 yitan
+
+{"code":1,"file":"\/c\/20190117\/app_package\/30\/20190117\/1650\/com_uxin_usedcar_CHANNEL.apk","size":29335170,"md5":"f0133e1406216aeda2551065c1b906d5"}
+
+{
+    "code": 1,
+    "file": "/c/20190117/app_package/30/20190117/1650/com_uxin_usedcar_CHANNEL.apk",
+    "size": 29335170,
+    "md5": "f0133e1406216aeda2551065c1b906d5"
+}
+
+{
+    "code": 1,
+    "message": "获取成功",
+    "data": {
+        "version": 786,
+        "title": "发现新版本：v10.5.0",
+        "content": "【购物车上线】列表页新增购物车，车辆对比一目了然\r\n【购车城市升级】支持城市搜索，购车更加方便",
+        "url": "http://appupdate.xinstatic.com/c/20181219/app_package/5/20181219/1019/com_uxin_usedcar_CHANNEL.apk",
+        "md5_code": "a416c30246c2437c2f36f4d15b397fe7",
+        "is_force": -1
+    }
+}
+
+http://appupdate.xinstatic.com/c/20190117/app_package/30/20190117/1650/com_uxin_usedcar_CHANNEL.apk
+
+
+****************************************************************
+****************************************************************
 
 {"searchForHotKeywordBean":{"param":{"title":"5-10万","pricemin":5,"pricemax":10,"mortgage":"0"}}}
 
