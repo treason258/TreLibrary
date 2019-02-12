@@ -464,6 +464,15 @@ ZFB
 1020 2350 -3857=594 huan,xinyongka----
 1021 1056 +10000-10000=594 zhuan,yuebao----
 594o
+...
+0129 0916 -20=41 chongzhi,ditie
+0129 1959 -16=25 ???shangpin
+0131 1033 -5=20 zaocan
+0204 2327 +2=22 wufu
+0205 1423 -10=12 wanju,liangyuanchaoshi
+0208 1246 -4=8 lingshi,diaozabing
+0210 1002 -1=7 xianyu,liulandiqiu
+7o
 
 YEB
 0130 1727 -2900= huan,xinyongka
