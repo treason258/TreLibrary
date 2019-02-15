@@ -24,6 +24,18 @@ guess_expo
 找不到
 car_guess_my_expo
 
+
+
+SSEventKey.IM_INFOR_CARLIST
+SSEventKey.IM_INFOR_CARLIST
+SSEventKey.IM_INFOR_CARLIST
+      com.xin.commonmodules.utils.SSEventUtils.onEvent(SSEventKey.UXIN_EVENT_SHOW, "", carlist_expo, sb.deleteCharAt(sb.length() - 1).toString(), getPid(), false);
+
+
+COMPARE_SUBMIT_HISTORY
+COMPARE_HISTORY
+
+
 ****************************************************************
 
 0
