@@ -466,7 +466,7 @@ ZFB
 594o
 ...
 0129 0916 -20=41 chongzhi,ditie
-0129 1959 -16=25 ???shangpin
+0129 1959 -16=25 ???shangpin,wancan
 0131 1033 -5=20 zaocan
 0204 2327 +2=22 wufu
 0205 1423 -10=12 wanju,liangyuanchaoshi
@@ -483,24 +483,16 @@ YEB
 				3ok
 
 ZS
-0205 0958 -1800-1.8=1291 baojian,meimei
-1291ok
+0216 2106 -1200=4678 zhuan,jianhang
+4678ok
 
 JS
-0131 2055 -1116.9=15975----
-0131 2056 -6967.08=9008----
-0131 2057 -6385.9=2622----
-0201 1054 5651 S0 +3179.2=5801----     -3200     -20.8   =0.65%
-0203 1719 1053 S0 +6755.8=12557----     -6800     -44.2   =0.65%
-0204 0911 -10000=2557 huan----
-0226 1025 1053 S0 +2980.5=5537----     -3000     -19.5   =0.65%
-0206 1158 -2500-2.5=3035 shasha----
-0209 1125 -500-7=2528 zhuan,xianjin----
-2528ok
+0216 2111 -3000-3=1175 zhuan,mama
+1175ok
 
 BJ
-0202 0447 +552=7419 shebao
-7419ok
+0216 1159 +2600=10019 zhuan,zhaohang
+10019ok
 
 				JT
 				0123 2208 -5000-5=48678 jiaofang
@@ -531,73 +523,28 @@ ZSXYK-6553  ----payday0121-0
 0ok
 
 JTXYK-3520  ----payday0219-0
-0131 2055 +1116.9=-871.4 huan(-10000+37000=26128.6)
-0202 1523 -9.9= wanju,zhongyangguangchang
-0202 1825 -10= shoushi,zhongyangguangchang
-0202 1830 -10.5= guandongzhu,zhongyangguangchang
-0203 1455 -157= chaoshigouwu,jinkelong
-0203 1810 -16.99= didi,jiadaoxiaochuniang
-0204 0011 -16.35= didi,xiaochunianghuijia
-0204 1119 -4.9= tiehua,zhongyangguangchang
-0204 1157 -2= wanju,xinganjie
-0204 1158 -2= wanju,xinganjie
-0204 1205 -3.5= diaozhabing
-0205 0954 -156.7= dianyingpiao,fengkuangdewaixingren
-0205 1137 -9= yinliao,kandianying
-0206 1528 -156= wenquan,menpiao
-0206 1531 -172= wenquan,yongyi
-0206 1847 -20= wenquan,shoujitao
-0206 1906 -100= jiayou
-0206 2019 -51= wancan,yangroutang
-0207 1422 -181= wucan,qingke,minglidoujiang
-0207 2248 -8= didi,binguandaoktv
-0208 1424 -22.8= fadai,zhongyangguangchang
-0208 1834 -79= huochepiao
-0209 1347 -10= fadai,zhongyangguangchang
-0210 0610 -199= huochepiao
-0210 0645 -259= huochepiao
-0210 1832 -58.5= kendeji
-0211 0142 -36=-2622.54 didi,nanzhanhuijia (-19800+37000=14577.46)
--2622.54ok
+0215 2006 -17.4=-2686.57 yabo (-19800+37000=14513.43)
+-2686.57ok
 
 JTXYK-1053  ----payday0219-10000
-0131 2056 +6967.08=-10000 huan (+24000=14000)
-0203 1719 1053 S0 -6800     +6755.8     -44.2   =0.65%
 0226 1025 1053 S0 -3000=-19800     +2980.5     -19.5   =0.65% (+24000=4200)
 -19800ok
 
 JTXYK-5651  ----payday0205-0
-0131 2057 +6385.9=-23440 (+33000=9560)
-0201 1054 5651 S0 -3200=-26640     +3179.2     -20.8   =0.65%
 0204 0911 +10000=-16640 (+33000=16360)
 -16640ok
 
 				MYHB ----payday0109-0
-				0202 1133 -50=-50 shuiguo,yinliao,nainaijia
-				0202 1156 -53.95= wucan,chaocai,nainaijia
-				0202 1529 -100= chongzhi,youkuleyuan
-				0202 1605 -4= yinliao,youkuleyuan
-				0202 1714 -100= chongzhi,vrtiyan
-				0202 1832 -6= zhongyangguangchang,zhangyuxiaowanzi
-				0206 1113 -35= gouwu,dalibao,laolaojia
-				0207 1537 -12= yinliao,jiangejia
-				0208 0006 -15= dache,huijia
-				0208 1308 -10= zhangyuxiaowanzi,zhongyangguangchang
-				0208 1313 -20= baodu,zhongyangguangchang
-				0208 1317 -23= boboyu,zhongyangguangchang
-				0208 1346 -20=-448.95 yinliao,bingqilin (+20000=19551.05)
-				-448.95ok
+				0215 2011 -10=-471.95 jipai (+20000=19528.05)
+				-471.95ok
 
 				JDBT ----payday0101-0
 				0615 1543 +623=0 (+7500=7500)
 				0ok
 
 XJJJJJ
-0205 0900 +200=200 yasuiqian
-0209 1125 +500=700 quxian----
-0209 1800 -100=600 jiayou
-0209 2000 +1100=1700 jie,yuqi
-1700ok
+0212 2001 -1500=200 zhuan,jianhang
+200ok
 
 // ******************************** TX ********************************
 
@@ -1025,7 +972,30 @@ X月
 540o
 ......
 0201 2131 +20=560 bandwagon
-0204 2015 
+0204 2015 +2+66+46+3+6=683 hongbao
+0205 0938 -20=663 hongbao
+0205 0939 +6=669 hongbao
+0205 1009 +14=683 hongbao
+0205 1018 -9=674 hongbao
+0205 1128 -10=664 taoquan
+0205 1437 +16=680 hongbao
+0207 1614 +10=690 hongbao,dapai
+0207 1635 +50=740 hongbao,dapai
+0207 1650 -50=690 hongbao,dapai
+0207 1704 -20=670 hongbao,dapai
+0207 1718 -10=660 hongbao,dapai
+0207 1734 -10=650 hongbao,dapai
+0207 1754 -10=640 hongbao,dapai
+0207 2043 -200=440 hongbao,jucan
+0208 1931 -89=351 hongbao,baba
+0209 1444 +9=360 hongbao
+0211 1112 +1=361 hongbao
+0211 2036 +6+8+2=377 hongbao
+0211 2041 -12=365 hongbao
+0211 2238 +8=373 hongbao
+0215 1849 +1+4+11+4+1+7+4=405 hongbao
+405o
+......
 ......
 
 // ******************************** ZSXYK-6553 ********************************
