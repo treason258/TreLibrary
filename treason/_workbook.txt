@@ -1,7 +1,21 @@
 
 
 ****************************************************************
+****************************************************************
 
+com.reactnative.autostatistictest
+com.xin.autostatistictest
+com.xin.autostatistictest.WriteBroadCastReceiver
+
+****************************************************************
+
+c_18600574121_918836
+3cde49a46b4860b69196723eb81ae642
+
+303
+Unknown server error
+
+****************************************************************
 
 1、详情页，下拉触发浏览历史，并没有退出详情页
 2、browse_depth_carlist 触发时机问题
@@ -14,6 +28,8 @@
 
 奇怪
 start_click_openapp
+active
+
 periodization_filter
 carlist_fresh
 
