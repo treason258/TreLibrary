@@ -4,7 +4,23 @@
 ****************************************************************
 ****************************************************************
 ****************************************************************
+
+2019-03-13 18:40:52.008 I/ReactNativeJS: matengfei888 | Items = [{"title":"奔驰","type":"1","is_color":"-1","param":{"brandid":"47"}},{"title":"宝马","type":"1","is_color":"-1","param":{"brandid":"38"}},{"title":"奥迪","type":"1","is_color":"-1","param":{"brandid":"62"}},{"title":"大众","type":"1","is_color":"-1","param":{"brandid":"84"}},{"title":"路虎","type":"1","is_color":"-1","param":{"brandid":"112"}}]
+
+2019-03-13 18:40:52.008 I/ReactNativeJS: matengfei888 | datas[0] = {"title":"奔驰","type":"1","is_color":"-1","param":{"brandid":"47"}}
+2019-03-13 18:40:52.008 I/ReactNativeJS: matengfei888 | datas[1] = {"title":"宝马","type":"1","is_color":"-1","param":{"brandid":"38"}}
+2019-03-13 18:40:52.008 I/ReactNativeJS: matengfei888 | datas[2] = {"title":"奥迪","type":"1","is_color":"-1","param":{"brandid":"62"}}
+2019-03-13 18:40:52.008 I/ReactNativeJS: matengfei888 | datas[3] = {"title":"大众","type":"1","is_color":"-1","param":{"brandid":"84"}}
+2019-03-13 18:40:52.008 I/ReactNativeJS: matengfei888 | datas[4] = {"title":"路虎","type":"1","is_color":"-1","param":{"brandid":"112"}}
+
 ****************************************************************
+
+"discount_money":1.2万 //让利金额，例如好车急降，降价了1.2万
+"price_sale_after":"60万"//券后价，10.8
+
+
+"is_discount_sale": 0//是否急降好车
+
 ****************************************************************
 
 车辆对比
