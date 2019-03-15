@@ -17,6 +17,31 @@ ZFB
 0227 0908 -20=75 chongzhi,ditie
 
 
+WX
+0215 1849 +1+4+11+4+1+7+4=405 hongbao
+405ok
+0217 1935 +40=445 zhuan,zhifubao
+0225 2228 +1000=1445 zhangkun
+0225 2228 -1000=445 zhangkun
+0225 2228 -1=444 shouxufei
+0226 0942 +200=644 zhuan,jianhang
+0226 0943 -600=44 hongbao,xuehan
+0301 2051 -15=29 shanlunche
+0307 2010 -1=28 gongxiangdanche
+0308 2059 -9=19 hongbao,gunbi
+0308 2104 -15=4 hongbao
+0308 2105 +1=5 hongbao
+0308 2107 +50=55 zhuan,jianhang
+0309 2108 -10=45 hongbao
+0308 2148 +1=46 hongbao
+0309 1010 +1=47 hongbao
+0314 1903 +110=157 shuifeiaa
+0314 1903 +2=159 hongbao
+0315 1317 +4000=4159 shasha
+0315 1428 -110=4049 zhuan,jianhang
+0315 1429 -4000=49 zhuan,jianhang
+0315 1430 -5=44 shouxufei
+44o
 
 				YEB
 				0315 2002 -31=0 zhuan,zhifubao
@@ -25,36 +50,6 @@ ZFB
 				YLB
 				0315 2003 -3=0 zhuan,zhifubao
 				0ok
-
-				WX
-				0215 1849 +1+4+11+4+1+7+4=405 hongbao
-                405ok
-                0217 1935 +40=445 zhuan,zhifubao
-                0225 2228 +1000=1445 zhangkun
-                0225 2228 -1000=445 zhangkun
-                0225 2228 -1=444 shouxufei
-                0226 0942 +200=644 zhuan,jianhang
-                0226 0943 -600=44 hongbao,xuehan
-                0301 2051 -15=29 shanlunche
-                0307 2010 -1=28 gongxiangdanche
-                0308 2059 -9=19 hongbao,gunbi
-                0308 2104 -15=4 hongbao
-                0308 2105 +1=5 hongbao
-                0308 2107 +50=55 zhuan,jianhang
-                0309 2108 -10=45 hongbao
-                0308 2148 +1=46 hongbao
-                0309 1010 +1=47 hongbao
-                0314 1903 +110=157 shuifeiaa
-                0314 1903 +2=159 hongbao
-                0315 1317 +4000=4159 shasha
-                0315 1428 -110=4049 zhuan,jianhang
-                0315 1429 -4000=49 zhuan,jianhang
-                0315 1430 -5=44 shouxufei
-                44o
-
-ZS
-0315 1109 +24372=24450 gongzi
-24450ok
 
 JS
 0217 1936 -100=1075 zhuan,zhifubao----
@@ -90,9 +85,13 @@ JS
 0315 1436 -300=9907 shasha,shenghuofei----
 9907ok
 
-BJ
-0302 0328 +552=10571 yibao
-10571ok
+ZS
+0315 1109 +24372=24450 gongzi
+24450ok
+
+				BJ
+				0302 0328 +552=10571 yibao
+				10571ok
 
 				JT
 				0305 0824 -10000=52868 jie
@@ -102,9 +101,9 @@ BJ
 				0123 1949 -100=17 zhuan,zhifubao
 				17ok
 
-                NY
-                0317 0000 -10=70 nianfei
-                70ok
+				NY
+				0317 0000 -10=70 nianfei
+				70ok
 
 				-NY-MM
 				1221 0030 +1=1483 lixi
