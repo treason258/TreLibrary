@@ -22,10 +22,14 @@ ZFB
 				YEB
 				0130 1727 -2900= huan,xinyongka
 				31o
+				0315 2002 -31=0 zhuan,zhifubao
+				0ok
 
 				YLB
 				0619 1059 -8000=3 zhuan,zhifubao
 				3ok
+				0315 2003 -3=0 zhuan,zhifubao
+				0ok
 
 				WX
 				0215 1849 +1+4+11+4+1+7+4=405 hongbao
@@ -62,7 +66,7 @@ ZS
 0226 1448 -4600=78 zhuan,jianhang
 78ok
 0315 1109 +24372=24450 gongzi
-24450o
+24450ok
 
 JS
 0216 2111 -3000-3=1175 zhuan,mama
@@ -94,14 +98,14 @@ JS
 0312 1017 -1222=11412 dongye----
 0312 2138 -200=11212 zhuan,shasha
 11212ok
-0314 1919 -20=11192 chongzhi,ditie
-0314 2227 -5000=6192 shasha,huanyuanyuan
-0315 1100 -200=5992 shasha,shenghuofei
-0315 1428 +110=6102 shuifei,huzi
-0315 1428 +4000=10102 shasha
-0315 1431 +105=10207 shuifei,baoxiao
-0315 1436 -300=9907 shasha,shenghuofei
-9907o
+0314 1919 -20=11192 chongzhi,ditie----
+0314 2227 -5000=6192 shasha,huanyuanyuan----
+0315 1100 -200=5992 shasha,shenghuofei----
+0315 1428 +110=6102 shuifei,huzi----
+0315 1428 +4000=10102 shasha----
+0315 1431 +105=10207 shuifei,baoxiao----
+0315 1436 -300=9907 shasha,shenghuofei----
+9907ok
 
 BJ
 0216 1159 +2600=10019 zhuan,zhaohang
@@ -158,7 +162,7 @@ JTXYK-3520  ----payday0319-3000 (-3353.3-18300+24000=2346.7)
 -3124.8ok
 0314 1341 -215=-3339.8 shuifei,aa
 0314 1455 -13.5=-3353.3 yinliao
--3353.3o
+-3353.3ok
 
 JTXYK-1053  ----payday0319-14100
 0206 1025 1053 S0 -3000=-19800     +2980.5     -19.5   =0.65%
