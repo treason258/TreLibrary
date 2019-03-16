@@ -83,7 +83,8 @@ JS
 0315 1428 +4000=10102 shasha----
 0315 1431 +105=10207 shuifei,baoxiao----
 0315 1436 -300=9907 shasha,shenghuofei----
-9907ok
+0315 2259 -200=9707 shasha,shenghuofei----
+9707ok
 
 ZS
 0315 1109 +24372=24450 gongzi
