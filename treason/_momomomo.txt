@@ -1,6 +1,4 @@
 
-181022-1912
-
 tab
 a	bb	ccc	dddd	e	f	g
 
@@ -10,38 +8,88 @@ ZFB
 0210 1002 -1=7 xianyu,liulandiqiu
 7ok
 0217 1936 +100=107 zhuan,jianhang
-0217 1936 -40=67 zhuan,weixin,zhangkun
+0217 1936 -40=67 zhuan,weixin,zhangkun----
+0220 2035 +14-14=67 huan,huabei
+0222 1106 +9-9.6=67 huan,huabei
+0222 1935 +4435=4502
+0222 0036 +1000=5502
+0223 0901 +1000=6502
+0223 1310 -1000=5502
+0223 1310 -1=5501
+0223 1356 -2655=2846
+0223 1356 -2779=67
 0223 1432 -20=47 chongzhi,ditie
 0226 1043 +56.7=103 hongbao
-0226 1412 -8=95 huan,huabei
+0226 1412 -8.4=95 huan,huabei
 0227 0908 -20=75 chongzhi,ditie
-
+0228 1945 -39.74=35 huan,huabei
+0228 1946 +331=366 hongbao---
+0228 1946 +39.74=406 hongbao
+0228 1947 -331=75 zhuan,jianhang---
+0228 2019 -15=60 ???shangpin
+0301 0914 -20=40 chongzhi,ditie
+0301 2137 -9=31 ???shangpin
+0302 0001 -1=30 huafei,1yuan
+0305 0910 -20=10 chongzhi,ditie
+0306 0849 +140=150 hongbao
+0306 0923 -13=137 huan,huabei
+0306 0923 -49.5=87 huan,huabei
+0307 0917 -20=67 chongzhi,ditie
+0308 2007 -15=52 ???shangpin
+0308 2135 +8=60 ???zhuanzhang
+0308 2135 +15=75 ???chaobing
+0308 2136 +220=295 hongbao----
+0308 2137 -8=287 huan,huabei
+0308 2146 -220=67 daigou----
+0309 1525 +9988=10055 huzi----
+0309 1805 -20=10035 chongzhi,ditie
+0310 0222 -13=10022 ???shangpin
+0311 1044 -9988=34 zhuan----
+0311 2354 +9988-9988=34----
+0312 1909 -20=14 ditie,chongzhi
+0314 1122 -8=6 huan,huabei
+0315 1111 +126=132 hongbao
+0315 1429 -13=119 huan,huabei
+0315 1429 -105=14 zhuan,jianhang
+0315 2002 +31=45 zhuan----
+0315 2003 +3=48 zhuan----
+0315 2004 -12.5=35 ???shangpin----
+0315 2230 +12.5=48 zhuan----
+0315 2303 +236=284 zhuan
+0315 2304 -236=48 zhuan
+0316 2021 +96.7=145 zhuan
+0316 2022 -96.7=48 zhuan
+0318 1135 +254=302 zhuan----
+0318 1141 -18.5=284 huan,huabei----
+0318 1154 -7.9=276 huan,huabei----
+0318 1159 -228=48 zhuan----
+48o
 
 WX
 0215 1849 +1+4+11+4+1+7+4=405 hongbao
 405ok
-0217 1935 +40=445 zhuan,zhifubao
-0225 2228 +1000=1445 zhangkun
-0225 2228 -1000=445 zhangkun
-0225 2228 -1=444 shouxufei
-0226 0942 +200=644 zhuan,jianhang
-0226 0943 -600=44 hongbao,xuehan
-0301 2051 -15=29 shanlunche
-0307 2010 -1=28 gongxiangdanche
-0308 2059 -9=19 hongbao,gunbi
-0308 2104 -15=4 hongbao
-0308 2105 +1=5 hongbao
-0308 2107 +50=55 zhuan,jianhang
-0309 2108 -10=45 hongbao
-0308 2148 +1=46 hongbao
-0309 1010 +1=47 hongbao
-0314 1903 +110=157 shuifeiaa
+0217 1935 +40=445 zhuan,zhifubao----
+0225 2228 +1000=1445 zhangkun----
+0225 2228 -1000=445 zhangkun----
+0225 2228 -1=444 shouxufei----
+0226 0942 +200=644 zhuan,jianhang----
+0226 0943 -600=44 hongbao,xuehan----
+0301 2051 -15=29 shanlunche----
+0307 2010 -1=28 gongxiangdanche----
+0308 2059 -9=19 hongbao,gunbi----
+0308 2104 -15=4 hongbao----
+0308 2105 +1=5 hongbao----
+0308 2107 +50=55 zhuan,jianhang----
+0309 2108 -10=45 hongbao----
+0308 2148 +1=46 hongbao----
+0309 1010 +1=47 hongbao----
+0314 1903 +110=157 shuifeiaa----
 0314 1903 +2=159 hongbao
-0315 1317 +4000=4159 shasha
-0315 1428 -110=4049 zhuan,jianhang
-0315 1429 -4000=49 zhuan,jianhang
-0315 1430 -5=44 shouxufei
-44o
+0315 1317 +4000=4159 shasha----
+0315 1428 -110=4049 zhuan,jianhang----
+0315 1429 -4000=49 zhuan,jianhang----
+0315 1430 -5=44 shouxufei----
+44ok
 
 				YEB
 				0315 2002 -31=0 zhuan,zhifubao
@@ -85,18 +133,38 @@ JS
 0315 1436 -300=9907 shasha,shenghuofei----
 0315 2259 -200=9707 shasha,shenghuofei----
 9707ok
+0316 0930 +7950=17657 zhuan,beihang
+0316 1020 -3000=14657 huan,3520
+0316 1021 -4100=10557 huan,1053
+0316 1508 -50=10507 ditie
+0318 1200 +228=10735 zhuan,zhaohangxinyongka
+0318 1242 -10000=735 huan,1053
+735ok
 
 ZS
 0315 1109 +24372=24450 gongzi
 24450ok
+0316 0856 -9000=15450 zhuan,jiaohang
+0316 0906 -3000=12450 fangdai,baba
+0316 0911 -2100=10350 fangdai,shasha
+0316 0918 -2700=7650 fangzu,beijingyinhang
+0316 1045 -2000=5650 shenghuofei
+5650ok
 
 				BJ
 				0302 0328 +552=10571 yibao
 				10571ok
+				0316 0918 +2700=13271 zhuan,zhaohang
+				0316 0930 -7950=5321 zhuan,jianhang
+				5321ok
 
 				JT
 				0305 0824 -10000=52868 jie
 				52868ok
+				0316 0900 +9000=61868 zhuan,zhaohang
+				0318 1230 -10000=51868 jie,xiaofu
+				0318 1236 -5000=46868 jie,xiaofu
+				46868ok
 
 				GS
 				0123 1949 -100=17 zhuan,zhifubao
@@ -110,9 +178,11 @@ ZS
 				1221 0030 +1=1483 lixi
 				1483ok
 
-ZSXYK-6553  ----payday0321-0  (-19975+51000=31025)
+ZSXYK-6553  ----payday0321-0  (-19975+51000=30797)
 0307 2040 -15900=-19975 fangzu
 -19975ok
+0317 1627 -228=-20203 zhuan,jianhang
+-20203ok
 
 ZXXYK-9796  ----payday0324-0  (-0-0+35000=35000)
 0110 1343 +295.83=0 (+35000=35000)
@@ -122,13 +192,18 @@ ZXXYK-6580  ----payday0324-0
 0110 1343 +360=0
 0ok
 
-JTXYK-3520  ----payday0319-3000 (-3353.3-18300+24000=2346.7)
+JTXYK-3520  ----payday0319-0 (-353.3-4200+24000=19446.7)
 0314 1455 -13.5=-3353.3 yinliao
 -3353.3ok
+0316 1020 +3000=-353.3 huan
+-353.3ok
 
-JTXYK-1053  ----payday0319-14100
+JTXYK-1053  ----payday0319-0
 0302 0826 1053 S0 -4200=-18300
 -18300ok
+0316 1021 +4100=-14200 huan
+0318 1242 +10000=-4200 huan
+-4200ok
 
 JTXYK-5651  ----payday0305-0 (-5360+33000=27640)
 0305 0827 +10000=-5360 huan
