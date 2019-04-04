@@ -1,6 +1,33 @@
 
 ****************************************************************
 ****************************************************************
+
+6228481311628170110
+6230521310002250678
+
+6214680040326975
+
+****************************************************************
+
+****************************************************************
+
+shuanglong9301--
+
+zhangyueiPhone3
+MAC	IP	Name	RSSI	Rx / Tx Rate	Connected	Flags
+CC:08:8D:CE:74:EB	192.168.2.89	treasoniPhone7	-69 dBm	292 / 433 Mbps	0:00:00	S
+E8:B2:AC:00:97:1C	192.168.2.250	HollieiPadmini4	-71 dBm	24 / 702 Mbps	12:28:38	PS AU
+E4:9A:DC:BF:CE:F2	192.168.2.147	lihuade-iPhone	-68 dBm	292 / 390 Mbps	17:08:16	S AU
+3C:15:C2:C3:28:1A	192.168.2.163	MacBook-Pro	-66 dBm	585 / 866 Mbps	18:00:07	STAU
+60:F8:1D:CD:02:3A	192.168.2.94	HolliedeMBP	-69 dBm	6 / 6 Mbps	21:46:20	PSTAU
+AC:CF:5C:37:F0:6D	192.168.2.63	tingtingde-iPad	-58 dBm	24 / 300 Mbps	24:11:57	PSTAU
+
+MAC	IP	Name	RSSI	Rx / Tx Rate	Connected	Flags
+24:5B:A7:0D:37:56	192.168.2.225	zhangyudeiPhone	-47 dBm	72 / 1 Mbps	1:28:00	PS AU
+CC:29:F5:71:19:23	192.168.2.218	iPhone	-46 dBm	24 / 72 Mbps	2:15:08	PS AU
+78:0F:77:CB:CD:B3	192.168.2.198	BL-cb-cd-b3	-51 dBm	1 / 39 Mbps	21:47:42	TAU
+10:9E:3A:6E:E7:DA	192.168.2.243	Tmall-Genie	-50 dBm	1 / 72 Mbps	296:44:44	STAU
+
 ****************************************************************
 
 GF-012200009897-x81xyz-180143832115
