@@ -8,6 +8,31 @@ push
 other
 dplink
 
+VIVO
+deviceToken------->AlrHSi9ftFbc_CTBebB0eDR3qt8RkRWSbL9Smjqosfau channel = umeng
+vivo_pushid = 15555799026721061176400
+channel = vivo
+
+XIAOMI
+deviceToken------->AhDxLt4c5UvBZkssKXTlqm5TFZLl-267UVlvy0a4PwjW channel = umeng
+xiaomi_token BUR2aIvsEciHdlwzHVnUgX0O88lYpiLf1K1YtXxfHhEp6wytH85QYT7BakCooDVC
+channel = xiaomi
+
+CUIZI
+deviceToken------->ApjwYnO9pAfo3x35UqXotuQ_V6g8_yTrpHMNb_BbNgmE channel = umeng
+deviceToken------->AsskFAi7aL_IWR1dRrS9B3oMlpleleJzhTRsvZwTbkzu channel = umeng
+
+离线包名：
+com.xin.uxincommonpushlib.UxinLeaveMessagepushActivity
+
+dplink如下：
+首页：
+openurl=uxin://uxin.app/openWith
+web页面
+openurl=uxin://uxin.app/WebViewActivityActivity?url=http://m.xin.com
+列表页：
+openurl=uxin://uxin.app/openDirectHalfCarActivity?brandname=宝马&pricemin=1&pricemax=20
+
 ****************************************************************
 
 所有埋点
