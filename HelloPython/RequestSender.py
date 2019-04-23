@@ -1,15 +1,17 @@
+def saveImage3(imageUrl, imageDir, imageName):
+    print('imageUrl = ' + imageUrl)
+    print('imageDir = ' + imageDir)
+    print('imageName = ' + imageName)
 
-def saveImage(imageURL, name):
+    imagePath = imageDir + imageName
+    print('imagePath = ' + imagePath)
+
     import urllib3
     http = urllib3.PoolManager()
-    print(imageURL)
-    splitPath = imageURL.split('.')
-    fileExt = splitPath.pop()
-    fileName = name + "/" + str(2) + "." + fileExt
-
-    r = http.request('GET', imageURL)
-    data = r.data
-    f = open(fileName, 'wb+')
-    f.write(data)
-    print(u'save as:%s', fileName)
-    f.close()
+    response = http.request('GET', imageUrl)
+    data = response.data
+    file = open(imagePath, 'wb+')
+    file.write(data)
+    print('图片已保存到：' + imagePath)
+    file.close()
+    return
