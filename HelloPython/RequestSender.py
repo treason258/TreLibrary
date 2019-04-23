@@ -5,7 +5,7 @@ def saveImage(imageURL, name):
     print(imageURL)
     splitPath = imageURL.split('.')
     fileExt = splitPath.pop()
-    fileName = name + "/" + str(1) + "." + fileExt
+    fileName = name + "/" + str(2) + "." + fileExt
 
     r = http.request('GET', imageURL)
     data = r.data
