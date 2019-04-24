@@ -1,34 +1,40 @@
-## Edit by Treason on 170206 version 1.0
+## Edit by Treason on 190424 version 1.1
 
-# 递归忽略文件
+
+# 递归忽略的文件
 .DS_Store
-*.iml
 local.properties
+*.class
+*.iml
+*.keystore
+*.jks
+*.pyc
+
 
 # 递归忽略文件夹
 .svn
 .git
-.gradle
 .idea
+.gradle
 build
+node_modules
 captures
 local
+venv
+
 
 # OTHER
-.navigation
-.externalNativeBuild
-proguard
-bin
-gen
-out
-*.jks
-*.keystore
-*.log
-*.apk
-*.ap_
-*.dex
-*.class
-node_modules
+# .navigation
+# .externalNativeBuild
+# proguard
+# bin
+# gen
+# out
+# *.log
+# *.apk
+# *.ap_
+# *.dex
+
 
 #    语法规范
 #    空行或是以 # 开头的行即注释行将被忽略。
