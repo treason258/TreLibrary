@@ -41,7 +41,6 @@ class Spider(object):
         print(imageUrlArray)
 
         for imageUrl in imageUrlArray:
-            print('\n网络图片地址：' + imageUrl)
             imageName = ("%d.jpg" % Spider.index)
             # Utils.saveImage2(imageUrl, Spider.imageDir, imageName)
             Utils.saveImage3(imageUrl, Spider.imageDir, imageName)

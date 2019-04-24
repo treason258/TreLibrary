@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 
-
 def saveImage(imageUrl, imageDir, imageName):
     return
 
@@ -14,26 +13,24 @@ def saveImage1(imageUrl, imageDir, imageName):
 
 
 def saveImage2(imageUrl, imageDir, imageName):
+    print('图片网络地址：' + imageUrl)
     imagePath = imageDir + imageName
-    # print('imageUrl = ' + imageUrl)
-    # print('imageDir = ' + imageDir)
-    # print('imageName = ' + imageName)
-    # print('imagePath = ' + imagePath)
 
     headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11"}
     import urllib2
     request = urllib2.Request(imageUrl, headers=headers)
-    imageData = urllib2.urlopen(request).read()
+    data = urllib2.urlopen(request).read()
     with open(imagePath, "wb") as f:
-        f.write(imageData)
-    print('保存图片：' + imagePath)
+        f.write(data)
+    print('已保存到：' + imagePath)
     import time
     time.sleep(0.1)
     return
 
 
 def saveImage3(imageUrl, imageDir, imageName):
+    print('图片网络地址：' + imageUrl)
     imagePath = imageDir + imageName
     # print('imageUrl = ' + imageUrl)
     # print('imageDir = ' + imageDir)
@@ -48,7 +45,7 @@ def saveImage3(imageUrl, imageDir, imageName):
     file = open(imagePath, 'wb+')
     file.write(data)
     file.close()
-    print('保存图片：' + imagePath)
+    print('已保存到：' + imagePath)
     import time
     time.sleep(0.1)
     return
@@ -62,8 +59,8 @@ def getHTMLContent(url):
     import urllib2
     request = urllib2.Request(url, headers=headers)
     response = urllib2.urlopen(request)
-    text = response.read()
-    return text
+    content = response.read()
+    return content
 
 
 def getHelloPythonDir():
