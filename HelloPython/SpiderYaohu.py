@@ -7,7 +7,7 @@ import Utils
 
 
 class Spider(object):
-    imageDir = '/Users/xin/Downloads/HelloPython/'
+    imageDir = Utils.getHelloPythonDir()
     index = 0
 
     def __init__(self):
@@ -23,7 +23,7 @@ class Spider(object):
         url = "http://m.yaohu.info/meinv/8/1412.html"
         print('url = ' + url)
 
-        text = Utils.getWebpageContent(url)
+        text = Utils.getHTMLContent(url)
         print('text = ' + text)
 
         patternStr = r"(?<=data-original=\").+?(?=\">)"
@@ -35,7 +35,7 @@ class Spider(object):
             imageUrl = 'http:' + imageUrl
             print('\n网络图片地址：' + imageUrl)
             imageName = ("%d.jpg" % Spider.index)
-            # RequestSender.saveImage2(imageUrl, Spider.imageDir, imageName)
+            # Utils.saveImage2(imageUrl, Spider.imageDir, imageName)
             Utils.saveImage3(imageUrl, Spider.imageDir, imageName)
             Spider.index += 1
 

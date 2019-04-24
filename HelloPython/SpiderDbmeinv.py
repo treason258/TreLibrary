@@ -7,7 +7,7 @@ import Utils
 
 
 class Spider(object):
-    imageDir = '/Users/xin/Downloads/HelloPython/'
+    imageDir = Utils.getHelloPythonDir()
     index = 0
 
     def __init__(self):
@@ -32,13 +32,7 @@ class Spider(object):
             fromPageInt += 1
 
     def getImageFormUrl(self, url):
-        import ssl
-        ssl._create_default_https_context = ssl._create_unverified_context
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
-        request = urllib2.Request(url, headers=headers)
-        response = urllib2.urlopen(request)
-        text = response.read()
+        text = Utils.getHTMLContent(url)
         # print(text)
 
         patternStr = r"(?<=\(this\);\" src=\").+?\.jpg(?=\" />)"
@@ -49,7 +43,7 @@ class Spider(object):
         for imageUrl in imageUrlArray:
             print('\n网络图片地址：' + imageUrl)
             imageName = ("%d.jpg" % Spider.index)
-            # RequestSender.saveImage2(imageUrl, Spider.imageDir, imageName)
+            # Utils.saveImage2(imageUrl, Spider.imageDir, imageName)
             Utils.saveImage3(imageUrl, Spider.imageDir, imageName)
             Spider.index += 1
 
@@ -60,4 +54,4 @@ spider = Spider()
 # fromPage = raw_input("输入开始页：")
 # toPage = raw_input("输入结束页：")
 # spider.getImagePageRange(category, fromPage, toPage)
-spider.getImagePageRange(3, 5, 5)
+spider.getImagePageRange(4, 20, 20)

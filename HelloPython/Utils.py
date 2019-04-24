@@ -54,11 +54,17 @@ def saveImage3(imageUrl, imageDir, imageName):
     return
 
 
-def getWebpageContent(url):
+def getHTMLContent(url):
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
+    import ssl
+    ssl._create_default_https_context = ssl._create_unverified_context
     import urllib2
     request = urllib2.Request(url, headers=headers)
     response = urllib2.urlopen(request)
     text = response.read()
     return text
+
+
+def getHelloPythonDir():
+    return '/Users/xin/Downloads/HelloPython/'
