@@ -1,4 +1,4 @@
-import RequestSender
+import Utils
 
 print('---------------- begin ----------------')
 
@@ -6,6 +6,6 @@ print('---------------- begin ----------------')
 imageUrl = 'http://img.q6pk.com/image/20181119/0ba051e0b7747bc8cce970b81cfa0584_938_1370.jpg'
 imageDir = '/Users/treason/Downloads/HelloPython/'
 imageName = '888.jpg'
-RequestSender.saveImage3(imageUrl, imageDir, imageName)
+Utils.saveImage3(imageUrl, imageDir, imageName)
 
 print('---------------- end ----------------')

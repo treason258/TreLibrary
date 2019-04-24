@@ -3,11 +3,11 @@ import urllib2
 import re
 import os
 import time
-import RequestSender
+import Utils
 
 
 class Spider(object):
-    imageDir = '/Users/treason/Downloads/HelloPython/'
+    imageDir = '/Users/xin/Downloads/HelloPython/'
     index = 0
 
     def __init__(self):
@@ -32,6 +32,8 @@ class Spider(object):
             fromPageInt += 1
 
     def getImageFormUrl(self, url):
+        import ssl
+        ssl._create_default_https_context = ssl._create_unverified_context
         headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
         request = urllib2.Request(url, headers=headers)
@@ -48,7 +50,7 @@ class Spider(object):
             print('\n网络图片地址：' + imageUrl)
             imageName = ("%d.jpg" % Spider.index)
             # RequestSender.saveImage2(imageUrl, Spider.imageDir, imageName)
-            RequestSender.saveImage3(imageUrl, Spider.imageDir, imageName)
+            Utils.saveImage3(imageUrl, Spider.imageDir, imageName)
             Spider.index += 1
 
 

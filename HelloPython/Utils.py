@@ -41,6 +41,7 @@ def saveImage3(imageUrl, imageDir, imageName):
     # print('imagePath = ' + imagePath)
 
     import urllib3
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     http = urllib3.PoolManager()
     response = http.request('GET', imageUrl)
     data = response.data
