@@ -31,13 +31,13 @@ class Spider(object):
         imageUrlArray = pattern.findall(text)
         print(imageUrlArray)
 
-        # for imageUrl in imageUrlArray:
-        #     imageUrl = 'http:' + imageUrl
-        #     print('\n网络图片地址：' + imageUrl)
-        #     imageName = ("%d.jpg" % Spider.index)
-        #     # RequestSender.saveImage2(imageUrl, Spider.imageDir, imageName)
-        #     RequestSender.saveImage3(imageUrl, Spider.imageDir, imageName)
-        #     Spider.index += 1
+        for imageUrl in imageUrlArray:
+            imageUrl = 'http:' + imageUrl
+            print('\n网络图片地址：' + imageUrl)
+            imageName = ("%d.jpg" % Spider.index)
+            # RequestSender.saveImage2(imageUrl, Spider.imageDir, imageName)
+            Utils.saveImage3(imageUrl, Spider.imageDir, imageName)
+            Spider.index += 1
 
 
 spider = Spider()
