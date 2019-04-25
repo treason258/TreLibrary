@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
-import urllib2
 import re
 import os
-import time
 import Utils
 
 
@@ -13,35 +11,38 @@ class Spider(object):
     def __init__(self):
         pass
 
-    def getImagePageRange(self, category, fromPage, toPage):
+    def downloadImage(self, category, fromPage, toPage):
         imageDirMK = 'mkdir ' + Spider.imageDir
         print('---------------- begin ----------------')
         print(imageDirMK)
         os.system(imageDirMK)  # 创建保存图片的目录
-        time.sleep(0.2)
+        Utils.sleep(0.1)
 
         categoryInt = int(category)
         fromPageInt = int(fromPage)
         toPageInt = int(toPage)
 
         while fromPageInt <= toPageInt:
-            url = 'https://www.dbmeinv.com/index.htm?cid=' + str(categoryInt) + '&pager_offset=' + str(fromPageInt)
-            print('url = ', url)
-            print("\n第%d页" % fromPageInt)
-            self.getImageFormUrl(url)
+            htmlUrl = 'https://www.dbmeinv.com/index.htm?cid=' + str(categoryInt) + '&pager_offset=' + str(fromPageInt)
+            print('htmlUrl = ' + htmlUrl)
+            print("\n开始处理第%d页" % fromPageInt)
+            self.getImageFormUrl(htmlUrl)
             fromPageInt += 1
 
-    def getImageFormUrl(self, url):
-        text = Utils.getHTMLContent(url)
-        # print(text)
+    def getImageFormUrl(self, htmlUrl):
+        htmlContent = Utils.getHtmlContent(htmlUrl)
+        print('\n网页内容：')
+        print(htmlContent)
 
         patternStr = r"(?<=\(this\);\" src=\").+?\.jpg(?=\" />)"
         pattern = re.compile(patternStr)
-        imageUrlArray = pattern.findall(text)
+        imageUrlArray = pattern.findall(htmlContent)
+        print('\n解析到的图片列表：')
         print(imageUrlArray)
 
         for imageUrl in imageUrlArray:
-            imageName = ("%d.jpg" % Spider.index)
+            imageName = ("image_%d.jpg" % Spider.index)
+            print('')
             # Utils.saveImage2(imageUrl, Spider.imageDir, imageName)
             Utils.saveImage3(imageUrl, Spider.imageDir, imageName)
             Spider.index += 1
@@ -53,4 +54,4 @@ spider = Spider()
 # fromPage = raw_input("输入开始页：")
 # toPage = raw_input("输入结束页：")
 # spider.getImagePageRange(category, fromPage, toPage)
-spider.getImagePageRange(4, 20, 20)
+spider.downloadImage(4, 2, 2)

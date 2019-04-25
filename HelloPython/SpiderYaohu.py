@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
-import urllib2
-import re
 import os
-import time
+import re
 import Utils
 
 
@@ -13,31 +11,34 @@ class Spider(object):
     def __init__(self):
         pass
 
-    def getImagePageRange(self):
+    def downloadImage(self):
         imageDirMK = 'mkdir ' + Spider.imageDir
         print('---------------- begin ----------------')
         print(imageDirMK)
         os.system(imageDirMK)  # 创建保存图片的目录
-        time.sleep(0.2)
+        Utils.sleep(0.1)
 
-        url = "http://m.yaohu.info/meinv/8/1412.html"
-        print('url = ' + url)
+        htmlUrl = "http://m.yaohu.info/meinv/8/1412.html"
+        print('htmlUrl = ' + htmlUrl)
 
-        text = Utils.getHTMLContent(url)
-        print('text = ' + text)
+        htmlContent = Utils.getHtmlContent(htmlUrl)
+        print('\n网页内容：')
+        print(htmlContent)
 
         patternStr = r"(?<=data-original=\").+?(?=\">)"
         pattern = re.compile(patternStr)
-        imageUrlArray = pattern.findall(text)
+        imageUrlArray = pattern.findall(htmlContent)
+        print('\n解析到的图片列表：')
         print(imageUrlArray)
 
         for imageUrl in imageUrlArray:
             imageUrl = 'http:' + imageUrl
-            imageName = ("%d.jpg" % Spider.index)
+            imageName = ("image_%d.jpg" % Spider.index)
+            print('')
             # Utils.saveImage2(imageUrl, Spider.imageDir, imageName)
             Utils.saveImage3(imageUrl, Spider.imageDir, imageName)
             Spider.index += 1
 
 
 spider = Spider()
-spider.getImagePageRange()
+spider.downloadImage()

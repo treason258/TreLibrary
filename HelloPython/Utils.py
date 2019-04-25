@@ -51,7 +51,7 @@ def saveImage3(imageUrl, imageDir, imageName):
     return
 
 
-def getHTMLContent(url):
+def getHtmlContent(url):
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
     import ssl
@@ -63,5 +63,11 @@ def getHTMLContent(url):
     return content
 
 
+def sleep(seconds):
+    import time
+    time.sleep(seconds)
+    return
+
+
 def getHelloPythonDir():
-    return '/Users/xin/Downloads/HelloPython/'
+    return '/Users/treason/Downloads/HelloPython/'
