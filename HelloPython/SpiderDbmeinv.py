@@ -34,7 +34,12 @@ class Spider(object):
         print('\n网页内容：')
         print(htmlContent)
 
-        patternStr = r"(?<=\(this\);\" src=\").+?\.jpg(?=\" />)"
+        # <a href="https://www.dbmeinv.com/topic/1800297" class="link" target="_blank">
+        #     <img class="height_min" title="第一次这么害羞" alt="第一次这么害羞" onerror="img_error(this);" src="https://wx4.sinaimg.cn/bmiddle/0060lm7Tgy1fwacdm71lij30u014jtee.jpg" referrerpolicy="no-referrer">
+        # </a>
+        # patternStr = r"(?<=\(this\);\" src=\").+?\.jpg(?=\" />)"
+        # patternStr = r"(?<=onerror=\"img_error\(this\);\" src=\").+?\.jpg(?=\" referrerpolicy=\"no-referrer\"/>)"
+        patternStr = r"(?<=onerror=\"img_error\(this\);\" src=\").+?\.jpg(?=\" referrerpolicy=\"no-referrer\")"
         pattern = re.compile(patternStr)
         imageUrlArray = pattern.findall(htmlContent)
         print('\n解析到的图片列表：')
