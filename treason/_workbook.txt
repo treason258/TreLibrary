@@ -2,6 +2,93 @@
 ****************************************************************
 ****************************************************************
 ****************************************************************
+
+@石奎-iOS @马腾飞 安卓 两位老哥，之前有个遗留的问题想确认一下。就是之前有一个入口地址和一个中间环节的拦截地址，然后我们这边都做了重定向，所以这次发版趁着要换新域名的机会，看能不能你们把重定向后的地址直接写死到客户端里面。
+我们把这两个地址做了重定向：
+1. "/uxin/cash/route"重定向到了"/cash/cash/route"
+2. "/uxin/cash/loading"重定向到了"/cash/cash/loading"
+
+****************************************************************
+
+涉及接口：
+门店接口新增is_recommend字段：是否自动推荐门店：1是  -1否，未传默认不推荐   
+文档地址：http://apidev.xin.com/share#5c821d6b51b26700076126b2
+
+客户端：
+1、接口增加如上参数。
+①首次安装启动定位后获取推荐门店，增加参数，后端做逻辑调整；
+②首次安装启动无定位/定位失败，选择其他城市门店，定位成功后，切换城市时选择定位城市，也传递参数做门店推荐处理。
+2、切换城市搜索时，筛选过滤掉地级市（高德ID：190104），区县（高德ID：190105），取前10条数据。
+
+****************************************************************
+
+线上白：13331033862
+线上非白：15616036416
+测试白：14000000075 验证码：666666
+测试非白：15811087678 验证码：666666
+@李雪琼—APP测试 账号如上，jira上已备注
+
+14000000006这个也可以用   验证码都是666666
+
+http://fe.test.youxinjinrong.com:5004/uxin/cash/route?from=app&nb=67809707b43fb62fa1a7ee7651bf4e67&appver=10.9.0.8ff5cabb8b&cityid=201
+
+****************************************************************
+
+-11
+accs channel error
+
+2019-05-13 16:11:10.528 E/LogUtils-matengfei888: s = -11 | s1 = accs channel error
+
+2019-05-13 16:11:58.298 I/UMLog_com.umeng.message.PushAgent: 开启推送失败-->s:-11,s1:accs channel error
+2019-05-13 16:11:58.321 I/UMLog_com.umeng.message.UmengMessageCallbackHandlerService: 进程名：com.uxin.usedcar
+2019-05-13 16:11:58.321 I/UMLog_com.umeng.message.UmengMessageCallbackHandlerService: 开启状态:false
+2019-05-13 16:11:58.321 E/LogUtils-matengfei888: s = -11 | s1 = accs channel error
+
+2019-05-13 16:43:04.552 I/UMLog_com.umeng.message.UTrack: appCachedPushlog已经在队列里, 忽略这次请求
+2019-05-13 16:43:06.340 I/UMLog_com.umeng.message.PushAgent: 开启推送成功
+2019-05-13 16:43:06.352 I/UMLog_com.umeng.message.UTrack: appCachedPushlog已经在队列里, 忽略这次请求
+2019-05-13 16:43:06.384 I/UMLog_com.umeng.message.UmengMessageCallbackHandlerService: 进程名：com.uxin.usedcar
+2019-05-13 16:43:06.385 I/UMLog_com.umeng.message.UmengMessageCallbackHandlerService: 开启状态:true
+
+****************************************************************
+
+@Theodore Pratt  @青春不再  
+门店接口新增is_recommend字段：是否自动推荐门店：1是  -1否，未传默认不推荐   
+文档地址：http://apidev.xin.com/share#5c821d6b51b26700076126b2
+
+****************************************************************
+
+showLoading(false);
+
+                mList = poiResult.getPois();
+                // 遍历，过滤掉城市、区县的搜索结果
+                for (int i = 0; i < mList.size(); i++) {
+                    PoiItem poiItem = mList.get(i);
+                    String typeCode = poiItem.getTypeCode();
+                    String typeDes = poiItem.getTypeDes();
+                    String title = poiItem.getTitle(); // 返回POI的名称
+                    String provinceName = poiItem.getProvinceName(); // 返回POI的省
+                    String cityName = poiItem.getCityName(); // 返回POI的城市名称
+                    String adName = poiItem.getAdName(); // 返回POI的行政区划名称
+                    String snippet = poiItem.getSnippet(); // 返回POI的地址
+                    String address;
+                    if (poiItem.getProvinceName().equals(poiItem.getCityName())) {
+                        address = cityName + adName + snippet;
+                    } else {
+                        address = provinceName + cityName + adName + snippet;
+                    }
+                    com.xin.ads.utils.LogUtils.e("matengfei666", "SelectLocationActivity | doSearch | onPoiSearched | typeCode = " + typeCode
+                            + " | typeDes = " + typeDes
+                            + " | title = " + title
+                            + " | address = " + address);
+                    // 190101-国家名；190102-省级地名；190103-直辖市级地名；190104-省级地名；190105-区县级地名；190106-乡镇级地名；190107-街道级地名；190108-村庄级地名；190109-村组级地名；
+                    if (typeCode.equals("190101") || typeCode.equals("190102") || typeCode.equals("190103") || typeCode.equals("190104") || typeCode.equals("190105")) {
+                        mList.remove(i);
+                        i--;
+                        com.xin.ads.utils.LogUtils.e("matengfei666", "SelectLocationActivity | mList.remove(poiItem);");
+                    }
+                }
+
 ****************************************************************
 
 0.5dp
