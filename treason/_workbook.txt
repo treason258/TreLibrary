@@ -1,6 +1,28 @@
 
 ****************************************************************
 ****************************************************************
+
+2019-05-16 17:21:46.270 E/AndroidRuntime: FATAL EXCEPTION: main
+    Process: com.uxin.usedcar, PID: 16340
+    java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:448)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:825)
+     Caused by: java.lang.reflect.InvocationTargetException
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:438)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:825) 
+     Caused by: java.lang.Exception
+        at cn.shuzilm.core.Main.go(Unknown Source:48)
+        at com.xin.modules.impl.U2AppModuleImpl.startSM(U2AppModuleImpl.java:1369)
+        at com.xin.commonmodules.utils.FingerPrintConfig$25.run(FingerPrintConfig.java:735)
+        at android.os.Handler.handleCallback(Handler.java:790)
+        at android.os.Handler.dispatchMessage(Handler.java:99)
+        at android.os.Looper.loop(Looper.java:192)
+        at android.app.ActivityThread.main(ActivityThread.java:6836)
+        at java.lang.reflect.Method.invoke(Native Method) 
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:438) 
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:825)
+
 ****************************************************************
 
 @石奎-iOS @马腾飞 安卓 两位老哥，之前有个遗留的问题想确认一下。就是之前有一个入口地址和一个中间环节的拦截地址，然后我们这边都做了重定向，所以这次发版趁着要换新域名的机会，看能不能你们把重定向后的地址直接写死到客户端里面。
