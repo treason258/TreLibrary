@@ -1,5 +1,12 @@
 
 ****************************************************************
+
+detail/car/view
+site/lists
+source:apis.xin.com AND "detail/car/view" AND 42984556
+source:apis.xin.com AND "detail/car/view" AND 114.217.5.213
+source:apis.xin.com AND "site/lists" AND 114.217.5.213
+
 ****************************************************************
 
 2019-05-16 17:21:46.270 E/AndroidRuntime: FATAL EXCEPTION: main
