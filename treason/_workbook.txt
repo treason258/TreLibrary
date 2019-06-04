@@ -1,7 +1,57 @@
 
+
 ****************************************************************
 ****************************************************************
 ****************************************************************
+****************************************************************
+****************************************************************
+
+IntelligentAllSeriesActivity
+IntelligentCarSeriesActivity
+SmartSelectCarActivity
+
+****************************************************************
+
+背景：2019年第三季度安卓端会上线Q系统，产生的后果如下：
+Android ID：只有恢复出厂设置的时候才会更新（系统升级不会影响）
+MAC地址：Andriod Q系统之前可以获取
+                    Andriod Q系统之后获取的是随机地址(已经不能作为标识参考)
+IMEI号：Andriod  Q系统之前可以获取
+                 Andriod  Q系统之后可能获取不到
+Andriod Q系统之前xdid生成规则：android id和imei生成的  md5 加密后生成的一个值
+Andriod Q系统之后xdid生成规则：设备指纹（开发的一个sdk，用来统计手机的所有参数），只有恢复出厂设置才会更新
+
+影响范围：
+针对于升级到Q系统且升级到版本为10.9.1的用户，xdid会保留之前系统的xdid，也会保留之前系统的imei。
+针对于Q系统的新用户，xdid会是采用新的生成规则
+针对于未升级系统的用户，xdid不会变
+针对于升级到Q系统且恢复出厂设置的用户，xdid也会改变
+针对于升级到Q系统但是未升级版本的用户，xdid会采用新的生成规则
+
+****************************************************************
+
+usedcarnative://mineSetting/mineSetting
+
+usedcarnative://userLogin/userLogin?param=%7B%22login_from_activity%22%3A%22fromMyAnswer%22%2C%22login_title%22%3A%22%E7%99%BB%E5%BD%95%22%2C%22login_from_ss%22%3A%22u2_7%22%7D
+
+usedcarnative://userLogin/userLogin?param=%7B%22login_from_activity%22%3A%22fromMyAnswer%22%2C%22login_title%22%3A%22%E7%99%BB%E5%BD%95%22%2C%22login_from_ss%22%3A%22u2_7%22%7D
+
+usedcarnative://messageCenter/messageCenter
+
+
+
+https://bac.oushangstyle.com/h5/dist/#/liuzi/secondhand/index?channel_code=1&appver=10.9.0.debug&cityid=201&from=app&nb=edf4db964e4efcae07bdbcc5f340580f
+
+oushangcos1://openoscar?type=10000&url=https%3A%2F%2Fbac.oushangstyle.com%2Fh5%2Fdist%2F%23%2Fliuzi%2Fsecondhand%2Findex%3Fchannel_code%3D1%26gsadid%3Dgad_399_s0b2ffcr%26nb%3Dedf4db964e4efcae07bdbcc5f340580f%26from%3Dapp%26appver%3D10.9.0.debug%26cityid%3D201
+
+https://bac.oushangstyle.com/h5/dist/#/common/download
+
+http://imgoushangstyle.oss-cn-hangzhou.aliyuncs.com/oushang.apk
+
+78.96M
+
+RouterUri
+
 ****************************************************************
 
 咱们下周一10.10宣讲吧
