@@ -53,7 +53,7 @@ import com.haoyang.lovelyreader.tre.widget.GridViewWithHeaderAndFooter;
 import com.haoyang.lovelyreader.tre.wifi.PopupMenuDialog;
 import com.haoyang.lovelyreader.tre.wifi.WebService;
 import com.haoyang.reader.sdk.Book;
-import com.haoyang.reader.sdk.BookInfoService;
+import com.haoyang.reader.sdk.BookMetaService;
 import com.java.common.service.file.FileNameService;
 import com.mjiayou.trecorelib.base.TCMenuActivity;
 import com.mjiayou.trecorelib.bean.entity.TCMenu;
@@ -257,12 +257,17 @@ public class HomeFragment extends BaseFragment {
 
 //                Book book = bookBean.getBookLocalInfo().getBook();
                 Book book = new Book();
-                book.path = bookBean.getBookLocalInfo().getLocalBookPath();
+                book.bookPath = bookBean.getBookLocalInfo().getLocalBookPath();
                 book.bookName = bookBean.getBookLocalInfo().getBookName();
                 book.bookType = Book.BookType.EPUB;
+                book.bookId = book.bookPath;
+                book.userId = "123";
+
+                UserBean userBean = Global.mCurrentUser;
+                userBean.setUid("123");
 
                 ToastUtils.show("正在打开电子书...");
-                ReaderHelper.startReader(mActivity, book, Global.mCurrentUser);
+                ReaderHelper.startReader2(mActivity, book, Global.mCurrentUser);
             }
         });
         gvBook.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -528,11 +533,15 @@ public class HomeFragment extends BaseFragment {
 
         // bookInfoService操作
         String filePath = fileBean.getPath();
-        BookInfoService bookInfoService = new BookInfoService();
-        bookInfoService.init(filePath);
-        Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
-        String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath, Utils.getCoverFileName(book.authors, book.bookName));
-        bookInfoService.clear();
+        Book book = new Book();
+        book.bookPath = filePath;
+        BookMetaService bookMetaService = new BookMetaService(book);
+        bookMetaService.open();
+        int result = bookMetaService.getBookInfo();
+        LogUtils.e("matengfei123", "result = " + result);
+        byte[] coverData = bookMetaService.getCoverData();
+        String localCoverPath = BookInfoUtils.getBookCover(coverData, Utils.getCoverFileName(book.authors, book.bookName));
+        bookMetaService.close();
 
         // new BookBean
         BookBean bookBean = new BookBean();

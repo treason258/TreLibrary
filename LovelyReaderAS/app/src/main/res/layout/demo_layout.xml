@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff" >
+
+    <TextView
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:background="#75cb34"
+        android:gravity="center"
+        android:text="豪扬阅读"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/searchBottom"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:background="#f1f1f1"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp" />
+
+    <ListView
+        android:id="@+id/bookList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/searchBottom"
+        android:layout_below="@id/search"
+        android:divider="#dbdbdb"
+        android:dividerHeight="1dp"
+        android:fadeScrollbars="false"
+        android:fastScrollEnabled="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarSize="15dp"
+        android:scrollbars="vertical" >
+    </ListView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Large.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <!-- <ImageView
+        android:id="@+id/searchICON"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/search_icon" /> 
+        -->
+
+</RelativeLayout>

@@ -10,4 +10,60 @@
     <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     <item name="android:windowNoTitle">true</item>
   </style>
+
+  <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <!--<style name="AppTheme" parent="AppBaseTheme">-->
+
+    <!--</style>-->
+
+    <style name="LaunchTheme" parent="Theme.AppCompat.NoActionBar">
+
+
+        <!--<item name="windowActionBar">false</item>-->
+        <item name="windowNoTitle">true</item>
+        <item name="android:navigationBarColor">#ff00ff</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowFullscreen">true</item>
+
+
+    </style>
+
+    <style name="AppTheme1"  parent="Theme.AppCompat">
+
+        <item name="android:statusBarColor">#22c283</item>
+        <!--<item name="android:navigationMode">#ff00ff</item>-->
+
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+    <!--<style name="AppTheme.NoActionBar">-->
+        <!--&lt;!&ndash;状态栏颜色&ndash;&gt;-->
+        <!--<item name="colorPrimaryDark">#22c283</item>-->
+        <!--&lt;!&ndash;控制各个控件被选中时的颜色&ndash;&gt;-->
+        <!--<item name="colorAccent">#22c283</item>-->
+
+        <!--&lt;!&ndash;底部导航栏颜色&ndash;&gt;-->
+        <!--<item name="android:navigationBarColor">#000000</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+        <!--&lt;!&ndash;Appbar背景色&ndash;&gt;-->
+        <!--<item name="android:colorPrimary">#22c283</item>-->
+        <!--&lt;!&ndash;ToolBar上的Title颜色&ndash;&gt;-->
+        <!--<item name="android:textColorPrimary">#22c283</item>-->
+        <!--&lt;!&ndash;各个控制控件的默认颜色&ndash;&gt;-->
+        <!--<item name="android:colorControlNormal">#22c283</item>-->
+    <!--</style>-->
 </resources>

@@ -6,27 +6,11 @@
     android:background="#ffffff" >
 
     <LinearLayout
-        android:id="@+id/headHY"
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/bookName_HY"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="书名"
-            android:textColor="#757575"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/naviHY"
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="65dp"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp"
         android:orientation="horizontal" >
 
         <RelativeLayout
@@ -263,8 +247,7 @@
         android:id="@+id/container"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/naviHY"
-        android:layout_below="@id/headHY"
+        android:layout_below="@id/naviHY"
         android:layout_marginTop="0dp"
         android:background="#ffffff" >
 
@@ -297,7 +280,7 @@
             android:dividerHeight="1dp" />
         -->
 
-        <com.haoyang.reader.page.ui.swipyrefreshlayout.SwipyRefreshLayout
+        <com.haoyang.reader.ui.swipyrefreshlayout.SwipyRefreshLayout
             android:id="@+id/swipyrefreshHY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
@@ -311,7 +294,7 @@
                 android:fastScrollEnabled="true"
                 android:focusable="true" >
             </ListView>
-        </com.haoyang.reader.page.ui.swipyrefreshlayout.SwipyRefreshLayout>
+        </com.haoyang.reader.ui.swipyrefreshlayout.SwipyRefreshLayout>
 
         <RelativeLayout
             android:id="@+id/noContentHY"

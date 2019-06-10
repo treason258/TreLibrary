@@ -33,7 +33,8 @@ import com.haoyang.lovelyreader.tre.util.BookInfoUtils;
 import com.haoyang.lovelyreader.tre.util.LoginUtils;
 import com.haoyang.lovelyreader.tre.util.Utils;
 //import com.haoyang.reader.service.bookservice.BookInfoService;
-import com.haoyang.reader.sdk.BookInfoService;
+import com.haoyang.reader.sdk.Book;
+import com.haoyang.reader.sdk.BookMetaService;
 import com.java.common.service.file.FileNameService;
 import com.mjiayou.trecorelib.base.TCAdapter;
 import com.mjiayou.trecorelib.base.TCViewHolder;
@@ -366,12 +367,17 @@ public class BookAdapter extends TCAdapter {
                     String fileName = fileNameService.getFileName(filePath);
                     String fileSuffix = fileNameService.getFileExtendName(filePath);
 
-                    BookInfoService bookInfoService = new BookInfoService();
-                    bookInfoService.init(filePath);
-//                    Book book = BookInfoUtils.getBookInfo(bookInfoService, filePath);
-                    String localCoverPath = BookInfoUtils.getBookCover(bookInfoService, filePath
-                            , Utils.getCoverFileName(bookBean.getBookServerInfo().getAuthor(), bookBean.getBookServerInfo().getBookName()));
-                    bookInfoService.clear();
+
+                    // bookInfoService操作
+                    Book book = new Book();
+                    book.bookPath = filePath;
+                    BookMetaService bookMetaService = new BookMetaService(book);
+                    bookMetaService.open();
+                    int result = bookMetaService.getBookInfo();
+                    LogUtils.e("matengfei123", "result = " + result);
+                    byte[] coverData = bookMetaService.getCoverData();
+                    String localCoverPath = BookInfoUtils.getBookCover(coverData, Utils.getCoverFileName(bookBean.getBookServerInfo().getAuthor(), bookBean.getBookServerInfo().getBookName()));
+                    bookMetaService.close();
 
                     bookBean.getBookLocalInfo().setFileName(fileName);
                     bookBean.getBookLocalInfo().setFileSuffix(fileSuffix);

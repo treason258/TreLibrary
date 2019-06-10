@@ -46,6 +46,13 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="appId"
+            android:value="773278" />
+        <meta-data
+            android:name="appKey"
+            android:value="10f2a8b3759b4304a5414269c5c4bf63" />
+
         <activity
             android:name=".tre.ui.MainActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -86,17 +93,9 @@
         <!-- reader sdk -->
         <activity
             android:name="com.haoyang.reader.page.ReaderActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask" />
-        <activity
-            android:name="com.haoyang.reader.page.ImageActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.haoyang.lovelyreader.ui.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.haoyang.lovelyreader.ui.FileBrowseActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:theme="@style/MyTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
 
         <!-- provider -->
         <provider

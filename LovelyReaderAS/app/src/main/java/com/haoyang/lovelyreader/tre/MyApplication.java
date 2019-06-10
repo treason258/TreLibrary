@@ -1,7 +1,7 @@
 package com.haoyang.lovelyreader.tre;
 
 import com.haoyang.lovelyreader.tre.helper.BuglyHelper;
-import com.haoyang.reader.page.ReaderApplication;
+import com.haoyang.reader.sdk.ReaderApplication;
 import com.mjiayou.trecorelib.base.TCApp;
 
 /**
