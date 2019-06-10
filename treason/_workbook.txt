@@ -11,8 +11,6 @@ imsi
 AndroidId
 mac
 
-
-
 DeviceInfo.getInstance()
 DeviceInfo.getInstance().getDeviceIMEI(this);
 DeviceInfo.getInstance().getDeviceMAC(U2Global.mApplicationContext)
@@ -35,71 +33,14 @@ api('com.xin:deviceinfolib:1.0.0') {
     exclude group: 'com.android.support', module: 'support-annotations'
 }
 
+
+
 TODO matengfei
-
-OLD
-
-2019-06-06 11:45:00.808 E/matengfei888: ========================================================================
-2019-06-06 11:45:00.808 E/matengfei888: DeviceInfoUtils.getAndroidId(context) = 8df196ec0da0b7b5
-2019-06-06 11:45:00.821 E/matengfei888: DeviceInfoUtils.getImei(context) = 868497048323975
-2019-06-06 11:45:00.827 E/matengfei888: DeviceInfoUtils.getImsi(context) = null
-2019-06-06 11:45:00.836 E/matengfei888: DeviceInfoUtils.getWiFiMacAddress(context) = E0:13:B5:FA:F0:73
-2019-06-06 11:45:00.849 E/matengfei888: FingerPrintManager.getFingerPrintId(getApplicationContext() = e32a1e31bed512d9c2849af81483b9e6
-2019-06-06 11:45:00.849 E/matengfei888: ========================================================================SplashActivity
-2019-06-06 11:45:00.849 E/matengfei888: Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) = 8df196ec0da0b7b5
-2019-06-06 11:45:00.856 E/matengfei888: ApkUtils.getIMEI(context) = 868497048323975
-2019-06-06 11:45:00.866 E/matengfei888: NetWorkUtils.getImei(context) = 868497048323975
-2019-06-06 11:45:00.872 E/matengfei888: NetWorkUtils.getMacAddress(context) = 02-00-00-00-00-00
-2019-06-06 11:45:00.874 E/matengfei888: com.xin.commonmodules.utils.DeviceInfo.getInstance().getDeviceMAC(context) = 02:00:00:00:00:00
-2019-06-06 11:45:00.880 E/matengfei888: com.xin.usedcar.deviceinfolib.DeviceInfo.getInstance().getDeviceIMEI(context) = 868497048323975
-2019-06-06 11:45:00.886 E/matengfei888: com.xin.usedcar.deviceinfolib.DeviceInfo.getInstance().getDeviceImsi(context) = null
-2019-06-06 11:45:00.891 E/matengfei888: com.xin.usedcar.deviceinfolib.DeviceInfo.getInstance().getDeviceMAC(context) = null
-2019-06-06 11:45:00.902 E/matengfei888: Utils.getFingerPrintId(context) = e32a1e31bed512d9c2849af81483b9e6
-2019-06-06 11:45:00.902 E/matengfei888: HttpSender.getXDID() = E32A1E31BED512D9C2849AF81483B9E6
-2019-06-06 11:45:00.903 E/matengfei888: ApiKeyUtils.getXDID() = E32A1E31BED512D9C2849AF81483B9E6
-2019-06-06 11:45:00.903 E/matengfei888: ========================================================================
-
-NEW
-
-2019-06-06 17:29:36.782 32202-32202/? E/matengfei888: ========================================================================SplashActivity
-2019-06-06 17:29:36.782 32202-32202/? E/matengfei888: DeviceInfoUtils.getAndroidId(context) = 8df196ec0da0b7b5
-2019-06-06 17:29:36.792 32202-32202/? E/matengfei888: DeviceInfoUtils.getImei(context) = 868497048323975
-2019-06-06 17:29:36.797 32202-32202/? E/matengfei888: DeviceInfoUtils.getImsi(context) = null
-2019-06-06 17:29:36.801 32202-32202/? E/matengfei888: DeviceInfoUtils.getWiFiMacAddress(context) = E0:13:B5:FA:F0:73
-2019-06-06 17:29:36.801 32202-32202/? E/matengfei888: FingerPrintManager.getInstance(context).getFingerPrintId() = e32a1e31bed512d9c2849af81483b9e6
-2019-06-06 17:29:36.801 32202-32202/? E/matengfei888: ========================================================================
-2019-06-06 17:29:36.801 32202-32202/? E/matengfei888: DeviceIdUtils.getAndroidId(context) = 8df196ec0da0b7b5
-2019-06-06 17:29:36.810 32202-32202/? E/matengfei888: DeviceIdUtils.getImei(context) = 868497048323975
-2019-06-06 17:29:36.815 32202-32202/? E/matengfei888: DeviceIdUtils.getImsi(context) = null
-2019-06-06 17:29:36.821 32202-32202/? E/matengfei888: DeviceIdUtils.getWiFiMacAddress(context) = E0:13:B5:FA:F0:73
-2019-06-06 17:29:36.821 32202-32202/? E/matengfei888: DeviceIdUtils.getFingerPrintId(context) = e32a1e31bed512d9c2849af81483b9e6
-2019-06-06 17:29:36.821 32202-32202/? E/matengfei888: ========================================================================
-2019-06-06 17:29:36.821 32202-32202/? E/matengfei888: SSDeviceIdUtils.getAndroidId(context) = 8df196ec0da0b7b5
-2019-06-06 17:29:36.834 32202-32202/? E/matengfei888: SSDeviceIdUtils.getImei(context) = 868497048323975
-2019-06-06 17:29:36.839 32202-32202/? E/matengfei888: SSDeviceIdUtils.getImsi(context) = null
-2019-06-06 17:29:36.843 32202-32202/? E/matengfei888: SSDeviceIdUtils.getWiFiMacAddress(context) = E0:13:B5:FA:F0:73
-2019-06-06 17:29:36.843 32202-32202/? E/matengfei888: SSDeviceIdUtils.getFingerPrintId(context) = e32a1e31bed512d9c2849af81483b9e6
-2019-06-06 17:29:36.843 32202-32202/? E/matengfei888: ========================================================================
-2019-06-06 17:29:36.843 32202-32202/? E/matengfei888: Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) = 8df196ec0da0b7b5
-2019-06-06 17:29:36.848 32202-32202/? E/matengfei888: ApkUtils.getIMEI(context) = 868497048323975
-2019-06-06 17:29:36.853 32202-32202/? E/matengfei888: NetWorkUtils.getImei(context) = 868497048323975
-2019-06-06 17:29:36.855 32202-32202/? E/matengfei888: NetWorkUtils.getMacAddress(context) = 02-00-00-00-00-00
-2019-06-06 17:29:36.857 32202-32202/? E/matengfei888: com.xin.commonmodules.utils.DeviceInfo.getInstance().getDeviceMAC(context) = 02:00:00:00:00:00
-2019-06-06 17:29:36.861 32202-32202/? E/matengfei888: com.xin.usedcar.deviceinfolib.DeviceInfo.getInstance().getDeviceIMEI(context) = 868497048323975
-2019-06-06 17:29:36.864 32202-32202/? E/matengfei888: com.xin.usedcar.deviceinfolib.DeviceInfo.getInstance().getDeviceImsi(context) = null
-2019-06-06 17:29:36.868 32202-32202/? E/matengfei888: com.xin.usedcar.deviceinfolib.DeviceInfo.getInstance().getDeviceMAC(context) = null
-2019-06-06 17:29:36.876 32202-32202/? E/matengfei888: Utils.getFingerPrintId(context) = e32a1e31bed512d9c2849af81483b9e6
-2019-06-06 17:29:36.876 32202-32202/? E/matengfei888: HttpSender.getXDID() = E32A1E31BED512D9C2849AF81483B9E6
-2019-06-06 17:29:36.877 32202-32202/? E/matengfei888: ApiKeyUtils.getXDID() = E32A1E31BED512D9C2849AF81483B9E6
-2019-06-06 17:29:36.877 32202-32202/? E/matengfei888: ========================================================================
-
 
 androidid=8df196ec0da0b7b5
 imei=868497048323975
-
 md5(imei+androidid)=md5(8684970483239758df196ec0da0b7b5) = 9f02ba35a4cb5fb08d151ccd7f5ee1ed
 md5(androidid+imei)=md5(8df196ec0da0b7b5868497048323975) = e32a1e31bed512d9c2849af81483b9e6
-
 
 之前的代码使用不对的值
 NetWorkUtils.getMacAddress(context) = 02-00-00-00-00-00
@@ -107,24 +48,112 @@ com.xin.commonmodules.utils.DeviceInfo.getInstance().getDeviceMAC(context) = 02:
 com.xin.usedcar.deviceinfolib.DeviceInfo.getInstance().getDeviceMAC(context) = null
 
 
+androidid imei imsi mac xdid
+imei有可能为空
+xdid比较之前版本有可能会变
 
-androidid
+EventManager 
+埋点公共参数
+参数xdid xdid ok
+参数imei imei ok有可能会为空
+参数mac mac ok
 
-imei
+CommonGlobal.IMEI imei ok有可能会为空
+CommonGlobal.IMSI imsi ok
+CommonGlobal.XDID xdid !!!之前是大写，现在是统一小写
+不再使用！！！
 
-imsi
+HalfPurcaseConfirmOrderActivity
+付一半借据相关显示页面 - 付一半电子签确认接口 - https://api.youxinjinrong.com/user/sign_contract_confirm/
+参数imei_idfa imei ok
 
-mac
+HttpSender
+所有接口的网络请求公共参数
+参数imei imei ok有可能会为空
+参数imsi imsi ok
+参数xdid xdid !!!之前是大写，现在是统一小写
 
-xidi
+JiangjiaPresenter
+改变消息状态为已读接口
+/user_message/update_message_status
+参数idfa imei ok有可能会为空
 
-EventManager 埋点公共参数 xidi、imei、mac ok
+MainActivity
+初始化卸载反馈sdk
+卸载后跳转url拼接?xdid=xdid ok
 
+MainActivity
+获取xdid
+保存xdid到SP
 
+MApplication
+初始化SessionId
+用到imei MD5Util.MD5(timestamp + imei)作为本次启动的唯一标示
 
+MApplication
+ApmUpload初始化
+用到xdid
 
+MarketPresenter
+接口监控上报时间接口 - /apilog_monitor/time_report
+参数phonemessage = "imei:" + imei + ",mac:" + mac + ",os:" + android.os.Build.VERSION.RELEASE + ",device_type:" + android.os.Build.MODEL
+imei ok
+mac 之前是错误的02:00:00:00:00:00，现在是正确的E0:13:B5:FA:F0:73
 
-Unexpected scopes found in folder '/Users/xin/Documents/Projects/UsedCar/myapplication/build/intermediates/transforms/WMRouter/debug'. Required: EXTERNAL_LIBRARIES, PROJECT. Found: EXTERNAL_LIBRARIES, PROJECT, SUB_PROJECTS
+MeMessagePresenter
+我的消息通知页读取未读消息数量 - /user_message/get_unread_message_count
+参数idfa imei ok
+
+MessageCountUtil
+我的消息通知页读取未读消息数量 - /user_message/get_unread_message_count
+参数idfa imei ok
+
+SplashActivity
+首页闪屏更新imei，idfa - /user_idfa_imei/index
+参数idfa imei ok
+
+UploadRegInfoHelper
+得到registid后，上传到服务器 - http://open.xin.com/app/deviceReg
+参数idfa imei ok
+
+VehicleDetailsPresenter
+接口监控上报时间接口 - /apilog_monitor/time_report
+参数phonemessage = "imei:" + imei + ",mac:" + mac + ",os:" + android.os.Build.VERSION.RELEASE + ",device_type:" + android.os.Build.MODEL
+imei ok
+mac 之前是错误的02:00:00:00:00:00，现在是正确的E0:13:B5:FA:F0:73
+
+VideoRecommendPresenter
+侃车TV列表presenter - 侃车TV列表 - /brake_tv/view
+参数idfa imei ok
+
+WebviewJumpHelper
+postUrl
+参数imei imei ok
+
+WebviewJumpHelper
+postUrlByX5ClickBtn
+参数imei imei ok
+参数xdid xdid ok
+
+WebviewJumpHelper
+postUrlByX5
+参数imei imei ok
+参数xdid xdid ok
+
+X5ProgressWebView
+syncCookie - 给养车快线种cookie
+参数device imei ok
+
+X5ProgressWebView
+commonParameter
+参数xdid xdid ok
+参数imei imei ok
+参数mac mac 之前是错误的null，现在是正确的E0:13:B5:FA:F0:73
+
+FeedbackPresenter
+获取意见反馈标签 - /feedback/add
+参数sn xdid ok
+
 
 ****************************************************************
 
@@ -136,10 +165,10 @@ SmartSelectCarActivity
 
 背景：2019年第三季度安卓端会上线Q系统，产生的后果如下：
 Android ID：只有恢复出厂设置的时候才会更新（系统升级不会影响）
-MAC地址：Andriod Q系统之前可以获取
-                    Andriod Q系统之后获取的是随机地址(已经不能作为标识参考)
+MAC地址：      Andriod Q系统之前可以获取
+            Andriod Q系统之后获取的是随机地址(已经不能作为标识参考)
 IMEI号：Andriod  Q系统之前可以获取
-                 Andriod  Q系统之后可能获取不到
+     Andriod  Q系统之后可能获取不到
 Andriod Q系统之前xdid生成规则：android id和imei生成的  md5 加密后生成的一个值
 Andriod Q系统之后xdid生成规则：设备指纹（开发的一个sdk，用来统计手机的所有参数），只有恢复出厂设置才会更新
 
@@ -149,6 +178,8 @@ Andriod Q系统之后xdid生成规则：设备指纹（开发的一个sdk，用�
 针对于未升级系统的用户，xdid不会变
 针对于升级到Q系统且恢复出厂设置的用户，xdid也会改变
 针对于升级到Q系统但是未升级版本的用户，xdid会采用新的生成规则
+
+
 
 ****************************************************************
 
