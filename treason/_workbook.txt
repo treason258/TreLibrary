@@ -3,6 +3,88 @@
 ****************************************************************
 ****************************************************************
 ****************************************************************
+
+活动名称 		备注 版本号
+0元抢车		首页列表页提供入口，详情为H5 9.6
+免费领流量	联通移动使用阿里云服务端控制，电信为原生SDK 9.6
+世界杯活动	原生世界杯弹窗，详情为H5 9.7
+砍价活动		首页弹窗、首页胶囊位、列表页入口为原生，详情页为H5 9.12
+好车急降 		首页banner入口（服务端控制）首页天天特价专区（NA后台控制），详情页列表页改动为原生，活动页为H5, 9.12
+天天特价 		首页banner入口（服务端控制）首页天天特价专区（NA后台控制），详情页列表页改动为原生， 9.12
+春节主题 		首页金刚位、tabbar、弹窗为原生 10.6
+限时抢购 		首页（原好车急降位置）、列表页入口、详情页为原生改动，活动详情页、优惠券为H5
+
+这三个可以删除，其他的还保留吧~
+
+0元抢车		
+页面	ZeroGetCarListActivity，只有push还有入口，没有其他入口
+接口 url_entrance_user_center-我的0元抢车入口是否展示 设置SP，但是就没有在用过
+接口 url_zero_getcar_list-我的0元抢车列表 用于ZeroGetCarListActivity页面
+接口 url_market_promotion-车市列表获取活动 没有引用
+
+免费领流量
+？？?找不到
+
+世界杯活动	
+弹窗还存在，貌似与其他活动复用
+
+****************************************************************
+
+http://k.fat.youxinjinrong.com/ksd?from=app&nb=8a083f970c529cc5bcdba72b143a0c70&appver=10.10.0.debug&cityid=201
+
+http://fe.test.youxinjinrong.com:5002/uxin/cash/route
+
+http://fe.test.youxinjinrong.com:5021/uxin/cash/route?from=app&nb=8a083f970c529cc5bcdba72b143a0c70&appver=10.10.0.debug&cityid=201
+
+****************************************************************
+
+{
+    "code": 2,
+    "message": "\u64cd\u4f5c\u6210\u529f",
+    "version": "",
+    "data": {
+        "status": -1
+    }
+}
+
+{
+    "code":2,                //类型：Number  必有字段  备注：-1:调用失败;1:调用成功， 无数据更新 ， 无需重新绑定数据;2:调用成功，有数据更新 ，需要重新绑定数据;-405:apikey校验失败;-408:用户token校验失败
+    "message":"调用成功",                //类型：String  必有字段  备注：消息内容
+    "data": - {                //类型：Object  必有字段  备注：数据
+        "status":"mock",                //类型：String  必有字段  备注：状态值（1：展示入口 -1：不展示入口）
+        "entrance_name":"mock",                //类型：String  必有字段  备注：入口名（status=-1无值）
+        "entrance_url":"mock"                //类型：String  必有字段  备注：跳转地址（status=-1无值）
+    }
+}
+
+线上白：13331033862
+线上非白：15616036416
+测试白：14000000075 验证码：666666
+测试非白：15811087678 验证码：666666
+@李雪琼—APP测试 账号如上，jira上已备注
+
+14000000006这个也可以用   验证码都是666666
+
+快速达账号：14165086999
+养车快现账号：14000001998
+
+{
+    "code": 2,
+    "message": "\u64cd\u4f5c\u6210\u529f",
+    "version": "",
+    "data": {
+        "status": 1,
+        "entrance_name": "http:\/\/k.fat.youxinjinrong.com\/ksd",
+        "entrance_url": "http:\/\/k.fat.youxinjinrong.com\/ksd"
+    }
+}
+
+****************************************************************
+
+http://dl.google.com/android/android-sdk_r24.2-windows.zip
+http://dl.google.com/android/tools_r25.2.5-macosx.zip
+https://dl.google.com/android/repository/sdk-tools-darwin-3859397.zip
+
 ****************************************************************
 
 指纹SDK升级，替换
@@ -58,6 +140,7 @@ EventManager
 参数imei imei ok有可能会为空
 参数mac mac ok
 
+Global
 CommonGlobal.IMEI imei ok有可能会为空
 CommonGlobal.IMSI imsi ok
 CommonGlobal.XDID xdid !!!之前是大写，现在是统一小写
@@ -153,6 +236,12 @@ commonParameter
 FeedbackPresenter
 获取意见反馈标签 - /feedback/add
 参数sn xdid ok
+
+IMEI
+IMSI
+
+getSystemService
+TELEPHONY_SERVICE
 
 
 ****************************************************************
