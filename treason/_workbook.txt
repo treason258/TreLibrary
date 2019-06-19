@@ -2,6 +2,15 @@
 
 ****************************************************************
 ****************************************************************
+
+_apikey=5db3f5&app_source=3&appver=10.10.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=&ip=10.70.139.216&latitude=39.991569&longitude=116.474202&nb=33eac9839d7a0438d9dc302de4c6dc6e&net=wifi&os=android&ref=CommonBuyCarCityChooseActivity&search_cityid=201&site_id=42&sysver=27&task_id=&tmpid=&ts=1560913591615&type=2&uid=&url=ConfirmSiteActivity&uuid=22b60fa3-1d43-418a-ad25-2258ebe3c4ac&xdid=e32a1e31bed512d9c2849af81483b9e6
+
+_apikey=a3f3e2&app_source=3&appver=10.10.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=&ip=10.70.139.216&latitude=39.991569&longitude=116.474202&nb=33eac9839d7a0438d9dc302de4c6dc6e&net=wifi&os=android&ref=focusConsultingFragment&search_cityid=201&site_id=42&sysver=27&task_id=&tmpid=&ts=1560913677400&type=2&uid=&url=ConfirmSiteActivity&uuid=22b60fa3-1d43-418a-ad25-2258ebe3c4ac&xdid=e32a1e31bed512d9c2849af81483b9e6
+
+_apikey=28007d&app_source=3&appver=10.10.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=&ip=10.70.139.216&latitude=39.991569&longitude=116.474202&nb=33eac9839d7a0438d9dc302de4c6dc6e&net=wifi&os=android&ref=focusConsultingFragment&search_cityid=201&site_id=42&sysver=27&task_id=&tmpid=&ts=1560913754397&type=1&uid=&url=ConfirmSiteActivity&uuid=22b60fa3-1d43-418a-ad25-2258ebe3c4ac&xdid=e32a1e31bed512d9c2849af81483b9e6
+
+_apikey=e34efe&app_source=3&appver=10.10.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=&ip=10.70.139.216&latitude=39.991556&longitude=116.474105&nb=4d3cee5370b106c13f789f9808941ce7&net=wifi&os=android&ref=CommonBuyCarCityChooseActivity&search_cityid=201&site_id=42&sysver=27&task_id=&tmpid=&ts=1560913889377&type=3&uid=&url=ConfirmSiteActivity&uuid=675c8d3d-3cb2-4e1a-a2e8-2c6c5b7bb3f0&xdid=e32a1e31bed512d9c2849af81483b9e6
+
 ****************************************************************
 
 活动名称 		备注 版本号
@@ -14,6 +23,7 @@
 春节主题 		首页金刚位、tabbar、弹窗为原生 10.6
 限时抢购 		首页（原好车急降位置）、列表页入口、详情页为原生改动，活动详情页、优惠券为H5
 
+
 这三个可以删除，其他的还保留吧~
 
 0元抢车		
@@ -21,12 +31,26 @@
 接口 url_entrance_user_center-我的0元抢车入口是否展示 设置SP，但是就没有在用过
 接口 url_zero_getcar_list-我的0元抢车列表 用于ZeroGetCarListActivity页面
 接口 url_market_promotion-车市列表获取活动 没有引用
+清理OK
 
 免费领流量
-？？?找不到
+已清理OK
 
 世界杯活动	
 弹窗还存在，貌似与其他活动复用
+清理OK
+
+
+弹窗逻辑：
+广告页面
+检查更新弹窗
+没有更新或者关闭不更新，则请求活动弹窗
+显示砍价弹框
+
+1、进入APP先显示广告
+
+
+
 
 ****************************************************************
 
