@@ -3,6 +3,65 @@
 ****************************************************************
 ****************************************************************
 
+         maven {
+-            url 'http://172.18.90.11:8082/repository/group_android/'
++            url 'http://172.20.90.31:8083/repository/group_android/'
+         }
+
+****************************************************************
+
+  if([reverseCityname containsString:@"自治州"]) {
+        //地级行政区包括地级市、地区、自治州、盟。
+        NSRange shiRange = [reverseCityname rangeOfString:@"自治州"];
+        cityname = [reverseCityname substringToIndex:shiRange.location];
+    }
+    else if([reverseCityname containsString:@"地区"]) {
+        //地级行政区包括地级市、地区、自治州、盟。
+        NSRange shiRange = [reverseCityname rangeOfString:@"地区"];
+        cityname = [reverseCityname substringToIndex:shiRange.location];
+    }
+    else if([reverseCityname containsString:@"盟"]) {
+        //地级行政区包括地级市、地区、自治州、盟。
+        NSRange shiRange = [reverseCityname rangeOfString:@"盟"];
+        cityname = [reverseCityname substringToIndex:shiRange.location];
+    }
+    else if ([reverseCityname containsString:@"市"]) {
+        //地级行政区包括地级市、地区、自治州、盟。
+        NSRange shiRange = [reverseCityname rangeOfString:@"市"];
+        cityname = [reverseCityname substringToIndex:shiRange.location];
+    }
+    else if([reverseCountyname containsString:@"市"]) {
+        //省直辖县级行政单位
+        NSRange xianRange = [reverseCountyname rangeOfString:@"市"];
+        cityname = [reverseCountyname substringToIndex:xianRange.location];
+    }
+    else if([reverseCountyname containsString:@"县"]) {
+        //省直辖县级行政单位
+        NSRange xianRange = [reverseCountyname rangeOfString:@"县"];
+        cityname = [reverseCountyname substringToIndex:xianRange.location];
+    }
+
+****************************************************************
+
+https://m.xianghuanji.com/legoactivity/index?page_id=youxin2&appver=10.10.0.debug&cityid=201&from=app&nb=75c7fd3fa37b23c665af824831b7a964
+
+airent://www.xianghuanji.com/homePage
+https://m.xianghuanji.com/site/appdownloadproceed?utm_medium=null
+
+****************************************************************
+
+2019-06-20 14:41:49.072 5536-5536/? D/matengfei333: LocationAmap | onLocationChanged() called with: location = [latitude=44.30541937934028#longitude=86.08024766710069#province=新疆维吾尔自治区#city=新疆维吾尔自治区#district=石河子市#cityCode=0993#adCode=659001#address=新疆维吾尔自治区新疆维吾尔自治区石河子市北三东路靠近石河子市人民政府#country=中国#road=北三东路#poiName=石河子市人民政府#street=北三东路#streetNum=1号#aoiName=石河子市人民政府#poiid=#floor=#errorCode=0#errorInfo=success#locationDetail=#description=在石河子市人民政府附近#locationType=1]
+2019-06-20 14:41:49.073 5536-5536/? D/matengfei333: U2AppModuleImpl | onReceiveLocation() called with: location = [latitude=44.30541937934028#longitude=86.08024766710069#province=新疆维吾尔自治区#city=新疆维吾尔自治区#district=石河子市#cityCode=0993#adCode=659001#address=新疆维吾尔自治区新疆维吾尔自治区石河子市北三东路靠近石河子市人民政府#country=中国#road=北三东路#poiName=石河子市人民政府#street=北三东路#streetNum=1号#aoiName=石河子市人民政府#poiid=#floor=#errorCode=0#errorInfo=success#locationDetail=#description=在石河子市人民政府附近#locationType=1]
+2019-06-20 14:41:49.073 5536-5536/? D/matengfei333: 
+CommonBuyCarCityChoosePresenter | onLocationSuccess() called with: locationInfo = [新疆维吾尔自治区 | 新疆维吾尔自治区 | 石河子市]
+
+2019-06-20 15:19:44.203 11883-11883/? D/matengfei333: LocationAmap | onLocationChanged() called with: location = [latitude=30.402188585069446#longitude=112.89898030598958#province=湖北省#city=湖北省#district=潜江市#cityCode=2728#adCode=429005#address=湖北省湖北省潜江市章华南路靠近中共潜江市委员会#country=中国#road=章华南路#poiName=中共潜江市委员会#street=章华南路#streetNum=21#aoiName=潜江市体育活动中心#poiid=#floor=#errorCode=0#errorInfo=success#locationDetail=#description=在中共潜江市委员会附近#locationType=1]
+2019-06-20 15:19:44.203 11883-11883/? D/matengfei333: U2AppModuleImpl | onReceiveLocation() called with: location = [latitude=30.402188585069446#longitude=112.89898030598958#province=湖北省#city=湖北省#district=潜江市#cityCode=2728#adCode=429005#address=湖北省湖北省潜江市章华南路靠近中共潜江市委员会#country=中国#road=章华南路#poiName=中共潜江市委员会#street=章华南路#streetNum=21#aoiName=潜江市体育活动中心#poiid=#floor=#errorCode=0#errorInfo=success#locationDetail=#description=在中共潜江市委员会附近#locationType=1]
+2019-06-20 15:19:44.204 11883-11883/? D/matengfei333: 
+CommonBuyCarCityChoosePresenter | onLocationSuccess() called with: locationInfo = [湖北省 | 湖北省 | 潜江市]
+
+****************************************************************
+
 _apikey=5db3f5&app_source=3&appver=10.10.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=&ip=10.70.139.216&latitude=39.991569&longitude=116.474202&nb=33eac9839d7a0438d9dc302de4c6dc6e&net=wifi&os=android&ref=CommonBuyCarCityChooseActivity&search_cityid=201&site_id=42&sysver=27&task_id=&tmpid=&ts=1560913591615&type=2&uid=&url=ConfirmSiteActivity&uuid=22b60fa3-1d43-418a-ad25-2258ebe3c4ac&xdid=e32a1e31bed512d9c2849af81483b9e6
 
 _apikey=a3f3e2&app_source=3&appver=10.10.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=&ip=10.70.139.216&latitude=39.991569&longitude=116.474202&nb=33eac9839d7a0438d9dc302de4c6dc6e&net=wifi&os=android&ref=focusConsultingFragment&search_cityid=201&site_id=42&sysver=27&task_id=&tmpid=&ts=1560913677400&type=2&uid=&url=ConfirmSiteActivity&uuid=22b60fa3-1d43-418a-ad25-2258ebe3c4ac&xdid=e32a1e31bed512d9c2849af81483b9e6
