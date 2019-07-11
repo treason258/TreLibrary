@@ -1,7 +1,145 @@
 
 
 ****************************************************************
+
+
+
+潜江市
+locationInfo.getProvince() = 湖北省 | locationInfo.getCity() = 湖北省 | locationInfo.getDistrict() = 潜江市
+
+石河子市
+locationInfo.getProvince() = 新疆维吾尔自治区 | locationInfo.getCity() = 新疆维吾尔自治区 | locationInfo.getDistrict() = 石河子市
+
+江阴市
+locationInfo.getProvince() = 江苏省 | locationInfo.getCity() = 无锡市 | locationInfo.getDistrict() = 江阴市
+
 ****************************************************************
+
+//        // 假数据
+//        if (true) {
+//            switch (new Random().nextInt(100) % 3) {
+//                case 0:
+//                    mTaskDetailBean.setCurrent_status("-1");
+//                    break;
+//                case 1:
+//                    mTaskDetailBean.setCurrent_status("0");
+//                    break;
+//                case 2:
+//                    mTaskDetailBean.setCurrent_status("1");
+//                    mTaskDetailBean.setIs_comment("0");
+//                    break;
+//
+//            }
+//        }
+//        LogUtils.d("matengfei333", "mTaskDetailBean.getCurrent_status() = " + mTaskDetailBean.getCurrent_status());
+//        LogUtils.d("matengfei333", "mTaskDetailBean.getIs_comment() = " + mTaskDetailBean.getIs_comment());
+
+//        if (true) {
+//            List<DateBean> dataBeanList111 = dateTimesBean.getDate_list();
+//            int size = dataBeanList111.size();
+//            for (int i = 0; i < size; i++) {
+//                DateBean dataBean111 = dataBeanList111.get(i);
+//
+//                DateBean dateBean = new DateBean();
+//                dateBean.setWeek_text(dataBean111.getWeek_text());
+//                dateBean.setDate_text(dataBean111.getDate_text());
+//                dateBean.setArrive_date(dataBean111.getArrive_date());
+//                dateBean.setTime_list(dataBean111.getTime_list());
+//
+//                dataBeanList111.add(dataBean111);
+//            }
+//            dateTimesBean.setDate_list(dataBeanList111);
+//        }
+
+//        TimeBean timeBeanTTT = new TimeBean("01:00-02:10");
+//        timeBeanTTT.setId("1");
+//        timeBeanTTT.setIs_selected(0);
+//        timeBeanTTT.setIs_available(1);
+//        dateTimesBean.getDate_list().get(1).getTime_list().add(timeBeanTTT);
+//        dateTimesBean.getDate_list().get(1).getTime_list().add(timeBeanTTT);
+//        dateTimesBean.getDate_list().get(1).getTime_list().add(timeBeanTTT);
+//        dateTimesBean.getDate_list().get(1).getTime_list().add(timeBeanTTT);
+//        dateTimesBean.getDate_list().get(1).getTime_list().add(timeBeanTTT);
+
+//        if (new Random().nextBoolean()) {
+//            LogUtils.d("matengfei333", "requestTaskStarListSuccess | 22222222");
+//            ServiceEvaluationDialog dialog = new ServiceEvaluationDialog(mContext);
+//            dialog.setData(taskStarBeanList, mReservationId, mMasterId);
+//            dialog.setOnTaskSubmitCommentListener(new ServiceEvaluationDialog.OnTaskSubmitCommentListener() {
+//                @Override
+//                public void onCommentSuccess() {
+//                    LogUtils.d("matengfei333", "requestTaskStarListSuccess | onCommentSuccess");
+//                    mReservationDetailPresenter.requestTaskDetail(mReservationId);
+//                }
+//            });
+//            dialog.show();
+//            return;
+//        }
+
+//        if (true) {
+//            showServiceEvaluation = true;
+//            mTaskDetailBean.setIs_comment("0");
+//        }
+
+//        try {
+//            // 设备指纹统计埋点
+//            String type = FingerPrintManager.getInstance(this).getFingerPrintType();
+//            String release = Build.VERSION.RELEASE;
+//            int sdk = Build.VERSION.SDK_INT;
+//            String product = Build.PRODUCT;
+//            String manufacturer = Build.MANUFACTURER;
+//            String brand = Build.BRAND;
+//            String model = Build.MODEL;
+//            String ev = "finger_print#type=" + type + "/release=" + release + "/sdk=" + sdk + "/product=" + product + "/manufacturer=" + manufacturer + "/brand=" + brand + "/model=" + model;
+//            Log.e("matengfei999", ev);
+//            SSEventUtils.sendGetOnEventUxinUrl(SSEventUtils.UXIN_EVENT_CLICK, ev, "", false);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+13121867528
+
+****************************************************************
+
+http://api.ceshi.xin.com/customer/contract_create?_apikey=b86726&app_source=3&appver=10.10.0.debug&cityid=201&gps_type=1&imei=354734083045753&imsi=&ip=10.70.73.209&latitude=39.991599&longitude=116.474056&nb=bc010afa9c176bfb9c7806d859e381ca&net=wifi&os=android&ref=UserFragmentNew&site_id=539&sysver=24&task_id=&tmpid=&ts=1562236496653&u=src%253Dcar_app%2526uid%253D4953524&uid=4953524&url=ContractListActivity&uuid=1e1e225f-ea99-4e32-b9c9-16ee81f8b1a3&x=9373e68c5429cd76bf1696140de66d05&xdid=eff3223fb315c03b38055592f434b9b4&carid=68175851
+
+http://api.ceshi.xin.com/customer/signature
+
+http://api.ceshi.xin.com/customer/signature?_apikey=6bda24&app_source=3&appver=10.10.0.debug&cityid=201&gps_type=1&imei=354734083045753&imsi=&ip=10.70.73.209&latitude=39.991599&longitude=116.474056&nb=bc010afa9c176bfb9c7806d859e381ca&net=wifi&os=android&ref=ContractListActivity&site_id=539&sysver=24&task_id=&tmpid=&ts=1562236595460&u=src%253Dcar_app%2526uid%253D4953524&uid=4953524&url=WebViewActivity&uuid=1e1e225f-ea99-4e32-b9c9-16ee81f8b1a3&x=9373e68c5429cd76bf1696140de66d05&xdid=eff3223fb315c03b38055592f434b9b4
+
+****************************************************************
+
+u2	APP	新增	预约详情页	C-【确定】取消预约按钮点击	预约详情页中点击取消预约后，可在小弹窗中点击【确定】按钮	c	cancel_appointment_toface	carid=value	cancel_appointment_toface#carid=123456	　	"carid取值：所属的车辆id
+    --carid可以为空"	　	线上预约上门	1010	2019/6/28	u2_186	　	孙潇
+
+u2	APP	新增	预约详情页	C-【确定】修改预约时间	预约详情页中点击修改后，可在小弹窗中修改预约时间，然后点击【确定】按钮	c	determine_modifications_appointment_time	date=value/hour=value/carid=value	determine_modifications_appointment_time#date=06-12/hour=13:00-15:00/carid=123456	　	"date取值：
+用户选择的预约上门日期
+hour取值：
+用户选择的预约上门时间点
+carid取值：所属的车辆id
+    --carid可以为空"	　	线上预约上门	1010	2019/6/28	u2_186	　	孙潇
+
+****************************************************************
+
+http://www.ceshi.xin.com/340d0z8ky9/che34768093.html?platform=android&isshare=1&platform=android&sharesort=qq&abversion=a
+http://www.ceshi.xin.com/340d0z8ky9/che34768093.html?platform=android&isshare=1&platform=android&isshare=1&sharesort=qq&abversion=a
+http://www.ceshi.xin.com/340d0z8ky9/che34768093.html?platform=android&isshare=1&sharesort=qq&abversion=a
+
+
+http://m.ceshi.xin.com/340d0z8ky9/che34768093.html?platform=android&isshare=1&platform=android&isshare=1
+https://c4.xinstatic.com/o/20190628/1804/5d15e61445da7379056.png
+
+http://m.ceshi.xin.com/340d0z8ky9/che34768093.html?platform=android&isshare=1&platform=android&isshare=1&sharesort=copy
+http://www.ceshi.xin.com/340d0z8ky9/che34768093.html?platform=android&isshare=1&sharesort=wechatmoments&from=timeline&abversion=a
+
+
+http://m.ceshi.xin.com/340d0z8ky9/che34768093.html
+http://www.ceshi.xin.com/340d0z8ky9/che34768093.html
+
+
+http://m.ceshi.xin.com/40d03z1dy9/che78844031.html
+http://www.ceshi.xin.com/40d03z1dy9/che78844031.html
+
 ****************************************************************
 
 10.10预约上门需求
