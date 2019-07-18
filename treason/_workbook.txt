@@ -2,6 +2,49 @@
 
 ****************************************************************
 
+2019-07-18 17:56:59.269 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainActivity | presenter.requestCityData()
+2019-07-18 17:56:59.269 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | requestCityData
+2019-07-18 17:56:59.563 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | requestCityData | onFoundCache
+2019-07-18 17:56:59.563 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | requestCityData | onSuccess | origin = 1
+2019-07-18 17:56:59.581 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | registerLocationListener
+2019-07-18 17:56:59.581 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | registerLocationListener | continue
+2019-07-18 17:56:59.581 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: U2AppModuleImpl | registerLocationListener
+2019-07-18 17:56:59.581 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: U2AppModuleImpl | registerLocationListener | startLocation
+2019-07-18 17:56:59.581 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: LocationAmap | startLocation
+2019-07-18 17:56:59.581 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: LocationAmap | startLocation | locationClient.isStarted() = true
+2019-07-18 17:56:59.582 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: LocationAmap | startLocation | locationClient.isStarted() = true
+2019-07-18 17:57:01.616 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | onLocationSuccess | locationInfo.getProvince() = 北京市 | locationInfo.getCity() = 北京市 | locationInfo.getDistrict() = 朝阳区
+2019-07-18 17:57:01.616 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | onLocationSuccess | 111
+2019-07-18 17:57:01.616 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | onLocationSuccess | 222
+2019-07-18 17:57:01.744 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | onLocationSuccess | 333
+2019-07-18 17:57:02.083 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | requestCityData | onSuccess | origin = 1
+2019-07-18 17:57:02.098 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | registerLocationListener
+2019-07-18 17:57:02.098 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | registerLocationListener | continue
+2019-07-18 17:57:02.098 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: U2AppModuleImpl | registerLocationListener
+2019-07-18 17:57:02.098 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: U2AppModuleImpl | registerLocationListener | startLocation
+2019-07-18 17:57:02.098 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: LocationAmap | startLocation
+2019-07-18 17:57:02.098 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: LocationAmap | startLocation | locationClient.isStarted() = true
+2019-07-18 17:57:02.098 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: LocationAmap | startLocation | locationClient.isStarted() = true
+2019-07-18 17:57:02.228 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | onLocationSuccess | locationInfo.getProvince() = 北京市 | locationInfo.getCity() = 北京市 | locationInfo.getDistrict() = 朝阳区
+2019-07-18 17:57:02.228 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | onLocationSuccess | 111
+2019-07-18 17:57:02.228 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | onLocationSuccess | 222
+2019-07-18 17:57:02.379 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: MainPresenter | onLocationSuccess | 333
+
+
+
+2019-07-18 17:57:10.884 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: CommonBuyCarCityChoosePresenter | requestData | onFoundCache
+2019-07-18 17:57:10.886 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: CommonBuyCarCityChoosePresenter | requestData | onSuccess | origin = 1
+2019-07-18 17:57:10.905 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: CommonBuyCarCityChoosePresenter | checkLocation
+2019-07-18 17:57:10.905 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: CommonBuyCarCityChoosePresenter | checkLocation | continue
+2019-07-18 17:57:10.905 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: U2AppModuleImpl | registerLocationListener
+2019-07-18 17:57:10.905 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: U2AppModuleImpl | registerLocationListener | startLocation
+2019-07-18 17:57:10.905 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: LocationAmap | startLocation
+2019-07-18 17:57:10.906 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: LocationAmap | startLocation | locationClient.isStarted() = true
+2019-07-18 17:57:10.906 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: LocationAmap | startLocation | locationClient.isStarted() = true
+2019-07-18 17:57:11.058 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: CommonBuyCarCityChoosePresenter | locationInfo.getProvince() = 北京市 | locationInfo.getCity() = 北京市 | locationInfo.getDistrict() = 朝阳区
+2019-07-18 17:57:11.218 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: CommonBuyCarCityChoosePresenter | requestData | onSuccess | origin = 1
+2019-07-18 17:57:11.238 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: CommonBuyCarCityChoosePresenter | checkLocation
+2019-07-18 17:57:11.238 7865-7865/com.uxin.usedcar E/LogUtils-matengfei888: CommonBuyCarCityChoosePresenter | checkLocation | return
 
 
 潜江市
