@@ -129,6 +129,11 @@ ZFB
 0705 1154 -13= wucan
 0705 1155 -13=0 zhuan,weixin
 0o
+0722 0946 +281=281 zhuan,yuebao
+0722 0948 -4=277 zaocan
+0722 1956 -15=262 wancan
+0722 2019 -3=259 huiyuan,baiduyun
+
 
 YEB
 0315 2002 -31=0 zhuan,zhifubao
@@ -136,7 +141,31 @@ YEB
 0715 2330 +2=2 lixi
 0716 1021 +1500=1502 zhuan,zhaohang
 0716 1133 -8=1494 wucan
-1494o
+0716 2119 -19=1475 ???shangpin
+0717 0944 -4=1471 zaocan,baozi
+0717 1209 -20=1451 wucan,???
+0717 1922 -20=1431 ditie
+0717 2001 -12=1419 wancan,bing
+0717 2007 -5=1414 wancan,???
+0718 0946 -4=1410 zaocan
+0718 1204 -15=1395 wucan
+0718 1205 -2=1393 wucan
+0718 2007 -6=1387 wancan
+0719 0949 -4=1383 zaocan
+0719 1136 -9=1374 wucan,waimai
+0719 1958 -4=1370 wancan
+0719 2004 -12=1358 shuiguo
+0720 0956 -18=1340 zaocan,waimai
+0720 1722 -20=1320 ditie
+0720 1942 -10=1310 wancan???
+0721 1039 -29=1281 zaocan,waimai
+0722 0946 -281=1000 zhuan,zhifubao
+0725 +250-250=1000 zhuan,jianhang,dianfei
+0725 2350 -200=800 zhuan,zhifubao
+0727 1626 -300=500 zhuan,zhifubao
+0730 2330 +1=501 lixi
+0731 1019 -200=301 zhuan,zhifubao
+301o
 
 WX
 0517 1914 -50=329 zhuan,zhifubao----
@@ -223,8 +252,9 @@ WX
 0725 2004 -2=100 qukuaidi
 0727 1634 +5=105 hongbao,yijia
 0727 2025 +2=107 hongbao
-0729 1220 +13=120 zhuan,zhifubao
-120o
+0729 1220 +13=120 zhuan,zhifubao,wucan
+0730 1107 +8=128 wucan,zhifubao,zhuan
+128o
 
 				YLB
 				0315 2003 -3=0 zhuan,zhifubao
@@ -341,7 +371,8 @@ JS
 0727 1939 +52.8=6719 zhuan,baoxiao,yijia
 0728 2019 -130=6589 huan,6553
 0731 1020 +170=6759 zhuan,zhifubao,kouhong
-6759o
+0731 2012 +34=6793 zhuan,zhifubao,shujuxian
+6793p
 
 ZS
 0622 2137 -250=35 zhuan,jianhang
@@ -406,14 +437,14 @@ ZXXYK-6580  ----payday0824-0 (-0-0+35000=35000)
 0417 1624 +1720=0 huan
 -0ok
 
-JTXYK-3520  ----payday0819-0 (-34.36-21351.8+34000=12613.84)
+JTXYK-3520  ----payday0819-0 (-34.36-21385.77+34000=12579.87)
 0618 1347 +398.21=0 huan
 -0ok
 0725 2343 -17.18=-17.18 huafei
 0725 2344 -17.18=-34.36 huafei
 -34.36o
 
-JTXYK-1053  ----payday0819-17000 (-21351.8+29000=7648.2)
+JTXYK-1053  ----payday0819-17000 (-21385.77+29000=7614.23)
 0623 2124 -50=-9351.22 huaniao
 -9351.22ok
 0623 0000 +400= woerma,shuakajin
@@ -473,7 +504,8 @@ JTXYK-1053  ----payday0819-17000 (-21351.8+29000=7648.2)
 0727 1625 -71= yijia,wucan
 0727 1937 -52.8=-21181.8 yijia,tang
 0731 1017 -170=-21351.8 kouhong,zhuan,jianhang
--21351.8o
+0731 2010 -33.97=-21385.77  shujuxian
+-21385.77o
 
 JTXYK-5651  ----payday0805-15289 (-26507+40000=13493)
 0619 0857 5651 D0 -3721=-31065
