@@ -539,6 +539,8 @@ JTXYK-5651  ----payday0805-15289 (-16567+40000=23433)
 				-0ok
 				0725 0001 -188.9=-188.9 lanqiu,weishengjin
 				0726 0008 +188.9=0 huan,jianhang
+				0803 2321 -17.98=-17.98 huafei
+				0803 2323 +17.98=0 huan,jianhang
 				-0o
 
 XJ
