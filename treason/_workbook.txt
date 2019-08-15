@@ -1,5 +1,17 @@
+****************************************************************
+****************************************************************
+****************************************************************
+
+https://apis.xin.com/site/lists?_apikey=b6206f&app_source=3&appver=10.12.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=460010256208608&ip=10.70.139.216&latitude=39.991837&longitude=116.473861&manual_latitude=39.991837&manual_longitude=116.473861&nb=f5fd7f2fb01d56d73ce83f0c87767a18&net=wifi&os=android&ref=&search_cityid=201&site_id=1237&site_type=2&sysver=27&task_id=&tmpid=&ts=1565852421836&uid=&url=SiteDetailsActivity&uuid=92386d74-f2e2-4f02-95e7-b349392899a2&xdid=e32a1e31bed512d9c2849af81483b9e6
+
+https://apis.xin.com/site/detail?_apikey=1c4e5a&app_source=3&appver=10.12.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=460010256208608&ip=10.70.139.216&latitude=39.991837&longitude=116.473861&manual_latitude=39.991837&manual_longitude=116.473861&nb=f5fd7f2fb01d56d73ce83f0c87767a18&net=wifi&os=android&ref=&search_cityid=201&site_id=41&site_type=2&sysver=27&task_id=&tmpid=&ts=1565852443496&uid=&url=MarketFragment&uuid=92386d74-f2e2-4f02-95e7-b349392899a2&xdid=e32a1e31bed512d9c2849af81483b9e6
 
 ****************************************************************
+
+http://172.18.90.11:8082/repository/group_android/
+
+http://172.20.90.31:8083/repository/group_android/
+
 ****************************************************************
 
 14704518738
