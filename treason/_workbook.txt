@@ -2,6 +2,28 @@
 ****************************************************************
 ****************************************************************
 
+车市列表		GroupExtra.MarketOrigin.MARKET
+高级筛选		GroupExtra.AdvancedFilterLinkOrigin.ADVANCEDLINKORIGIN
+
+卖车页面		Extra.Origin.C2B_SELLER_CAR
+估价页面		Extra.Origin.C2B_SELLER_CAR
+订阅车源		RN带来
+购车心愿单	Extra.Origin.WISH_LIST_BRAND
+
+****************************************************************
+
+1、配置页面，是下拉菜单，还是独立页面
+2、排序内容、车价内容、车型内容，是服务端配置还是本地写死
+3、车价样式的改动，是否同步车市列表的“车价”菜单样式，以及车市列表的“分期”菜单样式
+
+****************************************************************
+
+http://api.ceshi.xin.com/wap/financialplan/selectplan/
+
+http://m.ceshi.xin.com/halfprice/detail/13056221/?appver=10.12.0.debug&authtoken=0&_product_client=client_api&carid=13056221&userid=1590217604&is_new=0&nb=680c47c684e50b46e28461f930224d8b&os=android&u=src%253Dcar_app%2526uid%253D1590217604&x=0c5c6b4b17590a939d7ef551f746c3b7&cityid=201&from=app&token=825790&m=15652368851&is_yysm=0
+
+****************************************************************
+
 https://apis.xin.com/site/lists?_apikey=b6206f&app_source=3&appver=10.12.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=460010256208608&ip=10.70.139.216&latitude=39.991837&longitude=116.473861&manual_latitude=39.991837&manual_longitude=116.473861&nb=f5fd7f2fb01d56d73ce83f0c87767a18&net=wifi&os=android&ref=&search_cityid=201&site_id=1237&site_type=2&sysver=27&task_id=&tmpid=&ts=1565852421836&uid=&url=SiteDetailsActivity&uuid=92386d74-f2e2-4f02-95e7-b349392899a2&xdid=e32a1e31bed512d9c2849af81483b9e6
 
 https://apis.xin.com/site/detail?_apikey=1c4e5a&app_source=3&appver=10.12.0.debug&cityid=201&gps_type=1&imei=868497048323975&imsi=460010256208608&ip=10.70.139.216&latitude=39.991837&longitude=116.473861&manual_latitude=39.991837&manual_longitude=116.473861&nb=f5fd7f2fb01d56d73ce83f0c87767a18&net=wifi&os=android&ref=&search_cityid=201&site_id=41&site_type=2&sysver=27&task_id=&tmpid=&ts=1565852443496&uid=&url=MarketFragment&uuid=92386d74-f2e2-4f02-95e7-b349392899a2&xdid=e32a1e31bed512d9c2849af81483b9e6
