@@ -1,5 +1,56 @@
 ****************************************************************
 ****************************************************************
+****************************************************************
+
+usedcarnative://webView/webView?param=%7B%22webview_goto_url%22%3A%22usedcarpush%3A%2F%2Fopencarmarket%3Fparams%3D%257B%2522serieid%2522%253A%25222549%2522%252C%2522brandid%2522%253A%252287%2522%252C%2522seriename%2522%253A%2522%255Cu667a%255Cu5c1aS30%2522%252C%2522brandname%2522%253A%2522%255Cu91d1%255Cu676f%2522%257D%26from%3Dapp%26nb%3Df4613dd61df21037dd80dcbd34687cd9%26appver%3D10.13.0.debug%26cityid%3D201%22%7D
+
+usedcarnative://webView/webView?param={"webview_goto_url":"usedcarpush://opencarmarket?params=%7B%22serieid%22%3A%222549%22%2C%22brandid%22%3A%2287%22%2C%22seriename%22%3A%22%5Cu667a%5Cu5c1aS30%22%2C%22brandname%22%3A%22%5Cu91d1%5Cu676f%22%7D&from=app&nb=f4613dd61df21037dd80dcbd34687cd9&appver=10.13.0.debug&cityid=201"}
+
+usedcarnative://webView/webView?param={"webview_goto_url":"usedcarpush://opencarmarket?params={"serieid":"2549","brandid":"87","seriename":"\u667a\u5c1aS30","brandname":"\u91d1\u676f"}&from=app&nb=f4613dd61df21037dd80dcbd34687cd9&appver=10.13.0.debug&cityid=201"}
+
+usedcarpush://opencarmarket?params={"serieid":"2549","brandid":"87","seriename":"\u667a\u5c1aS30","brandname":"\u91d1\u676f"}&from=app&nb=f4613dd61df21037dd80dcbd34687cd9&appver=10.13.0.debug&cityid=201
+
+旧接口
+http://apis.fat.xin.com/serie/view
+
+阿尔法罗密欧
+http://apis.fat.xin.com/serie/view?_apikey=4fde69&app_source=3&appver=10.13.0.debug&brandid=175&cityid=201&flag=fullprice&gps_type=1&imei=868497048323975&imsi=460010256208608&ip=10.70.139.216&latitude=39.9917&longitude=116.47379&nb=7b15770cc3e7c4d88330f46467d3292d&net=wifi&os=android&ref=SellCarFragment&showcounter=1&site_id=43&site_type=2&sysver=27&task_id=&tmpid=&ts=1568199027202&u=src%253Dcar_app%2526uid%253D1928174610&uid=1928174610&url=BrandFilterActivity&uuid=c213733c-6aeb-4dad-b597-0c179ef1ea70&version=&x=8ffba46bcab4bc5089ba825002287b8f&xdid=e32a1e31bed512d9c2849af81483b9e6
+
+安凯客车
+http://apis.fat.xin.com/serie/view?_apikey=988ced&app_source=3&appver=10.13.0.debug&brandid=251&cityid=201&flag=fullprice&gps_type=1&imei=868497048323975&imsi=460010256208608&ip=10.70.139.216&latitude=39.9917&longitude=116.47379&nb=7b15770cc3e7c4d88330f46467d3292d&net=wifi&os=android&ref=SellCarFragment&showcounter=1&site_id=43&site_type=2&sysver=27&task_id=&tmpid=&ts=1568199219468&u=src%253Dcar_app%2526uid%253D1928174610&uid=1928174610&url=BrandFilterActivity&uuid=c213733c-6aeb-4dad-b597-0c179ef1ea70&x=8ffba46bcab4bc5089ba825002287b8f&xdid=e32a1e31bed512d9c2849af81483b9e6
+
+新接口
+http://apis.fat.xin.com/car_search/series_selector_list
+
+阿尔法罗密欧
+http://apis.fat.xin.com/car_search/series_selector_list?_apikey=ad3137&app_source=3&appver=10.13.0.debug&brandid=175&cityid=201&gps_type=1&imei=868497048323975&imsi=460010256208608&ip=10.70.139.216&latitude=39.9917&longitude=116.47379&nb=7b15770cc3e7c4d88330f46467d3292d&net=wifi&os=android&ref=SellCarFragment&site_id=43&site_type=2&source_type=1&sysver=27&task_id=&tmpid=&ts=1568199307136&u=src%253Dcar_app%2526uid%253D1928174610&uid=1928174610&url=SelectSeriesActivity&uuid=c213733c-6aeb-4dad-b597-0c179ef1ea70&x=8ffba46bcab4bc5089ba825002287b8f&xdid=e32a1e31bed512d9c2849af81483b9e6
+
+安凯客车
+http://apis.fat.xin.com/car_search/series_selector_list?_apikey=75bacb&app_source=3&appver=10.13.0.debug&brandid=251&cityid=201&gps_type=1&imei=868497048323975&imsi=460010256208608&ip=10.70.139.216&latitude=39.9917&longitude=116.47379&nb=7b15770cc3e7c4d88330f46467d3292d&net=wifi&os=android&ref=SellCarFragment&site_id=43&site_type=2&source_type=1&sysver=27&task_id=&tmpid=&ts=1568199390846&u=src%253Dcar_app%2526uid%253D1928174610&uid=1928174610&url=SelectSeriesActivity&uuid=c213733c-6aeb-4dad-b597-0c179ef1ea70&x=8ffba46bcab4bc5089ba825002287b8f&xdid=e32a1e31bed512d9c2849af81483b9e6
+
+
+
+
+
+
+
+
+****************************************************************
+
+35dp*35dp
+70px*70px
+105px*105px
+
+left	24px-8dp-7.5dp
+right	24px-8do-7.5dp
+top		15px-5dp-5.5dp
+buttom	27px-9dp-9.5dp
+
+5.5dp+9.5dp=15dp
+
+android:layout_marginTop="9.5dp"
+
+****************************************************************
 
 打开车市列表 usedcarpush://opencarmarket?params={brandid:1}  其中 params字段做urlencode
 打开详情页  usedcarpush://opencardetail?carid=123456
@@ -20,7 +71,7 @@ let imageInfoJson = await NativeModules.PublicityImage.getPublicityImageInfo();
 }
 
 ****************************************************************
-
+1005 18976
 1、车系选择页，文案太长显示问题；
 2、车系选择页，排序默认选择，因为接口返回可能有个延迟；
 3、车系选择页，自定义车价选中后，想取消选中怎么操作；
@@ -28,12 +79,16 @@ let imageInfoJson = await NativeModules.PublicityImage.getPublicityImageInfo();
 
 ****************************************************************
 
+点击品牌直接关闭当前页面，把品牌信息带回
+车系选择器	Extra.SelectSeriesType.ORIGIN
+
+点击品牌新逻辑，跳转独立车系页面
 车市列表		GroupExtra.MarketOrigin.MARKET
 高级筛选		GroupExtra.AdvancedFilterLinkOrigin.ADVANCEDLINKORIGIN
 
+保持原有逻辑不变，即侧滑样式的车系列表
 卖车页面		Extra.Origin.C2B_SELLER_CAR
 估价页面		Extra.Origin.C2B_SELLER_CAR
-订阅车源		RN带来
 购车心愿单	Extra.Origin.WISH_LIST_BRAND
 
 ****************************************************************
