@@ -2,6 +2,44 @@
 ****************************************************************
 ****************************************************************
 
+Didn't find class "com.facebook.react.ReactInstanceManager" on path: DexPathList[[zip file "/data/app/com.uxin.
+
+
+new File("/data/user/0/com.uxin.usedcar/app_js_bundle/0.56.0/10.15.0.debug/original/UsedCar/index.android.bundle").exists()
+
+
+/data/user/0/com.uxin.usedcar/app_js_bundle/0.56.0/10.15.0.debug/original/UsedCar/index.android.bundle
+
+
+2019-10-11 17:08:58.428 8448-9189/com.uxin.usedcar E/ReactNativeJS: Invariant Violation: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.    
+
+
+Invariant Violation: ViewPagerAndroid has been removed from React Native. It can now be installed and imported from 'react-native-viewpager'. See https://github.com/react-native-community/react-native-viewpager
+
+ 
+TypeError: undefined is not an object(evaluating 'React.PropTypes.func')
+
+
+Invariant Violation: View config not found for name RNCViewPager.
+
+
+Invariant Violation: requireNativeComponent: "RNCViewPager" was not found in the UIManager.
+
+
+It looks like you did not run react-native link @react-native-community/viewpager ?
+
+
+npm install --save @react-native-community/viewpager
+
+
+npm install @react-native-community/viewpager
+react-native link @react-native-community/viewpager
+yarn add @react-native-community/viewpager
+
+api 'com.xin.rnbridge:react-native:0.56.0'
+
+****************************************************************
+
 75*4=300
 
 375-15*2=345
