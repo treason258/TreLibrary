@@ -2,6 +2,31 @@
 ****************************************************************
 ****************************************************************
 
+{
+    "currentCityId": 201,
+    "currentCityName": "北京",
+    "gpsCityId": 301,
+    "gpsCityName": "日本",
+    "shouldShowCityDiffToast": "1"
+}
+
+let getCityChooseInfo = await NativeModules.UCRouter.getCityChooseInfo();
+
+usedcarnative://changeToGpsCity/changeToGpsCity?param={"gpsCityName":"日本","gpsCityId":301}
+
+
+NativeModules.UCBase.showToast("matengfei | _showHomeLocationInfoView");
+NativeModules.UCBase.showToast("matengfei | _showHomeLocationInfoView | cityChooseInfo = " + JSON.stringify(cityChooseInfo));
+NativeModules.UCBase.showToast("matengfei | _changeCurrentCity | cityChooseInfo = " + JSON.stringify(cityChooseInfo));
+
+****************************************************************
+
+pid=com.uxin.commonbusiness.series.SelectSeriesActivity
+
+u2_195
+
+****************************************************************
+
 Didn't find class "com.facebook.react.ReactInstanceManager" on path: DexPathList[[zip file "/data/app/com.uxin.
 
 
@@ -37,6 +62,7 @@ react-native link @react-native-community/viewpager
 yarn add @react-native-community/viewpager
 
 api 'com.xin.rnbridge:react-native:0.56.0'
+api 'com.xin.rnbridge:react-native:0.61.2'
 
 ****************************************************************
 
@@ -47,6 +73,17 @@ api 'com.xin.rnbridge:react-native:0.56.0'
 45/5=9
 
 15+75*4+9*5+15=375
+
+15*2+75*4+9*5=375
+15*2+79*4+7+7+5+5+5=375
+15*2+79*4+5.8*5=375
+
+79=15+6+58
+
+width:${58 * screenWidth / 375};
+flexDirection:row;
+justifyContent:center;
+alignItems:center;
 
 ****************************************************************
 
