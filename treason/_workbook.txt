@@ -2,6 +2,46 @@
 ****************************************************************
 ****************************************************************
 
+横屏变竖屏
+2019-11-08 10:44:17.043 11357-11357/com.uxin.usedcar E/LogUtils-matengfei: MainActivity | onConfigurationChanged | newConfig = {"appBounds":{"bottom":720,"left":0,"right":1356,"top":0},"assetsSeq":0,"colorMode":5,"compatScreenHeightDp":295,"compatScreenWidthDp":602,"compatSmallestScreenWidthDp":320,"densityDpi":320,"extraConfig":{"themeId":0},"fontScale":1.0,"hardKeyboardHidden":2,"keyboard":1,"keyboardHidden":1,"locale":"zh_CN","mLocaleList":{"mList":["zh_CN"],"mStringRepresentation":"zh-CN"},"mcc":460,"mnc":1,"navigation":1,"navigationHidden":2,"orientation":2,"screenHeightDp":332,"screenLayout":268435810,"screenWidthDp":678,"seq":94,"smallestScreenWidthDp":360,"touchscreen":3,"uiMode":17,"userSetLocale":false}
+
+
+竖屏变横屏
+2019-11-08 10:44:57.179 11357-11357/com.uxin.usedcar E/LogUtils-matengfei: MainActivity | onConfigurationChanged | newConfig = {"appBounds":{"bottom":1356,"left":0,"right":720,"top":0},"assetsSeq":0,"colorMode":5,"compatScreenHeightDp":577,"compatScreenWidthDp":320,"compatSmallestScreenWidthDp":320,"densityDpi":320,"extraConfig":{"themeId":0},"fontScale":1.0,"hardKeyboardHidden":2,"keyboard":1,"keyboardHidden":1,"locale":"zh_CN","mLocaleList":{"mList":["zh_CN"],"mStringRepresentation":"zh-CN"},"mcc":460,"mnc":1,"navigation":1,"navigationHidden":2,"orientation":1,"screenHeightDp":650,"screenLayout":268435810,"screenWidthDp":360,"seq":95,"smallestScreenWidthDp":360,"touchscreen":3,"uiMode":17,"userSetLocale":false}
+
+width: ${(345 * screenWidth) / 375};
+width: ${prop => prop.screenWidthReal * 345 / 375};
+width: ${(345 * screenWidthRealReal()) / 375};
+width: ${345 / 375 * 100 + "%"};
+
+margin-left: ${prop => prop.screenWidthReal * 7 / 375};
+margin-right: ${prop => prop.screenWidthReal * 7 / 375};
+
+****************************************************************
+
+basernmodule
+	libc++_shared.so
+	libhermes.so
+	libjsc.so
+
+lib/armeabi-v7a/libhermes.so
+lib/armeabi-v7a/libhermes-inspector.so
+lib/armeabi-v7a/libreactnativejni.so
+lib/armeabi-v7a/libfolly_futures.so
+lib/armeabi-v7a/libhermes-executor-debug.so
+lib/armeabi-v7a/libhermes-executor-release.so
+lib/armeabi-v7a/libjscexecutor.so
+lib/armeabi-v7a/libfolly_json.so
+lib/armeabi-v7a/libfb.so
+lib/armeabi-v7a/libglog.so
+lib/armeabi-v7a/libjsinspector.so
+lib/armeabi-v7a/libjsijniprofiler.so
+lib/armeabi-v7a/libyoga.so
+lib/armeabi-v7a/libglog_init.so
+lib/armeabi-v7a/libc++_shared.so	
+
+****************************************************************
+
 {
     "currentCityId": 201,
     "currentCityName": "北京",
