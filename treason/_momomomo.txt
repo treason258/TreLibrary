@@ -475,6 +475,13 @@ ZS
 				1101 1742 -10000=9975 jie,zhuan,jianhang
 				1102 0105 -4797=5178 TATAmumen
 				5178o
+				1103 1740 -550=4628 cizhuanjiao
+				1103 1742 -200=4428 shangliao
+				1104 1325 +5000=9428 zhuan
+				1106 0915 -120=9308 dingjin,chazuo
+				1106 0917 -287=9021 dilou
+				9021o
+
 
 				GS
 				0123 1949 -100=17 zhuan,zhifubao
