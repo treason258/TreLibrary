@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_flutter/study1.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +23,23 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
+
+//    return new MaterialApp(
+//      title: 'Welcome to Flutter',
+//      home: new Scaffold(
+//        appBar: new AppBar(
+//          title: new Text('Welcome to Flutter'),
+//        ),
+//        body: new Center(
+//          child: new Text('Hello World'),
+//        ),
+//      ),
+//    );
+
+//    return new MaterialApp(
+//      title: 'Startup Name Generator',
+//      home: new RandomWords(),
+//    );
   }
 }
 
