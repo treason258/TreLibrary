@@ -17,14 +17,18 @@ class ImageSpider(object):
         pass
 
     def saveImage(self, imageUrl, imagePath):
-        headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
-        request = urllib2.Request(imageUrl, headers=headers)
-        imageData = urllib2.urlopen(request).read()
-        # fileName = imageName[-15:]
-        with open(imagePath, "wb") as f:
-            f.write(imageData)
-        print '正在保存图片 | imagePath = ' + imagePath + " | imageUrl = " + imageUrl
-        time.sleep(0.1)
+        print '下载图片 | imagePath = ' + imagePath + " | imageUrl = " + imageUrl
+        try:
+            headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
+            request = urllib2.Request(imageUrl, headers=headers)
+            imageData = urllib2.urlopen(request).read()
+            with open(imagePath, "wb") as f:
+                f.write(imageData)
+            time.sleep(0.1)
+        except BaseException:
+            print "下载异常异常异常异常异常异常"
+        else:
+            print "下载成功"
 
 
 if __name__ == '__main__':
@@ -44,7 +48,7 @@ if __name__ == '__main__':
         os.makedirs(imageDir)
 
     print "--------------------------------解析网页代码"
-    url = "https://yy.8630vip.com/home/book/capter/id/28494"
+    url = "https://yy.8630vip.com/home/book/capter/id/28496"
     print "网页地址 | url = " + url
     headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
     request = urllib2.Request(url, headers=headers)
@@ -67,7 +71,7 @@ if __name__ == '__main__':
     print "imageUrlPrefix = " + imageUrlPrefix
 
     imageSpider = ImageSpider()
-    for i in range(1, 3):
+    for i in range(0, 40):
         imageUrl = imageUrlPrefix + ("%d.jpg" % i)
         imagePath = imageDir + ("%d.jpg" % i)
         imageSpider.saveImage(imageUrl, imagePath)
