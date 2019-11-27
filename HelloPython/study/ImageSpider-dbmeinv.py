@@ -41,16 +41,16 @@ class ImageSpider(object):
         print "打印图片列表"
         print imageUrls
         for imageUrl in imageUrls:
-            imagePath = imageDir + ("/%d.jpg" % ImageSpider.num)
+            imagePath = imageDir + ("%d.jpg" % ImageSpider.num)
             self.saveImage(imageUrl, imagePath)
             ImageSpider.num += 1
 
 
 if __name__ == '__main__':
 
-    print "--------------------------------配置信息"
+    print "--------------------------------项目配置信息"
     homeDir = os.environ['HOME']
-    imageDir = homeDir + '/Downloads/python/ImageSpider'
+    imageDir = homeDir + '/Downloads/python/ImageSpider-dbmeinv/'
     print "用户目录 | home_dir = " + str(homeDir)
     print "下载目录 | imageDir = " + str(imageDir)
 
