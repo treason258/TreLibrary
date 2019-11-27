@@ -11,6 +11,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 
 class ImageSpider(object):
+
     num = 0
 
     def __init__(self):
