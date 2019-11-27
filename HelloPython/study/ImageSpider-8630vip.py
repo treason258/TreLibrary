@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
-import urllib
+import sys
 import urllib2
 import re
 import os
 import time
-from bs4 import BeautifulSoup
 
 import ssl
 
@@ -31,10 +30,37 @@ class ImageSpider(object):
 
 if __name__ == '__main__':
 
-    print "--------------------------------项目配置信息"
     headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36"}
+
+    print "--------------------------------解析网页代码"
+    url = "https://yy.8630vip.com/home/book/capter/id/28514"
+    print "网页地址 | url = " + url
+    request = urllib2.Request(url, headers=headers)
+    response = urllib2.urlopen(request)
+    text = response.read()
+    print "----打印网页内容"
+    print text
+
+    patternTitle = re.compile(r"(?<=<div class=\"title\">).+?(?=<span class=\"subtitle\">)")
+    titleArray = patternTitle.findall(text)
+    title = titleArray[0].decode('utf-8')
+    print "----打印标题"
+    print title
+
+    patternSubtitle = re.compile(r"(?<=<span class=\"subtitle\">).+?(?=</span>)")
+    subtitleArray = patternSubtitle.findall(text)
+    subtitle = subtitleArray[0].decode('utf-8')
+    print "----打印副标题"
+    print subtitle
+
+    titleAll = title + "-" + subtitle + "/"
+    print titleAll
+
+    print "--------------------------------项目配置信息"
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
     homeDir = os.environ['HOME']
-    imageDir = homeDir + '/Downloads/python/ImageSpider-8630vip/'
+    imageDir = homeDir + '/Downloads/python/ImageSpider-8630vip/' + titleAll
     print "用户目录 | home_dir = " + str(homeDir)
     print "下载目录 | imageDir = " + str(imageDir)
 
@@ -46,30 +72,18 @@ if __name__ == '__main__':
         print "下载目录不存在，开始创建"
         os.makedirs(imageDir)
 
-    print "--------------------------------解析网页代码"
-    url = "https://yy.8630vip.com/home/book/capter/id/28504"
-    print "网页地址 | url = " + url
-    request = urllib2.Request(url, headers=headers)
-    response = urllib2.urlopen(request)
-    text = response.read()
-    print "打印网页内容"
-    print text
+    # pattern = re.compile(r"(?<=888888).+?(?=888888)")
+    # pattern = re.compile(r"(?<=img src=\").+?\.jpg(?=\" alt=\"图)")
+    patternImages = re.compile(r"(?<=img src=\").+?(?=1.jpg\" alt=\"图)")
+    imageUrlArray = patternImages.findall(text)
+    print "----打印图片列表"
+    print imageUrlArray
 
-    # soup = BeautifulSoup(text, 'lxml')
-    # print "title = " + soup.title.text
-
-    # patternStr = r"(?<=img src=\").+?\.jpg(?=\" alt=\"图)"
-    patternStr = r"(?<=img src=\").+?(?=1.jpg\" alt=\"图)"
-    pattern = re.compile(patternStr)
-    imageUrls = pattern.findall(text)
-    print "打印图片列表"
-    print imageUrls
-
-    imageUrlPrefix = imageUrls[0]
+    imageUrlPrefix = imageUrlArray[0]
     print "imageUrlPrefix = " + imageUrlPrefix
 
     imageSpider = ImageSpider()
-    for i in range(1, 2):
+    for i in range(1, 40):
         imageUrl = imageUrlPrefix + ("%d.jpg" % i)
         imagePath = imageDir + ("%d.jpg" % i)
         imageSpider.saveImage(imageUrl, imagePath)
