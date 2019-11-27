@@ -54,14 +54,6 @@ if __name__ == '__main__':
     print "用户目录 | home_dir = " + str(homeDir)
     print "下载目录 | imageDir = " + str(imageDir)
 
-    print "--------------------------------输入页码"
-    pageFrom = raw_input("输入开始页：")
-    pageTo = raw_input("输入结束页：")
-    # pageFrom = 1
-    # pageTo = 1
-    print "开始页码 | pageFrom = " + str(pageFrom)
-    print "结束页码 | pageTo = " + str(pageTo)
-
     print "--------------------------------创建下载目录"
     isdir = os.path.isdir(imageDir)
     if isdir:
@@ -69,6 +61,14 @@ if __name__ == '__main__':
     else:
         print "下载目录不存在，开始创建"
         os.makedirs(imageDir)
+
+    print "--------------------------------输入页码"
+    pageFrom = raw_input("输入开始页：")
+    pageTo = raw_input("输入结束页：")
+    # pageFrom = 1
+    # pageTo = 1
+    print "开始页码 | pageFrom = " + str(pageFrom)
+    print "结束页码 | pageTo = " + str(pageTo)
 
     print "--------------------------------开始爬虫"
     imageSpider = ImageSpider()
