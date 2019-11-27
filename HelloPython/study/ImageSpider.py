@@ -11,55 +11,73 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 
 class ImageSpider(object):
-    num = 0;
+    num = 0
 
     def __init__(self):
         pass
 
-    def saveImage(self, imageUrl, imageName):
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
+    def saveImage(self, imageUrl, imagePath):
+        headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
         request = urllib2.Request(imageUrl, headers=headers)
         imageData = urllib2.urlopen(request).read()
         # fileName = imageName[-15:]
-        with open(imageName, "wb") as f:
+        with open(imagePath, "wb") as f:
             f.write(imageData)
-
-        print '正在保存图片：', imageName
+        print '正在保存图片 | imagePath = ' + imagePath + " | imageUrl = " + imageUrl
         time.sleep(0.1)
 
     def getImageFormUrl(self, url):
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
+        print "--------------------------------解析网页代码"
+        print "网页地址 | url = " + url
+        headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/1    7.0.963.56 Safari/535.11"}
         request = urllib2.Request(url, headers=headers)
         response = urllib2.urlopen(request)
         text = response.read()
-        p1 = r"(?<=\(this\);\" src=\").+?\.jpg(?=\" />)"
-        pattern = re.compile(p1)
-        imgs = pattern.findall(text)
-        print imgs
-        for img in imgs:
-            imageName = "Downloads/python/ImageSpider/%d.jpg" % (ImageSpider.num)
-            imageUrl = img
-            print img
-            self.saveImage(imageUrl, imageName)
+        print "打印网页内容"
+        print text
+        patternStr = r"(?<=onerror=\"img_error\(this\);\" src=\").+?\.jpg(?=\" referrerpolicy=\"no-referrer\")"
+        pattern = re.compile(patternStr)
+        imageUrls = pattern.findall(text)
+        print "打印图片列表"
+        print imageUrls
+        for imageUrl in imageUrls:
+            imagePath = imageDir + ("/%d.jpg" % ImageSpider.num)
+            self.saveImage(imageUrl, imagePath)
             ImageSpider.num += 1
 
-    def getImagePageRange(self, fromPage, toPage):
 
-        # os.system('mkdir pic')   #创建保存图片的目录
-        os.system('mkdir Downloads/python/ImageSpider')  # 创建保存图片的目录
+if __name__ == '__main__':
 
-        i = int(fromPage)
-        while i <= int(toPage):
-            url = "http://www.dbmeinv.com/?pager_offset=" + str(i)
-            print url
-            print "\n第%d页" % i
-            self.getImageFormUrl(url)
-            i += 1
+    print "--------------------------------配置信息"
+    homeDir = os.environ['HOME']
+    imageDir = homeDir + '/Downloads/python/ImageSpider'
+    print "用户目录 | home_dir = " + str(homeDir)
+    print "下载目录 | imageDir = " + str(imageDir)
 
+    print "--------------------------------输入页码"
+    pageFrom = raw_input("输入开始页：")
+    pageTo = raw_input("输入结束页：")
+    # pageFrom = 1
+    # pageTo = 1
+    print "开始页码 | pageFrom = " + str(pageFrom)
+    print "结束页码 | pageTo = " + str(pageTo)
 
-imageSpider = ImageSpider()
-beginPage = raw_input("输入开始页：")
-endPage = raw_input("输入结束页：")
-imageSpider.getImagePageRange(beginPage, endPage)
+    print "--------------------------------创建下载目录"
+    isdir = os.path.isdir(imageDir)
+    if isdir:
+        print "下载目录已存在，不需要创建"
+    else:
+        print "下载目录不存在，开始创建"
+        os.makedirs(imageDir)
+
+    print "--------------------------------开始爬虫"
+    imageSpider = ImageSpider()
+    pageFromInt = int(pageFrom)
+    pageToInt = int(pageTo)
+    while pageFromInt <= pageToInt:
+        print "--------------------------------开始解析"
+        url = "http://www.dbmeinv.com/?pager_offset=" + str(pageFromInt)
+        print ("正在处理第%d页" % pageFromInt) + " | url = " + url
+        imageSpider.getImageFormUrl(url)
+        pageFromInt += 1
+        print "--------------------------------解析结束"
