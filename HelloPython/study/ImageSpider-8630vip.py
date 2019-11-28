@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import re
 import SpiderUtils
+import json
 
 
 def get8630VipImage(url):
@@ -38,8 +39,22 @@ def get8630VipImage(url):
 
 
 if __name__ == '__main__':
+    # https://yy.8630vip.com/home/book/chapter_list/id/8131
+    # https://yy.8630vip.com/home/api/chapter_list/tp/8131-1-1-50
     urlPrefix = "https://yy.8630vip.com/home/book/capter/id/"
     beginIndex = 28500
     for i in range(1, 2):
         url = urlPrefix + str(beginIndex + i)
         get8630VipImage(url)
+
+    # url = "https://yy.8630vip.com/home/api/chapter_list/tp/8131-1-1-100"
+    # content = SpiderUtils.getHtmlContent(url)
+    # bean = json.loads(content)
+    # totalRow = bean['result']['totalRow']
+    # print totalRow
+    # startRowInt = 0
+    # list = bean['result']['list']
+    # while startRowInt < int(totalRow):
+    #     item = list[startRowInt]
+    #     print item['id'] + "-" + item['title']
+    #     startRowInt += 1
