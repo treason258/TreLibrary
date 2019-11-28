@@ -4,6 +4,10 @@ import sys
 import os
 import re
 
+# .decode('utf-8')
+# reload(sys)
+# sys.setdefaultencoding("utf-8")
+
 # pattern
 pattern_default = re.compile(r"(?<=888888).+?(?=888888)")
 
@@ -21,23 +25,19 @@ def findTextArray(content, pattern):
 # 利用正则查找字符串
 def findText(content, pattern):
     textArray = pattern.findall(content)
-    text = textArray[0].decode('utf-8')
-    reload(sys)
-    sys.setdefaultencoding("utf-8")
+    text = textArray[0]
     return text
 
 
 # 利用正则查找字符串
-def findTextByStr(content, patternStr, flags=0):
+def findTextByStr(content, patternStr):
     pattern = re.compile(patternStr)
     textArray = pattern.findall(content)
-    text = textArray[0].decode('utf-8')
-    reload(sys)
-    sys.setdefaultencoding("utf-8")
+    text = textArray[0]
     return text
 
 
-# 获取用户根目录 eg /Users/xin
+# 获取用户根目录 /Users/xin
 def getHomeDir():
     homeDir = os.environ['HOME']
     return homeDir

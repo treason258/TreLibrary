@@ -40,6 +40,6 @@ def get8630VipImage(url):
 if __name__ == '__main__':
     urlPrefix = "https://yy.8630vip.com/home/book/capter/id/"
     beginIndex = 28500
-    for i in range(1, 5):
+    for i in range(1, 2):
         url = urlPrefix + str(beginIndex + i)
         get8630VipImage(url)
