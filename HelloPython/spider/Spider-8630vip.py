@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 import re
 import SpiderUtils
-import json
 
 
 def get8630VipImage(url):
