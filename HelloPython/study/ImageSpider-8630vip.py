@@ -39,8 +39,13 @@ def get8630VipImage(url):
 
 
 if __name__ == '__main__':
-    # https://yy.8630vip.com/home/book/chapter_list/id/8131
-    # https://yy.8630vip.com/home/api/chapter_list/tp/8131-1-1-50
+
+    # 页面-漫画列表：https://yy.8630vip.com/home/book/chapter_list/id/8131
+    # 页面-漫画内容：https://yy.8630vip.com/home/book/capter/id/28500
+
+    # 接口-首页数据：https://yy.8630vip.com/home/api/yymhindex.html
+    # 接口-章节列表：https://yy.8630vip.com/home/api/chapter_list/tp/8131-1-1-100
+
     urlPrefix = "https://yy.8630vip.com/home/book/capter/id/"
     beginIndex = 28500
     for i in range(1, 2):
