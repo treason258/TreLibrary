@@ -2,21 +2,21 @@ package com.mjiayou.hellokotlin.view
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mjiayou.hellokotlin.R
+import com.mjiayou.hellokotlin.databinding.FragmentMusicItemBinding
 import com.mjiayou.hellokotlin.model.MusicBean
 import java.util.*
 
-class MusicAdapter(mContext: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
+class MusicAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
 
-    private val mLayoutInflater: LayoutInflater = LayoutInflater.from(mContext)
+    private val mLayoutInflater: LayoutInflater = LayoutInflater.from(context)
     private var mList: MutableList<MusicBean>? = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return MusicViewHolder(mLayoutInflater.inflate(R.layout.fragment_music_item, parent, false))
+        return MusicViewHolder(DataBindingUtil.inflate(mLayoutInflater, R.layout.fragment_music_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -45,14 +45,13 @@ class MusicAdapter(mContext: Context?) : RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    inner class MusicViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MusicViewHolder(binding: FragmentMusicItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private val tv_title: TextView = itemView.findViewById(R.id.tv_title)
-        private val tv_author: TextView = itemView.findViewById(R.id.tv_author)
+        var mBinding: FragmentMusicItemBinding = binding
 
         fun setData(musicBean: MusicBean) {
-            tv_title.text = musicBean.title
-            tv_author.text = musicBean.author
+            mBinding.tvTitle.text = musicBean.title
+            mBinding.tvAuthor.text = musicBean.author
         }
     }
 }
