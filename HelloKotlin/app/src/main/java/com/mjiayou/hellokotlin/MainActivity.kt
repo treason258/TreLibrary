@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.mjiayou.hellokotlin.databinding.ActivityMainBinding
-import com.mjiayou.hellokotlin.view.MusicFragment
+import com.mjiayou.hellokotlin.view.MovieFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,8 +12,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main) // // 通过 DataBindingUtil 获取 ActivityMainBinding
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main) // 通过 DataBindingUtil 获取 ActivityMainBinding
 
-        supportFragmentManager.beginTransaction().add(R.id.fl_container, MusicFragment.getInstance()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fl_container, MovieFragment.getInstance()).commit()
     }
 }
