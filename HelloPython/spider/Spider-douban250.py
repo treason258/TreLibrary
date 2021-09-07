@@ -1,4 +1,4 @@
-# -*- coding = utf-8 -*-
+# coding=utf-8
 
 # Python爬虫——爬取豆瓣top250完整代码
 # https://www.cnblogs.com/zq-zq/p/13974807.html
@@ -11,6 +11,11 @@ import re
 import xlwt
 # 获取URL得到html文件
 import urllib.request as req
+
+import os
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 # 设置单独全局变量，如需更加规范，也可以将电影信息封装成一个class类 比如 class Movie: ...
 # 电影名称
@@ -54,7 +59,7 @@ def get_data():
     for i in range(0, 250, 25):
 
         # 使用二进制读取，这点很重要，报错无数次
-        html = open('Data/html/html' + str(i//25) + '.html', 'rb')
+        html = open(os.environ['HOME'] + '/Downloads/HelloPython/douban250/html/html' + str(i // 25) + '.html', 'rb')
 
         # 接下来是逐一解析数据
         bs = bf(html, 'html.parser')
@@ -100,7 +105,7 @@ def save_douban_html(base_url):
         html = ask_url(url)
 
         # 将文件批量保存在 Data/html/ 目录下 i//25 是整除，命名格式如   html0.html  html1.html ...
-        write_html('Data/html/html' + str(i//25) + '.html', html)
+        write_html(os.environ['HOME'] + '/Downloads/HelloPython/douban250/html/html' + str(i // 25) + '.html', html)
 
 
 # 获取html信息，并返回html信息
@@ -189,7 +194,7 @@ def save_data_excel(datas, save_path):
     sheet = excel.add_sheet('top250')
 
     # 设置前六列的列宽
-    width_c = [256*20, 256*6, 256*12, 256*42, 256*72, 256*68]
+    width_c = [256 * 20, 256 * 6, 256 * 12, 256 * 42, 256 * 72, 256 * 68]
     for i in range(0, 6):
         sheet.col(i).width = width_c[i]
 
@@ -233,7 +238,7 @@ def main():
 
     # 1.爬取网页
     # 从豆瓣上获取html文件并保存到本地目录下，该方法成功执行一次即可，保存html，接下来本地操作
-    # save_douban_html(base_url)
+    save_douban_html(base_url)
 
     # 2.解析数据
     # 逐个解析保存在本地的html文件
@@ -241,13 +246,14 @@ def main():
 
     # 3.保存数据
     # 保存爬取数据到本地txt文件
-    # save_txt_path = 'Data/Text/top250.txt'
-    # save_data_txt(datas, save_txt_path)
+    save_txt_path = os.environ['HOME'] + '/Downloads/HelloPython/douban250/text/top250.txt'
+    save_data_txt(datas, save_txt_path)
+
     # 将读取的txt文本打印到控制台
-    # read_file('Data/Text/top250.txt')
+    read_file(os.environ['HOME'] + '/Downloads/HelloPython/douban250/text/top250.txt')
 
     # 保存爬取数据到本地excel文件
-    save_excel_path = 'Data/excel/top250.xls'
+    save_excel_path = os.environ['HOME'] + '/Downloads/HelloPython/douban250/excel/top250.xls'
     save_data_excel(datas, save_excel_path)
 
     # 打印自定义分界线
