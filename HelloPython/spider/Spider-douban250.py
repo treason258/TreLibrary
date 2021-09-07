@@ -9,6 +9,8 @@ import os
 import re
 # 访问SSL页面
 import ssl
+# 模拟阻塞
+import time
 # 获取URL得到html文件
 import urllib.request as req
 
@@ -36,7 +38,7 @@ find_inq = re.compile(r'<span class="inq">(.*?)</span>')
 # 各种目录和文件名
 base_url = 'https://movie.douban.com/top250?start='
 base_path = os.environ['HOME'] + '/Downloads/HelloPython/douban250/'
-base_date = '20210908-'
+base_date = '20210907-'
 
 save_html_path = base_path + 'html/'
 save_text_path = base_path + 'text/'
@@ -90,6 +92,9 @@ def save_douban_html():
 
         # 将文件批量保存在 Data/html/ 目录下 i//25 是整除，命名格式如   html0.html  html1.html ...
         write_html(save_html_file + 'page' + str((i // 25) + 1) + '.html', html)
+
+        # 模拟阻塞
+        time.sleep(3)
 
 
 # 获取html信息，并返回html信息
