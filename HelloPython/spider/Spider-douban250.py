@@ -21,20 +21,6 @@ from bs4 import BeautifulSoup as bf
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-# 设置单独全局变量，如需更加规范，也可以将电影信息封装成一个class类 比如 class Movie: ...
-# 电影名称
-find_name = re.compile(r'<span class="title">(.*?)</span>')
-# 电影播放地址链接
-find_link = re.compile(r'<a href="(.*?)">')
-# 电影封面的地址链接，re.S让换行符包含在字符中
-find_imgSrc = re.compile(r'<img.*src="(.*?)"', re.S)
-# 电影评分
-find_score = re.compile(r'<span class="rating_num".*>(.*?)</span>')
-# 评分人数
-find_num = re.compile(r'<span>(\d*人)评价</span>')
-# 名句
-find_inq = re.compile(r'<span class="inq">(.*?)</span>')
-
 # 各种目录和文件名
 base_url = 'https://movie.douban.com/top250?start='
 base_path = os.environ['HOME'] + '/Downloads/HelloPython/douban250/'
@@ -57,7 +43,7 @@ def main():
     make_dirs(save_excel_path)
 
     print('--------1-爬取网页，从豆瓣上获取html文件并保存到本地目录下，该方法成功执行一次即可，保存html，接下来本地操作--------')
-    save_douban_html()
+    # save_douban_html()
 
     print('--------2-解析数据，逐个解析保存在本地的html文件--------')
     datas = get_data()
@@ -152,21 +138,17 @@ def get_data():
         # 使用re.findall(x, s) 或者 x.findall(s)效果一样
         for f in f_list:
             data = []
-            # 将正则表达式提取的内容赋值给自定义变量
-            file_name = set_film(find_name, str(f))
-            file_num = set_film(find_num, str(f))
-            file_link = set_film(find_link, str(f))
-            file_img_src = set_film(find_imgSrc, str(f))
-            file_score = set_film(find_score, str(f))
-            file_inq = set_film(find_inq, str(f))
 
-            # 将所有需要的数据保存到data列表
-            data.append(file_name)
-            data.append(file_score)
-            data.append(file_num)
-            data.append(file_link)
-            data.append(file_img_src)
-            data.append(file_inq)
+            # 将正则表达式提取的内容赋值给自定义变量，将所有需要的数据保存到data列表
+            # titles = ['电影', '排行', '评分', '评论数', '链接', '封面', '概括', '别名']
+            data.append(set_film(str(f), re.compile(r'<span class="title">(.*?)</span>')))
+            data.append(set_film(str(f), re.compile(r'em class="">(.*?)</em>')))
+            data.append(set_film(str(f), re.compile(r'<span class="rating_num".*>(.*?)</span>')))
+            data.append(set_film(str(f), re.compile(r'<span>(\d*人)评价</span>')))
+            data.append(set_film(str(f), re.compile(r'<a href="(.*?)">')))
+            data.append(set_film(str(f), re.compile(r'<img.*src="(.*?)"', re.S)))  # re.S让换行符包含在字符中
+            data.append(set_film(str(f), re.compile(r'<span class="inq">(.*?)</span>')))
+            data.append(set_film(str(f), re.compile(r'<span class="other">(.*?)</span>')))
 
             # 写入data（单条电影信息）列表，到总的 data_list（所有电影信息）列表
             data_list.append(data)
@@ -177,12 +159,12 @@ def get_data():
 
 
 # 有些电影没有某些项，所以查找长度为0的时候，设置该项为空
-def set_film(file, content):
+def set_film(content, file):
     # 检查查找内容的长度，如果不为0，说明查找到内容，则将内容转换成字符串类型
     if len(re.findall(file, content)) != 0:
         film = str(re.findall(file, content)[0])
     else:
-        film = ""
+        film = "-"
 
     return film
 
@@ -224,20 +206,19 @@ def save_data_excel(datas, save_file):
     # 创建一个工作表，命名为top250
     sheet = excel.add_sheet('top250')
 
-    # 设置前六列的列宽
-    width_c = [256 * 20, 256 * 6, 256 * 12, 256 * 42, 256 * 72, 256 * 68]
-    for i in range(0, 6):
+    # 设置三种单元格样式 set_font(粗体，尺寸，居中)
+    style_font_title = set_font(240, True, True)
+    style_font_content_center = set_font(220, False, True)
+    style_font_content_left = set_font(220, False, False)
+
+    # 设置列宽
+    width_c = [256 * 20, 256 * 6, 256 * 6, 256 * 12, 256 * 42, 256 * 72, 256 * 68, 256 * 40]
+    for i in range(0, len(width_c)):
         sheet.col(i).width = width_c[i]
 
-    # 设置三种单元格样式 set_font(粗体，尺寸，居中)
-    style_font_title = set_font(True, 240, True)
-    style_font_content = set_font(False, 220, True)
-    style_font_content1 = set_font(False, 220, False)
-
-    # 表格各列的列名
-    titles = ['电影名称', '评分', '评论数', '电影链接', '图片链接', '电影名言']
+    # 表格各列的列名，将标题写入excel
+    titles = ['电影', '排行', '评分', '评论数', '链接', '封面', '概括', '别名']
     index = 0
-    # 将标题写入excel
     for title in titles:
         # (单元格行序号，单元格列序号，单元格的内容，单元格样式)
         sheet.write(0, index, title, style_font_title)
@@ -251,11 +232,11 @@ def save_data_excel(datas, save_file):
         # 从一条电影中每次取出一个属性
         for item in data:
             # 前三列设置居中对齐
-            if index_c <= 2:
-                sheet.write(index_r, index_c, item, style_font_content)
+            if index_c <= 3:
+                sheet.write(index_r, index_c, item, style_font_content_center)
             # 后三列设置默认对齐，即左对齐
             else:
-                sheet.write(index_r, index_c, item, style_font_content1)
+                sheet.write(index_r, index_c, item, style_font_content_left)
             index_c += 1
         index_r += 1
 
@@ -264,15 +245,15 @@ def save_data_excel(datas, save_file):
 
 
 # 设置excel的单元格字体样式
-def set_font(bold, size, horz):
+def set_font(size, bold, center):
     # 创建xlwt格式对象
     style_font = xlwt.XFStyle()
-    # 设置字体是否为粗体
-    style_font.font.bold = bold
     # 设置字体尺寸大小
     style_font.font.height = size
+    # 设置字体是否为粗体
+    style_font.font.bold = bold
     # 字体是否居中
-    if horz:
+    if center:
         # 设置字体水平居中
         style_font.alignment.horz = 0x02
         # 设置字体垂直居中
