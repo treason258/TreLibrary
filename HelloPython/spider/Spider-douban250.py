@@ -41,8 +41,8 @@ base_path = os.environ['HOME'] + '/Downloads/HelloPython/douban250/'
 base_date = '20210907-'
 
 save_html_path = base_path + 'html/'
-save_text_path = base_path + 'text/'
-save_excel_path = base_path + 'excel/'
+save_text_path = base_path + ''  # text/
+save_excel_path = base_path + ''  # excel/
 
 save_html_file = save_html_path + base_date + 'top250-'
 save_text_file = save_text_path + base_date + 'top250.txt'
