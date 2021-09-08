@@ -30,9 +30,9 @@ save_html_path = base_path + ''  # html/
 save_text_path = base_path + ''  # text/
 save_excel_path = base_path + ''  # excel/
 
-save_html_file = save_html_path + base_date + 'top250-'
-save_text_file = save_text_path + base_date + 'top250.txt'
-save_excel_file = save_excel_path + base_date + 'top250.xls'
+save_html_file = save_html_path + base_date + 'douban250-'
+save_text_file = save_text_path + base_date + 'douban250.txt'
+save_excel_file = save_excel_path + base_date + 'douban250.xls'
 
 
 # 主程序
@@ -43,7 +43,7 @@ def main():
     make_dirs(save_excel_path)
 
     print('--------1-爬取网页，从豆瓣上获取html文件并保存到本地目录下，该方法成功执行一次即可，保存html，接下来本地操作--------')
-    save_douban_html()
+    # save_douban_html()
 
     print('--------2-解析数据，逐个解析保存在本地的html文件--------')
     datas = get_data()
@@ -140,7 +140,7 @@ def get_data():
             data = []
 
             # 将正则表达式提取的内容赋值给自定义变量，将所有需要的数据保存到data列表
-            # titles = ['电影', '排行', '评分', '评论数', '链接', '封面', '概括', '别名']
+            # titles = ['电影', '排行', '评分', '评价', '链接', '封面', '概括', '别名']
             data.append(set_film(str(f), re.compile(r'<span class="title">(.*?)</span>')))
             data.append(set_film(str(f), re.compile(r'em class="">(.*?)</em>')))
             data.append(set_film(str(f), re.compile(r'<span class="rating_num".*>(.*?)</span>')))
@@ -217,7 +217,7 @@ def save_data_excel(datas, save_file):
         sheet.col(i).width = width_c[i]
 
     # 表格各列的列名，将标题写入excel
-    titles = ['电影', '排行', '评分', '评论数', '链接', '封面', '概括', '别名']
+    titles = ['电影', '排行', '评分', '评价', '链接', '封面', '概括', '别名']
     index = 0
     for title in titles:
         # (单元格行序号，单元格列序号，单元格的内容，单元格样式)
