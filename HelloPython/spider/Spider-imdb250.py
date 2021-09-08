@@ -119,43 +119,37 @@ def get_data():
     # 循环遍历，修改?start=起始排行序号，获取不同分页的豆瓣top信息，url分页格式去豆瓣换页内容试试
     print('----读取网页----')
 
-    # 使用二进制读取，这点很重要，报错无数次
-    html = open(save_html_file, 'rb')
+    file = open(save_html_file, 'r')
+    content = file.read()
+    html = str(content)
 
-    # 接下来是逐一解析数据
-    bs = bf(html, 'html.parser')
+    pat = r'<td class="titleColumn">\s*(.*)..*\s*.*\s*title=".*" >(.*)</a>.*\s*<span class="secondaryInfo">\((.*)\)</span>'
+    res = re.findall(pat, html)
 
-    # 使用标签 + 属性组合查找，查找<div class="item"></div>的标签块
-    # 注意：class是关键字，所以这里需要使用 class_ 代替
-    f_list = bs.find_all('td', class_="posterColumn")
-
-    # 使用re.findall(x, s) 或者 x.findall(s)效果一样
-    for f in f_list:
+    for i in range(len(res)):
         data = []
+        # 排行
+        rank = res[i][0]
+        if int(rank) <= 9:
+            rank = '00' + rank
+        else:
+            if int(rank) <= 99:
+                rank = '0' + rank
+        # 名称
+        name = res[i][1]
+        name = name.replace("'", "")
+        name = name.replace(".", "")
+        name = name.replace(" - ", ".")
+        name = name.replace(", ", ".")
+        name = name.replace(": ", ".")
+        name = name.replace("-", ".")
+        name = name.replace("·", ".")
+        name = name.replace(" ", ".")
+        # 年份
+        year = res[i][2]
 
-        # 将正则表达式提取的内容赋值给自定义变量，将所有需要的数据保存到data列表
-        # titles = ['电影', '排行', '评分', '评价', '链接', '封面', '概括', '别名']
-        # data.append(set_film(str(f), re.compile(r'<span class="title">(.*?)</span>')))
-        # data.append(set_film(str(f), re.compile(r'em class="">(.*?)</em>')))
-        # data.append(set_film(str(f), re.compile(r'<span class="rating_num".*>(.*?)</span>')))
-        # data.append(set_film(str(f), re.compile(r'<span>(\d*人)评价</span>')))
-        # data.append(set_film(str(f), re.compile(r'<a href="(.*?)">')))
-        # data.append(set_film(str(f), re.compile(r'<img.*src="(.*?)"', re.S)))  # re.S让换行符包含在字符中
-        # data.append(set_film(str(f), re.compile(r'<span class="inq">(.*?)</span>')))
-        # data.append(set_film(str(f), re.compile(r'<span class="other">(.*?)</span>')))
-        data.append(set_film(str(f), re.compile(r'<td class="titleColumn">\s*(.*)..*\s*.*\s*title=".*" >(.*)</a>.*\s*<span class="secondaryInfo">\((.*)\)</span>')))
-        data.append("https://www.imdb.com" + set_film(str(f), re.compile(r'<a href="(.*?)"')))  # 链接ok
-        data.append(set_film(str(f), re.compile(r'<img.*src="(.*?)"')))  # 图片ok
-        data.append(set_film(str(f), re.compile(r'Freeman".*>(.*?)</a>')))  #
-        data.append(set_film(str(f), re.compile(r'strong title.*>(.*?)</strong>')))  #
-        data.append(set_film(str(f), re.compile(r'<td class="titleColumn">"(.*?)"<a href=')))
-        data.append(set_film(str(f), re.compile(r'<a href.*title="(.*?)"', re.S)))  #
-        data.append(set_film(str(f), re.compile(r'<span class="secondaryInfo">(.*?)</span>')))
-
-        # 写入data（单条电影信息）列表，到总的 data_list（所有电影信息）列表
+        data.append('IMDB' + rank + '.' + name + '.' + year)
         data_list.append(data)
-
-    html.close()
     return data_list
 
 
@@ -178,7 +172,7 @@ def save_data_txt(datas, save_file):
     for data in datas:
         for dat in data:
             file.write(dat + '\n')
-        file.write(split(10) + '\n')
+        # file.write(split(10) + '\n')
     file.close()
     # 将读取的txt文本打印到控制台
     read_file(save_file)
