@@ -24,9 +24,9 @@ ssl._create_default_https_context = ssl._create_unverified_context
 # 各种目录和文件名
 base_url = 'https://movie.douban.com/top250?start='
 base_path = os.environ['HOME'] + '/Downloads/HelloPython/douban250/'
-base_date = '20210907-'
+base_date = '20210908-'
 
-save_html_path = base_path + 'html/'
+save_html_path = base_path + ''  # html/
 save_text_path = base_path + ''  # text/
 save_excel_path = base_path + ''  # excel/
 
@@ -43,7 +43,7 @@ def main():
     make_dirs(save_excel_path)
 
     print('--------1-爬取网页，从豆瓣上获取html文件并保存到本地目录下，该方法成功执行一次即可，保存html，接下来本地操作--------')
-    # save_douban_html()
+    save_douban_html()
 
     print('--------2-解析数据，逐个解析保存在本地的html文件--------')
     datas = get_data()
@@ -212,7 +212,7 @@ def save_data_excel(datas, save_file):
     style_font_content_left = set_font(220, False, False)
 
     # 设置列宽
-    width_c = [256 * 20, 256 * 6, 256 * 6, 256 * 12, 256 * 42, 256 * 72, 256 * 68, 256 * 40]
+    width_c = [256 * 20, 256 * 6, 256 * 6, 256 * 12, 256 * 42, 256 * 72, 256 * 68, 256 * 50]
     for i in range(0, len(width_c)):
         sheet.col(i).width = width_c[i]
 
