@@ -30,9 +30,9 @@ save_html_path = base_path + ''  # html/
 save_text_path = base_path + ''  # text/
 save_excel_path = base_path + ''  # excel/
 
-save_html_file = save_html_path + base_date + 'top250-page1.html'
-save_text_file = save_text_path + base_date + 'top250.txt'
-save_excel_file = save_excel_path + base_date + 'top250.xls'
+save_html_file = save_html_path + base_date + 'imdb250-page1.html'
+save_text_file = save_text_path + base_date + 'imdb250.txt'
+save_excel_file = save_excel_path + base_date + 'imdb250.xls'
 
 
 # 主程序
@@ -43,7 +43,7 @@ def main():
     make_dirs(save_excel_path)
 
     print('--------1-爬取网页，从网页上获取html文件并保存到本地目录下，该方法成功执行一次即可，保存html，接下来本地操作--------')
-    save_html()
+    # save_html()
 
     print('--------2-解析数据，逐个解析保存在本地的html文件--------')
     datas = get_data()
@@ -52,7 +52,7 @@ def main():
     save_data_txt(datas, save_text_file)
 
     print('--------4-保存数据，保存爬取数据到本地excel文件--------')
-    save_data_excel(datas, save_excel_file)
+    # save_data_excel(datas, save_excel_file)
 
 
 # 0-创建目录
@@ -134,19 +134,22 @@ def get_data():
         data = []
 
         # 将正则表达式提取的内容赋值给自定义变量，将所有需要的数据保存到data列表
-        # titles = ['电影', '排行', '评分', '评论数', '链接', '封面', '概括', '别名']
+        # titles = ['电影', '排行', '评分', '评价', '链接', '封面', '概括', '别名']
         # data.append(set_film(str(f), re.compile(r'<span class="title">(.*?)</span>')))
         # data.append(set_film(str(f), re.compile(r'em class="">(.*?)</em>')))
         # data.append(set_film(str(f), re.compile(r'<span class="rating_num".*>(.*?)</span>')))
         # data.append(set_film(str(f), re.compile(r'<span>(\d*人)评价</span>')))
+        # data.append(set_film(str(f), re.compile(r'<a href="(.*?)">')))
+        # data.append(set_film(str(f), re.compile(r'<img.*src="(.*?)"', re.S)))  # re.S让换行符包含在字符中
+        # data.append(set_film(str(f), re.compile(r'<span class="inq">(.*?)</span>')))
         # data.append(set_film(str(f), re.compile(r'<span class="other">(.*?)</span>')))
-        data.append(set_film(str(f), re.compile(r'<a href="(.*?)">')))
-        data.append(set_film(str(f), re.compile(r'<a href="(.*?)">')))
-        data.append(set_film(str(f), re.compile(r'<a href="(.*?)">')))
-        data.append(set_film(str(f), re.compile(r'<a href="(.*?)">')))
-        data.append(set_film(str(f), re.compile(r'<a href="(.*?)">')))
-        data.append(set_film(str(f), re.compile(r'<img.*src="(.*?)"', re.S)))  # re.S让换行符包含在字符中
-        data.append(set_film(str(f), re.compile(r'<a href.*title="(.*?)"', re.S)))  # re.S让换行符包含在字符中
+        data.append(set_film(str(f), re.compile(r'<td class="titleColumn">\s*(.*)..*\s*.*\s*title=".*" >(.*)</a>.*\s*<span class="secondaryInfo">\((.*)\)</span>')))
+        data.append("https://www.imdb.com" + set_film(str(f), re.compile(r'<a href="(.*?)"')))  # 链接ok
+        data.append(set_film(str(f), re.compile(r'<img.*src="(.*?)"')))  # 图片ok
+        data.append(set_film(str(f), re.compile(r'Freeman".*>(.*?)</a>')))  #
+        data.append(set_film(str(f), re.compile(r'strong title.*>(.*?)</strong>')))  #
+        data.append(set_film(str(f), re.compile(r'<td class="titleColumn">"(.*?)"<a href=')))
+        data.append(set_film(str(f), re.compile(r'<a href.*title="(.*?)"', re.S)))  #
         data.append(set_film(str(f), re.compile(r'<span class="secondaryInfo">(.*?)</span>')))
 
         # 写入data（单条电影信息）列表，到总的 data_list（所有电影信息）列表
